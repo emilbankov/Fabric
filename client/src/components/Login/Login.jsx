@@ -45,13 +45,13 @@ export default function Login() {
                             <div className="box">
                                 <div className="box-heading">Account</div>
                                 <div className="list-group">
-                                    <a href="account/login" className="list-group-item">
+                                    <Link to="/login" className="list-group-item">
                                         Login{" "}
-                                    </a>
-                                    <a href="account/register" className="list-group-item">
+                                    </Link>
+                                    <Link to="/register" className="list-group-item">
                                         Register
-                                    </a>
-                                    <a href="account/forgotten" className="list-group-item">
+                                    </Link>
+                                    <a href="/forgotten" className="list-group-item">
                                         Forgotten Password{" "}
                                     </a>
                                     <a href="account.html" className="list-group-item">
@@ -150,9 +150,9 @@ export default function Login() {
                                             date on an order's status, and keep track of the orders you have
                                             previously made.
                                         </p>
-                                        <a href="account/register" className="btn btn-primary">
+                                        <Link to="/register" className="btn btn-primary">
                                             Continue
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="col-sm-6">
@@ -195,7 +195,7 @@ export default function Login() {
                                             </div>
                                             <input
                                                 type="submit"
-                                                defaultValue="Login"
+                                                value="Login"
                                                 className="btn btn-primary"
                                             />
                                         </form>
@@ -206,7 +206,6 @@ export default function Login() {
                     </div>
                 </div>
             </div>
-
         </>
     );
 };

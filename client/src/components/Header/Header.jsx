@@ -51,14 +51,14 @@ export default function Header() {
                                     <div className="drop_account">
                                         <div className="login_acc">
                                             <li>
-                                                <a className="login" href="/login">
+                                                <Link className="login" to="/login">
                                                     Login
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a className="reg" href="/register.html">
+                                                <Link className="reg" to="/register">
                                                     Register
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li>
                                                 <a href="/checkout" title="Checkout">
