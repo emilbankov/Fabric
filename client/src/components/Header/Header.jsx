@@ -626,7 +626,7 @@ export default function Header() {
                                                     <a href="catalog.html">Specials</a>
                                                 </li>
                                                 <li>
-                                                    <a href="contact.html">Contact Us</a>
+                                                    <Link to="/contact">Contact Us</Link>
                                                 </li>
                                                 <li className="toplink">
                                                     <a href="blogs.html">Blogs</a>

@@ -127,9 +127,9 @@ export default function Login() {
                                     >
                                         Terms &amp; Conditions{" "}
                                     </a>
-                                    <a className="list-group-item" href="contact.html">
+                                    <Link className="list-group-item" to="/contact">
                                         Contact Us{" "}
-                                    </a>
+                                    </Link>
                                     <a className="list-group-item" href="information/sitemap">
                                         Site Map{" "}
                                     </a>
