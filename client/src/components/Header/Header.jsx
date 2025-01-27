@@ -629,7 +629,7 @@ export default function Header() {
                                                     <Link to="/contact">Contact Us</Link>
                                                 </li>
                                                 <li className="toplink">
-                                                    <a href="blogs.html">Blogs</a>
+                                                    <Link to="/blogs">Blogs</Link>
                                                 </li>
                                             </ul>
                                         </div>
