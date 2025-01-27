@@ -89,7 +89,7 @@ export default function Footer() {
                                             <h5>About</h5>
                                             <ul className="list-unstyled">
                                                 <li>
-                                                    <a href="/information&information_id=4">About Us</a>
+                                                    <Link to="/about">About Us</Link>
                                                 </li>
                                                 <li>
                                                     <a href="/information&information_id=6">

@@ -4,6 +4,7 @@ import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Catalog from './components/Catalog/Catalog';
 import Contact from './components/Contact/Contact';
+import About from './components/About/About';
 import Blogs from './components/Blogs/Blogs';
 import Account from './components/Account/Account';
 import Login from "./components/Login/Login";
@@ -21,6 +22,7 @@ function App() {
                 <Route path='/' element={<Home />} />
                 <Route path='/catalog' element={<Catalog />} />
                 <Route path='/contact' element={<Contact />} />
+                <Route path='/about' element={<About />} />
                 <Route path='/blogs' element={<Blogs />} />
                 <Route path='/account' element={<Account />} />
                 <Route path='/login' element={<Login />} />

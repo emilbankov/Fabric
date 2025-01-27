@@ -76,9 +76,9 @@ export default function Catalog() {
                 <div id="product-special" className="container">
                     <ul className="breadcrumb">
                         <li>
-                            <a href="index.html">
+                            <Link to="/">
                                 <i className="fa fa-home" />
-                            </a>
+                            </Link>
                         </li>
                         <li>
                             <Link to="/catalog">Men</Link>

@@ -38,9 +38,9 @@ export default function Blogs() {
                 <div className="container">
                     <ul className="breadcrumb">
                         <li>
-                            <a href="index.html">
+                            <Link to="/">
                                 <i className="fa fa-home" />
-                            </a>
+                            </Link>
                         </li>
                         <li>
                             <a href="information/blogger">Blogs</a>{" "}
@@ -51,9 +51,9 @@ export default function Blogs() {
                             <div className="box">
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
-                                    <a className="list-group-item" href="about.html">
+                                    <Link className="list-group-item" to="/about">
                                         About Us{" "}
-                                    </a>
+                                    </Link>
                                     <a
                                         className="list-group-item"
                                         href="information/information&information_id=6"
@@ -390,45 +390,45 @@ export default function Blogs() {
                             <div className="box">
                                 <div className="box-heading">Account</div>
                                 <div className="list-group">
-                                    <a href="account/login" className="list-group-item">
+                                    <Link to="/login" className="list-group-item">
                                         Login{" "}
-                                    </a>{" "}
-                                    <a href="account/register" className="list-group-item">
+                                    </Link>{" "}
+                                    <Link to="/register" className="list-group-item">
                                         Register
-                                    </a>{" "}
-                                    <a href="account/forgotten" className="list-group-item">
+                                    </Link>{" "}
+                                    <Link to="/forgotten" className="list-group-item">
                                         Forgotten Password{" "}
-                                    </a>
-                                    <a href="account/account " className="list-group-item">
+                                    </Link>
+                                    <Link to="/account " className="list-group-item">
                                         My Account{" "}
-                                    </a>
-                                    <a href="account/address" className="list-group-item">
+                                    </Link>
+                                    <Link to="/address" className="list-group-item">
                                         Address Book
-                                    </a>{" "}
-                                    <a href="account/wishlist " className="list-group-item">
+                                    </Link>{" "}
+                                    <Link to="/wishlist " className="list-group-item">
                                         Wish List{" "}
-                                    </a>{" "}
-                                    <a href="account/order " className="list-group-item">
+                                    </Link>{" "}
+                                    <Link to="/order " className="list-group-item">
                                         Order History{" "}
-                                    </a>{" "}
-                                    <a href="account/download" className="list-group-item">
+                                    </Link>{" "}
+                                    <Link to="/download" className="list-group-item">
                                         Downloads{" "}
-                                    </a>
-                                    <a href="account/recurring" className="list-group-item">
+                                    </Link>
+                                    <Link to="/recurring" className="list-group-item">
                                         Recurring payments{" "}
-                                    </a>{" "}
-                                    <a href="account/reward " className="list-group-item">
+                                    </Link>{" "}
+                                    <Link to="/reward " className="list-group-item">
                                         Reward Points{" "}
-                                    </a>{" "}
-                                    <a href="account/return" className="list-group-item">
+                                    </Link>{" "}
+                                    <Link to="/return" className="list-group-item">
                                         Returns{" "}
-                                    </a>{" "}
-                                    <a href="account/transaction" className="list-group-item">
+                                    </Link>{" "}
+                                    <Link to="/transaction" className="list-group-item">
                                         Transactions{" "}
-                                    </a>{" "}
-                                    <a href="account/newsletter" className="list-group-item">
+                                    </Link>{" "}
+                                    <Link to="/newsletter" className="list-group-item">
                                         Newsletter{" "}
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </aside>

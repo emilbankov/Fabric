@@ -78,9 +78,9 @@ export default function Account() {
                             <div className="box">
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
-                                    <a className="list-group-item" href="about.html">
+                                    <Link className="list-group-item" to="/about">
                                         About Us{" "}
-                                    </a>
+                                    </Link>
                                     <a
                                         className="list-group-item"
                                         href="information/information&information_id=6"
