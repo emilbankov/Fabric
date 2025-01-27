@@ -38,15 +38,15 @@ export default function Header() {
                     <div className="nav_right">
                         <div className="account">
                             <li className="dropdown myaccount">
-                                <a
-                                    href="/account.html"
+                                <Link
+                                    to="/account"
                                     title="My Account"
                                     className="dropdown-toggle"
                                     data-toggle="dropdown"
                                 >
                                     <span className="hidden-xs hidden-sm hidden-md">My Account</span>
                                     <i className="fa fa-caret-down" aria-hidden="true" />
-                                </a>
+                                </Link>
                                 <ul className="dropdown-menu dropdown-menu-right myaccount-menu">
                                     <div className="drop_account">
                                         <div className="login_acc">
@@ -222,8 +222,8 @@ export default function Header() {
                             <div className="header_center">
                                 <div className="header-cartright">
                                     <div className="compare">
-                                        <a
-                                            href="account.html"
+                                        <Link
+                                            to="/account"
                                             id="compare-total"
                                             title="Product Compare"
                                         />{" "}

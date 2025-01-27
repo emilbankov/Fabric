@@ -54,9 +54,9 @@ export default function Login() {
                                     <a href="/forgotten" className="list-group-item">
                                         Forgotten Password{" "}
                                     </a>
-                                    <a href="account.html" className="list-group-item">
+                                    <Link to="/account" className="list-group-item">
                                         My Account{" "}
-                                    </a>
+                                    </Link>
                                     <a href="account/address" className="list-group-item">
                                         Address Book
                                     </a>
