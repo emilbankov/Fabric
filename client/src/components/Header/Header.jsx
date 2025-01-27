@@ -290,7 +290,7 @@ export default function Header() {
                                         <a href="/category&path=30">Bay 2 Get 1 FREE</a>
                                     </li>
                                     <li className="top_level dropdown">
-                                        <a href="catalog.html">Men</a>
+                                        <Link to="/catalog">Men</Link>
                                         <span className="cat" />
                                         <div className="dropdown-menu megamenu column3">
                                             <div className="dropdown-inner">
@@ -469,7 +469,7 @@ export default function Header() {
                                                     <a href="/category&path=30">Bay 2 Get 1 FREE</a>
                                                 </li>
                                                 <li>
-                                                    <a href="catalog.html">Men</a>
+                                                    <Link to="/catalog">Men</Link>
                                                     <ul>
                                                         {/* 2 Level Sub Categories START */}
                                                         <li className="dropdown">
@@ -620,10 +620,10 @@ export default function Header() {
                                                     <a href="/">Home</a>
                                                 </li>
                                                 <li className="new menu-item">
-                                                    <a href="catalog.html">New collection</a>
+                                                    <Link to="/catalog">New collection</Link>
                                                 </li>
                                                 <li className="hot menu-item">
-                                                    <a href="catalog.html">Specials</a>
+                                                    <Link to="/catalog">Specials</Link>
                                                 </li>
                                                 <li>
                                                     <Link to="/contact">Contact Us</Link>

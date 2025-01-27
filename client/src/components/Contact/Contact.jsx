@@ -86,7 +86,7 @@ export default function Contact() {
                                         <div className="swiper-slide">
                                             <a href="#">
                                                 <img
-                                                    src="assets/images/left-banner-272x340.jpg"
+                                                    src="/images/left-banner-272x340.jpg"
                                                     alt="Left Banner1"
                                                     className="img-responsive"
                                                 />
