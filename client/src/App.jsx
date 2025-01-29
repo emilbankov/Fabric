@@ -28,7 +28,7 @@ function App() {
 
     return (
         <>
-            <AuthContext.Provider value={{ loginSubmitHandler }}>
+            <AuthContext.Provider value={{ loginSubmitHandler, email: auth.email, isAuthenticated: !!auth.email }}>
                 <Header />
 
                 <Routes>

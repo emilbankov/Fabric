@@ -4322,7 +4322,6 @@ div.tm_button {
 
 .col-sm-3.header_cart {
 	width: auto;
-	float: right;
 	padding: 0px 0 0 0;
 	margin: 0 0 0 0px;
 }
@@ -4337,7 +4336,6 @@ div.tm_button {
 }
 
 .col-sm-3.header_cart {
-	float: right;
 	width: auto;
 	border: none;
 	padding: 0;
@@ -4898,6 +4896,13 @@ header #cart li {
 	background-size: 22px;
 	font-size: 0;
 	margin: 0px 5px 0 0;
+}
+
+.logout a {
+	height: 40px;
+	margin-left: 8px;
+	background-size: 28px;
+	background-image: url(../images/logout.svg);
 }
 
 #content .panel {
