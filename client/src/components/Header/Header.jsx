@@ -13,7 +13,7 @@ export default function Header() {
                                 <ul className="toggle-block">
                                     <li>
                                         <a href="#" title="Facebook" className="facebook icon">
-                                        <i class="fa-brands fa-facebook-f"></i>
+                                        <i className="fa-brands fa-facebook-f"></i>
                                         </a>
                                         <a href="#" title="Twitter" className="twitter icon">
                                             <i className="fa fa-twitter" />

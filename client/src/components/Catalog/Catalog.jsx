@@ -9,7 +9,6 @@ export default function Catalog() {
         const listButton = document.querySelector(".btn-list-grid .list");
         const products = document.querySelectorAll(".product-layout");
 
-        // Function to set active class and update product layout
         const setGridView = () => {
             gridButton.classList.add("active");
             listButton.classList.remove("active");
@@ -28,14 +27,11 @@ export default function Catalog() {
             });
         };
 
-        // Set grid view as default
         setGridView();
 
-        // Event listeners
         gridButton.addEventListener("click", setGridView);
         listButton.addEventListener("click", setListView);
 
-        // Cleanup event listeners on unmount
         return () => {
             gridButton.removeEventListener("click", setGridView);
             listButton.removeEventListener("click", setListView);

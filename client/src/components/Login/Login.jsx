@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 
-export default function Login() {
+export default function Login({ loginSubmitHandler }) {
     let location = useLocation();
 
-    const { values, onChange, onSubmit } = useForm({
+    const { values, onChange, onSubmit } = useForm(loginSubmitHandler, {
         email: '',
         password: ''
     });
@@ -169,7 +169,7 @@ export default function Login() {
                                         </p>
                                         <form onSubmit={onSubmit}>
                                             <div className="form-group">
-                                                <label className="control-label" htmlFor="email"> E-Mail Address</label>
+                                                <label className="control-label" htmlFor="email">E-Mail Address</label>
                                                 <input
                                                     className="form-control"
                                                     type="email"
@@ -195,7 +195,7 @@ export default function Login() {
                                                 />
                                                 <a href="account/forgotten">Forgotten Password</a>
                                             </div>
-                                            <input type="submit" value="Login" className="btn btn-primary"/>
+                                            <input type="submit" value="Login" className="btn btn-primary" />
                                         </form>
                                     </div>
                                 </div>
