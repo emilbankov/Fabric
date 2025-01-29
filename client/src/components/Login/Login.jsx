@@ -1,8 +1,14 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useForm } from "../../hooks/useForm";
 
 export default function Login() {
     let location = useLocation();
+
+    const { values, onChange, onSubmit } = useForm({
+        email: '',
+        password: ''
+    });
 
     useEffect(() => {
         const handleLoad = () => {
@@ -161,43 +167,35 @@ export default function Login() {
                                         <p>
                                             <strong>I am a returning customer</strong>
                                         </p>
-                                        <form
-                                            action="account/login"
-                                            method="post"
-                                            encType="multipart/form-data"
-                                        >
+                                        <form onSubmit={onSubmit}>
                                             <div className="form-group">
-                                                <label className="control-label" htmlFor="input-email">
-                                                    E-Mail Address
-                                                </label>
+                                                <label className="control-label" htmlFor="email"> E-Mail Address</label>
                                                 <input
-                                                    type="text"
-                                                    name="email"
-                                                    defaultValue=""
-                                                    placeholder="E-Mail Address"
-                                                    id="input-email"
                                                     className="form-control"
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                    placeholder="E-Mail Address"
+                                                    onChange={onChange}
+                                                    value={values.email}
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label className="control-label" htmlFor="input-password">
+                                                <label className="control-label" htmlFor="password">
                                                     Password
                                                 </label>
                                                 <input
-                                                    type="password"
-                                                    name="password"
-                                                    defaultValue=""
-                                                    placeholder="Password"
-                                                    id="input-password"
                                                     className="form-control"
+                                                    type="password"
+                                                    id="password"
+                                                    name="password"
+                                                    placeholder="Password"
+                                                    onChange={onChange}
+                                                    value={values.password}
                                                 />
                                                 <a href="account/forgotten">Forgotten Password</a>
                                             </div>
-                                            <input
-                                                type="submit"
-                                                value="Login"
-                                                className="btn btn-primary"
-                                            />
+                                            <input type="submit" value="Login" className="btn btn-primary"/>
                                         </form>
                                     </div>
                                 </div>
