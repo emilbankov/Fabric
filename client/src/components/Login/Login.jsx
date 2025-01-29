@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
+import AuthContext from "../../contexts/authContext";
 
-export default function Login({ loginSubmitHandler }) {
-    let location = useLocation();
+export default function Login() {
+    const location = useLocation();
+    const { loginSubmitHandler } = useContext(AuthContext);
 
     const { values, onChange, onSubmit } = useForm(loginSubmitHandler, {
         email: '',
