@@ -153,7 +153,7 @@ export default function Login() {
                                         <p>
                                             <strong>Register Account</strong>
                                         </p>
-                                        <p>
+                                        <p className="form-group">
                                             By creating an account you will be able to shop faster, be up to
                                             date on an order's status, and keep track of the orders you have
                                             previously made.
@@ -166,9 +166,6 @@ export default function Login() {
                                 <div className="col-sm-6">
                                     <div className="well">
                                         <h2>Returning Customer</h2>
-                                        <p>
-                                            <strong>I am a returning customer</strong>
-                                        </p>
                                         <form onSubmit={onSubmit}>
                                             <div className="form-group">
                                                 <label className="control-label" htmlFor="email">E-Mail Address</label>
@@ -187,7 +184,7 @@ export default function Login() {
                                                     Password
                                                 </label>
                                                 <input
-                                                    className="form-control"
+                                                    className="form-control mb-5"
                                                     type="password"
                                                     id="password"
                                                     name="password"
@@ -195,7 +192,7 @@ export default function Login() {
                                                     onChange={onChange}
                                                     value={values.password}
                                                 />
-                                                <a href="account/forgotten">Forgotten Password</a>
+                                                <a className="forgotten-password" href="/forgotten">Forgotten Password</a>
                                             </div>
                                             <input type="submit" value="Login" className="btn btn-primary" />
                                         </form>

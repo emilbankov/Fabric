@@ -388,6 +388,21 @@ div.required .control-label:before {
 	font-weight: bold;
 }
 
+.bold {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.account-login .well .form-group a.forgotten-password {
+	line-height: 0;
+	margin-top: 5px;
+	text-decoration: underline;
+}
+
+.mb-5 {
+	margin-bottom: 5px;
+}
+
 /* Gradent to all drop down menus */
 #servicecmsblock .Fourth-content-four,
 #servicecmsblock .third-content-three,

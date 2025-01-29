@@ -26,9 +26,16 @@ function App() {
         navigate("/");
     };
 
+    const registerSubmitHandler = async (values) => {
+        // const result = await register(values.email, values.password);
+        console.log(values);
+        
+        // navigate("/");
+    };
+
     return (
         <>
-            <AuthContext.Provider value={{ loginSubmitHandler, email: auth.email, isAuthenticated: !!auth.email }}>
+            <AuthContext.Provider value={{ loginSubmitHandler, registerSubmitHandler, email: auth.email, isAuthenticated: !!auth.email }}>
                 <Header />
 
                 <Routes>

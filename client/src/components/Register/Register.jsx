@@ -1,8 +1,20 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useForm } from "../../hooks/useForm";
+import AuthContext from "../../contexts/authContext";
 
 export default function Register() {
     let location = useLocation();
+    const { registerSubmitHandler } = useContext(AuthContext);
+
+    const { values, onChange, onSubmit } = useForm(registerSubmitHandler, {
+        firstName: '',
+        lastName: '',
+        email: '',
+        telephone: '',
+        password: '',
+        confirmPassword: ''
+    });
 
     useEffect(() => {
         const handleLoad = () => {
@@ -144,16 +156,8 @@ export default function Register() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Register Account</h1>
-                            <p>
-                                If you already have an account with us, please login at the{" "}
-                                <Link to="/login">login page</Link>.
-                            </p>
-                            <form
-                                action="/register"
-                                method="post"
-                                encType="multipart/form-data"
-                                className="form-horizontal"
-                            >
+                            <p>Already have an account? Log in {" "}<Link className="bold" to="/login">here</Link>.</p>
+                            <form className="form-horizontal" onSubmit={onSubmit}>
                                 <fieldset id="account">
                                     <legend>Your Personal Details</legend>
                                     <div className="form-group required" style={{ display: "none" }}>
@@ -173,71 +177,58 @@ export default function Register() {
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label
-                                            className="col-sm-2 control-label"
-                                            htmlFor="input-firstname"
-                                        >
-                                            First Name
-                                        </label>
+                                        <label className="col-sm-2 control-label" htmlFor="firstName">First Name</label>
                                         <div className="col-sm-10">
                                             <input
+                                                className="form-control"
                                                 type="text"
-                                                name="firstname"
-                                                defaultValue=""
+                                                id="firstName"
+                                                name="firstName"
                                                 placeholder="First Name"
-                                                id="input-firstname"
-                                                className="form-control"
+                                                onChange={onChange}
+                                                values={values.firstName}
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label
-                                            className="col-sm-2 control-label"
-                                            htmlFor="input-lastname"
-                                        >
-                                            Last Name
-                                        </label>
+                                        <label className="col-sm-2 control-label" htmlFor="lastName">Last Name</label>
                                         <div className="col-sm-10">
                                             <input
+                                                className="form-control"
                                                 type="text"
-                                                name="lastname"
-                                                defaultValue=""
+                                                id="lastName"
+                                                name="lastName"
                                                 placeholder="Last Name"
-                                                id="input-lastname"
-                                                className="form-control"
+                                                onChange={onChange}
+                                                values={values.lastName}
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="input-email">
-                                            E-Mail
-                                        </label>
+                                        <label className="col-sm-2 control-label" htmlFor="email">E-Mail</label>
                                         <div className="col-sm-10">
                                             <input
+                                                className="form-control"
                                                 type="email"
+                                                id="email"
                                                 name="email"
-                                                defaultValue=""
                                                 placeholder="E-Mail"
-                                                id="input-email"
-                                                className="form-control"
+                                                onChange={onChange}
+                                                values={values.email}
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label
-                                            className="col-sm-2 control-label"
-                                            htmlFor="input-telephone"
-                                        >
-                                            Telephone
-                                        </label>
+                                        <label className="col-sm-2 control-label" htmlFor="telephone">Telephone</label>
                                         <div className="col-sm-10">
                                             <input
-                                                type="tel"
-                                                name="telephone"
-                                                defaultValue=""
-                                                placeholder="Telephone"
-                                                id="input-telephone"
                                                 className="form-control"
+                                                type="tel"
+                                                id="telephone"
+                                                name="telephone"
+                                                placeholder="Telephone"
+                                                onChange={onChange}
+                                                values={values.telephone}
                                             />
                                         </div>
                                     </div>
@@ -245,95 +236,36 @@ export default function Register() {
                                 <fieldset>
                                     <legend>Your Password</legend>
                                     <div className="form-group required">
-                                        <label
-                                            className="col-sm-2 control-label"
-                                            htmlFor="input-password"
-                                        >
-                                            Password
-                                        </label>
+                                        <label className="col-sm-2 control-label" htmlFor="password">Password</label>
                                         <div className="col-sm-10">
                                             <input
+                                                className="form-control"
                                                 type="password"
+                                                id="password"
                                                 name="password"
-                                                defaultValue=""
                                                 placeholder="Password"
-                                                id="input-password"
-                                                className="form-control"
+                                                onChange={onChange}
+                                                values={values.password}
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="input-confirm">
-                                            Password Confirm
-                                        </label>
+                                        <label className="col-sm-2 control-label" htmlFor="confirmPassword">Confirm Password</label>
                                         <div className="col-sm-10">
                                             <input
+                                                className="form-control"
                                                 type="password"
-                                                name="confirm"
-                                                defaultValue=""
-                                                placeholder="Password Confirm"
-                                                id="input-confirm"
-                                                className="form-control"
+                                                id="confirmPassword"
+                                                name="confirmPassword"
+                                                placeholder="Confirm Password"
+                                                onChange={onChange}
+                                                values={values.confirmPassword}
                                             />
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend>Newsletter</legend>
-                                    <div className="form-group">
-                                        <label className="col-sm-2 control-label">Subscribe</label>
-                                        <div className="col-sm-10">
-                                            {" "}
-                                            <label className="radio-inline">
-                                                <input type="radio" name="newsletter" defaultValue={1} />
-                                                Yes
-                                            </label>
-                                            <label className="radio-inline">
-                                                <input
-                                                    type="radio"
-                                                    name="newsletter"
-                                                    defaultValue={0}
-                                                    defaultChecked="checked"
-                                                />
-                                                No
-                                            </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend>Captcha</legend>
-                                    <div className="form-group required">
-                                        <label className="col-sm-3 control-label" htmlFor="input-captcha">
-                                            Enter the code in the box below
-                                        </label>
-                                        <div className="col-sm-8">
-                                            <input
-                                                type="text"
-                                                name="captcha"
-                                                id="input-captcha"
-                                                className="form-control"
-                                            />
-                                            <img src="/captcha" alt="" />
                                         </div>
                                     </div>
                                 </fieldset>
                                 <div className="buttons">
-                                    <div className="pull-right">
-                                        I have read and agree to the{" "}
-                                        <a
-                                            href="information/information/agree&information_id=3"
-                                            className="agree"
-                                        >
-                                            <b>Privacy Policy</b>
-                                        </a>
-                                        <input type="checkbox" name="agree" defaultValue={1} />
-                                        &nbsp;
-                                        <input
-                                            type="submit"
-                                            value="Register"
-                                            className="btn btn-primary"
-                                        />
-                                    </div>
+                                    <div className="pull-right"><input type="submit" value="Register" className="btn btn-primary" /></div>
                                 </div>
                             </form>
                         </div>
