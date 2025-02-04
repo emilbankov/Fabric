@@ -249,7 +249,7 @@ export default function Header() {
                                                 </ul>
                                             </div>
                                         </div>
-                                        {isAuthenticated && <div className="compare logout"><Link to="/account" id="compare-total" title="Product Compare" />{" "}</div>}
+                                        {isAuthenticated && <div className="compare logout"><Link to="/logout" id="compare-total" title="Product Compare" />{" "}</div>}
                                     </div>
                                 </div>
                             </div>
@@ -439,9 +439,7 @@ export default function Header() {
                                                     <div className="expandable" />
                                                 </div>
                                                 <ul className="main-navigation">
-                                                    <li>
-                                                        <a href="/home">Home</a>
-                                                    </li>
+                                                    <li><Link to="/">Home</Link></li>
                                                     <li>
                                                         <a href="/category&path=53">Festive Sarees</a>
                                                     </li>
@@ -609,7 +607,7 @@ export default function Header() {
                                             <div className="static-menu">
                                                 <ul id="static-menu">
                                                     <li>
-                                                        <a href="/">Home</a>
+                                                        <Link to="/">Home</Link>
                                                     </li>
                                                     <li className="new menu-item">
                                                         <Link to="/catalog">New collection</Link>

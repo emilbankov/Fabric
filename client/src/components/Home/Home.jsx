@@ -5,25 +5,24 @@ export default function Home() {
     let location = useLocation();
 
     useEffect(() => {
-        const handleLoad = () => {
-            const existingScript = document.querySelector('script[src="/js/custom.js"]');
-            if (existingScript) {
-                existingScript.remove();
-            }
-
-            const script = document.createElement('script');
-            script.src = '/js/custom.js';
-            script.async = true;
-            document.body.appendChild(script);
-        };
-
-        window.addEventListener('load', handleLoad);
-
+        const existingScript = document.querySelector('script[src="/js/custom.js"]');
+        if (existingScript && existingScript.parentNode) {
+          existingScript.parentNode.removeChild(existingScript);
+        }
+      
+        const script = document.createElement('script');
+        script.src = '/js/custom.js';
+        script.async = true;
+      
+        document.body.appendChild(script);
+      
         return () => {
-            window.removeEventListener('load', handleLoad);
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
         };
-    }, [location]);
-
+      }, [location.pathname]);
+      
     return (
         <>
             <div className="content_headercms_bottom" />
