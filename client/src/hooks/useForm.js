@@ -6,7 +6,6 @@ export function useForm(submitHandler, initialValues) {
     const onChange = (e) => {
         let value;
         if (e.target.type === "file") {
-
             value = e.target.files[0];
         } else {
             value = e.target.value;
