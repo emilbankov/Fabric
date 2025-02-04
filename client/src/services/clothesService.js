@@ -47,6 +47,22 @@ export const create = (name, description, price, type, gender, category, model, 
     });
 };
 
+// export const create = (name, description, price, type, gender, category, model, frontImage, backImage) => {
+//     const deviceInfo = getDeviceInfo();
+
+//     return post(`${baseUrl}/add`, {
+//         name,
+//         description,
+//         price,
+//         type,
+//         gender,
+//         category,
+//         model,
+//         frontImage,
+//         backImage,
+//         deviceInfo
+//     });
+// };
 
 // export const getAll = async () => await get(baseUrl);
 // export const getOne = async (gameId) => await get(`${baseUrl}/${gameId}`);
