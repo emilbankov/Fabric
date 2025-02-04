@@ -15,21 +15,21 @@ export default function Login() {
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
-          existingScript.parentNode.removeChild(existingScript);
+            existingScript.parentNode.removeChild(existingScript);
         }
-      
+
         const script = document.createElement('script');
         script.src = '/js/custom.js';
         script.async = true;
-      
+
         document.body.appendChild(script);
-      
+
         return () => {
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
         };
-      }, [location.pathname]);
+    }, [location.pathname]);
 
     return (
         <>
@@ -144,56 +144,54 @@ export default function Login() {
                             </div>
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h1>Account Login</h1>
+                            <h1>Влизане в акаунт</h1>
                             <div className="row">
                                 <div className="col-sm-6">
                                     <div className="well">
-                                        <h2>New Customer</h2>
+                                        <h2>Нов потребител</h2>
                                         <p>
-                                            <strong>Register Account</strong>
+                                            <strong>Регистрация на акаунт</strong>
                                         </p>
                                         <p className="form-group">
-                                            By creating an account you will be able to shop faster, be up to
-                                            date on an order's status, and keep track of the orders you have
-                                            previously made.
+                                            Създавайки акаунт, вие ще можете да пазарувате по-бързо, да сте в течение на статуса на поръчката и да следите поръчките, които сте направили преди това.
                                         </p>
                                         <Link to="/register" className="btn btn-primary">
-                                            Continue
+                                            Продължи към регистрация
                                         </Link>
                                     </div>
                                 </div>
                                 <div className="col-sm-6">
                                     <div className="well">
-                                        <h2>Returning Customer</h2>
+                                        <h2>Завръщащ се потребител</h2>
                                         <form onSubmit={onSubmit}>
                                             <div className="form-group">
-                                                <label className="control-label" htmlFor="email">E-Mail Address</label>
+                                                <label className="control-label" htmlFor="email">E-mail</label>
                                                 <input
                                                     className="form-control"
                                                     type="email"
                                                     id="email"
                                                     name="email"
-                                                    placeholder="E-Mail Address"
+                                                    placeholder="E-mail"
                                                     onChange={onChange}
                                                     value={values.email}
                                                 />
                                             </div>
                                             <div className="form-group">
                                                 <label className="control-label" htmlFor="password">
-                                                    Password
+                                                    Парола
                                                 </label>
                                                 <input
                                                     className="form-control mb-5"
                                                     type="password"
                                                     id="password"
                                                     name="password"
-                                                    placeholder="Password"
+                                                    placeholder="Парола"
                                                     onChange={onChange}
                                                     value={values.password}
                                                 />
-                                                <a className="forgotten-password" href="/forgotten">Forgotten Password</a>
+                                                <a className="forgotten-password" href="/forgotten">Забравена парола</a>
                                             </div>
-                                            <input type="submit" value="Login" className="btn btn-primary" />
+                                            <input type="submit" value="Вход" className="btn btn-primary" />
                                         </form>
                                     </div>
                                 </div>
