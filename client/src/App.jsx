@@ -13,18 +13,24 @@ import Blogs from './components/Blogs/Blogs';
 import Account from './components/Account/Account';
 import Login from "./components/Login/Login";
 import Register from './components/Register/Register';
+import Logout from './components/Logout/Logout';
 import Footer from "./components/Footer/Footer";
 
 function App() {
     const navigate = useNavigate();
-    const [auth, setAuth] = useState({});
+    const [auth, setAuth] = useState(() => {
+        localStorage.removeItem('accessToken');
+
+        return {};
+    });
 
     const loginSubmitHandler = async (values) => {
         try {
             const result = await login(values.email, values.password);
             console.log(result);
-            
+
             setAuth(result);
+            localStorage.setItem('accessToken', result.access_token);
             navigate("/");
         } catch (error) {
             console.log(error);
@@ -37,6 +43,7 @@ function App() {
                 const result = await register(values.firstName, values.lastName, values.email, values.telephone, values.address, values.password);
                 console.log(result);
                 setAuth(result);
+                localStorage.setItem('accessToken', result.access_token);
                 navigate("/");
             }
         } catch (error) {
@@ -44,9 +51,15 @@ function App() {
         }
     };
 
+    const logoutHandler = () => {
+        setAuth({});
+        localStorage.removeItem('accessToken');
+        navigate("/");
+    };
+
     return (
         <>
-            <AuthContext.Provider value={{ loginSubmitHandler, registerSubmitHandler, email: auth.email, isAuthenticated: !!auth.email }}>
+            <AuthContext.Provider value={{ loginSubmitHandler, registerSubmitHandler, logoutHandler, email: auth.email, isAuthenticated: !!auth.access_token }}>
                 <Header />
 
                 <Routes>
@@ -58,6 +71,7 @@ function App() {
                     <Route path='/account' element={<Account />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/register' element={<Register />} />
+                    <Route path='/logout' element={<Logout />} />
                 </Routes>
 
                 <Footer />
