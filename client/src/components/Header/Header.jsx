@@ -621,6 +621,9 @@ export default function Header() {
                                                     <li className="toplink">
                                                         <Link to="/blogs">Blogs</Link>
                                                     </li>
+                                                    <li className="toplink">
+                                                        <Link to="/add-clothing">Добавяне на продукт</Link>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
