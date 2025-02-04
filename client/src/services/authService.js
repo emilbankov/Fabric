@@ -20,6 +20,7 @@ const getDeviceInfo = () => {
 
 export const login = (email, password) => {
     const deviceInfo = getDeviceInfo();
+
     return post(`${baseUrl}/login`, {
         email,
         password,
@@ -27,13 +28,14 @@ export const login = (email, password) => {
     });
 };
 
-export const register = (firstName, lastName, email, telephone, address, password) => {
+export const register = (firstName, lastName, email, phoneNumber, address, password) => {
     const deviceInfo = getDeviceInfo();
+
     return post(`${baseUrl}/register`, {
         firstName,
         lastName,
         email,
-        telephone,
+        phoneNumber,
         address,
         password,
         deviceInfo,
