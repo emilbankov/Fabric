@@ -232,6 +232,20 @@ export default function Register() {
                                             />
                                         </div>
                                     </div>
+                                    <div className="form-group required">
+                                        <label className="col-sm-2 control-label" htmlFor="address">Address</label>
+                                        <div className="col-sm-10">
+                                            <input
+                                                className="form-control"
+                                                type="text"
+                                                id="address"
+                                                name="address"
+                                                placeholder="Address"
+                                                onChange={onChange}
+                                                values={values.address}
+                                            />
+                                        </div>
+                                    </div>
                                 </fieldset>
                                 <fieldset>
                                     <legend>Your Password</legend>

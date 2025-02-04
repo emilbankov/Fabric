@@ -20,17 +20,28 @@ function App() {
     const [auth, setAuth] = useState({});
 
     const loginSubmitHandler = async (values) => {
-        const result = await login(values.email, values.password);
-
-        setAuth(result);
-        navigate("/");
+        try {
+            const result = await login(values.email, values.password);
+            console.log(result);
+            
+            setAuth(result);
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const registerSubmitHandler = async (values) => {
-        // const result = await register(values.email, values.password);
-        console.log(values);
-        
-        // navigate("/");
+        try {
+            if (values.password === values.confirmPassword) {
+                const result = await register(values.firstName, values.lastName, values.email, values.telephone, values.address, values.password);
+                console.log(result);
+                setAuth(result);
+                navigate("/");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
