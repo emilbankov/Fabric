@@ -31,7 +31,6 @@ function App() {
         try {
             const result = await create(values.name, values.description, values.price, values.type, values.gender, values.category, values.model, values.frontImage, values.backImage);
             console.log(result);
-            console.log(values);
             
             navigate("/");
         } catch (error) {
