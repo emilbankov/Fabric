@@ -5,15 +5,18 @@ import AuthContext from "../../contexts/authContext";
 
 export default function AddClothing() {
     let location = useLocation();
-    const { registerSubmitHandler } = useContext(AuthContext);
+    const { addClothHandler } = useContext(AuthContext);
 
-    const { values, onChange, onSubmit } = useForm(registerSubmitHandler, {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
-        confirmPassword: ''
+    const { values, onChange, onSubmit } = useForm(addClothHandler, {
+        name: '',
+        description: '',
+        price: '',
+        type: '',
+        gender: '',
+        category: '',
+        model: '',
+        frontImage: '',
+        backImage: '',
     });
 
     useEffect(() => {
