@@ -11,7 +11,7 @@ export default function Register() {
         firstName: '',
         lastName: '',
         email: '',
-        telephone: '',
+        phoneNumber: '',
         password: '',
         confirmPassword: ''
     });
@@ -19,21 +19,21 @@ export default function Register() {
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
-          existingScript.parentNode.removeChild(existingScript);
+            existingScript.parentNode.removeChild(existingScript);
         }
-      
+
         const script = document.createElement('script');
         script.src = '/js/custom.js';
         script.async = true;
-      
+
         document.body.appendChild(script);
-      
+
         return () => {
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
         };
-      }, [location.pathname]);
+    }, [location.pathname]);
 
     return (
         <>
@@ -154,11 +154,9 @@ export default function Register() {
                             </div>
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h1>Register Account</h1>
-                            <p>Already have an account? Log in {" "}<Link className="bold" to="/login">here</Link>.</p>
+                            <h1>Регистрация на акаунт</h1>
                             <form className="form-horizontal" onSubmit={onSubmit}>
                                 <fieldset id="account">
-                                    <legend>Your Personal Details</legend>
                                     <div className="form-group required" style={{ display: "none" }}>
                                         <label className="col-sm-2 control-label">Customer Group</label>
                                         <div className="col-sm-10">
@@ -176,70 +174,70 @@ export default function Register() {
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="firstName">First Name</label>
+                                        <label className="col-sm-2 control-label" htmlFor="firstName">Име</label>
                                         <div className="col-sm-10">
                                             <input
                                                 className="form-control"
                                                 type="text"
                                                 id="firstName"
                                                 name="firstName"
-                                                placeholder="First Name"
+                                                placeholder="Име"
                                                 onChange={onChange}
                                                 values={values.firstName}
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="lastName">Last Name</label>
+                                        <label className="col-sm-2 control-label" htmlFor="lastName">Фамилия</label>
                                         <div className="col-sm-10">
                                             <input
                                                 className="form-control"
                                                 type="text"
                                                 id="lastName"
                                                 name="lastName"
-                                                placeholder="Last Name"
+                                                placeholder="Фамилия"
                                                 onChange={onChange}
                                                 values={values.lastName}
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="email">E-Mail</label>
+                                        <label className="col-sm-2 control-label" htmlFor="email">E-mail</label>
                                         <div className="col-sm-10">
                                             <input
                                                 className="form-control"
                                                 type="email"
                                                 id="email"
                                                 name="email"
-                                                placeholder="E-Mail"
+                                                placeholder="E-mail"
                                                 onChange={onChange}
                                                 values={values.email}
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="telephone">Telephone</label>
+                                        <label className="col-sm-2 control-label" htmlFor="phoneNumber">Телефонен номер</label>
                                         <div className="col-sm-10">
                                             <input
                                                 className="form-control"
                                                 type="tel"
-                                                id="telephone"
-                                                name="telephone"
-                                                placeholder="Telephone"
+                                                id="phoneNumber"
+                                                name="phoneNumber"
+                                                placeholder="Телефонен номер"
                                                 onChange={onChange}
-                                                values={values.telephone}
+                                                values={values.phoneNumber}
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="address">Address</label>
+                                        <label className="col-sm-2 control-label" htmlFor="address">Адрес</label>
                                         <div className="col-sm-10">
                                             <input
                                                 className="form-control"
                                                 type="text"
                                                 id="address"
                                                 name="address"
-                                                placeholder="Address"
+                                                placeholder="Адрес"
                                                 onChange={onChange}
                                                 values={values.address}
                                             />
@@ -247,30 +245,30 @@ export default function Register() {
                                     </div>
                                 </fieldset>
                                 <fieldset>
-                                    <legend>Your Password</legend>
+                                    <legend>Вашата парола</legend>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="password">Password</label>
+                                        <label className="col-sm-2 control-label" htmlFor="password">Парола</label>
                                         <div className="col-sm-10">
                                             <input
                                                 className="form-control"
                                                 type="password"
                                                 id="password"
                                                 name="password"
-                                                placeholder="Password"
+                                                placeholder="Парола"
                                                 onChange={onChange}
                                                 values={values.password}
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="confirmPassword">Confirm Password</label>
+                                        <label className="col-sm-2 control-label" htmlFor="confirmPassword">Потвърди парола</label>
                                         <div className="col-sm-10">
                                             <input
                                                 className="form-control"
                                                 type="password"
                                                 id="confirmPassword"
                                                 name="confirmPassword"
-                                                placeholder="Confirm Password"
+                                                placeholder="Потвърди парола"
                                                 onChange={onChange}
                                                 values={values.confirmPassword}
                                             />
@@ -278,7 +276,8 @@ export default function Register() {
                                     </div>
                                 </fieldset>
                                 <div className="buttons">
-                                    <div className="pull-right"><input type="submit" value="Register" className="btn btn-primary" /></div>
+                                    <div className="pull-right"><input type="submit" value="Регистрация" className="btn btn-primary" /></div>
+                                    <p>Вече имате акаунт? Влезте {" "}<Link className="bold" to="/login">тук</Link>.</p>
                                 </div>
                             </form>
                         </div>
