@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Home() {
     let location = useLocation();
@@ -7,22 +7,22 @@ export default function Home() {
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
-          existingScript.parentNode.removeChild(existingScript);
+            existingScript.parentNode.removeChild(existingScript);
         }
-      
+
         const script = document.createElement('script');
         script.src = '/js/custom.js';
         script.async = true;
-      
+
         document.body.appendChild(script);
-      
+
         return () => {
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
         };
-      }, [location.pathname]);
-      
+    }, [location.pathname]);
+
     return (
         <>
             <div className="content_headercms_bottom" />
@@ -35,58 +35,24 @@ export default function Home() {
             </div>
             <div className="content-top" id="content">
                 <div className="main-slider">
-                    <div id="spinner" />
                     <div className="swiper-viewport">
-                        <div
-                            id="slideshow0"
-                            className="swiper-container"
-                            style={{ opacity: 1 }}
-                        >
+                        <div id="slideshow0" className="swiper-container" style={{ opacity: 1 }}>
                             <div className="swiper-wrapper">
                                 <div className="swiper-slide text-center">
-                                    <a href="#">
-                                        <img
-                                            src="/images/Main-banner-2-1903x637.jpg"
-                                            alt="UP to 40% Discount"
-                                            className="img-responsive"
-                                        />
-                                    </a>
-                                    <div className="slider-content">
-                                        <div className="slider-description">
-                                            By Trendy T-Shirts For Men
-                                        </div>
-                                        <div className="slider-title">UP to 40% Discount</div>
-                                        <div className="slider-button">
-                                            {" "}
-                                            <a href="#">Shop Now</a>
-                                        </div>
-                                    </div>
+                                    <Link to="/catalog"><img src="/images/banner 1.jpg" alt="banner 2" className="img-responsive banner-img-100" /></Link>
                                 </div>
                                 <div className="swiper-slide text-center">
-                                    <a href="#">
-                                        <img
-                                            src="/images/Main-banner-1-1903x637.jpg"
-                                            alt="UP to 60% Discount"
-                                            className="img-responsive"
-                                        />
-                                    </a>
-                                    <div className="slider-content">
-                                        <div className="slider-description">
-                                            By Trendy Clothes For Women
-                                        </div>
-                                        <div className="slider-title">UP to 60% Discount</div>
-                                        <div className="slider-button">
-                                            {" "}
-                                            <a href="#">Shop Now</a>
-                                        </div>
-                                    </div>
+                                    <Link to="/catalog"><img src="/images/banner 2.jpg" alt="banner 2" className="img-responsive banner-img-100" /></Link>
+                                </div>
+                                <div className="swiper-slide text-center">
+                                    <Link to="/catalog"><img src="/images/banner 3.jpg" alt="banner 3" className="img-responsive banner-img-100" /></Link>
                                 </div>
                             </div>
                         </div>
                         <div className="swiper-pagination slideshow0" />
                         <div className="swiper-pager">
-                            <div className="swiper-button-next" />
-                            <div className="swiper-button-prev" />
+                            <div className="swiper-button-next white" />
+                            <div className="swiper-button-prev white" />
                         </div>
                     </div>
                 </div>
@@ -108,15 +74,15 @@ export default function Home() {
                                         <div className="category_img">
                                             <a href="/category&path=69" title="banner1">
                                                 <img
-                                                    src="/images/Cat-1-pro-447x550.jpg"
+                                                    src="/images/Cat-2-pro-447x550.jpg"
                                                     alt="Women Jacket"
                                                     title="Women Jacket"
                                                     className="cat_image1"
                                                 />
                                             </a>
                                             <div className="category_list_inner">
-                                                <div className="box-heading">
-                                                    <a href="/category&path=69">Women Jacket</a>
+                                                <div className="box-heading .tt-n">
+                                                    <a href="/category&path=69">Мъжки дрехи</a>
                                                 </div>
                                                 <div className="product-item">
                                                     <p className="desc">
@@ -133,15 +99,15 @@ export default function Home() {
                                         <div className="category_img">
                                             <a href="/category&path=70" title="banner1">
                                                 <img
-                                                    src="/images/Cat-2-pro-447x550.jpg"
+                                                    src="/images/Cat-1-pro-447x550.jpg"
                                                     alt="Mens T-shirt"
                                                     title="Mens T-shirt"
                                                     className="cat_image1"
                                                 />
                                             </a>
                                             <div className="category_list_inner">
-                                                <div className="box-heading">
-                                                    <a href="/category&path=70">Mens T-shirt</a>
+                                                <div className="box-heading .tt-n">
+                                                    <a href="/category&path=70">Дамски дрехи</a>
                                                 </div>
                                                 <div className="product-item">
                                                     <p className="desc">
@@ -165,8 +131,8 @@ export default function Home() {
                                                 />
                                             </a>
                                             <div className="category_list_inner">
-                                                <div className="box-heading">
-                                                    <a href="/category&path=71">Kids Fashion</a>
+                                                <div className="box-heading .tt-n">
+                                                    <a href="/category&path=71">Детски дрехи</a>
                                                 </div>
                                                 <div className="product-item">
                                                     <p className="desc">
@@ -186,16 +152,12 @@ export default function Home() {
                     <div className="container">
                         <div className="row">
                             <div className="tab-head">
-                                <div className="hometab-heading box-heading">New Arrival Item</div>
+                                <div className="hometab-heading box-heading">Нови и популярни артикули</div>
                                 <div id="tabs" className="htabs">
                                     <ul className="etabs">
-                                        <li className="tab">
-                                            <a href="#tab-latest">Featured</a>
-                                        </li>
+                                        <li className="tab"><a href="#tab-latest">Най-нови</a></li>
                                         <li className="tab"></li>
-                                        <li className="tab">
-                                            <a href="#tab-special">Hot Sale</a>
-                                        </li>
+                                        <li className="tab"><a href="#tab-special">Най-продавани</a></li>
                                     </ul>
                                 </div>
                             </div>
