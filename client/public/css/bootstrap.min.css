@@ -321,6 +321,10 @@ img {
     height: auto;
 }
 
+.banner-img-100 {
+    width: 100%;
+}
+
 .img-rounded {
     border-radius: 6px;
 }

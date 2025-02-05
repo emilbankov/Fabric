@@ -1595,7 +1595,6 @@ header .row {
 	line-height: 20px;
 	position: relative;
 	width: 100%;
-	text-transform: capitalize;
 }
 
 .box-content-category .dropdown span::after {
@@ -3214,6 +3213,22 @@ a.banner_text::after {
 
 .swiper-viewport .swiper-button-prev:hover::before {
 	color: #252525;
+}
+
+.swiper-viewport .swiper-button-prev.white::before {
+	color: #fff;
+}
+
+.swiper-viewport .swiper-button-next.white::before {
+	color: #fff;
+}
+
+.swiper-viewport .swiper-button-next.white:hover::before {
+	color: #fff;
+}
+
+.swiper-viewport .swiper-button-prev.white:hover::before {
+	color: #fff;
 }
 
 .main-slider .swiper-pagination {
@@ -9087,6 +9102,10 @@ h2.price {
 	margin-bottom: 22px;
 }
 
+.box .box-heading {
+	text-transform: none;
+}
+
 #content .category_list_cms .box-heading {
 	color: #222;
 	display: inline-block;
@@ -13498,6 +13517,11 @@ li.paymt a:hover:before {
 	cursor: pointer;
 	text-transform: capitalize;
 	line-height: 25px;
+}
+
+.htabs a {
+	font-size: 16px;
+	text-transform: none;
 }
 
 #Tab_Category_Slider .nav li {
@@ -24493,4 +24517,8 @@ h3 .fa {
 
 .card .card-body .form-group span {
 	text-indent: 35px;
+}
+
+#content .category_list_cms .box-heading a {
+	text-transform: none;
 }

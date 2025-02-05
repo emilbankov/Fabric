@@ -650,12 +650,12 @@ $(function () {
 });
 });
 
-$(document).ready(function(){
-	$(".box-category-top").click(function(){
-    $('.box-category-top').toggleClass('active');
-	$(".box-content-category").slideToggle(800);
-	});
-});
+// $(document).ready(function(){
+// 	$(".box-category-top").click(function(){
+//     $('.box-category-top').toggleClass('active');
+// 	$(".box-content-category").slideToggle(800);
+// 	});
+// });
 
 
 function searchtoggle() {	
