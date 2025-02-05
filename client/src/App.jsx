@@ -16,7 +16,7 @@ import Register from './components/Register/Register';
 import Logout from './components/Logout/Logout';
 import Footer from "./components/Footer/Footer";
 import AddClothing from './components/Add Clothing/AddClothing';
-import { create } from './services/clothesService';
+import * as clothesService from "./services/clothesService"
 
 function App() {
     const navigate = useNavigate();
@@ -29,7 +29,7 @@ function App() {
 
     const addClothHandler = async (values) => {
         try {
-            const result = await create(values.name, values.description, values.price, values.type, values.gender, values.category, values.model, values.frontImage, values.backImage);
+            const result = await clothesService.create(values.name, values.description, values.price, values.type, values.gender, values.category, values.model, values.frontImage, values.backImage);
             navigate("/catalog");
         } catch (error) {
             console.log(error);

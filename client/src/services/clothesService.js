@@ -2,6 +2,9 @@ import { get, post, put, del } from '../lib/request.js';
 
 const baseUrl = 'https://tshirt-latest.onrender.com/clothes';
 
+export const getNewest = async () => await get(`${baseUrl}/newest`);
+export const getMostSold = async () => await get(`${baseUrl}/most-sold`);
+
 export const create = (name, description, price, type, gender, category, model, frontImage, backImage) => {
     const formData = new FormData();
 
@@ -19,7 +22,6 @@ export const create = (name, description, price, type, gender, category, model, 
     return post(`${baseUrl}/add`, formData);
 };
 
-// export const getAll = async () => await get(baseUrl);
 // export const getOne = async (gameId) => await get(`${baseUrl}/${gameId}`);
 
 // export const getLatest = async () => {
