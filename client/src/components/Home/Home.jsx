@@ -5,17 +5,21 @@ import * as clothesService from "../../services/clothesService"
 export default function Home() {
     let location = useLocation();
     const [newest, setNewest] = useState([]);
+    const [mostSold, setMostSold] = useState([]);
 
     useEffect(() => {
-        clothesService.getNewest()
-            .then(result => setNewest(result))
-            .catch(err => { console.log(err); });
-
-        return () => {
-            setNewest('movie');
-        };
+        Promise.all([
+            clothesService.getNewest(),
+            clothesService.getMostSold(),
+        ])
+            .then(([newest, mostSold]) => {
+                setNewest(newest);
+                setMostSold(mostSold);
+            })
+            .catch(err => {
+                console.error("Error fetching data:", err);
+            });
     }, [location.pathname]);
-
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -34,7 +38,7 @@ export default function Home() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [location.pathname, newest.cloths]);
+    }, [location.pathname, newest.cloths, mostSold.cloths]);
 
     return (
         <>
@@ -189,16 +193,16 @@ export default function Home() {
                                                             <div className="image">
                                                                 <a href={`/product&product_id=${cloth.id}`}>
                                                                     <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${cloth.images[0].publicId}.jpg`}
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${cloth.images[0].path}`}
                                                                         title={cloth.name}
                                                                         alt={cloth.name}
                                                                         className="img-responsive reg-image"
                                                                     />
                                                                     <img
-                                                                        className="img-responsive hover-image"
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${cloth.images[1].publicId}.jpg`}
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${cloth.images[1].path}`}
                                                                         title={cloth.name}
                                                                         alt={cloth.name}
+                                                                        className="img-responsive hover-image"
                                                                     />
                                                                 </a>
                                                                 <div className="product_hover_block">
@@ -248,203 +252,64 @@ export default function Home() {
                                 <div className="box">
                                     <div className="box-content">
                                         <div className="box-product  productbox-grid" id="tabspecial-grid">
-                                            <div className="product-items">
-                                                <div className="product-block product-thumb transition">
-                                                    <div className="product-block-inner">
-                                                        <div className="image">
-                                                            <a href="/product&product_id=42">
-                                                                <img
-                                                                    src="/images/1-264x380.jpg"
-                                                                    title="Hoodie for men"
-                                                                    alt="Hoodie for men"
-                                                                    className="img-responsive reg-image"
-                                                                />
-                                                                <img
-                                                                    className="img-responsive hover-image"
-                                                                    src="/images/14-264x380.jpg"
-                                                                    title="Hoodie for men"
-                                                                    alt="Hoodie for men"
-                                                                />
-                                                            </a>
-                                                            <span className="saleicon sale">Sale</span>
-                                                            <div className="product_hover_block">
-                                                                <div className="action">
-                                                                    <button
-                                                                        type="button"
-                                                                        className="cart_button"
-                                                                        onClick={() => cart.add('49')}
-                                                                        title="Add to Cart"
-                                                                    >
-                                                                        <i
-                                                                            className="fa fa-shopping-cart"
-                                                                            area-hidden="true"
-                                                                        />
-                                                                    </button>
-                                                                    <div className="quickview-button">
-                                                                        <a
-                                                                            className="quickbox"
-                                                                            title="Add To quickview"
-                                                                            href="/quick_view&product_id=42"
+                                            {mostSold.cloths && mostSold.cloths.map((product) => (
+                                                <div className="product-items" key={product.id}>
+                                                    <div className="product-block product-thumb transition">
+                                                        <div className="product-block-inner">
+                                                            <div className="image">
+                                                                <a href={`/product&product_id=${product.id}`}>
+                                                                    <img
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`}
+                                                                        title={product.name}
+                                                                        alt={product.name}
+                                                                        className="img-responsive reg-image"
+                                                                    />
+                                                                    <img
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[1].path}`}
+                                                                        title={product.name}
+                                                                        alt={product.name}
+                                                                        className="img-responsive hover-image"
+                                                                    />
+                                                                </a>
+                                                                <span className="saleicon sale">Sale</span>
+                                                                <div className="product_hover_block">
+                                                                    <div className="action">
+                                                                        <button
+                                                                            type="button"
+                                                                            className="cart_button"
+                                                                            onClick={() => cart.add(product.id)}
+                                                                            title="Add to Cart"
                                                                         >
-                                                                            <i className="fa fa-eye" />
-                                                                        </a>
+                                                                            <i className="fa fa-shopping-cart" aria-hidden="true" />
+                                                                        </button>
+                                                                        <button
+                                                                            className="wishlist"
+                                                                            type="button"
+                                                                            title="Add to Wish List"
+                                                                            onClick={() => cart.add(product.id)}
+                                                                        >
+                                                                            <i className="fa fa-heart" />
+                                                                        </button>
                                                                     </div>
-                                                                    <button
-                                                                        className="wishlist"
-                                                                        type="button"
-                                                                        title="Add to Wish List "
-                                                                        onClick={() => cart.add('49')}
-                                                                    >
-                                                                        <i className="fa fa-heart" />
-                                                                    </button>
-                                                                    <button
-                                                                        className="compare_button"
-                                                                        type="button"
-                                                                        title="Add to compare "
-                                                                        onClick={() => cart.add('49')}
-                                                                    >
-                                                                        <i className="fa fa-exchange" />
-                                                                    </button>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="product-details">
-                                                            <div className="caption">
-                                                                <div className="rating">
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
+                                                            <div className="product-details">
+                                                                <div className="caption">
+                                                                    <h4>
+                                                                        <a href={`/product&product_id=${product.id}`}>
+                                                                            {product.name}
+                                                                        </a>
+                                                                    </h4>
+                                                                    <p className="price">
+                                                                        <span className="price-new">{product.price.toFixed(2)} лв.</span>
+                                                                        {/* <span className="price-old">$122.00</span> */}
+                                                                    </p>
                                                                 </div>
-                                                                <h4>
-                                                                    <a href="/product&product_id=42 ">
-                                                                        Hoodie for men{" "}
-                                                                    </a>
-                                                                </h4>
-                                                                <p className="price">
-                                                                    <span className="price-new">$110.00</span>{" "}
-                                                                    <span className="price-old">$122.00</span>
-                                                                    <span className="price-tax">Ex Tax: $90.00</span>
-                                                                </p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="product-items">
-                                                <div className="product-block product-thumb transition">
-                                                    <div className="product-block-inner">
-                                                        <div className="image">
-                                                            <a href="/product&product_id=30">
-                                                                <img
-                                                                    src="/images/16-264x380.jpg"
-                                                                    title="long sleeve Shirts"
-                                                                    alt="long sleeve Shirts"
-                                                                    className="img-responsive reg-image"
-                                                                />
-                                                                <img
-                                                                    className="img-responsive hover-image"
-                                                                    src="/images/3-264x380.jpg"
-                                                                    title="long sleeve Shirts"
-                                                                    alt="long sleeve Shirts"
-                                                                />
-                                                            </a>
-                                                            <span className="saleicon sale">Sale</span>
-                                                            <div className="product_hover_block">
-                                                                <div className="action">
-                                                                    <button
-                                                                        type="button"
-                                                                        className="cart_button"
-                                                                        onClick={() => cart.add('49')}
-                                                                        title="Add to Cart"
-                                                                    >
-                                                                        <i
-                                                                            className="fa fa-shopping-cart"
-                                                                            area-hidden="true"
-                                                                        />
-                                                                    </button>
-                                                                    <div className="quickview-button">
-                                                                        <a
-                                                                            className="quickbox"
-                                                                            title="Add To quickview"
-                                                                            href="/quick_view&product_id=30"
-                                                                        >
-                                                                            <i className="fa fa-eye" />
-                                                                        </a>
-                                                                    </div>
-                                                                    <button
-                                                                        className="wishlist"
-                                                                        type="button"
-                                                                        title="Add to Wish List "
-                                                                        onClick={() => cart.add('49')}
-                                                                    >
-                                                                        <i className="fa fa-heart" />
-                                                                    </button>
-                                                                    <button
-                                                                        className="compare_button"
-                                                                        type="button"
-                                                                        title="Add to compare "
-                                                                        onClick={() => cart.add('49')}
-                                                                    >
-                                                                        <i className="fa fa-exchange" />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="product-details">
-                                                            <div className="caption">
-                                                                <div className="rating">
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                </div>
-                                                                <h4>
-                                                                    <a href="/product&product_id=30 ">
-                                                                        long sleeve Shirts{" "}
-                                                                    </a>
-                                                                </h4>
-                                                                <p className="price">
-                                                                    <span className="price-new">$98.00</span>{" "}
-                                                                    <span className="price-old">$122.00</span>
-                                                                    <span className="price-tax">Ex Tax: $80.00</span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
