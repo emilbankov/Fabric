@@ -30,9 +30,7 @@ function App() {
     const addClothHandler = async (values) => {
         try {
             const result = await create(values.name, values.description, values.price, values.type, values.gender, values.category, values.model, values.frontImage, values.backImage);
-            console.log(result);
-            
-            navigate("/");
+            navigate("/catalog");
         } catch (error) {
             console.log(error);
         }
