@@ -1,9 +1,21 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../contexts/authContext";
+import $ from 'jquery';
 
 export default function Header() {
     const { isAuthenticated } = useContext(AuthContext);
+
+    useEffect(() => {
+        $(".box-category-top").click(function () {
+            $(this).toggleClass("active");
+            $(".box-content-category").slideToggle(800);
+        });
+
+        return () => {
+            $(".box-category-top").off("click");
+        };
+    }, []);
 
     return (
         <>
@@ -258,51 +270,25 @@ export default function Header() {
                     <div className="header_bottom">
                         <div className="container">
                             <div className="row">
-                                <div className="box-category-top">
-                                    <div className="box-heading">Shop By Categories</div>
-                                </div>
+                                <div className="box-category-top"><div className="box-heading">Shop By Categories</div></div>
                                 <div className="box-content-category">
                                     <ul id="nav-one" className="dropmenu box-category">
-                                        <li className="top_level">
-                                            <a href="/category&path=53">Festive Sarees</a>
-                                        </li>
-                                        <li className="top_level">
-                                            <a href="/category&path=44">Slipcover</a>
-                                        </li>
-                                        <li className="top_level">
-                                            <a href="/category&path=37">WesternWear</a>
-                                        </li>
-                                        <li className="top_level">
-                                            <a href="/category&path=42">Zink</a>
-                                        </li>
-                                        <li className="top_level">
-                                            <a href="/category&path=31">Bags</a>
-                                        </li>
-                                        <li className="top_level">
-                                            <a href="/category&path=30">Bay 2 Get 1 FREE</a>
-                                        </li>
+                                        <li className="top_level"><a href="/category&path=53">Най-нови</a></li>
+                                        <li className="top_level"><a href="/category&path=53">Най-продавани</a></li>
                                         <li className="top_level dropdown">
-                                            <Link to="/catalog">Men</Link>
+                                            <Link to="/catalog">Тениски</Link>
                                             <span className="cat" />
                                             <div className="dropdown-menu megamenu column3">
                                                 <div className="dropdown-inner">
                                                     <ul className="list-unstyled childs_1">
                                                         <li className="dropdown">
-                                                            <a href="/category&path=20_59">Pocket Squares (2)</a>
                                                             <div className="dropdown-menu">
                                                                 <div className="dropdown-inner">
                                                                     <ul className="list-unstyled childs_2">
-                                                                        <li>
-                                                                            <a href="/category&path=20_59_61">
-                                                                                Bags &amp; Backpacks (1)
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/category&path=20_59_60">Caps (2)</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/category&path=20_59_62">Socks (2)</a>
-                                                                        </li>
+                                                                        <li><a href="/category&path=20_27_64">Формула 1 (1)</a></li>
+                                                                        <li><a href="/category&path=20_27_67">Автомобили (8)</a></li>
+                                                                        <li><a href="/category&path=20_26_63">Мотори (33)</a></li>
+                                                                        <li><a href="/category&path=20_59_62">Камиони (7)</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -310,25 +296,13 @@ export default function Header() {
                                                     </ul>
                                                     <ul className="list-unstyled childs_1">
                                                         <li className="dropdown">
-                                                            <a href="/category&path=20_26">Luxe (2)</a>
                                                             <div className="dropdown-menu">
                                                                 <div className="dropdown-inner">
                                                                     <ul className="list-unstyled childs_2">
-                                                                        <li>
-                                                                            <a href="/category&path=20_26_65">
-                                                                                Convertible (2)
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/category&path=20_26_66">
-                                                                                Netbook (0)
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/category&path=20_26_63">
-                                                                                Peter England (2)
-                                                                            </a>
-                                                                        </li>
+                                                                        <li><a href="/category&path=20_26_65">Коледни (22)</a></li>
+                                                                        <li><a href="/category&path=20_59_62">Филми (6)</a></li>
+                                                                        <li><a href="/category&path=20_26_63">Гейм Аф Тронс (12)</a></li>
+                                                                        <li><a href="/category&path=20_27_64">Музика (5)</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -336,23 +310,38 @@ export default function Header() {
                                                     </ul>
                                                     <ul className="list-unstyled childs_1">
                                                         <li className="dropdown">
-                                                            <a href="/category&path=20_27">Topwear (2)</a>
                                                             <div className="dropdown-menu">
                                                                 <div className="dropdown-inner">
                                                                     <ul className="list-unstyled childs_2">
-                                                                        <li>
-                                                                            <a href="/category&path=20_27_67">
-                                                                                Allen Solly (2)
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/category&path=20_27_68">Belts (1)</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/category&path=20_27_64">
-                                                                                Louis Philippe (2)
-                                                                            </a>
-                                                                        </li>
+                                                                        <li><a href="/category&path=20_27_64">Работни (1)</a></li>
+                                                                        <li><a href="/category&path=20_27_68">Лов (19)</a></li>
+                                                                        <li><a href="/category&path=20_27_64">Риболов (5)</a></li>
+                                                                        <li><a href="/category&path=20_27_67">Кучета (8)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_59_61">UEFA EURO 2024 (2)</a></li>
+                                                                        <li><a href="/category&path=20_26_66">Футболни (10)</a></li>
+                                                                        <li><a href="/category&path=20_27_68">Бойни спортове (19)</a></li>
+                                                                        <li><a href="/category&path=20_59_60">Патриотични (3)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/">Други (11)</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -362,68 +351,193 @@ export default function Header() {
                                             </div>
                                         </li>
                                         <li className="top_level dropdown">
-                                            <a href="/category&path=18">Indian Wear</a>
+                                            <Link to="/catalog">Блузи</Link>
                                             <span className="cat" />
-                                            <div className="dropdown-menu megamenu column1">
+                                            <div className="dropdown-menu megamenu column3">
                                                 <div className="dropdown-inner">
                                                     <ul className="list-unstyled childs_1">
-                                                        <li>
-                                                            <a href="/category&path=18_46">Biba (10)</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="/category&path=18_45">Choli &amp; Gaun (1)</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li className="top_level">
-                                            <a href="/category&path=57">Jaipur Kurti</a>
-                                        </li>
-                                        <li className="top_level dropdown">
-                                            <a href="/category&path=25">Women</a>
-                                            <span className="cat" />
-                                            <div className="dropdown-menu megamenu column1">
-                                                <div className="dropdown-inner">
-                                                    <ul className="list-unstyled childs_1">
-                                                        <li>
-                                                            <a href="/category&path=25_32">Handbags (2)</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="/category&path=25_29">Printers (9)</a>
-                                                        </li>
                                                         <li className="dropdown">
-                                                            <a href="/category&path=25_28">Tota Bags (9)</a>
                                                             <div className="dropdown-menu">
                                                                 <div className="dropdown-inner">
                                                                     <ul className="list-unstyled childs_2">
-                                                                        <li>
-                                                                            <a href="/category&path=25_28_36">
-                                                                                Jumpsuits (3)
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/category&path=25_28_35">
-                                                                                T - Shirts (9)
-                                                                            </a>
-                                                                        </li>
+                                                                        <li><a href="/category&path=20_27_64">Формула 1 (1)</a></li>
+                                                                        <li><a href="/category&path=20_27_67">Автомобили (8)</a></li>
+                                                                        <li><a href="/category&path=20_26_63">Мотори (33)</a></li>
+                                                                        <li><a href="/category&path=20_59_62">Камиони (7)</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
                                                         </li>
-                                                        {/* 2 Level Sub Categories END */}
+                                                    </ul>
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_26_65">Коледни (22)</a></li>
+                                                                        <li><a href="/category&path=20_59_62">Филми (6)</a></li>
+                                                                        <li><a href="/category&path=20_26_63">Гейм Аф Тронс (12)</a></li>
+                                                                        <li><a href="/category&path=20_27_64">Музика (5)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_26_66">Футболни (10)</a></li>
+                                                                        <li><a href="/category&path=20_27_68">Бойни спортове (19)</a></li>
+                                                                        <li><a href="/category&path=20_59_60">Патриотични (3)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_27_68">Лов (19)</a></li>
+                                                                        <li><a href="/category&path=20_27_64">Риболов (5)</a></li>
+                                                                        <li><a href="/catalog">Други (11)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li className="top_level">
-                                            <a href="/category&path=17">Festive Sarees</a>
+                                        <li className="top_level dropdown">
+                                            <Link to="/catalog">Суитчъри</Link>
+                                            <span className="cat" />
+                                            <div className="dropdown-menu megamenu column3">
+                                                <div className="dropdown-inner">
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_27_67">Автомобили (8)</a></li>
+                                                                        <li><a href="/category&path=20_26_63">Мотори (33)</a></li>
+                                                                        <li><a href="/category&path=20_59_62">Камиони (7)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_26_66">Футболни (10)</a></li>
+                                                                        <li><a href="/category&path=20_26_65">Коледни (22)</a></li>
+                                                                        <li><a href="/category&path=20_27_64">Музика (5)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_27_68">Лов (19)</a></li>
+                                                                        <li><a href="/category&path=20_27_64">Риболов (5)</a></li>
+                                                                        <li><a href="/category&path=20_59_60">Патриотични (3)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/catalog">Други (11)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </li>
-                                        <li className="top_level">
-                                            <a href="/category&path=24">Skirts</a>
+                                        <li className="top_level"><a href="/category&path=53">Бандани</a></li>
+                                        <li className="top_level dropdown">
+                                            <Link to="/catalog">Комплекти</Link>
+                                            <span className="cat" />
+                                            <div className="dropdown-menu megamenu column3">
+                                                <div className="dropdown-inner">
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_27_67">Автомобили (8)</a></li>
+                                                                        <li><a href="/category&path=20_26_63">Мотори (33)</a></li>
+                                                                        <li><a href="/category&path=20_59_62">Камиони (7)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_26_66">Футболни (10)</a></li>
+                                                                        <li><a href="/category&path=20_59_60">Патриотични (3)</a></li>
+                                                                        <li><a href="/category&path=20_27_64">Риболов (5)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </li>
-                                        <li className="top_level">
-                                            <a href="/category&path=33">Shoes</a>
+                                        <li className="top_level dropdown">
+                                            <Link to="/catalog">Къси панталони</Link>
+                                            <span className="cat" />
+                                            <div className="dropdown-menu megamenu column3">
+                                                <div className="dropdown-inner">
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_27_67">Автомобили (8)</a></li>
+                                                                        <li><a href="/category&path=20_26_63">Мотори (33)</a></li>
+                                                                        <li><a href="/category&path=20_59_62">Камиони (7)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="list-unstyled childs_1">
+                                                        <li className="dropdown">
+                                                            <div className="dropdown-menu">
+                                                                <div className="dropdown-inner">
+                                                                    <ul className="list-unstyled childs_2">
+                                                                        <li><a href="/category&path=20_26_66">Футболни (10)</a></li>
+                                                                        <li><a href="/category&path=20_59_60">Патриотични (3)</a></li>
+                                                                        <li><a href="/category&path=20_27_64">Риболов (5)</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
