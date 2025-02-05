@@ -7666,12 +7666,6 @@ p.powered {
 	border: none;
 }
 
-.btn-inverse:hover,
-.btn-inverse:active,
-.btn-inverse.active,
-.btn-inverse.disabled,
-.btn-inverse[disabled] {}
-
 @media (max-width: 767px) {
 	.newsletter .input-news {
 		width: 75%;
@@ -7715,11 +7709,6 @@ button.list-group-item:focus,
 button.list-group-item:hover {
 	background: transparent !important;
 }
-
-.radio input[type="radio"],
-.radio-inline input[type="radio"],
-.checkbox input[type="checkbox"],
-.checkbox-inline input[type="checkbox"] {}
 
 .list-group-item {
 	border: none;
@@ -17380,6 +17369,7 @@ h3 .fa {
 .search_box .form-control-select {
 	height: 42px;
 	position: relative;
+	appearance: none;
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	border-radius: 0;
