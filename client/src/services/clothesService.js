@@ -22,6 +22,10 @@ export const create = (name, description, price, type, gender, category, model, 
     return post(`${baseUrl}/add`, formData);
 };
 
+export const search = (value) => {
+    return get(`${baseUrl}/search?name=${value}`);
+};
+
 // export const getOne = async (gameId) => await get(`${baseUrl}/${gameId}`);
 
 // export const getLatest = async () => {
