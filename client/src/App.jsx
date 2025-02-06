@@ -17,6 +17,7 @@ import Logout from './components/Logout/Logout';
 import Footer from "./components/Footer/Footer";
 import AddClothing from './components/Add Clothing/AddClothing';
 import * as clothesService from "./services/clothesService"
+import AuthGuard from './guards/AuthGuard';
 
 function App() {
     const navigate = useNavigate();
@@ -80,14 +81,17 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/catalog' element={<Catalog />} />
-                    <Route path='/add-clothing' element={<AddClothing />} />
                     <Route path='/contact' element={<Contact />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/blogs' element={<Blogs />} />
-                    <Route path='/account' element={<Account />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/register' element={<Register />} />
-                    <Route path='/logout' element={<Logout />} />
+
+                    <Route element={<AuthGuard />}>
+                        <Route path='/account' element={<Account />} />
+                        <Route path='/add-clothing' element={<AddClothing />} />
+                        <Route path='/logout' element={<Logout />} />
+                    </Route>
                 </Routes>
 
                 <Footer />
