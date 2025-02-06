@@ -18,8 +18,6 @@ export default function Search() {
             try {
                 const data = await clothesService.search(query);
                 setResults(data);
-                console.log(data);
-                
             } catch (error) {
                 console.error("Search error:", error);
             }
@@ -32,6 +30,10 @@ export default function Search() {
 
         return () => clearTimeout(delayDebounceFn);
     }, [query]);
+
+    const handleViewAllResultsClick = () => {
+        setQuery("");
+    };
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -69,12 +71,11 @@ export default function Search() {
                             <button type="button" className="btn btn-default btn-lg"> Search </button>
                         </span>
                     </div>
-
                     {query && query.length > 0 && (
-                        <div className="live-search" style={{ display: results.clothes?.length > 0 ? "block" : "none" }}>
-                            {loading && <p>Loading...</p>}
+                        <div className="live-search" style={{ display: query?.length > 0 ? "block" : "none" }}>
+                                {loading && <img className="loading" src="/images/loading.gif" />}
                             <ul>
-                                {results.clothes && results.clothes.map((product) => (
+                                {results.clothes && results.clothes.slice(0, 6).map((product) => (
                                     <li key={product.id}>
                                         <a href={product.id} title={product.name}>
                                             <div className="product-image col-sm-3 col-xs-4">
@@ -96,7 +97,11 @@ export default function Search() {
                                 ))}
                             </ul>
                             <div className="result-text">
-                                <Link to={`/search?query=${query}`} className="view-all-results">
+                                <Link
+                                    to={`/search-results?query=${query}`}
+                                    className="view-all-results"
+                                    onClick={handleViewAllResultsClick}
+                                >
                                     View all results ({results.clothes && results.clothes.length})
                                 </Link>
                             </div>
