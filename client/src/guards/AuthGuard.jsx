@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import AuthContext from "../contexts/authContext";
+import AuthContext from "../contexts/AuthProvider";
 import { Navigate, Outlet } from "react-router-dom";
 
 export default function AuthGuard() {

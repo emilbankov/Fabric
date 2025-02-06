@@ -280,7 +280,6 @@ export default function Catalog() {
                                                                     <button
                                                                         type="button"
                                                                         className="cart_button"
-                                                                        onclick="cart.add('49 ');"
                                                                         title="Add to Cart"
                                                                     >
                                                                         <i
@@ -301,7 +300,6 @@ export default function Catalog() {
                                                                         className="wishlist"
                                                                         type="button"
                                                                         title="Add to Wish List "
-                                                                        onclick="wishlist.add('49 ');"
                                                                     >
                                                                         <i className="fa fa-heart" />
                                                                     </button>
@@ -309,7 +307,6 @@ export default function Catalog() {
                                                                         className="compare_button"
                                                                         type="button"
                                                                         title="Add to compare "
-                                                                        onclick="compare.add('49 ');"
                                                                     >
                                                                         <i className="fa fa-exchange" />
                                                                     </button>
@@ -378,7 +375,6 @@ export default function Catalog() {
                                                                     <button
                                                                         type="button"
                                                                         className="cart_button"
-                                                                        onclick="cart.add('48 ');"
                                                                         title="Add to Cart"
                                                                     >
                                                                         <i
@@ -399,7 +395,6 @@ export default function Catalog() {
                                                                         className="wishlist"
                                                                         type="button"
                                                                         title="Add to Wish List "
-                                                                        onclick="wishlist.add('48 ');"
                                                                     >
                                                                         <i className="fa fa-heart" />
                                                                     </button>
@@ -407,7 +402,6 @@ export default function Catalog() {
                                                                         className="compare_button"
                                                                         type="button"
                                                                         title="Add to compare "
-                                                                        onclick="compare.add('48 ');"
                                                                     >
                                                                         <i className="fa fa-exchange" />
                                                                     </button>
@@ -477,7 +471,6 @@ export default function Catalog() {
                                                                     <button
                                                                         type="button"
                                                                         className="cart_button"
-                                                                        onclick="cart.add('47 ');"
                                                                         title="Add to Cart"
                                                                     >
                                                                         <i
@@ -498,7 +491,6 @@ export default function Catalog() {
                                                                         className="wishlist"
                                                                         type="button"
                                                                         title="Add to Wish List "
-                                                                        onclick="wishlist.add('47 ');"
                                                                     >
                                                                         <i className="fa fa-heart" />
                                                                     </button>
@@ -506,7 +498,6 @@ export default function Catalog() {
                                                                         className="compare_button"
                                                                         type="button"
                                                                         title="Add to compare "
-                                                                        onclick="compare.add('47 ');"
                                                                     >
                                                                         <i className="fa fa-exchange" />
                                                                     </button>
@@ -597,11 +588,9 @@ export default function Catalog() {
                                             <select
                                                 id="input-sort"
                                                 className="form-control"
-                                                onchange="location = this.value;"
                                             >
                                                 <option
                                                     value="productcatalog.html&sort=p.sort_order&order=ASC "
-                                                    selected="selected"
                                                 >
                                                     Default
                                                 </option>
@@ -642,11 +631,9 @@ export default function Catalog() {
                                             <select
                                                 id="input-limit"
                                                 className="form-control"
-                                                onchange="location = this.value;"
                                             >
                                                 <option
                                                     value="productcatalog.html&limit=15 "
-                                                    selected="selected"
                                                 >
                                                     15
                                                 </option>
@@ -687,7 +674,6 @@ export default function Catalog() {
                                                     type="button"
                                                     data-toggle="tooltip"
                                                     title="Add to Wish List "
-                                                    onclick="wishlist.add('35 ');"
                                                 >
                                                     <i className="fa fa-heart" />
                                                 </button>
@@ -789,7 +775,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('42 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -807,7 +792,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('42 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -815,7 +799,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('42 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -922,7 +905,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('43 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -940,7 +922,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('43 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -948,7 +929,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('43 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -1054,7 +1034,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('30 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -1072,7 +1051,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('30 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -1080,7 +1058,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('30 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -1189,7 +1166,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('48 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -1207,7 +1183,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('48 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -1215,7 +1190,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('48 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -1316,7 +1290,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('33 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -1334,7 +1307,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('33 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -1342,7 +1314,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('33 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -1443,7 +1414,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('31 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -1461,7 +1431,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('31 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -1469,7 +1438,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('31 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -1572,7 +1540,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('47 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -1590,7 +1557,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('47 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -1598,7 +1564,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('47 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -1701,7 +1666,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('32 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -1719,7 +1683,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('32 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -1727,7 +1690,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('32 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -1828,7 +1790,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('29 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -1846,7 +1807,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('29 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -1854,7 +1814,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('29 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -1953,7 +1912,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('40 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -1971,7 +1929,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('40 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -1979,7 +1936,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('40 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -2081,7 +2037,6 @@ export default function Catalog() {
                                                     type="button"
                                                     data-toggle="tooltip"
                                                     title="Add to Wish List "
-                                                    onclick="wishlist.add('46 ');"
                                                 >
                                                     <i className="fa fa-heart" />
                                                 </button>
@@ -2182,7 +2137,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('44 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -2200,7 +2154,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('44 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -2208,7 +2161,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('44 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -2311,7 +2263,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('45 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -2329,7 +2280,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('45 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -2337,7 +2287,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('45 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>
@@ -2440,7 +2389,6 @@ export default function Catalog() {
                                                         <button
                                                             type="button"
                                                             className="cart_button"
-                                                            onclick="cart.add('28 ');"
                                                             title="Add to Cart"
                                                         >
                                                             <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
@@ -2458,7 +2406,6 @@ export default function Catalog() {
                                                             className="wishlist"
                                                             type="button"
                                                             title="Add to Wish List "
-                                                            onclick="wishlist.add('28 ');"
                                                         >
                                                             <i className="fa fa-heart" />
                                                         </button>
@@ -2466,7 +2413,6 @@ export default function Catalog() {
                                                             className="compare_button"
                                                             type="button"
                                                             title="Add to compare "
-                                                            onclick="compare.add('28 ');"
                                                         >
                                                             <i className="fa fa-exchange" />
                                                         </button>

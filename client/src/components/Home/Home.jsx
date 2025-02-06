@@ -38,7 +38,7 @@ export default function Home() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [location.pathname, newest.cloths, mostSold.cloths]);
+    }, [location.pathname, newest.clothes, mostSold.clothes]);
 
     return (
         <>
@@ -186,7 +186,7 @@ export default function Home() {
                                             <a className="fa next fa-arrow-right">&nbsp;</a>
                                         </div>
                                         <div className="box-product product-carousel" id="tablatest-carousel">
-                                            {newest.cloths && newest.cloths.map((cloth) => (
+                                            {newest.clothes && newest.clothes.map((cloth) => (
                                                 <div className="slider-item" key={cloth.id}>
                                                     <div className="product-block product-thumb transition">
                                                         <div className="product-block-inner">
@@ -252,7 +252,7 @@ export default function Home() {
                                 <div className="box">
                                     <div className="box-content">
                                         <div className="box-product  productbox-grid" id="tabspecial-grid">
-                                            {mostSold.cloths && mostSold.cloths.map((product) => (
+                                            {mostSold.clothes && mostSold.clothes.map((product) => (
                                                 <div className="product-items" key={product.id}>
                                                     <div className="product-block product-thumb transition">
                                                         <div className="product-block-inner">

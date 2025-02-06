@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
-import AuthContext from "../../contexts/authContext";
+import AuthContext from "../../contexts/AuthProvider";
 
 export default function Login() {
     const location = useLocation();
