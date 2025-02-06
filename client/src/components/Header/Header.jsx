@@ -1,7 +1,8 @@
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../../contexts/authContext";
+import AuthContext from "../../contexts/AuthProvider";
 import $ from 'jquery';
+import Search from "../Search/Search";
 
 export default function Header() {
     const { isAuthenticated } = useContext(AuthContext);
@@ -216,25 +217,9 @@ export default function Header() {
                                         </a>
                                     </div>
                                 </div>
-                                <div className="col-sm-5 header_search">
-                                    <div id="search">
-                                        <div id="searchbox" className="input-group searchtoggle">
-                                            <input
-                                                type="text"
-                                                name="search"
-                                                defaultValue=""
-                                                placeholder="Search for products..."
-                                                className="form-control input-lg"
-                                            />
-                                            <span className="input-group-btn">
-                                                <button type="button" className="btn btn-default btn-lg">
-                                                    {" "}
-                                                    Search
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                <Search />
+                                
                                 <div className="header_center">
                                     <div className="header-cartright">
                                         {/* {isAuthenticated && <div className="compare"><Link to="/account" id="compare-total" title="Product Compare" />{" "}</div>} */}
