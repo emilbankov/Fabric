@@ -339,16 +339,14 @@ export default function Home() {
                                             <div className="testimonial-content">
                                                 <div className="testimonial-desc">
                                                     <p>
-                                                        "Lorem Ipsum is simply dummy text of the printing and
-                                                        typesetting industry. Lorem Ipsum has been the
-                                                        industry's standard dummy text ever since the 1500s,
-                                                        when an unknown printer took a galley type specimen
-                                                        book."
+                                                        "Купих тениска и суитшърт и двата артикула са абсолютно невероятни. 
+                                                        Тениската е дишаща, перфектна за по-топлите дни, а суитшъртът ме държи 
+                                                        уютно през студените вечери. Дизайните са свежи и размерите са точни. Ще пазарувам отново!"
                                                     </p>
                                                 </div>
                                                 <div className="quote_img" />
                                                 <div className="testimonial-user-title">
-                                                    <h4>Nick Burkard</h4>
+                                                    <h4>Кирил Гешев, Бургас</h4>
                                                 </div>
                                             </div>
                                         </li>
@@ -364,16 +362,14 @@ export default function Home() {
                                             <div className="testimonial-content">
                                                 <div className="testimonial-desc">
                                                     <p>
-                                                        "Lorem Ipsum is simply dummy text of the printing and
-                                                        typesetting industry. Lorem Ipsum has been the
-                                                        industry's standard dummy text ever since the 1500s,
-                                                        when an unknown printer took a galley type specimen
-                                                        book."
+                                                        "Наскоро купих суитшърт от този сайт и съм изключително доволен от качеството! 
+                                                        Тъканта е мека, удобна и идеална за по-хладно време. Освен това, дизайнът е точно 
+                                                        това, което търсех. Горещо препоръчвам този сайт на всеки, който иска стилни и качествени дрехи!"
                                                     </p>
                                                 </div>
                                                 <div className="quote_img" />
                                                 <div className="testimonial-user-title">
-                                                    <h4>Nick Burkard</h4>
+                                                    <h4>Иван Владимиров, София</h4>
                                                 </div>
                                             </div>
                                         </li>
@@ -389,16 +385,75 @@ export default function Home() {
                                             <div className="testimonial-content">
                                                 <div className="testimonial-desc">
                                                     <p>
-                                                        "Lorem Ipsum is simply dummy text of the printing and
-                                                        typesetting industry. Lorem Ipsum has been the
-                                                        industry's standard dummy text ever since the 1500s,
-                                                        when an unknown printer took a galley type specimen
-                                                        book."
+                                                        "Късите панталонки са страхотни! Лек и удобен материал, подходящи за горещото лято. Перфектни за плажа или ежедневието."
                                                     </p>
                                                 </div>
                                                 <div className="quote_img" />
                                                 <div className="testimonial-user-title">
-                                                    <h4>Nick Burkard</h4>
+                                                    <h4>Пенка Стоянова, Пловдив</h4>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="testimonial-image">
+                                                <img
+                                                    alt=""
+                                                    src="/images/user1.jpg"
+                                                    width={86}
+                                                    height={86}
+                                                />
+                                            </div>
+                                            <div className="testimonial-content">
+                                                <div className="testimonial-desc">
+                                                    <p>
+                                                        "Тениската е с невероятен дизайн и много удобна. Материалът е приятен на допир и е идеална за летните дни."
+                                                    </p>
+                                                </div>
+                                                <div className="quote_img" />
+                                                <div className="testimonial-user-title">
+                                                    <h4>Геро Пройчев, Сопот</h4>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="testimonial-image">
+                                                <img
+                                                    alt=""
+                                                    src="/images/user2.jpg"
+                                                    width={86}
+                                                    height={86}
+                                                />
+                                            </div>
+                                            <div className="testimonial-content">
+                                                <div className="testimonial-desc">
+                                                    <p>
+                                                        "Комплектът е много комфортен и стилен. Идеален както за тренировки, така и за ежедневни излизания. Страхотно съотношение качество-цена."
+                                                    </p>
+                                                </div>
+                                                <div className="quote_img" />
+                                                <div className="testimonial-user-title">
+                                                    <h4>Любомир Радков, Пазарджик</h4>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="testimonial-image">
+                                                <img
+                                                    alt=""
+                                                    src="/images/user1.jpg"
+                                                    width={86}
+                                                    height={86}
+                                                />
+                                            </div>
+                                            <div className="testimonial-content">
+                                                <div className="testimonial-desc">
+                                                    <p>
+                                                        "Купих комплект тениска и къси панталонки. Перфектен за топлите летни дни! Материалът е мек и удобен, а дизайните са модерни и стилни. Идеален за спорт или просто за разходка. Супер удобен и изглежда страхотно!"
+                                                    </p>
+                                                </div>
+                                                <div className="quote_img" />
+                                                <div className="testimonial-user-title">
+                                                    <h4>Николай Найденов, с. Садово</h4>
                                                 </div>
                                             </div>
                                         </li>

@@ -24058,7 +24058,6 @@ h3 .fa {
 #wdcmstestimonial .wdtestimonial-content .wdtestimonial-inner ul li .testimonial-user-title h4 {
 	color: #fff;
 	font: 500 18px/24px 'Inter', sans-serif;
-	text-transform: capitalize;
 	margin: 0;
 	display: inline-block;
 }
@@ -24076,9 +24075,8 @@ h3 .fa {
 }
 
 #wdcmstestimonial .wdtestimonial-content .wdtestimonial-inner ul li .testimonial-content .testimonial-desc p {
-	font: 400 14px/24px 'Inter', sans-serif;
+	font: 400 16px/24px 'Inter', sans-serif;
 	color: #fff;
-	text-transform: capitalize;
 	margin: 0 0 10px;
 	text-align: center;
 	letter-spacing: 0.5px;
@@ -24509,6 +24507,10 @@ h3 .fa {
 }
 
 #content .category_list_cms .box-heading a {
+	text-transform: none;
+}
+
+.tt-n {
 	text-transform: none;
 }
 
