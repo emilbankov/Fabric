@@ -1,11 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import AuthContext from "../../contexts/AuthProvider";
 import * as clothesService from "../../services/clothesService"
 
 export default function EditClothing() {
     const navigate = useNavigate();
-    const { addClothHandler } = useContext(AuthContext);
     const { clothingId } = useParams();
     const [clothing, setClothing] = useState({
         name: '',

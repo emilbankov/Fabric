@@ -2666,10 +2666,6 @@ fieldset[disabled] .btn-default.active {
     border: none;
     border-radius: 5px;
     background: #000000;
-    /* Old browsers */
-
-
-
 }
 
 .btn-primary:hover,
@@ -7310,4 +7306,26 @@ td.visible-print {
     .nav-tabs>li>a {
         padding: 10px 10px;
     }
+}
+
+.productpage #button-edit.btn.btn-primary.btn-lg.btn-block,
+.productpage #button-delete.btn.btn-danger.btn-lg.btn-block {
+    margin-left: 9px;
+    float: right;
+}
+
+.productpage #button-edit.btn.btn-primary.btn-lg.btn-block {
+    padding: 7px 23px !important;
+}
+
+.productpage #button-edit.btn.btn-primary.btn-lg.btn-block {
+    background: #4c50f7 !important;
+}
+
+.productpage #button-edit.btn.btn-primary.btn-lg.btn-block:hover {
+    background: #0004f3 !important;
+}
+
+.productpage #button-cart.btn.btn-primary.btn-lg.btn-block {
+    float: right !important;
 }

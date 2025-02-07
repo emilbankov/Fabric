@@ -49,7 +49,7 @@ export default function Header() {
                                 </div>
                             </div>
                             <div className="offer-title">
-                                Free Coupne Code : Summer Sale On Selected Items Use : New 27
+                                Безплатна доставка за поръчки над 100 лв.
                             </div>
                         </div>
                         <div className="nav_right">
@@ -219,7 +219,7 @@ export default function Header() {
                                 </div>
 
                                 <Search />
-                                
+
                                 <div className="header_center">
                                     <div className="header-cartright">
                                         {/* {isAuthenticated && <div className="compare"><Link to="/account" id="compare-total" title="Product Compare" />{" "}</div>} */}
