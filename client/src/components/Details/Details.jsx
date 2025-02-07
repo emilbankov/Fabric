@@ -1,9 +1,57 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import * as clothesService from "../../services/clothesService"
+import { categoryTranslations, modelType, typeTranslations } from "../../lib/dictionary";
 
 export default function Details() {
     const location = useLocation();
     const { clothingId } = useParams();
+    const [clothing, setClothing] = useState({});
+    const [currentImage, setCurrentImage] = useState("");
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedType, setSelectedType] = useState(null);
+
+    useEffect(() => {
+        clothesService.getOne(clothingId)
+            .then(result => {
+                setClothing(result);
+                if (result?.clothing?.images?.length > 0) {
+                    setCurrentImage(result.clothing.images[0].path);
+                }
+            });
+    }, [clothingId]);
+
+    const handleImageClick = (imagePath) => {
+        setCurrentImage(imagePath);
+    };
+
+    console.log(clothing.clothing);
+
+    const handleSelect = (option, type) => {
+        if (type === "size") {
+            setSelectedSize(option);
+        } else {
+            setSelectedType(option);
+        }
+    };
+
+    const calculatePrice = () => {
+        let price = clothing.clothing.price;
+
+        if (selectedSize === "5XL") {
+            if (clothing.clothing.type === "T_SHIRT") {
+                price += 2;
+            } else {
+                price += 5;
+            }
+        }
+
+        if (selectedType === "Ватирана блуза с дълъг ръкав (+8.00лв.)") {
+            price += 8;
+        }
+
+        return price.toFixed(2);
+    };
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -22,7 +70,7 @@ export default function Details() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [location.pathname]);
+    }, [location.pathname, clothing.clothing]);
 
     return (
         <>
@@ -382,481 +430,358 @@ export default function Details() {
                             />
                         </aside>
                         <div id="content" className="col-sm-9 productpage">
-                            <div className="row">
-                                <div className="col-sm-5 product-left">
-                                    <div className="product-info">
-                                        <div className="left product-image thumbnails">
-                                            {/* Webdigify Cloud-Zoom Image Effect Start */}
-                                            <div className="image">
-                                                <a
-                                                    className="thumbnail"
-                                                    href="/images/4-692x1000.jpg"
-                                                    title="round toe Shoes"
-                                                >
-                                                    <img
-                                                        id="tmzoom"
-                                                        src="/images/4-532x769.jpg"
-                                                        data-zoom-image="/images/4-692x1000.jpg"
-                                                        title="round toe Shoes"
-                                                        alt="round toe Shoes"
-                                                    />
-                                                </a>
-                                            </div>
-                                            <div className="additional-carousel">
-                                                <div className="customNavigation">
-                                                    <span className="fa prev fa-arrow-left">&nbsp;</span>
-                                                    <span className="fa next fa-arrow-right">&nbsp;</span>
-                                                </div>
-                                                <div
-                                                    id="additional-carousel"
-                                                    className="image-additional product-carousel"
-                                                >
-                                                    <div className="slider-item">
-                                                        <div className="product-block">
+
+                            {clothing.clothing && (
+                                <div className="row">
+                                    <div id="content" className="col-sm-9 productpage">
+                                        <div className="row">
+                                            <div className="col-sm-5 product-left">
+                                                <div className="product-info">
+                                                    <div className="left product-image thumbnails">
+                                                        <div className="image">
                                                             <a
-                                                                href="/images/4-692x1000.jpg"
-                                                                title="round toe Shoes"
-                                                                className="elevatezoom-gallery"
-                                                                data-image="/images/4-532x769.jpg"
-                                                                data-zoom-image="/images/4-692x1000.jpg"
+                                                                className="thumbnail"
+                                                                href={`https://res.cloudinary.com/dfttdd1vq/image/upload/${currentImage}`}
+                                                                title={clothing.clothing.name}
                                                             >
                                                                 <img
-                                                                    src="/images/4-532x769.jpg"
-                                                                    width={74}
-                                                                    height={74}
-                                                                    title="round toe Shoes"
-                                                                    alt="round toe Shoes"
+                                                                    id="tmzoom"
+                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${currentImage}`}
+                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload/${currentImage}`}
+                                                                    title={clothing.clothing.name}
+                                                                    alt={clothing.clothing.name}
                                                                 />
                                                             </a>
                                                         </div>
-                                                    </div>
-                                                    <div className="slider-item">
-                                                        <div className="product-block">
-                                                            <a
-                                                                href="/images/6-692x1000.jpg"
-                                                                title="round toe Shoes"
-                                                                className="elevatezoom-gallery"
-                                                                data-image="/images/6-532x769.jpg"
-                                                                data-zoom-image="/images/6-692x1000.jpg"
-                                                            >
-                                                                <img
-                                                                    src="/images/6-532x769.jpg"
-                                                                    width={74}
-                                                                    height={74}
-                                                                    title="round toe Shoes"
-                                                                    alt="round toe Shoes"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="slider-item">
-                                                        <div className="product-block">
-                                                            <a
-                                                                href="/images/5-692x1000.jpg"
-                                                                title="round toe Shoes"
-                                                                className="elevatezoom-gallery"
-                                                                data-image="/images/5-532x769.jpg"
-                                                                data-zoom-image="/images/5-692x1000.jpg"
-                                                            >
-                                                                <img
-                                                                    src="/images/5-532x769.jpg"
-                                                                    width={74}
-                                                                    height={74}
-                                                                    title="round toe Shoes"
-                                                                    alt="round toe Shoes"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="slider-item">
-                                                        <div className="product-block">
-                                                            <a
-                                                                href="/images/7-692x1000.jpg"
-                                                                title="round toe Shoes"
-                                                                className="elevatezoom-gallery"
-                                                                data-image="/images/7-532x769.jpg"
-                                                                data-zoom-image="/images/7-692x1000.jpg"
-                                                            >
-                                                                <img
-                                                                    src="/images/7-532x769.jpg"
-                                                                    width={74}
-                                                                    height={74}
-                                                                    title="round toe Shoes"
-                                                                    alt="round toe Shoes"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="slider-item">
-                                                        <div className="product-block">
-                                                            <a
-                                                                href="/images/8-692x1000.jpg"
-                                                                title="round toe Shoes"
-                                                                className="elevatezoom-gallery"
-                                                                data-image="/images/8-532x769.jpg"
-                                                                data-zoom-image="/images/8-692x1000.jpg"
-                                                            >
-                                                                <img
-                                                                    src="/images/8-532x769.jpg"
-                                                                    width={74}
-                                                                    height={74}
-                                                                    title="round toe Shoes"
-                                                                    alt="round toe Shoes"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="slider-item">
-                                                        <div className="product-block">
-                                                            <a
-                                                                href="/images/9-692x1000.jpg"
-                                                                title="round toe Shoes"
-                                                                className="elevatezoom-gallery"
-                                                                data-image="/images/9-532x769.jpg"
-                                                                data-zoom-image="/images/9-692x1000.jpg"
-                                                            >
-                                                                <img
-                                                                    src="/images/9-532x769.jpg"
-                                                                    width={74}
-                                                                    height={74}
-                                                                    title="round toe Shoes"
-                                                                    alt="round toe Shoes"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="slider-item">
-                                                        <div className="product-block">
-                                                            <a
-                                                                href="/images/1-692x1000.jpg"
-                                                                title="round toe Shoes"
-                                                                className="elevatezoom-gallery"
-                                                                data-image="/images/1-532x769.jpg"
-                                                                data-zoom-image="/images/1-692x1000.jpg"
-                                                            >
-                                                                <img
-                                                                    src="/images/1-532x769.jpg"
-                                                                    width={74}
-                                                                    height={74}
-                                                                    title="round toe Shoes"
-                                                                    alt="round toe Shoes"
-                                                                />
-                                                            </a>
+                                                        <div className="additional-carousel">
+                                                            <div className="customNavigation">
+                                                                <span className="fa prev fa-arrow-left">&nbsp;</span>
+                                                                <span className="fa next fa-arrow-right">&nbsp;</span>
+                                                            </div>
+                                                            <div id="additional-carousel" className="image-additional product-carousel">
+                                                                {clothing.clothing.images && clothing.clothing.images.map((image, index) => (
+                                                                    <div className="slider-item" key={index}>
+                                                                        <div className="product-block">
+                                                                            <a
+                                                                                href="#"
+                                                                                title={image.side}
+                                                                                className="elevatezoom-gallery"
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                    handleImageClick(image.path)
+                                                                                }}
+                                                                            >
+                                                                                <img
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${image.path}`}
+                                                                                    width={74}
+                                                                                    height={74}
+                                                                                    title={image.side}
+                                                                                    alt={image.side}
+                                                                                />
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                            <span
+                                                                className="additional_default_width"
+                                                                style={{ display: "none", visibility: "hidden" }}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <span
-                                                    className="additional_default_width"
-                                                    style={{ display: "none", visibility: "hidden" }}
-                                                />
                                             </div>
-                                            {/* Webdigify Cloud-Zoom Image Effect End*/}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm-6 product-right">
-                                    <h3 className="product-title">round toe Shoes</h3>
-                                    <div className="rating-wrapper">
-                                        <span className="fa fa-stack">
-                                            <i className="fa fa-star fa-stack-1x" />
-                                            <i className="fa fa-star-o fa-stack-1x" />
-                                        </span>
-                                        <span className="fa fa-stack">
-                                            <i className="fa fa-star fa-stack-1x" />
-                                            <i className="fa fa-star-o fa-stack-1x" />
-                                        </span>
-                                        <span className="fa fa-stack">
-                                            <i className="fa fa-star fa-stack-1x" />
-                                            <i className="fa fa-star-o fa-stack-1x" />
-                                        </span>
-                                        <span className="fa fa-stack">
-                                            <i className="fa fa-star fa-stack-1x" />
-                                            <i className="fa fa-star-o fa-stack-1x" />
-                                        </span>
-                                        <span className="fa fa-stack">
-                                            <i className="fa fa-star fa-stack-1x" />
-                                            <i className="fa fa-star-o fa-stack-1x" />
-                                        </span>
-                                        <a
-                                            href=""
-                                            className="review-count"
-                                        >
-                                            1 reviews
-                                        </a>
-                                        <a
-                                            href=""
-                                            className="write-review"
-                                        >
-                                            <i className="fa fa-pencil" />
-                                            Write a review
-                                        </a>
-                                    </div>
-                                    <div className="description">
-                                        <table className="product-description">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <span className="desc">Brand:</span>
-                                                    </td>
-                                                    <td className="description-right">
-                                                        <a href="?route=product/manufacturer/info&manufacturer_id=7">
-                                                            Hewlett-Packard
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span className="desc">Product Code:</span>
-                                                    </td>
-                                                    <td className="description-right"> Product 21</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span className="desc">Reward Points:</span>{" "}
-                                                    </td>
-                                                    <td className="description-right">300</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span className="desc">Availability:</span>{" "}
-                                                    </td>
-                                                    <td className="description-right">In Stock</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <ul className="list-unstyled">
-                                        <li>
-                                            <h4>$122.00</h4>
-                                        </li>
-                                        <li className="price-tax">Ex Tax: $100.00</li>
-                                        <li className="rewardpoint">Price in reward points: 400</li>
-                                    </ul>
-                                    <div id="product">
-                                        <h3 className="product-option">Available Options</h3>
-                                        <div className="form-group required">
-                                            <label className="control-label" htmlFor="input-option225">
-                                                Delivery Date
-                                            </label>
-                                            <div className="input-group date">
-                                                <input
-                                                    type="text"
-                                                    name="option[225]"
-                                                    defaultValue="2011-04-22"
-                                                    data-date-format="YYYY-MM-DD"
-                                                    id="input-option225"
-                                                    className="form-control"
-                                                />
-                                                <span className="input-group-btn">
-                                                    <button className="btn btn-default" type="button">
-                                                        <i className="fa fa-calendar" />
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="form-group qty">
-                                            <label className="control-label" htmlFor="input-quantity">
-                                                Qty
-                                            </label>
-                                            <input
-                                                type="text"
-                                                name="quantity"
-                                                defaultValue={1}
-                                                size={2}
-                                                id="input-quantity"
-                                                className="form-control"
-                                            />
-                                            <input type="hidden" name="product_id" defaultValue={47} />
-                                            <button
-                                                type="button"
-                                                id="button-cart"
-                                                data-loading-text="Loading..."
-                                                className="btn btn-primary btn-lg btn-block"
-                                            >
-                                                Add to Cart
-                                            </button>
-                                            <div className="btn-group prd_page">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-default wishlist"
-                                                    title="Add to Wish List"
-                                                >
-                                                    Add to Wish List
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-default compare"
-                                                    title="Add to compare"
-                                                >
-                                                    Add to compare
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr />
-                                    <div
-                                        className="addthis_toolbox addthis_default_style"
-                                        data-url="=47"
-                                    >
-                                        <a className="addthis_button_facebook_like" />{" "}
-                                        <a className="addthis_button_tweet" />{" "}
-                                        <a className="addthis_button_pinterest_pinit" />{" "}
-                                        <a className="addthis_counter addthis_pill_style" />
-                                    </div>
-                                </div>
-                                <div className="content_product_block" />
-                            </div>
-                            {/* product page tab code start*/}
-                            <div id="tabs_info" className="product-tab col-sm-12">
-                                <ul className="nav nav-tabs">
-                                    <li className="active">
-                                        <a href="#tab-description" data-toggle="tab">
-                                            Description
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#tab-specification" data-toggle="tab">
-                                            Specification
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#tab-review" data-toggle="tab">
-                                            Reviews (1)
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div className="tab-content">
-                                    <div className="tab-pane active" id="tab-description">
-                                        <p>
-                                            Stop your co-workers in their tracks with the stunning new
-                                            30-inch diagonal HP LP3065 Flat Panel Monitor. This flagship
-                                            monitor features best-in-class performance and presentation
-                                            features on a huge wide-aspect screen while letting you work as
-                                            comfortably as possible - you might even forget you're at the
-                                            office
-                                        </p>
-                                    </div>
-                                    <div className="tab-pane" id="tab-specification">
-                                        <table className="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <td colSpan={2}>
-                                                        <strong>Memory</strong>
-                                                    </td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>test 1</td>
-                                                    <td>16GB</td>
-                                                </tr>
-                                            </tbody>
-                                            <thead>
-                                                <tr>
-                                                    <td colSpan={2}>
-                                                        <strong>Processor</strong>
-                                                    </td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>No. of Cores</td>
-                                                    <td>4</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div className="tab-pane" id="tab-review">
-                                        <form className="form-horizontal" id="form-review">
-                                            <div id="review" />
-                                            <h4>Write a review</h4>
-                                            <div className="form-group required">
-                                                <div className="col-sm-12">
-                                                    <label className="control-label" htmlFor="input-name">
-                                                        Your Name
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        name="name"
-                                                        defaultValue=""
-                                                        id="input-name"
-                                                        className="form-control"
-                                                    />
+                                            <div className="col-sm-6 product-right">
+                                                <h3 className="product-title">{typeTranslations[clothing.clothing.type]} {clothing.clothing.name} #{clothing.clothing.model}</h3>
+                                                <div className="description">
+                                                    <table className="product-description">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <span className="desc">Модел:</span>
+                                                                </td>
+                                                                <td className="description-right">
+                                                                    <a href="?route=product/manufacturer/info&manufacturer_id=7">
+                                                                        #{clothing.clothing.model}{modelType[clothing.clothing.type]}
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span className="desc">Пол:</span>
+                                                                </td>
+                                                                <td className="description-right">М/Ж/Д</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span className="desc">Категория</span>{" "}
+                                                                </td>
+                                                                <td className="description-right">{categoryTranslations[clothing.clothing.category]}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span className="desc">Наличност:</span>{" "}
+                                                                </td>
+                                                                <td className="description-right">В наличност</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <div className="col-sm-12">
-                                                    <label className="control-label" htmlFor="input-review">
-                                                        Your Review
-                                                    </label>
-                                                    <textarea
-                                                        name="text"
-                                                        rows={5}
-                                                        id="input-review"
-                                                        className="form-control"
-                                                        defaultValue={""}
-                                                    />
-                                                    <div className="help-block">
-                                                        <span className="text-danger">Note:</span> HTML is not
-                                                        translated!
+                                                <ul className="list-unstyled">
+                                                    <li><h4>Цена: {calculatePrice()} лв.</h4></li>
+                                                    <li className="phone"><i className="fas fa-phone"></i>{" "}За бърза поръчка: +359 898 739 178 (08-17ч.)</li>
+                                                    <li className="rewardpoint"><i className="fas fa-shipping-fast"></i> Безплатна доставка над 100 лв.</li>
+                                                </ul>
+                                                <div id="product">
+                                                    <h3 className="product-option">Налични опции</h3>
+
+                                                    <div className={`options-container ${clothing.clothing.type !== "T_SHIRT" && "last"}`}>
+                                                        <span className="desc">Размер: </span>
+                                                        <div className="options">
+                                                            {["XS", "S", "M", "L", "XL", "2XL", "3XL"].map(size => (
+                                                                <div key={size}
+                                                                    className={`option ${selectedSize === size ? "selected" : ""}`}
+                                                                    onClick={() => handleSelect(size, "size")}
+                                                                >
+                                                                    {size}
+                                                                </div>
+                                                            ))}
+                                                            <div
+                                                                key="5XL"
+                                                                className={`option ${selectedSize === "5XL" ? "selected" : ""}`}
+                                                                onClick={() => handleSelect("5XL", "size")}
+                                                            >
+                                                                {clothing.clothing.type === 'T_SHIRT' ? "5XL (+2.00лв.)" : "5XL (+5.00лв.)"}
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <div className="col-sm-12">
-                                                    <label className="control-label">Rating</label>
-                                                    &nbsp;&nbsp;&nbsp; Bad&nbsp;
-                                                    <input type="radio" name="rating" defaultValue={1} />
-                                                    &nbsp;
-                                                    <input type="radio" name="rating" defaultValue={2} />
-                                                    &nbsp;
-                                                    <input type="radio" name="rating" defaultValue={3} />
-                                                    &nbsp;
-                                                    <input type="radio" name="rating" defaultValue={4} />
-                                                    &nbsp;
-                                                    <input type="radio" name="rating" defaultValue={5} />
-                                                    &nbsp;Good
-                                                </div>
-                                            </div>
-                                            <fieldset>
-                                                <legend>Captcha</legend>
-                                                <div className="form-group required">
-                                                    <label
-                                                        className="col-sm-3 control-label"
-                                                        htmlFor="input-captcha"
-                                                    >
-                                                        Enter the code in the box below
-                                                    </label>
-                                                    <div className="col-sm-8">
+
+                                                    {clothing.clothing.type === "T_SHIRT" && (
+                                                        <div className="options-container last">
+                                                            <span className="desc">Вид: </span>
+                                                            <div className="options">
+                                                                {["Тениска с къс ръкав", "Ватирана блуза с дълъг ръкав (+8.00лв.)"].map(type => (
+                                                                    <div key={type}
+                                                                        className={`option ${selectedType === type ? "selected" : ""}`}
+                                                                        onClick={() => handleSelect(type, "type")}
+                                                                    >
+                                                                        {type}
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    <div className="form-group qty">
+                                                        <label className="control-label" htmlFor="input-quantity">
+                                                            Кол
+                                                        </label>
                                                         <input
                                                             type="text"
-                                                            name="captcha"
-                                                            id="input-captcha"
+                                                            name="quantity"
+                                                            defaultValue={1}
+                                                            size={2}
+                                                            id="input-quantity"
                                                             className="form-control"
                                                         />
-                                                        <img
-                                                            src="index.php?route=extension/captcha/basic/captcha"
-                                                            alt=""
+                                                        <input type="hidden" name="product_id" defaultValue={47} />
+                                                        <button
+                                                            type="button"
+                                                            id="button-cart"
+                                                            className="btn btn-primary btn-lg btn-block"
+                                                        >
+                                                            Добави в количка
+                                                        </button>
+                                                        <div className="btn-group prd_page">
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-default wishlist"
+                                                                title="Add to Wish List"
+                                                            >
+                                                                Add to Wish List
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                id="button-delete"
+                                                                className="btn btn-danger btn-lg btn-block"
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                id="button-edit"
+                                                                className="btn btn-primary btn-lg btn-block btn-secondary"
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div
+                                                    className="addthis_toolbox addthis_default_style"
+                                                    data-url="=47"
+                                                >
+                                                    <a className="addthis_button_facebook_like" />{" "}
+                                                    <a className="addthis_button_tweet" />{" "}
+                                                    <a className="addthis_button_pinterest_pinit" />{" "}
+                                                    <a className="addthis_counter addthis_pill_style" />
+                                                </div>
+                                            </div>
+                                            <div className="content_product_block" />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {clothing.clothing && (
+                                <div id="tabs_info" className="product-tab col-sm-12">
+                                    <ul className="nav nav-tabs">
+                                        <li className="active">
+                                            <a href="#tab-description" data-toggle="tab">
+                                                Описание
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab-specification" data-toggle="tab">
+                                                Размери
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab-review" data-toggle="tab">
+                                                Ревюта (1)
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div className="tab-content">
+                                        <div className="tab-pane active" id="tab-description">
+                                            <p className="product-desc">
+                                                {clothing.clothing.description}
+                                            </p>
+                                        </div>
+                                        <div className="tab-pane" id="tab-specification">
+                                            <table className="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <td colSpan={2}>
+                                                            <strong>Memory</strong>
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>test 1</td>
+                                                        <td>16GB</td>
+                                                    </tr>
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <td colSpan={2}>
+                                                            <strong>Processor</strong>
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>No. of Cores</td>
+                                                        <td>4</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div className="tab-pane" id="tab-review">
+                                            <form className="form-horizontal" id="form-review">
+                                                <div id="review" />
+                                                <h4>Write a review</h4>
+                                                <div className="form-group required">
+                                                    <div className="col-sm-12">
+                                                        <label className="control-label" htmlFor="input-name">
+                                                            Your Name
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            name="name"
+                                                            defaultValue=""
+                                                            id="input-name"
+                                                            className="form-control"
                                                         />
                                                     </div>
                                                 </div>
-                                            </fieldset>
-                                            <div className="buttons clearfix">
-                                                <div className="pull-right">
-                                                    <button
-                                                        type="button"
-                                                        id="button-review"
-                                                        data-loading-text="Loading..."
-                                                        className="btn btn-primary"
-                                                    >
-                                                        Continue
-                                                    </button>
+                                                <div className="form-group required">
+                                                    <div className="col-sm-12">
+                                                        <label className="control-label" htmlFor="input-review">
+                                                            Your Review
+                                                        </label>
+                                                        <textarea
+                                                            name="text"
+                                                            rows={5}
+                                                            id="input-review"
+                                                            className="form-control"
+                                                            defaultValue={""}
+                                                        />
+                                                        <div className="help-block">
+                                                            <span className="text-danger">Note:</span> HTML is not
+                                                            translated!
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
+                                                <div className="form-group required">
+                                                    <div className="col-sm-12">
+                                                        <label className="control-label">Rating</label>
+                                                        &nbsp;&nbsp;&nbsp; Bad&nbsp;
+                                                        <input type="radio" name="rating" defaultValue={1} />
+                                                        &nbsp;
+                                                        <input type="radio" name="rating" defaultValue={2} />
+                                                        &nbsp;
+                                                        <input type="radio" name="rating" defaultValue={3} />
+                                                        &nbsp;
+                                                        <input type="radio" name="rating" defaultValue={4} />
+                                                        &nbsp;
+                                                        <input type="radio" name="rating" defaultValue={5} />
+                                                        &nbsp;Good
+                                                    </div>
+                                                </div>
+                                                <fieldset>
+                                                    <legend>Captcha</legend>
+                                                    <div className="form-group required">
+                                                        <label
+                                                            className="col-sm-3 control-label"
+                                                            htmlFor="input-captcha"
+                                                        >
+                                                            Enter the code in the box below
+                                                        </label>
+                                                        <div className="col-sm-8">
+                                                            <input
+                                                                type="text"
+                                                                name="captcha"
+                                                                id="input-captcha"
+                                                                className="form-control"
+                                                            />
+                                                            <img
+                                                                src="index.php?route=extension/captcha/basic/captcha"
+                                                                alt=""
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                                <div className="buttons clearfix">
+                                                    <div className="pull-right">
+                                                        <button
+                                                            type="button"
+                                                            id="button-review"
+                                                            data-loading-text="Loading..."
+                                                            className="btn btn-primary"
+                                                        >
+                                                            Continue
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
+
                             <div className="box related_prd">
                                 <div className="box-head">
                                     <div className="box-heading">Related Products</div>
