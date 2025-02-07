@@ -1295,7 +1295,7 @@ header .row {
 
 /* mouse grab icon */
 .grabbing {
-	cursor: url(../../../../../../Electron_layout2/catalog/view/theme/webdigifydefault/stylesheet/grabbing.png) 8 8, move;
+	cursor: url(../images/grabbing.png) 8 8, move;
 }
 
 /* fix */

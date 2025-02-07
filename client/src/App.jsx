@@ -6,7 +6,9 @@ import AuthGuard from './guards/AuthGuard';
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Catalog from './components/Catalog/Catalog';
+import Details from './components/Details/Details';
 import AddClothing from './components/Add Clothing/AddClothing';
+import EditClothing from './components/EditClothing/EditClothing';
 import SearchResults from './components/Search Results/SearchResults';
 import Contact from './components/Contact/Contact';
 import About from './components/About/About';
@@ -27,6 +29,8 @@ function App() {
                     <Route path='/' element={<Home />} />
                     <Route path='/catalog' element={<Catalog />} />
                     <Route path='/search-results' element={<SearchResults />} />
+                    <Route path='/clothing/edit/:clothingId' element={<EditClothing />} />
+                    <Route path='/clothing/details/:clothingId' element={<Details />} />
                     <Route path='/contact' element={<Contact />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/blogs' element={<Blogs />} />

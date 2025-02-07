@@ -90,14 +90,14 @@ export default function Blogs() {
                                                         <div className="image">
                                                             <a href="product/product&product_id=49">
                                                                 <img
-                                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/8-70x70.jpg"
+                                                                    src="catalog/8-70x70.jpg"
                                                                     title="tote bags for women"
                                                                     alt="tote bags for women"
                                                                     className="img-responsive reg-image"
                                                                 />
                                                                 <img
                                                                     className="img-responsive hover-image"
-                                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/13-70x70.jpg"
+                                                                    src="catalog/13-70x70.jpg"
                                                                     title="tote bags for women"
                                                                     alt="tote bags for women"
                                                                 />
@@ -189,14 +189,14 @@ export default function Blogs() {
                                                         <div className="image">
                                                             <a href="product/product&product_id=48">
                                                                 <img
-                                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/11-70x70.jpg"
+                                                                    src="catalog/11-70x70.jpg"
                                                                     title="Men's lace up Shoes"
                                                                     alt="Men's lace up Shoes"
                                                                     className="img-responsive reg-image"
                                                                 />
                                                                 <img
                                                                     className="img-responsive hover-image"
-                                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/17-70x70.jpg"
+                                                                    src="catalog/17-70x70.jpg"
                                                                     title="Men's lace up Shoes"
                                                                     alt="Men's lace up Shoes"
                                                                 />
@@ -287,14 +287,14 @@ export default function Blogs() {
                                                         <div className="image">
                                                             <a href="product/product&product_id=47">
                                                                 <img
-                                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/4-70x70.jpg"
+                                                                    src="catalog/4-70x70.jpg"
                                                                     title="round toe Shoes"
                                                                     alt="round toe Shoes"
                                                                     className="img-responsive reg-image"
                                                                 />
                                                                 <img
                                                                     className="img-responsive hover-image"
-                                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/6-70x70.jpg"
+                                                                    src="catalog/6-70x70.jpg"
                                                                     title="round toe Shoes"
                                                                     alt="round toe Shoes"
                                                                 />
@@ -439,7 +439,7 @@ export default function Blogs() {
                                         <div className="blog-left-content">
                                             <div className="blog-image">
                                                 <img
-                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/blog5-1098x737.jpg"
+                                                    src="catalog/blog5-1098x737.jpg"
                                                     alt="Blogs"
                                                     title="Blogs"
                                                     className="img-thumbnail"
@@ -449,7 +449,7 @@ export default function Blogs() {
                                                     <a
                                                         className="icon zoom"
                                                         title="Click to view Full Image "
-                                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/blog5-1098x737.jpg"
+                                                        href="catalog/blog5-1098x737.jpg"
                                                         data-lightbox="example-set"
                                                     >
                                                         <i className="fa fa-search-plus" />{" "}
@@ -487,7 +487,7 @@ export default function Blogs() {
                                         <div className="blog-left-content">
                                             <div className="blog-image">
                                                 <img
-                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/blog4-1098x737.jpg"
+                                                    src="catalog/blog4-1098x737.jpg"
                                                     alt="Blogs"
                                                     title="Blogs"
                                                     className="img-thumbnail"
@@ -497,7 +497,7 @@ export default function Blogs() {
                                                     <a
                                                         className="icon zoom"
                                                         title="Click to view Full Image "
-                                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/blog4-1098x737.jpg"
+                                                        href="catalog/blog4-1098x737.jpg"
                                                         data-lightbox="example-set"
                                                     >
                                                         <i className="fa fa-search-plus" />{" "}
@@ -539,7 +539,7 @@ export default function Blogs() {
                                         <div className="blog-left-content">
                                             <div className="blog-image">
                                                 <img
-                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/blog3-1098x737.jpg"
+                                                    src="catalog/blog3-1098x737.jpg"
                                                     alt="Blogs"
                                                     title="Blogs"
                                                     className="img-thumbnail"
@@ -549,7 +549,7 @@ export default function Blogs() {
                                                     <a
                                                         className="icon zoom"
                                                         title="Click to view Full Image "
-                                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/blog3-1098x737.jpg"
+                                                        href="catalog/blog3-1098x737.jpg"
                                                         data-lightbox="example-set"
                                                     >
                                                         <i className="fa fa-search-plus" />{" "}
@@ -589,7 +589,7 @@ export default function Blogs() {
                                         <div className="blog-left-content">
                                             <div className="blog-image">
                                                 <img
-                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/blog2-1098x737.jpg"
+                                                    src="catalog/blog2-1098x737.jpg"
                                                     alt="Blogs"
                                                     title="Blogs"
                                                     className="img-thumbnail"
@@ -599,7 +599,7 @@ export default function Blogs() {
                                                     <a
                                                         className="icon zoom"
                                                         title="Click to view Full Image "
-                                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/blog2-1098x737.jpg"
+                                                        href="catalog/blog2-1098x737.jpg"
                                                         data-lightbox="example-set"
                                                     >
                                                         <i className="fa fa-search-plus" />{" "}
@@ -643,7 +643,7 @@ export default function Blogs() {
                                         <div className="blog-left-content">
                                             <div className="blog-image">
                                                 <img
-                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/blog1-1098x737.jpg"
+                                                    src="catalog/blog1-1098x737.jpg"
                                                     alt="Blogs"
                                                     title="Blogs"
                                                     className="img-thumbnail"
@@ -653,7 +653,7 @@ export default function Blogs() {
                                                     <a
                                                         className="icon zoom"
                                                         title="Click to view Full Image "
-                                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/blog1-1098x737.jpg"
+                                                        href="catalog/blog1-1098x737.jpg"
                                                         data-lightbox="example-set"
                                                     >
                                                         <i className="fa fa-search-plus" />{" "}

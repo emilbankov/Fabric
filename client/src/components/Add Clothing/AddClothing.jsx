@@ -1,10 +1,9 @@
-import { useContext, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import AuthContext from "../../contexts/AuthProvider";
 
 export default function AddClothing() {
-    let location = useLocation();
     const { addClothHandler } = useContext(AuthContext);
 
     const { values, onChange, onSubmit } = useForm(addClothHandler, {
@@ -18,6 +17,25 @@ export default function AddClothing() {
         frontImage: '',
         backImage: '',
     });
+
+    useEffect(() => {
+        const existingScript = document.querySelector('script[src="/js/custom.js"]');
+        if (existingScript && existingScript.parentNode) {
+            existingScript.parentNode.removeChild(existingScript);
+        }
+
+        const script = document.createElement('script');
+        script.src = '/js/custom.js';
+        script.async = true;
+
+        document.body.appendChild(script);
+
+        return () => {
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
+        };
+    }, [location.pathname]);
 
     return (
         <>
@@ -93,7 +111,7 @@ export default function AddClothing() {
                                         <div className="swiper-slide">
                                             <a href="#">
                                                 <img
-                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/left-banner-272x340.jpg"
+                                                    src="/images/left-banner-272x340.jpg"
                                                     alt="Left Banner1"
                                                     className="img-responsive"
                                                 />
