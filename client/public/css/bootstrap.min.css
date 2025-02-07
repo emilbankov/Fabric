@@ -7315,10 +7315,6 @@ td.visible-print {
 }
 
 .productpage #button-edit.btn.btn-primary.btn-lg.btn-block {
-    /* padding: 7px 23px !important; */
-}
-
-.productpage #button-edit.btn.btn-primary.btn-lg.btn-block {
     background: #4c50f7 !important;
 }
 
