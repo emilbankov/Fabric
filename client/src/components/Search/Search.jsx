@@ -35,25 +35,6 @@ export default function Search() {
         setQuery("");
     };
 
-    useEffect(() => {
-        const existingScript = document.querySelector('script[src="/js/custom.js"]');
-        if (existingScript && existingScript.parentNode) {
-            existingScript.parentNode.removeChild(existingScript);
-        }
-
-        const script = document.createElement('script');
-        script.src = "/js/custom.js";
-        script.async = true;
-
-        document.body.appendChild(script);
-
-        return () => {
-            if (script.parentNode) {
-                script.parentNode.removeChild(script);
-            }
-        };
-    }, [location.pathname]);
-
     return (
         <>
             <div className="col-sm-5 header_search">

@@ -186,31 +186,31 @@ export default function Home() {
                                             <a className="fa next fa-arrow-right">&nbsp;</a>
                                         </div>
                                         <div className="box-product product-carousel" id="tablatest-carousel">
-                                            {newest.clothes && newest.clothes.map((cloth) => (
-                                                <div className="slider-item" key={cloth.id}>
+                                            {newest.clothes && newest.clothes.map((clothing) => (
+                                                <div className="slider-item" key={clothing.id}>
                                                     <div className="product-block product-thumb transition">
                                                         <div className="product-block-inner">
                                                             <div className="image">
-                                                                <a href={`/product&product_id=${cloth.id}`}>
+                                                                <Link to={`/clothing/details/${clothing.id}`}>
                                                                     <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${cloth.images[0].path}`}
-                                                                        title={cloth.name}
-                                                                        alt={cloth.name}
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[0].path}`}
+                                                                        title={clothing.name}
+                                                                        alt={clothing.name}
                                                                         className="img-responsive reg-image"
                                                                     />
                                                                     <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${cloth.images[1].path}`}
-                                                                        title={cloth.name}
-                                                                        alt={cloth.name}
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[1].path}`}
+                                                                        title={clothing.name}
+                                                                        alt={clothing.name}
                                                                         className="img-responsive hover-image"
                                                                     />
-                                                                </a>
+                                                                </Link>
                                                                 <div className="product_hover_block">
                                                                     <div className="action">
                                                                         <button
                                                                             type="button"
                                                                             className="cart_button"
-                                                                            onClick={() => cart.add(cloth.id)}
+                                                                            onClick={() => cart.add(clothing.id)}
                                                                             title="Add to Cart"
                                                                         >
                                                                             <i className="fa fa-shopping-cart" area-hidden="true" />
@@ -219,7 +219,7 @@ export default function Home() {
                                                                             className="wishlist"
                                                                             type="button"
                                                                             title="Add to Wish List"
-                                                                            onClick={() => cart.add(cloth.id)}
+                                                                            onClick={() => cart.add(clothing.id)}
                                                                         >
                                                                             <i className="fa fa-heart" />
                                                                         </button>
@@ -229,10 +229,10 @@ export default function Home() {
                                                             <div className="product-details">
                                                                 <div className="caption">
                                                                     <h4>
-                                                                        <a href={`/product&product_id=${cloth.id}`}>{cloth.name}</a>
+                                                                        <Link to={`/clothing/details/${clothing.id}`}>{clothing.name}</Link>
                                                                     </h4>
                                                                     <p className="price">
-                                                                        {cloth.price.toFixed(2)} лв.
+                                                                        {clothing.price.toFixed(2)} лв.
                                                                     </p>
                                                                 </div>
                                                             </div>

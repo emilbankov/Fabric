@@ -4,6 +4,11 @@ const baseUrl = 'https://tshirt-latest.onrender.com/clothes';
 
 export const getNewest = async () => await get(`${baseUrl}/newest`);
 export const getMostSold = async () => await get(`${baseUrl}/most-sold`);
+export const getOne = async (clothingId) => await get(`${baseUrl}/${clothingId}`);
+
+export const search = (value) => {
+    return get(`${baseUrl}/search?name=${value}`);
+};
 
 export const create = (name, description, price, type, gender, category, model, frontImage, backImage) => {
     const formData = new FormData();
@@ -22,23 +27,16 @@ export const create = (name, description, price, type, gender, category, model, 
     return post(`${baseUrl}/add`, formData);
 };
 
-export const search = (value) => {
-    return get(`${baseUrl}/search?name=${value}`);
-};
+export const edit = async (clothingId, clothData) => {
+    const result = await put(`${baseUrl}/${clothingId}`, clothData);
 
-// export const getOne = async (gameId) => await get(`${baseUrl}/${gameId}`);
+    return result;
+};
 
 // export const getLatest = async () => {
 //     const result = await get(`${baseUrl}?sortBy=_createdOn%20desc&offset=0&pageSize=4`);
 
 //     return result;
 // }
-
-
-// export const edit = async (gameId, gameData) => {
-//     const result = await put(`${baseUrl}/${gameId}`, gameData);
-
-//     return result;
-// };
 
 // export const deleteGame = async (gameId) => await del(`${baseUrl}/${gameId}`);
