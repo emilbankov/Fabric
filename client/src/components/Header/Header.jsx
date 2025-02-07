@@ -5,7 +5,7 @@ import $ from 'jquery';
 import Search from "../Search/Search";
 
 export default function Header() {
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, isAdmin } = useContext(AuthContext);
 
     useEffect(() => {
         $(".box-category-top").click(function () {
@@ -720,9 +720,11 @@ export default function Header() {
                                                     <li className="toplink">
                                                         <Link to="/blogs">Blogs</Link>
                                                     </li>
-                                                    <li className="toplink">
-                                                        <Link to="/add-clothing">Добавяне на продукт</Link>
-                                                    </li>
+                                                    {isAdmin && (
+                                                        <li className="toplink">
+                                                            <Link to="/add-clothing">Добавяне на продукт</Link>
+                                                        </li>
+                                                    )}
                                                 </ul>
                                             </div>
                                         </div>

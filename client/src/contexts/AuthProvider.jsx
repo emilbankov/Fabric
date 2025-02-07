@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
             console.log(error);
         }
     };
-
+    
     const logoutHandler = () => {
         setAuth({});
         localStorage.removeItem('accessToken');
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ addClothHandler, loginSubmitHandler, registerSubmitHandler, logoutHandler, email: auth.email, isAuthenticated: !!auth.accessToken }}>
+        <AuthContext.Provider value={{ addClothHandler, loginSubmitHandler, registerSubmitHandler, logoutHandler, email: auth.email, isAuthenticated: !!auth.accessToken, isAdmin: auth?.roles?.includes("ADMIN") || false }}>
             {children}
         </AuthContext.Provider>
     );

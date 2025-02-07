@@ -15705,7 +15705,7 @@ li {
 }
 
 .btn-group.prd_page {
-	margin: 10px 0 0;
+	margin: 9px 0 0;
 	width: 100%;
 }
 
@@ -15731,7 +15731,7 @@ li {
 	font-size: 13px;
 	font-weight: 500;
 	letter-spacing: 0;
-	padding: 7px 20px 7px !important;
+	padding: 7px 14px 7px !important;
 	text-transform: uppercase;
 	box-shadow: none;
 }
