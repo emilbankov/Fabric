@@ -24587,11 +24587,32 @@ input[type=file]::file-selector-button:hover {
 
 .options-container.last {
 	padding-bottom: 15px;
-    border-bottom: 1px solid lightgrey;
+	border-bottom: 1px solid lightgrey;
 }
 
 .options-container span.desc {
-    color: #000;
-    font-weight: 600;
-    padding: 2px;
+	color: #000;
+	font-weight: 600;
+	padding: 2px;
+}
+
+.form-group.required .col-sm-10 .input-with-hash {
+	position: relative;
+}
+
+.form-group.required .col-sm-10 .input-with-hash input {
+	padding-left: 25px;
+}
+
+.form-group.required .col-sm-10 .input-with-hash::before {
+	content: "#";
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+	border: 1px solid rgb(240, 240, 240);
+	padding: 7px 22.5px;
+	background-color: #eeeeee;
 }

@@ -2228,6 +2228,12 @@ output {
     border-radius: 0px;
 }
 
+.form-control.model-field {
+    width: 95%;
+    margin-left: 45px;
+    padding-left: 20px !important;
+}
+
 select.hasCustomSelect::-webkit-scrollbar {
     width: 0 !important;
     display: none !important;

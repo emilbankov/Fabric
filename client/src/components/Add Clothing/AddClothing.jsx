@@ -256,15 +256,21 @@ export default function AddClothing() {
                                     <div className="form-group required">
                                         <label className="col-sm-2 control-label" htmlFor="model">Модел</label>
                                         <div className="col-sm-10">
-                                            <input
-                                                className="form-control"
-                                                type="text"
-                                                id="model"
-                                                name="model"
-                                                placeholder="Модел"
-                                                onChange={onChange}
-                                                values={values.model}
-                                            />
+                                            <div className="input-with-hash">
+                                                <input
+                                                    className="form-control model-field"
+                                                    type="text"
+                                                    id="model"
+                                                    name="model"
+                                                    placeholder="Модел"
+                                                    onChange={onChange}
+                                                    value={values.model}
+                                                    maxLength="4"
+                                                    pattern="\d{4}"
+                                                    title="Please enter exactly 4 digits"
+                                                    required
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
