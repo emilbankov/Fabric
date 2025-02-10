@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import AuthContext from "../../contexts/AuthProvider";
@@ -11,7 +11,6 @@ export default function AddClothing() {
         description: '',
         price: '',
         type: '',
-        gender: '',
         category: '',
         model: '',
         frontImage: '',
@@ -188,22 +187,6 @@ export default function AddClothing() {
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="price">Цена</label>
-                                        <div className="col-sm-10">
-                                            <input
-                                                className="form-control"
-                                                type="number"
-                                                id="price"
-                                                name="price"
-                                                placeholder="Цена"
-                                                onChange={onChange}
-                                                value={values.price}
-                                                step="0.01"
-                                                min="0"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="form-group required">
                                         <label className="col-sm-2 control-label" htmlFor="type">Тип</label>
                                         <div className="col-sm-10">
                                             <select
@@ -223,20 +206,20 @@ export default function AddClothing() {
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="gender">Пол</label>
+                                        <label className="col-sm-2 control-label" htmlFor="price">Цена</label>
                                         <div className="col-sm-10">
-                                            <select
+                                            <input
                                                 className="form-control"
-                                                id="gender"
-                                                name="gender"
+                                                type="number"
+                                                id="price"
+                                                name="price"
+                                                placeholder="Цена"
                                                 onChange={onChange}
-                                                value={values.gender}
-                                            >
-                                                <option value="" hidden>Изберете пол</option>
-                                                <option value="MALE">Мъж</option>
-                                                <option value="FEMALE">Жена</option>
-                                                <option value="CHILD">Дете</option>
-                                            </select>
+                                                value={values.price}
+                                                step="0.01"
+                                                min="0"
+                                                readOnly
+                                            />
                                         </div>
                                     </div>
                                     <div className="form-group required">
