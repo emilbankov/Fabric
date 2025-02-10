@@ -1,5 +1,13 @@
 import { useState } from "react";
 
+const priceMap = {
+    T_SHIRT: 29,
+    SWEATSHIRT: 54,
+    KIT: 59,
+    SHORTS: 30,
+    LONG_T_SHIRT: 37
+};
+
 export function useForm(submitHandler, initialValues) {
     const [values, setValues] = useState(initialValues);
 
@@ -11,10 +19,16 @@ export function useForm(submitHandler, initialValues) {
             value = e.target.value;
         }
 
-        setValues((state) => ({
-            ...state,
-            [e.target.name]: value,
-        }));
+        setValues((state) => {
+            let newValues = { ...state, [e.target.name]: value };
+
+            // If changing "type", update "price"
+            if (e.target.name === "type") {
+                newValues.price = priceMap[value] || "";
+            }
+
+            return newValues;
+        });
     };
 
     const onSubmit = (e) => {

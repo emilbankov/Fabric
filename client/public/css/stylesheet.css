@@ -24518,6 +24518,12 @@ h3 .fa {
 	text-transform: none;
 }
 
+#content.productpage h3.ta-c {
+	text-align: center;
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+
 p.no-products {
 	text-align: center;
 	margin: 100px 0;

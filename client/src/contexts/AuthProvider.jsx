@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
     const addClothHandler = async (values) => {
         try {
-            const result = await clothesService.create(values.name, values.description, values.price, values.type, values.gender, values.category, values.model, values.frontImage, values.backImage);
+            const result = await clothesService.create(values.name, values.description, values.price, values.type, values.category, values.model, values.frontImage, values.backImage);
             navigate("/catalog");
         } catch (error) {
             console.log(error);

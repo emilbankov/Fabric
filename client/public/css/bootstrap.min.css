@@ -225,6 +225,13 @@ table {
 td,
 th {
     padding: 0;
+    text-align: center;
+    vertical-align: middle;
+}
+
+thead tr th {
+    text-align: center;
+    vertical-align: middle;
 }
 
 @media print {

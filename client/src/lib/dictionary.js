@@ -6,13 +6,6 @@ export const typeTranslations = {
     "KIT": "Комплект",
 };
 
-export const modelType = {
-    "LONG_T_SHIRT": "D",
-    "SWEATSHIRT": "SW",
-    "SHORTS": "K",
-    "KIT": "KT",
-};
-
 export const categoryTranslations = {
     "UEFA_EURO_2024": "УЕФА ЕВРО 2024",
     "PATRIOTIC": "Патриотични",

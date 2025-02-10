@@ -10,14 +10,13 @@ export const search = (value) => {
     return get(`${baseUrl}/search?name=${value}`);
 };
 
-export const create = (name, description, price, type, gender, category, model, frontImage, backImage) => {
+export const create = (name, description, price, type, category, model, frontImage, backImage) => {
     const formData = new FormData();
 
     formData.append('name', name);
     formData.append('description', description);
     formData.append('price', price);
     formData.append('type', type);
-    formData.append('gender', gender);
     formData.append('category', category);
     formData.append('model', model);
 
