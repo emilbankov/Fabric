@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../contexts/AuthProvider";
 import Search from "../Search/Search";
 import $ from 'jquery';
-import 'jquery-treeview';
 
 export default function Header() {
     const { isAuthenticated, isAdmin } = useContext(AuthContext);

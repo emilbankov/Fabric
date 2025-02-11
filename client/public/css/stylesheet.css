@@ -5144,6 +5144,10 @@ strong {
 	letter-spacing: 0.2px;
 }
 
+.main-menu ul>li>a {
+	text-transform: none;
+}
+
 .main-menu ul>li:first-child>a {
 	padding-left: 36px;
 }
@@ -5670,6 +5674,10 @@ strong {
 	padding: 0;
 	text-transform: capitalize;
 	white-space: normal;
+}
+
+.responsive-menu .main-navigation li a {
+	text-transform: none;
 }
 
 #nav-one li .megamenu ul.list-unstyled li .dropdown-menu {
