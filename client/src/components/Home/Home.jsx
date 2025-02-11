@@ -38,7 +38,7 @@ export default function Home() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [location.pathname, newest.clothes, mostSold.clothes]);
+    }, [newest.clothes, mostSold.clothes]);
 
     return (
         <>
@@ -198,12 +198,22 @@ export default function Home() {
                                                                         alt={clothing.name}
                                                                         className="img-responsive reg-image"
                                                                     />
-                                                                    <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[1].path}`}
-                                                                        title={clothing.name}
-                                                                        alt={clothing.name}
-                                                                        className="img-responsive hover-image"
-                                                                    />
+                                                                    {clothing.type !== "KIT" && (
+                                                                        <img
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[1].path}`}
+                                                                            title={clothing.name}
+                                                                            alt={clothing.name}
+                                                                            className="img-responsive hover-image"
+                                                                        />
+                                                                    )}
+                                                                    {clothing.type === "KIT" && (
+                                                                        <img
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[0].path}`}
+                                                                            title={clothing.name}
+                                                                            alt={clothing.name}
+                                                                            className="img-responsive hover-image"
+                                                                        />
+                                                                    )}
                                                                 </Link>
                                                                 <div className="product_hover_block">
                                                                     <div className="action">
@@ -264,12 +274,15 @@ export default function Home() {
                                                                         alt={product.name}
                                                                         className="img-responsive reg-image"
                                                                     />
-                                                                    <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[1].path}`}
-                                                                        title={product.name}
-                                                                        alt={product.name}
-                                                                        className="img-responsive hover-image"
-                                                                    />
+
+                                                                    {product.type !== "KIT" && (
+                                                                        <img
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[1].path}`}
+                                                                            title={product.name}
+                                                                            alt={product.name}
+                                                                            className="img-responsive hover-image"
+                                                                        />
+                                                                    )}
                                                                 </a>
                                                                 <span className="saleicon sale">Sale</span>
                                                                 <div className="product_hover_block">
@@ -339,8 +352,8 @@ export default function Home() {
                                             <div className="testimonial-content">
                                                 <div className="testimonial-desc">
                                                     <p>
-                                                        "Купих тениска и суитшърт и двата артикула са абсолютно невероятни. 
-                                                        Тениската е дишаща, перфектна за по-топлите дни, а суитшъртът ме държи 
+                                                        "Купих тениска и суитшърт и двата артикула са абсолютно невероятни.
+                                                        Тениската е дишаща, перфектна за по-топлите дни, а суитшъртът ме държи
                                                         уютно през студените вечери. Дизайните са свежи и размерите са точни. Ще пазарувам отново!"
                                                     </p>
                                                 </div>
@@ -362,8 +375,8 @@ export default function Home() {
                                             <div className="testimonial-content">
                                                 <div className="testimonial-desc">
                                                     <p>
-                                                        "Наскоро купих суитшърт от този сайт и съм изключително доволен от качеството! 
-                                                        Тъканта е мека, удобна и идеална за по-хладно време. Освен това, дизайнът е точно 
+                                                        "Наскоро купих суитшърт от този сайт и съм изключително доволен от качеството!
+                                                        Тъканта е мека, удобна и идеална за по-хладно време. Освен това, дизайнът е точно
                                                         това, което търсех. Горещо препоръчвам този сайт на всеки, който иска стилни и качествени дрехи!"
                                                     </p>
                                                 </div>
