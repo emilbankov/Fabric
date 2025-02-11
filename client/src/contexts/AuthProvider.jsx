@@ -18,10 +18,26 @@ export const AuthProvider = ({ children }) => {
 
     const addClothHandler = async (values) => {
         try {
-            const result = await clothesService.create(values.name, values.description, values.price, values.type, values.category, values.model, values.frontImage, values.backImage);
+            const payload = { ...values };
+
+            if (payload.type === "KIT") {
+                delete payload.backImage;
+            }
+
+            await clothesService.create(
+                payload.name,
+                payload.description,
+                payload.price,
+                payload.type,
+                payload.category,
+                payload.model,
+                payload.frontImage,
+                payload.backImage
+            );
+            
             navigate("/catalog");
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -53,7 +69,7 @@ export const AuthProvider = ({ children }) => {
             console.log(error);
         }
     };
-    
+
     const logoutHandler = () => {
         setAuth({});
         localStorage.removeItem('accessToken');

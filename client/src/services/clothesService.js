@@ -21,7 +21,9 @@ export const create = (name, description, price, type, category, model, frontIma
     formData.append('model', model);
 
     formData.append('frontImage', frontImage);
-    formData.append('backImage', backImage);
+    if (backImage) {
+        formData.append('backImage', backImage);
+    }
 
     return post(`${baseUrl}/add`, formData);
 };

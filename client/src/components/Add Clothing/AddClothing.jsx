@@ -289,19 +289,21 @@ export default function AddClothing() {
                                             />
                                         </div>
                                     </div>
-                                    <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="backImage">Снимка отзад</label>
-                                        <div className="col-sm-10">
-                                            <input
-                                                className="form-control"
-                                                type="file"
-                                                id="backImage"
-                                                name="backImage"
-                                                accept="image/*"
-                                                onChange={onChange}
-                                            />
+                                    {values.type !== "KIT" && (
+                                        <div className="form-group required">
+                                            <label className="col-sm-2 control-label" htmlFor="backImage">Снимка отзад</label>
+                                            <div className="col-sm-10">
+                                                <input
+                                                    className="form-control"
+                                                    type="file"
+                                                    id="backImage"
+                                                    name="backImage"
+                                                    accept="image/*"
+                                                    onChange={onChange}
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </fieldset>
                                 <div className="buttons">
                                     <div className="pull-right"><input type="submit" value="Добавяне на продукт" className="btn btn-primary" /></div>
