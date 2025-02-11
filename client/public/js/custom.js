@@ -454,26 +454,7 @@ function LangCurDropDown(selector,subsel){
 }
 
 
-$(document).ready(function(){
 
-	LangCurDropDown('#currency','.currency_div');
-	LangCurDropDown('#language','.language_div');
-
-	$('.nav-responsive').click(function() {
-        $('.responsive-menu .main-navigation').slideToggle();
-		$('.nav-responsive div').toggleClass('active');
-		
-    }); 
-
-	$(".treeview-list").treeview({
-		animated: "slow",
-		collapsed: true,
-		unique: true		
-	});
-	$('.treeview-list a.active').parent().removeClass('expandable');
-	$('.treeview-list a.active').parent().addClass('collapsable');
-	$('.treeview-list .collapsable ul').css('display','block');
-});
 
 
 function menuResponsive(){
