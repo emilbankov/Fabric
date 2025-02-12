@@ -171,9 +171,19 @@ export default function Details() {
                                                                         alt="tote bags for women"
                                                                         className="img-responsive reg-image"
                                                                     />
+
                                                                     {item.type !== "KIT" && (
                                                                         <img
                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[1].path}`}
+                                                                            title="tote bags for women"
+                                                                            alt="tote bags for women"
+                                                                            className="img-responsive hover-image"
+                                                                        />
+                                                                    )}
+
+                                                                    {item.type === "KIT" && (
+                                                                        <img
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
                                                                             title="tote bags for women"
                                                                             alt="tote bags for women"
                                                                             className="img-responsive hover-image"
@@ -701,9 +711,19 @@ export default function Details() {
                                                                                         alt={clothing.name}
                                                                                         className="img-responsive reg-image"
                                                                                     />
+
                                                                                     {clothing.type !== "KIT" && (
                                                                                         <img
                                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[1].path}`}
+                                                                                            title={clothing.name}
+                                                                                            alt={clothing.name}
+                                                                                            className="img-responsive hover-image"
+                                                                                        />
+                                                                                    )}
+
+                                                                                    {clothing.type === "KIT" && (
+                                                                                        <img
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[0].path}`}
                                                                                             title={clothing.name}
                                                                                             alt={clothing.name}
                                                                                             className="img-responsive hover-image"
@@ -769,6 +789,7 @@ export default function Details() {
                                                                                         alt={product.name}
                                                                                         className="img-responsive reg-image"
                                                                                     />
+
                                                                                     {product.type !== "KIT" && (
                                                                                         <img
                                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[1].path}`}
@@ -777,8 +798,16 @@ export default function Details() {
                                                                                             className="img-responsive hover-image"
                                                                                         />
                                                                                     )}
+
+                                                                                    {product.type === "KIT" && (
+                                                                                        <img
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`}
+                                                                                            title={product.name}
+                                                                                            alt={product.name}
+                                                                                            className="img-responsive hover-image"
+                                                                                        />
+                                                                                    )}
                                                                                 </Link>
-                                                                                <span className="saleicon sale">Sale</span>
                                                                                 <div className="product_hover_block">
                                                                                     <div className="action">
                                                                                         <button
