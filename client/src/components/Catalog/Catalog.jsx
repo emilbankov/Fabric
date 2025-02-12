@@ -1,27 +1,41 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
 
 export default function Catalog() {
     const location = useLocation();
+    const navigate = useNavigate()
     const queryParams = new URLSearchParams(location.search);
     const type = queryParams.get("type") || "";
     const sort = queryParams.get("sort") || "";
-    const [results, setResults] = useState([]);
-    
+    const [catalog, setCatalog] = useState([]);
+
     useEffect(() => {
         if (!type && !sort) return;
 
         clothesService.getCatalog(type, sort)
-            .then(result => { setResults(result); })
+            .then(result => { setCatalog(result); })
             .catch(err => { console.log(err); });
 
-        return () => setResults("clothes");
+        return () => setCatalog("clothes");
     }, [type, sort]);
 
+    const handleSortChange = (e) => {
+        const newSort = e.target.value;
+        console.log(newSort);
+
+        const params = new URLSearchParams(location.search);
+        console.log(params);
+
+        params.set("sort", newSort);
+        console.log(params.set("sort", newSort));
+
+        navigate(`${location.pathname}?${params.toString()}`);
+    };
+
     useEffect(() => {
-        const gridButton = document.querySelector(".btn-list-grid .grid");
-        const listButton = document.querySelector(".btn-list-grid .list");
+        const gridButton = document.getElementById("grid-view");
+        const listButton = document.getElementById("list-view");
         const products = document.querySelectorAll(".product-layout");
 
         const setGridView = () => {
@@ -51,7 +65,7 @@ export default function Catalog() {
             gridButton.removeEventListener("click", setGridView);
             listButton.removeEventListener("click", setListView);
         };
-    }, []);
+    }, [catalog.clothes]);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -70,7 +84,7 @@ export default function Catalog() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [location.pathname]);
+    }, [location.pathname, catalog.clothes]);
 
     return (
         <>
@@ -594,76 +608,124 @@ export default function Catalog() {
                                 </div>
                                 <div className="pagination-right">
                                     <div className="sort-by-wrapper">
-                                        <div className="col-md-2 text-right sort-by">
-                                            <label className="control-label" htmlFor="input-sort">
-                                                Sort By:
-                                            </label>
-                                        </div>
                                         <div className="col-md-3 text-right sort">
                                             <select
                                                 id="input-sort"
-                                                className="form-control"
+                                                className=" form-control catalog"
+                                                onChange={handleSortChange}
+                                                value={sort}
                                             >
-                                                <option
-                                                    value="productcatalog.html&sort=p.sort_order&order=ASC "
-                                                >
-                                                    Default
-                                                </option>
-                                                <option value="productcatalog.html&sort=pd.name&order=ASC ">
-                                                    Name (A - Z){" "}
-                                                </option>
-                                                <option value="productcatalog.html&sort=pd.name&order=DESC ">
-                                                    Name (Z - A){" "}
-                                                </option>
-                                                <option value="productcatalog.html&sort=p.price&order=ASC ">
-                                                    Price (Low &gt; High){" "}
-                                                </option>
-                                                <option value="productcatalog.html&sort=p.price&order=DESC ">
-                                                    Price (High &gt; Low){" "}
-                                                </option>
-                                                <option value="productcatalog.html&sort=rating&order=DESC ">
-                                                    Rating (Highest){" "}
-                                                </option>
-                                                <option value="productcatalog.html&sort=rating&order=ASC ">
-                                                    Rating (Lowest){" "}
-                                                </option>
-                                                <option value="productcatalog.html&sort=p.model&order=ASC ">
-                                                    Model (A - Z){" "}
-                                                </option>
-                                                <option value="productcatalog.html&sort=p.model&order=DESC ">
-                                                    Model (Z - A){" "}
-                                                </option>
+                                                <option value="new">Сортирай</option>
+                                                <option value="name_asc">Име (А - Я)</option>
+                                                <option value="name_desc">Име (Я - А)</option>
+                                                <option value="price_asc">Най-ниска цена</option>
+                                                <option value="price_desc">Най-висока цена</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div className="show-wrapper">
-                                        <div className="col-md-1 text-right show">
-                                            <label className="control-label" htmlFor="input-limit">
-                                                Show:
-                                            </label>
-                                        </div>
-                                        <div className="col-md-2 text-right limit">
-                                            <select
-                                                id="input-limit"
-                                                className="form-control"
-                                            >
-                                                <option
-                                                    value="productcatalog.html&limit=15 "
+                                        {catalog.clothes && (
+                                            <div className="col-md-1 text-right show">
+                                                <label className="control-label" htmlFor="input-limit">
+                                                    Show:
+                                                </label>
+                                            </div>
+                                        )}
+                                        {catalog.clothes && (
+                                            <div className="col-md-2 text-right limit">
+                                                <select
+                                                    id="input-limit"
+                                                    className="form-control"
                                                 >
-                                                    15
-                                                </option>
-                                                <option value="productcatalog.html&limit=25 ">25 </option>
-                                                <option value="productcatalog.html&limit=50 ">50 </option>
-                                                <option value="productcatalog.html&limit=75 ">75 </option>
-                                                <option value="productcatalog.html&limit=100 ">100 </option>
-                                            </select>
-                                        </div>
+                                                    <option value="productcatalog.html&limit=15 ">15</option>
+                                                    <option value="productcatalog.html&limit=25 ">25 </option>
+                                                    <option value="productcatalog.html&limit=50 ">50 </option>
+                                                    <option value="productcatalog.html&limit=75 ">75 </option>
+                                                    <option value="productcatalog.html&limit=100 ">100 </option>
+                                                </select>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
                             <br />
                             <div className="row">
-                                <div className="product-layout product-list col-xs-12">
+                                {catalog.clothes && catalog.clothes.map(item => (
+                                    <div className="product-layout product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6" key={item.id}>
+                                        <div className="product-block product-thumb">
+                                            <div className="product-block-inner">
+                                                <div className="image">
+                                                    <Link to={`/clothing/details/${item.id}`}>
+                                                        <img
+                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_250,h_275/${item.images[0].path}`}
+                                                            title={item.name}
+                                                            alt={item.name}
+                                                            className="img-responsive reg-image"
+                                                        />
+                                                        {item.type !== "KIT" && (
+                                                            <img
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[1].path}`}
+                                                                title={item.name}
+                                                                alt={item.name}
+                                                                className="img-responsive hover-image"
+                                                            />
+                                                        )}
+                                                        {item.type === "KIT" && (
+                                                            <img
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
+                                                                title={item.name}
+                                                                alt={item.name}
+                                                                className="img-responsive hover-image"
+                                                            />
+                                                        )}
+                                                    </Link>
+                                                    <div className="product_hover_block">
+                                                        <div className="action">
+                                                            <button
+                                                                type="button"
+                                                                className="cart_button"
+                                                                title="Add to Cart"
+                                                            >
+                                                                <i className="fa fa-shopping-cart" aria-hidden="true" />{" "}
+                                                            </button>
+                                                            <button
+                                                                className="wishlist"
+                                                                type="button"
+                                                                title="Add to Wish List "
+                                                            >
+                                                                <i className="fa fa-heart" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="product-details grid">
+                                                    <div className="caption">
+                                                        <h4>
+                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                                {item.name}
+                                                            </a>
+                                                        </h4>
+                                                        <p className="price">{item.price.toFixed(2)} лв.</p>
+                                                    </div>
+                                                </div>
+                                                <div className="product-details list">
+                                                    <div className="caption">
+                                                        <h4>
+                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                                {item.name}
+                                                            </a>
+                                                        </h4>
+                                                        <p className="desc">
+                                                            {item.description}
+                                                        </p>
+                                                        <p className="price">{item.price.toFixed(2)} лв.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                                {/* <div className="product-layout product-list col-xs-12">
                                     <div className="product-block product-thumb">
                                         <div className="product-block-inner">
                                             <div className="image outstock">
@@ -896,1615 +958,7 @@ export default function Catalog() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=43">
-                                                    <img
-                                                        src="/images/13-264x380.jpg"
-                                                        title="Layered Crop Top"
-                                                        alt="Layered Crop Top"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/19-264x380.jpg"
-                                                        title="Layered Crop Top"
-                                                        alt="Layered Crop Top"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=43"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=43">
-                                                            Layered Crop Top
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$602.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=43">
-                                                            Layered Crop Top
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        Intel Core 2 Duo processor Powered by an Intel Core 2 Duo
-                                                        processor at speeds up to 2.16GHz, the new MacBook is the
-                                                        fastest ever. 1GB memory, larger hard drives The new
-                                                        MacBook now c..
-                                                    </p>
-                                                    <p className="price">$602.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=30">
-                                                    <img
-                                                        src="/images/16-264x380.jpg"
-                                                        title="long sleeve Shirts"
-                                                        alt="long sleeve Shirts"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/3-264x380.jpg"
-                                                        title="long sleeve Shirts"
-                                                        alt="long sleeve Shirts"
-                                                    />
-                                                </a>
-                                                <div className="saleback">
-                                                    <div className="saleicon sale">20%</div>
-                                                </div>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=30"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=30">
-                                                            long sleeve Shirts
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">
-                                                        <span className="price-new">$98.00</span>{" "}
-                                                        <span className="price-old">$122.00</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=30">
-                                                            long sleeve Shirts
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        Canon's press material for the EOS 5D states that it
-                                                        'defines (a) new D-SLR category', while we're not
-                                                        typically too concerned with marketing talk this
-                                                        particular statement is clearly pretty accurate...
-                                                    </p>
-                                                    <p className="price">
-                                                        <span className="price-new">$98.00</span>{" "}
-                                                        <span className="price-old">$122.00</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=48">
-                                                    <img
-                                                        src="/images/11-264x380.jpg"
-                                                        title="Men's lace up Shoes"
-                                                        alt="Men's lace up Shoes"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/17-264x380.jpg"
-                                                        title="Men's lace up Shoes"
-                                                        alt="Men's lace up Shoes"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=48"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=48">
-                                                            Men's lace up Shoes
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$122.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=48">
-                                                            Men's lace up Shoes
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        More room to move. With 80GB or 160GB of storage and up to
-                                                        40 hours of battery life, the new iPod classic lets you
-                                                        enjoy up to 40,000 songs or up to 200 hours of video or
-                                                        any combination where..
-                                                    </p>
-                                                    <p className="price">$122.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=33">
-                                                    <img
-                                                        src="/images/15-264x380.jpg"
-                                                        title="Pacsafe Intasafe  Laptop Backpack"
-                                                        alt="Pacsafe Intasafe  Laptop Backpack"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/3-264x380.jpg"
-                                                        title="Pacsafe Intasafe  Laptop Backpack"
-                                                        alt="Pacsafe Intasafe  Laptop Backpack"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=33"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=33">
-                                                            Pacsafe Intasafe Laptop Backpack
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$242.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=33">
-                                                            Pacsafe Intasafe Laptop Backpack
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        Imagine the advantages of going big without slowing down.
-                                                        The big 19" 941BW monitor combines wide aspect ratio with
-                                                        fast pixel response time, for bigger images, more room to
-                                                        work and crisp motion..
-                                                    </p>
-                                                    <p className="price">$242.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=31">
-                                                    <img
-                                                        src="/images/7-264x380.jpg"
-                                                        title="Propel IDP Sportstyle Sneakers"
-                                                        alt="Propel IDP Sportstyle Sneakers"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/12-264x380.jpg"
-                                                        title="Propel IDP Sportstyle Sneakers"
-                                                        alt="Propel IDP Sportstyle Sneakers"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=31"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=31">
-                                                            Propel IDP Sportstyle Sneakers
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$98.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=31">
-                                                            Propel IDP Sportstyle Sneakers
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        Engineered with pro-level features and performance, the
-                                                        12.3-effective-megapixel D300 combines brand new
-                                                        technologies with advanced features inherited from Nikon's
-                                                        newly announced D3 professional ..
-                                                    </p>
-                                                    <p className="price">$98.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=47">
-                                                    <img
-                                                        src="/images/4-264x380.jpg"
-                                                        title="round toe Shoes"
-                                                        alt="round toe Shoes"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/6-264x380.jpg"
-                                                        title="round toe Shoes"
-                                                        alt="round toe Shoes"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=47"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=47">
-                                                            round toe Shoes
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$122.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=47">
-                                                            round toe Shoes
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        Stop your co-workers in their tracks with the stunning new
-                                                        30-inch diagonal HP LP3065 Flat Panel Monitor. This
-                                                        flagship monitor features best-in-class performance and
-                                                        presentation features on a huge w..
-                                                    </p>
-                                                    <p className="price">$122.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=32">
-                                                    <img
-                                                        src="/images/12-264x380.jpg"
-                                                        title="Self-Design Sweater"
-                                                        alt="Self-Design Sweater"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/13-264x380.jpg"
-                                                        title="Self-Design Sweater"
-                                                        alt="Self-Design Sweater"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=32"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=32">
-                                                            Self-Design Sweater
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$122.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=32">
-                                                            Self-Design Sweater
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        Revolutionary multi-touch interface. iPod touch features
-                                                        the same multi-touch screen technology as iPhone. Pinch to
-                                                        zoom in on a photo. Scroll through your songs and videos
-                                                        with a flick. Flip throug..
-                                                    </p>
-                                                    <p className="price">$122.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=29">
-                                                    <img
-                                                        src="/images/19-264x380.jpg"
-                                                        title="Self-Designed Tank Top"
-                                                        alt="Self-Designed Tank Top"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/20-264x380.jpg"
-                                                        title="Self-Designed Tank Top"
-                                                        alt="Self-Designed Tank Top"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=29"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=29">
-                                                            Self-Designed Tank Top
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$337.99</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=29">
-                                                            Self-Designed Tank Top
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        Redefine your workday with the Palm Treo Pro smartphone.
-                                                        Perfectly balanced, you can respond to business and
-                                                        personal email, stay on top of appointments and contacts,
-                                                        and use Wi-Fi or GPS when you&amp;rsq..
-                                                    </p>
-                                                    <p className="price">$337.99</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=40">
-                                                    <img
-                                                        src="/images/5-264x380.jpg"
-                                                        title="Solid A-Line Top"
-                                                        alt="Solid A-Line Top"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/10-264x380.jpg"
-                                                        title="Solid A-Line Top"
-                                                        alt="Solid A-Line Top"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=40"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=40">
-                                                            Solid A-Line Top
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$123.20</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=40">
-                                                            Solid A-Line Top
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        iPhone is a revolutionary new mobile phone that allows you
-                                                        to make a call by simply tapping a name or number in your
-                                                        address book, a favorites list, or a call log. It also
-                                                        automatically syncs all your..
-                                                    </p>
-                                                    <p className="price">$123.20</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image outstock">
-                                                <a href="product/product&path=20&product_id=46">
-                                                    <img
-                                                        src="/images/14-264x380.jpg"
-                                                        title="Solid Men & Women Muffler"
-                                                        alt="Solid Men & Women Muffler"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/2-264x380.jpg"
-                                                        title="Solid Men & Women Muffler"
-                                                        alt="Solid Men & Women Muffler"
-                                                    />
-                                                </a>
-                                            </div>
-                                            <div className="status_stock">
-                                                Out of stock
-                                                <button
-                                                    className="wishlist_button"
-                                                    type="button"
-                                                    data-toggle="tooltip"
-                                                    title="Add to Wish List "
-                                                >
-                                                    <i className="fa fa-heart" />
-                                                </button>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=46">
-                                                            Solid Men &amp; Women Muffler
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$1,202.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=46">
-                                                            Solid Men &amp; Women Muffler
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        Unprecedented power. The next generation of processing
-                                                        technology has arrived. Built into the newest VAIO
-                                                        notebooks lies Intel's latest, most powerful innovation
-                                                        yet: Intel® Centrino® 2 pr..
-                                                    </p>
-                                                    <p className="price">$1,202.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=44">
-                                                    <img
-                                                        src="/images/20-264x380.jpg"
-                                                        title="Striped Men & Women Muffler"
-                                                        alt="Striped Men & Women Muffler"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/8-264x380.jpg"
-                                                        title="Striped Men & Women Muffler"
-                                                        alt="Striped Men & Women Muffler"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=44"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=44">
-                                                            Striped Men &amp; Women Muffler
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$1,202.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=44">
-                                                            Striped Men &amp; Women Muffler
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        MacBook Air is ultrathin, ultraportable, and ultra unlike
-                                                        anything else. But you don’t lose inches and pounds
-                                                        overnight. It’s the result of rethinking conventions. Of
-                                                        multiple wireless inn..
-                                                    </p>
-                                                    <p className="price">$1,202.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=45">
-                                                    <img
-                                                        src="/images/9-264x380.jpg"
-                                                        title="tid watches nato"
-                                                        alt="tid watches nato"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/14-264x380.jpg"
-                                                        title="tid watches nato"
-                                                        alt="tid watches nato"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=45"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=45">
-                                                            tid watches nato
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$2,000.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=45">
-                                                            tid watches nato
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        Latest Intel mobile architecture Powered by the most
-                                                        advanced mobile processors from Intel, the new Core 2 Duo
-                                                        MacBook Pro is over 50% faster than the original Core Duo
-                                                        MacBook Pro and now sup..
-                                                    </p>
-                                                    <p className="price">$2,000.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=28">
-                                                    <img
-                                                        src="/images/10-264x380.jpg"
-                                                        title="Women Solid Backpack"
-                                                        alt="Women Solid Backpack"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/12-264x380.jpg"
-                                                        title="Women Solid Backpack"
-                                                        alt="Women Solid Backpack"
-                                                    />
-                                                </a>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=28"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=28">
-                                                            Women Solid Backpack
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$122.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=28">
-                                                            Women Solid Backpack
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        HTC Touch - in High Definition. Watch music videos and
-                                                        streaming content in awe-inspiring high definition clarity
-                                                        for a mobile experience you never thought possible.
-                                                        Seductively sleek, the HTC Touch H..
-                                                    </p>
-                                                    <p className="price">$122.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="pagination-wrapper">
                                 <div className="col-sm-6 text-left page-link">
@@ -2524,7 +978,7 @@ export default function Catalog() {
                                     </ul>
                                 </div>
                                 <div className="col-sm-6 text-right page-result">
-                                    Showing 1 to 15 of 16 ({results?.total_pages} Pages)
+                                    Showing 1 to {catalog.items_on_page} of 16 ({catalog.total_pages} Pages)
                                 </div>
                             </div>
                         </div>
