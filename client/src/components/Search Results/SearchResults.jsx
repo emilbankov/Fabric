@@ -6,27 +6,16 @@ export default function SearchResults() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const query = queryParams.get("query") || "";
-
     const [results, setResults] = useState([]);
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!query) return;
 
-        const fetchResults = async () => {
-            setLoading(true);
-            try {
-                const data = await clothesService.search(query);
-                setResults(data);
-                console.log(data);
+        clothesService.search(query)
+            .then(result => { setResults(result); })
+            .catch(err => { console.log(err); });
 
-            } catch (error) {
-                console.error("Search error:", error);
-            }
-            setLoading(false);
-        };
-
-        fetchResults();
+        return () => setResults("clothes");
     }, [query]);
 
     useEffect(() => {
@@ -683,12 +672,22 @@ export default function SearchResults() {
                                                             alt={item.name}
                                                             className="img-responsive reg-image"
                                                         />
-                                                        <img
-                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_250,h_275/${item.images[1].path}`}
-                                                            title={item.name}
-                                                            alt={item.name}
-                                                            className="img-responsive hover-image"
-                                                        />
+                                                        {item.type !== "KIT" && (
+                                                            <img
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[1].path}`}
+                                                                title={item.name}
+                                                                alt={item.name}
+                                                                className="img-responsive hover-image"
+                                                            />
+                                                        )}
+                                                        {item.type === "KIT" && (
+                                                            <img
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
+                                                                title={item.name}
+                                                                alt={item.name}
+                                                                className="img-responsive hover-image"
+                                                            />
+                                                        )}
                                                     </a>
                                                     <div className="product_hover_block">
                                                         <div className="action">
