@@ -1,8 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import * as clothesService from "../../services/clothesService";
 
 export default function Catalog() {
-    let location = useLocation();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const type = queryParams.get("type") || "";
+    const sort = queryParams.get("sort") || "";
+    const [results, setResults] = useState([]);
+    
+    useEffect(() => {
+        if (!type && !sort) return;
+
+        clothesService.getCatalog(type, sort)
+            .then(result => { setResults(result); })
+            .catch(err => { console.log(err); });
+
+        return () => setResults("clothes");
+    }, [type, sort]);
 
     useEffect(() => {
         const gridButton = document.querySelector(".btn-list-grid .grid");
@@ -41,21 +56,21 @@ export default function Catalog() {
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
-          existingScript.parentNode.removeChild(existingScript);
+            existingScript.parentNode.removeChild(existingScript);
         }
-      
+
         const script = document.createElement('script');
         script.src = '/js/custom.js';
         script.async = true;
-      
+
         document.body.appendChild(script);
-      
+
         return () => {
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
         };
-      }, [location.pathname]);
+    }, [location.pathname]);
 
     return (
         <>
@@ -2509,7 +2524,7 @@ export default function Catalog() {
                                     </ul>
                                 </div>
                                 <div className="col-sm-6 text-right page-result">
-                                    Showing 1 to 15 of 16 (2 Pages)
+                                    Showing 1 to 15 of 16 ({results?.total_pages} Pages)
                                 </div>
                             </div>
                         </div>
