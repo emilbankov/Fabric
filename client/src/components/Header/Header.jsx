@@ -277,13 +277,13 @@ export default function Header() {
                                 <div className="box-category-top"><div className="box-heading">Shop By Categories</div></div>
                                 <div className="box-content-category">
                                     <ul id="nav-one" className="dropmenu box-category">
-                                        <li className="top_level"><Link to="/catalog">Най-нови</Link></li>
-                                        <li className="top_level"><Link to="/catalog">Най-продавани</Link></li>
-                                        <li className="top_level"><Link to="/catalog">Тениски</Link></li>
-                                        <li className="top_level"><Link to="/catalog">Блузи</Link></li>
-                                        <li className="top_level"><Link to="/catalog">Суитчъри</Link></li>
-                                        <li className="top_level"><Link to="/catalog">Комплекти</Link></li>
-                                        <li className="top_level"><Link to="/catalog">Къси панталони</Link></li>
+                                        <li className="top_level"><Link to="/catalog?sort=new">Най-нови</Link></li>
+                                        <li className="top_level"><Link to="/catalog?sort=most-sold">Най-продавани</Link></li>
+                                        <li className="top_level"><Link to="/catalog?type=t_shirt&sort=new">Тениски</Link></li>
+                                        <li className="top_level"><Link to="/catalog?type=long_t_shirt&sort=new">Блузи</Link></li>
+                                        <li className="top_level"><Link to="/catalog?type=sweatshirt&sort=new">Суитчъри</Link></li>
+                                        <li className="top_level"><Link to="/catalog?type=shorts&sort=new">Къси панталони</Link></li>
+                                        <li className="top_level"><Link to="/catalog?type=kit&sort=new">Комплекти</Link></li>
                                     </ul>
                                 </div>
                                 <nav className="nav-container" role="navigation">
@@ -301,13 +301,13 @@ export default function Header() {
                                                     <li className="top_level"><Link to="/">Начало</Link></li>
                                                     <li className="top_level"><Link to="/contact">Контакти</Link></li>
                                                     <li className="top_level"><Link to="/blogs">Блог</Link></li>
-                                                    <li className="top_level"><Link to="/catalog">Най-нови</Link></li>
-                                                    <li className="top_level"><Link to="/catalog">Най-продавани</Link></li>
-                                                    <li className="top_level"><Link to="/catalog">Тениски</Link></li>
-                                                    <li className="top_level"><Link to="/catalog">Блузи</Link></li>
-                                                    <li className="top_level"><Link to="/catalog">Суитчъри</Link></li>
-                                                    <li className="top_level"><Link to="/catalog">Комплекти</Link></li>
-                                                    <li className="top_level"><Link to="/catalog">Къси панталони</Link></li>
+                                                    <li className="top_level"><Link to="/catalog?sort=new">Най-нови</Link></li>
+                                                    <li className="top_level"><Link to="/catalog?sort=most-sold">Най-продавани</Link></li>
+                                                    <li className="top_level"><Link to="/catalog?type=t_shirt&sort=new">Тениски</Link></li>
+                                                    <li className="top_level"><Link to="/catalog?type=long_t_shirt&sort=new">Блузи</Link></li>
+                                                    <li className="top_level"><Link to="/catalog?type=sweatshirt&sort=new">Суитчъри</Link></li>
+                                                    <li className="top_level"><Link to="/catalog?type=shorts&sort=new">Къси панталони</Link></li>
+                                                    <li className="top_level"><Link to="/catalog?type=kit&sort=new">Комплекти</Link></li>
                                                 </ul>
                                             </div>
                                             <div className="static-menu">

@@ -283,8 +283,16 @@ export default function Home() {
                                                                             className="img-responsive hover-image"
                                                                         />
                                                                     )}
+
+                                                                    {product.type === "KIT" && (
+                                                                        <img
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`}
+                                                                            title={product.name}
+                                                                            alt={product.name}
+                                                                            className="img-responsive hover-image"
+                                                                        />
+                                                                    )}
                                                                 </a>
-                                                                <span className="saleicon sale">Sale</span>
                                                                 <div className="product_hover_block">
                                                                     <div className="action">
                                                                         <button
@@ -466,7 +474,7 @@ export default function Home() {
                                                 </div>
                                                 <div className="quote_img" />
                                                 <div className="testimonial-user-title">
-                                                    <h4>Николай Найденов, с. Садово</h4>
+                                                    <h4>Николай Найденов, Садово</h4>
                                                 </div>
                                             </div>
                                         </li>
