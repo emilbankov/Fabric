@@ -13,20 +13,19 @@ export default function Search() {
             return;
         }
 
-        const fetchResults = async () => {
-            setLoading(true);
-            try {
-                const data = await clothesService.search(query);
-                setResults(data);
-            } catch (error) {
-                console.error("Search error:", error);
-            }
-            setLoading(false);
-        };
+        setLoading(true);
 
         const delayDebounceFn = setTimeout(() => {
-            fetchResults();
-        }, 500);
+            clothesService.search(query)
+                .then(result => {
+                    setResults(result);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.log(err);
+                    setLoading(false);
+                });
+        }, 300);
 
         return () => clearTimeout(delayDebounceFn);
     }, [query]);
@@ -54,11 +53,15 @@ export default function Search() {
                     </div>
                     {query && query.length > 0 && (
                         <div className="live-search" style={{ display: query?.length > 0 ? "block" : "none" }}>
-                                {loading && <img className="loading" src="/images/loading.gif" />}
+                            {loading && <img className="loading" src="/images/loading.gif" />}
                             <ul>
                                 {results.clothes && results.clothes.slice(0, 6).map((product) => (
                                     <li key={product.id}>
-                                        <a href={product.id} title={product.name}>
+                                        <Link
+                                            to={`/clothing/details/${product.id}`}
+                                            title={product.name}
+                                            onClick={() => setQuery("")}
+                                        >
                                             <div className="product-image col-sm-3 col-xs-4">
                                                 <img alt={product.name} src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`} />
                                             </div>
@@ -73,7 +76,7 @@ export default function Search() {
                                                 </div>
                                             </div>
                                             <span style={{ clear: "both" }} />
-                                        </a>
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
