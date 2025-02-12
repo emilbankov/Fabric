@@ -227,6 +227,8 @@ th {
     padding: 0;
     text-align: center;
     vertical-align: middle;
+    border: 1px solid black !important;
+    color: black !important;
 }
 
 thead tr th {

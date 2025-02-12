@@ -13,6 +13,10 @@ span.customSelect {
 	height: 34px;
 }
 
+span.customSelect.catalog {
+	text-align: center;
+}
+
 span.customSelect option {
 	font-size: 12px !important;
 }
@@ -30,6 +34,7 @@ span.customSelect.changed {
 .customSelectInner {
 	background: url('../images/select-arrow-down.gif') no-repeat center right;
 	width: 100% !important;
+	white-space: nowrap !important;
 }
 
 .customSelectOpen .customSelectInner {
@@ -40,8 +45,17 @@ span.customSelect.changed {
 #input-limit,
 #product .form-group select {
 	cursor: pointer;
+	text-align: center;
 }
 
+select[id] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: url(../images/select-arrow-down.gif) no-repeat right 10px center;
+    background-color: white;
+    background-size: 8px;
+    padding-right: 25px;
+}
 
 /* TREEVIEW CATEGORY LEFT */
 .treeview-list,
