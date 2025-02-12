@@ -164,7 +164,7 @@ export default function Details() {
                                                     <div className="product-block product-thumb transition">
                                                         <div className="product-block-inner">
                                                             <div className="image">
-                                                                <a href={`/clothing/details/${item.id}`}>
+                                                                <Link to={`/clothing/details/${item.id}`}>
                                                                     <img
                                                                         src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
                                                                         title="tote bags for women"
@@ -189,7 +189,7 @@ export default function Details() {
                                                                             className="img-responsive hover-image"
                                                                         />
                                                                     )}
-                                                                </a>
+                                                                </Link>
                                                             </div>
                                                             <div className="product-details">
                                                                 <div className="caption">
@@ -466,7 +466,7 @@ export default function Details() {
                                             </p>
                                         </div>
                                         <div className="tab-pane" id="tab-specification">
-                                            <h3 className="ta-c">Мъжки / Женски</h3>
+                                            <h3 className="ta-c">Мъжки / Дамски</h3>
                                             <table className="table table-bordered">
                                                 <thead>
                                                     <tr>

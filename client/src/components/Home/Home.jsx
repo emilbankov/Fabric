@@ -267,7 +267,7 @@ export default function Home() {
                                                     <div className="product-block product-thumb transition">
                                                         <div className="product-block-inner">
                                                             <div className="image">
-                                                                <a href={`/product&product_id=${product.id}`}>
+                                                                <Link to={`/clothing/details/${product.id}`}>
                                                                     <img
                                                                         src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`}
                                                                         title={product.name}
@@ -292,7 +292,7 @@ export default function Home() {
                                                                             className="img-responsive hover-image"
                                                                         />
                                                                     )}
-                                                                </a>
+                                                                </Link>
                                                                 <div className="product_hover_block">
                                                                     <div className="action">
                                                                         <button
