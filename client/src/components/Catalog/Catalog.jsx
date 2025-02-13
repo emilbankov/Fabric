@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
+import { categories } from "../../lib/dictionary";
 
 export default function Catalog() {
     const location = useLocation();
@@ -9,18 +10,23 @@ export default function Catalog() {
     const type = queryParams.get("type") || "";
     const sort = queryParams.get("sort") || "";
     const size = queryParams.get("size") || "";
+    const page = parseInt(queryParams.get("page") || "1", 10);
     const [catalog, setCatalog] = useState([]);
+    const [mostSold, setMostSold] = useState([]);
 
     useEffect(() => {
-        if (!type && !sort) return;
-
-        clothesService.getCatalog(type, sort, size)
-            .then(result => { setCatalog(result); })
-            .catch(err => { console.log(err); });
-
-        return () => setCatalog("clothes");
-    }, [type, sort, size]);
-console.log(catalog);
+        Promise.all([
+            clothesService.getCatalog(type, sort, size, page),
+            clothesService.getMostSold(),
+        ])
+            .then(([catalog, mostSold]) => {
+                setCatalog(catalog);
+                setMostSold(mostSold);
+            })
+            .catch(err => {
+                console.error("Error fetching data:", err);
+            });
+    }, [type, sort, size, page]);
 
     const handleSortChange = (e) => {
         const newSort = e.target.value;
@@ -37,6 +43,12 @@ console.log(catalog);
         const params = new URLSearchParams(location.search);
         params.set("size", newSize);
 
+        navigate(`${location.pathname}?${params.toString()}`);
+    };
+
+    const handlePageChange = (newPage) => {
+        const params = new URLSearchParams(location.search);
+        params.set("page", newPage);
         navigate(`${location.pathname}?${params.toString()}`);
     };
 
@@ -91,7 +103,7 @@ console.log(catalog);
                 script.parentNode.removeChild(script);
             }
         };
-    }, [location.pathname, catalog.clothes]);
+    }, [location.pathname, catalog.clothes, mostSold.clothes]);
 
     return (
         <>
@@ -118,106 +130,20 @@ console.log(catalog);
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
                             <div className="box">
-                                <div className="box-heading">Refine Search</div>
+                                <div className="box-heading">Филтрирано търсене</div>
                                 <div className="list-group ">
                                     {" "}
-                                    <a className="list-group-item heading">Category</a>
+                                    <a className="list-group-item heading">Категории</a>
                                     <div className="list-group-item  ">
                                         <div id="filter-group1">
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={1} />
-                                                    Shoes (5)
-                                                </label>
-                                            </div>
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={2} />
-                                                    Clothes (4)
-                                                </label>
-                                            </div>
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={3} />
-                                                    Bags (10)
-                                                </label>
-                                            </div>
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={4} />
-                                                    Accessories (12)
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a className="list-group-item heading">Color</a>
-                                    <div className="list-group-item  ">
-                                        <div id="filter-group2">
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={5} />
-                                                    White (6)
-                                                </label>
-                                            </div>
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={6} />
-                                                    red (7)
-                                                </label>
-                                            </div>
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={7} />
-                                                    green (6)
-                                                </label>
-                                            </div>
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={8} />
-                                                    blue (9)
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a className="list-group-item heading">price</a>
-                                    <div className="list-group-item  ">
-                                        <div id="filter-group3">
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={9} />
-                                                    $50.00 - $100.00 (8)
-                                                </label>
-                                            </div>
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={10} />
-                                                    $101.00 - $150.00 (1)
-                                                </label>
-                                            </div>
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={11} />
-                                                    $151.00 - $200.00 (2)
-                                                </label>
-                                            </div>
-                                            <div className="checkbox">
-                                                <label>
-                                                    {" "}
-                                                    <input type="checkbox" name="filter[]" defaultValue={12} />
-                                                    $201.00 - Above (5)
-                                                </label>
-                                            </div>
+                                            {categories.map((category) => (
+                                                <div className="checkbox" key={category.id}>
+                                                    <label>
+                                                        <input type="checkbox" name="filter[]" defaultValue={category.id} />
+                                                        {category.name} ()
+                                                    </label>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                     <div className="panel-footer text-right">
@@ -226,7 +152,7 @@ console.log(catalog);
                                             id="button-filter"
                                             className="btn btn-primary"
                                         >
-                                            Refine Search
+                                            Филтрирай
                                         </button>
                                     </div>
                                 </div>
@@ -257,293 +183,68 @@ console.log(catalog);
                                 <div className="box-heading">Latest Product</div>
                                 <div className="box-content">
                                     <div className="box-product  productbox-grid" id=" latest-grid">
-                                        <div className="product-items">
-                                            <div className="product-items">
-                                                <div className="product-block product-thumb transition">
-                                                    <div className="product-block-inner">
-                                                        <div className="image">
-                                                            <a href="product/product&product_id=49">
-                                                                <img
-                                                                    src="/images/8-70x70.jpg"
-                                                                    title="tote bags for women"
-                                                                    alt="tote bags for women"
-                                                                    className="img-responsive reg-image"
-                                                                />
-                                                                <img
-                                                                    className="img-responsive hover-image"
-                                                                    src="/images/13-70x70.jpg"
-                                                                    title="tote bags for women"
-                                                                    alt="tote bags for women"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div className="product-details">
-                                                            <div className="caption">
-                                                                <div className="rating">
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                </div>
-                                                                <h4>
-                                                                    <a href="product/product&product_id=49 ">
-                                                                        tote bags for women{" "}
-                                                                    </a>
-                                                                </h4>
-                                                                <p className="price">
-                                                                    $241.99
-                                                                    <span className="price-tax">Ex Tax: $199.99</span>
-                                                                </p>
-                                                            </div>
-                                                            <div className="product_hover_block">
-                                                                <div className="action">
-                                                                    <button
-                                                                        type="button"
-                                                                        className="cart_button"
-                                                                        title="Add to Cart"
-                                                                    >
-                                                                        <i
-                                                                            className="fa fa-shopping-cart"
-                                                                            area-hidden="true"
+                                        {mostSold.clothes && mostSold.clothes.slice(0, 3).map((item) => (
+                                            <div className="product-items" key={item.id}>
+                                                <div className="product-items">
+                                                    <div className="product-block product-thumb transition">
+                                                        <div className="product-block-inner">
+                                                            <div className="image">
+                                                                <Link to={`/clothing/details/${item.id}`}>
+                                                                    <img
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
+                                                                        title="tote bags for women"
+                                                                        alt="tote bags for women"
+                                                                        className="img-responsive reg-image"
+                                                                    />
+
+                                                                    {item.type !== "KIT" && (
+                                                                        <img
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[1].path}`}
+                                                                            title="tote bags for women"
+                                                                            alt="tote bags for women"
+                                                                            className="img-responsive hover-image"
                                                                         />
-                                                                    </button>
-                                                                    <div className="quickview-button">
-                                                                        <a
-                                                                            className="quickbox"
-                                                                            title="Add To quickview"
-                                                                            href="product/quick_view&product_id=49"
+                                                                    )}
+
+                                                                    {item.type === "KIT" && (
+                                                                        <img
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
+                                                                            title="tote bags for women"
+                                                                            alt="tote bags for women"
+                                                                            className="img-responsive hover-image"
+                                                                        />
+                                                                    )}
+                                                                </Link>
+                                                            </div>
+                                                            <div className="product-details">
+                                                                <div className="caption">
+                                                                    <h4>
+                                                                        <a href="=49 ">{item.name}</a>
+                                                                    </h4>
+                                                                    <p className="price">
+                                                                        {item.price.toFixed(2)} лв.
+                                                                    </p>
+                                                                </div>
+                                                                <div className="product_hover_block">
+                                                                    <div className="action">
+                                                                        <button
+                                                                            type="button"
+                                                                            className="cart_button"
+                                                                            title="Add to Cart"
                                                                         >
-                                                                            <i className="fa fa-eye" />
-                                                                        </a>
+                                                                            <i
+                                                                                className="fa fa-shopping-cart"
+                                                                                area-hidden="true"
+                                                                            />
+                                                                        </button>
                                                                     </div>
-                                                                    <button
-                                                                        className="wishlist"
-                                                                        type="button"
-                                                                        title="Add to Wish List "
-                                                                    >
-                                                                        <i className="fa fa-heart" />
-                                                                    </button>
-                                                                    <button
-                                                                        className="compare_button"
-                                                                        type="button"
-                                                                        title="Add to compare "
-                                                                    >
-                                                                        <i className="fa fa-exchange" />
-                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="product-items">
-                                            <div className="product-items">
-                                                <div className="product-block product-thumb transition">
-                                                    <div className="product-block-inner">
-                                                        <div className="image">
-                                                            <a href="product/product&product_id=48">
-                                                                <img
-                                                                    src="/images/11-70x70.jpg"
-                                                                    title="Men's lace up Shoes"
-                                                                    alt="Men's lace up Shoes"
-                                                                    className="img-responsive reg-image"
-                                                                />
-                                                                <img
-                                                                    className="img-responsive hover-image"
-                                                                    src="/images/17-70x70.jpg"
-                                                                    title="Men's lace up Shoes"
-                                                                    alt="Men's lace up Shoes"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div className="product-details">
-                                                            <div className="caption">
-                                                                <div className="rating">
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                </div>
-                                                                <h4>
-                                                                    <a href="product/product&product_id=48 ">
-                                                                        Men's lace up Shoes{" "}
-                                                                    </a>
-                                                                </h4>
-                                                                <p className="price">
-                                                                    $122.00
-                                                                    <span className="price-tax">Ex Tax: $100.00</span>
-                                                                </p>
-                                                            </div>
-                                                            <div className="product_hover_block">
-                                                                <div className="action">
-                                                                    <button
-                                                                        type="button"
-                                                                        className="cart_button"
-                                                                        title="Add to Cart"
-                                                                    >
-                                                                        <i
-                                                                            className="fa fa-shopping-cart"
-                                                                            area-hidden="true"
-                                                                        />
-                                                                    </button>
-                                                                    <div className="quickview-button">
-                                                                        <a
-                                                                            className="quickbox"
-                                                                            title="Add To quickview"
-                                                                            href="product/quick_view&product_id=48"
-                                                                        >
-                                                                            <i className="fa fa-eye" />
-                                                                        </a>
-                                                                    </div>
-                                                                    <button
-                                                                        className="wishlist"
-                                                                        type="button"
-                                                                        title="Add to Wish List "
-                                                                    >
-                                                                        <i className="fa fa-heart" />
-                                                                    </button>
-                                                                    <button
-                                                                        className="compare_button"
-                                                                        type="button"
-                                                                        title="Add to compare "
-                                                                    >
-                                                                        <i className="fa fa-exchange" />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="product-items">
-                                            <div className="product-items">
-                                                <div className="product-block product-thumb transition">
-                                                    <div className="product-block-inner">
-                                                        <div className="image">
-                                                            <a href="product/product&product_id=47">
-                                                                <img
-                                                                    src="/images/4-70x70.jpg"
-                                                                    title="round toe Shoes"
-                                                                    alt="round toe Shoes"
-                                                                    className="img-responsive reg-image"
-                                                                />
-                                                                <img
-                                                                    className="img-responsive hover-image"
-                                                                    src="/images/6-70x70.jpg"
-                                                                    title="round toe Shoes"
-                                                                    alt="round toe Shoes"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div className="product-details">
-                                                            <div className="caption">
-                                                                <div className="rating">
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                    <span className="fa fa-stack">
-                                                                        <i className="fa fa-star fa-stack-2x" />
-                                                                        <i className="fa fa-star-o fa-stack-2x" />
-                                                                    </span>
-                                                                </div>
-                                                                <h4>
-                                                                    <a href="product/product&product_id=47 ">
-                                                                        round toe Shoes{" "}
-                                                                    </a>
-                                                                </h4>
-                                                                <p className="price">
-                                                                    $122.00
-                                                                    <span className="price-tax">Ex Tax: $100.00</span>
-                                                                </p>
-                                                            </div>
-                                                            <div className="product_hover_block">
-                                                                <div className="action">
-                                                                    <button
-                                                                        type="button"
-                                                                        className="cart_button"
-                                                                        title="Add to Cart"
-                                                                    >
-                                                                        <i
-                                                                            className="fa fa-shopping-cart"
-                                                                            area-hidden="true"
-                                                                        />
-                                                                    </button>
-                                                                    <div className="quickview-button">
-                                                                        <a
-                                                                            className="quickbox"
-                                                                            title="Add To quickview"
-                                                                            href="product/quick_view&product_id=47"
-                                                                        >
-                                                                            <i className="fa fa-eye" />
-                                                                        </a>
-                                                                    </div>
-                                                                    <button
-                                                                        className="wishlist"
-                                                                        type="button"
-                                                                        title="Add to Wish List "
-                                                                    >
-                                                                        <i className="fa fa-heart" />
-                                                                    </button>
-                                                                    <button
-                                                                        className="compare_button"
-                                                                        type="button"
-                                                                        title="Add to compare "
-                                                                    >
-                                                                        <i className="fa fa-exchange" />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -562,29 +263,6 @@ console.log(catalog);
                                         title="Men"
                                         className="img-thumbnail"
                                     />
-                                </div>
-                                <div className="col-sm-10 category_description">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                    ever since the 1500s, when an unknown printer took a galley of type
-                                    and scrambled it to make a type specimen book. It has survived not
-                                    only five centuries, but also the leap into electronic{" "}
-                                </div>
-                            </div>
-                            <h3 className="refine-search">Refine Search</h3>
-                            <div className="row">
-                                <div className="col-sm-12 category_list">
-                                    <ul>
-                                        <li>
-                                            <a href="product/category&path=20_59">Pocket Squares (5)</a>
-                                        </li>
-                                        <li>
-                                            <a href="product/category&path=20_26">Luxe (4)</a>
-                                        </li>
-                                        <li>
-                                            <a href="product/category&path=20_27">Topwear (6)</a>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                             <div className="category_filter">
@@ -607,11 +285,6 @@ console.log(catalog);
                                             <i className="fa fa-th-list" />
                                         </button>
                                     </div>
-                                </div>
-                                <div className="compare-total">
-                                    <a href="product/compare" id="compare-total">
-                                        Product Compare (0)
-                                    </a>
                                 </div>
                                 <div className="pagination-right">
                                     <div className="sort-by-wrapper">
@@ -968,14 +641,70 @@ console.log(catalog);
                             <div className="pagination-wrapper">
                                 <div className="col-sm-6 text-left page-link">
                                     <ul className="pagination">
-                                        <li className="active"><span>1</span></li>
-                                        <li><a href="catalog.html?page=2">2</a></li>
-                                        <li><a href="catalog.html?page=2">&gt;</a></li>
-                                        <li><a href="catalog.html?page=2">&gt;|</a></li>
+                                        {/* Show "First" and "Previous" only if NOT on Page 1 */}
+                                        {page > 1 && (
+                                            <>
+                                                <li>
+                                                    <a onClick={() => handlePageChange(1)} role="button" style={{ cursor: "pointer" }}>
+                                                        |&lt;
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a onClick={() => handlePageChange(page - 1)} role="button" style={{ cursor: "pointer" }}>
+                                                        &lt;
+                                                    </a>
+                                                </li>
+                                            </>
+                                        )}
+
+                                        {/* Page Number Logic (Show max 3 pages at a time) */}
+                                        {(() => {
+                                            const totalPages = Math.max(1, catalog.total_pages || 1);
+                                            let startPage = Math.max(1, page - 1);
+                                            let endPage = Math.min(totalPages, startPage + 2);
+
+                                            if (endPage - startPage < 2) {
+                                                startPage = Math.max(1, endPage - 2);
+                                            }
+
+                                            return [...Array(Math.max(0, endPage - startPage + 1))].map((_, index) => {
+                                                const pageNumber = startPage + index;
+                                                return (
+                                                    <li key={pageNumber} className={page === pageNumber ? "active" : ""}>
+                                                        <a
+                                                            onClick={() => handlePageChange(pageNumber)}
+                                                            role="button"
+                                                            style={{ cursor: "pointer" }}
+                                                        >
+                                                            {pageNumber}
+                                                        </a>
+                                                    </li>
+                                                );
+                                            });
+                                        })()}
+
+                                        {/* Show "Next" and "Last" only if NOT on the last page */}
+                                        {page < catalog.total_pages && (
+                                            <>
+                                                <li>
+                                                    <a onClick={() => handlePageChange(page + 1)} role="button" style={{ cursor: "pointer" }}>
+                                                        &gt;
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a onClick={() => handlePageChange(catalog.total_pages)} role="button" style={{ cursor: "pointer" }}>
+                                                        &gt;|
+                                                    </a>
+                                                </li>
+                                            </>
+                                        )}
                                     </ul>
                                 </div>
+
+                                {/* Page Information */}
                                 <div className="col-sm-6 text-right page-result">
-                                    Showing 1 to {catalog.items_on_page} of {size} ({catalog.total_pages} Pages)
+                                    Показвани {catalog.items_on_page} от {size} ({catalog.total_pages} Страници)
+
                                 </div>
                             </div>
                         </div>
