@@ -5,7 +5,8 @@ const baseUrl = 'https://tshirt-latest.onrender.com/clothes';
 export const getNewest = async () => await get(`${baseUrl}/catalog?sort=new`);
 export const getMostSold = async () => await get(`${baseUrl}/catalog?sort=most-sold`);
 export const getOne = async (clothingId) => await get(`${baseUrl}/${clothingId}`);
-export const getCatalog = async (type, sort, size, page) => await get(`${baseUrl}/catalog?type=${type}&sort=${sort}&size=${size}&page=${page}`);
+export const getCatalog = async (type, sort, size, page, category) => await get(`${baseUrl}/catalog?type=${type}&sort=${sort}&size=${size}&page=${page}&category=${category}`);
+export const getProductsCount = async () => await get(`${baseUrl}/category`);
 export const search = async (value) => await get(`${baseUrl}/search?name=${value}`);
 
 export const create = (name, description, price, type, category, model, frontImage, backImage) => {
