@@ -88,7 +88,7 @@ export default function Details() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [location.pathname, clothing.clothing, newest.clothes, mostSold.clothes]);
+    }, [clothing.clothing, newest.clothes, mostSold.clothes]);
 
     return (
         <>

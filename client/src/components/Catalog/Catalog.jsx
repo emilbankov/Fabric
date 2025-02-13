@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
-import { categories } from "../../lib/dictionary";
+import { categories, filters } from "../../lib/dictionary";
 
 export default function Catalog() {
     const location = useLocation();
@@ -22,7 +22,6 @@ export default function Catalog() {
     const [catalog, setCatalog] = useState([]);
     const [mostSold, setMostSold] = useState([]);
     const [productsCount, setProductsCount] = useState([]);
-console.log(productsCount);
 
     useEffect(() => {
         Promise.all([
@@ -172,7 +171,7 @@ console.log(productsCount);
                             </Link>
                         </li>
                         <li>
-                            <Link to="/catalog">Men</Link>
+                            <Link to={`/catalog?sort=${sort}&type=${type}`}>{type ? filters[type] : filters[sort]}</Link>
                         </li>
                     </ul>
                     <div className="row">
@@ -321,7 +320,7 @@ console.log(productsCount);
                             />
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h2 className="page-title">Men</h2>
+                            <h2 className="page-title">{type ? filters[type] : filters[sort]}</h2>
                             <div className="row category_thumb">
                                 <div className="col-sm-2 category_img">
                                     <img

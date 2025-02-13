@@ -226,14 +226,14 @@ export default function Header() {
                             <div className="row">
                                 <div className="col-sm-4 header-logo">
                                     <div id="logo">
-                                        <a href="/">
+                                        <Link to="/">
                                             <img
                                                 src="/images/logo.png"
                                                 title="Vesture"
                                                 alt="Vesture"
                                                 className="img-responsive"
                                             />
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
 
