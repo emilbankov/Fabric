@@ -165,6 +165,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
+                
                 <div className="hometab box">
                     <div className="container">
                         <div className="row">
@@ -342,6 +343,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
+
                 <div id="parallaxcmsblock" className="block parallax">
                     <div id="wdcmstestimonial">
                         <div className="wdtestimonial-main">

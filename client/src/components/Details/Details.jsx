@@ -336,7 +336,7 @@ export default function Details() {
 
                                                     <div className={`options-container ${clothing.clothing.type !== "T_SHIRT" && "last"}`}>
                                                         <span className="desc">Избери пол:</span>
-                                                        <select style={{ marginBottom: "15px" }} className="form-control" value={gender} onChange={(e) => setGender(e.target.value)}>
+                                                        <select id="gender" style={{ marginBottom: "15px" }} className="form-control" value={gender} onChange={(e) => setGender(e.target.value)}>
                                                             <option value="Men">Мъжки</option>
                                                             <option value="Women">Дамски</option>
                                                             <option value="Kids">Детски</option>
@@ -675,189 +675,180 @@ export default function Details() {
                     </div>
                 </div>
                 <div className="container">
-                    <div className="row">
-                        <div id="content" className="col-sm-9 productpage">
-                            {newest.clothes && mostSold.clothes && (
-                                <div className="hometab box">
-                                    <div className="container">
-                                        <div className="row">
-                                            <div className="tab-head">
-                                                <div className="hometab-heading box-heading">Нови и популярни артикули</div>
-                                                <div id="tabs" className="htabs">
-                                                    <ul className="etabs">
-                                                        <li className="tab"><a href="#tab-latest">Най-нови</a></li>
-                                                        <li className="tab"></li>
-                                                        <li className="tab"><a href="#tab-special">Най-продавани</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div id="tab-latest" className="tab-content">
-                                                <div className="box">
-                                                    <div className="box-content">
-                                                        <div className="customNavigation">
-                                                            <a className="fa prev fa-arrow-left">&nbsp;</a>
-                                                            <a className="fa next fa-arrow-right">&nbsp;</a>
-                                                        </div>
-                                                        <div className="box-product product-carousel" id="tablatest-carousel">
-                                                            {newest.clothes && newest.clothes.map((clothing) => (
-                                                                <div className="slider-item" key={clothing.id}>
-                                                                    <div className="product-block product-thumb transition">
-                                                                        <div className="product-block-inner">
-                                                                            <div className="image">
-                                                                                <Link to={`/clothing/details/${clothing.id}`}>
-                                                                                    <img
-                                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[0].path}`}
-                                                                                        title={clothing.name}
-                                                                                        alt={clothing.name}
-                                                                                        className="img-responsive reg-image"
-                                                                                    />
-
-                                                                                    {clothing.type !== "KIT" && (
-                                                                                        <img
-                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[1].path}`}
-                                                                                            title={clothing.name}
-                                                                                            alt={clothing.name}
-                                                                                            className="img-responsive hover-image"
-                                                                                        />
-                                                                                    )}
-
-                                                                                    {clothing.type === "KIT" && (
-                                                                                        <img
-                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[0].path}`}
-                                                                                            title={clothing.name}
-                                                                                            alt={clothing.name}
-                                                                                            className="img-responsive hover-image"
-                                                                                        />
-                                                                                    )}
-                                                                                </Link>
-                                                                                <div className="product_hover_block">
-                                                                                    <div className="action">
-                                                                                        <button
-                                                                                            type="button"
-                                                                                            className="cart_button"
-                                                                                            onClick={() => cart.add(clothing.id)}
-                                                                                            title="Add to Cart"
-                                                                                        >
-                                                                                            <i className="fa fa-shopping-cart" area-hidden="true" />
-                                                                                        </button>
-                                                                                        <button
-                                                                                            className="wishlist"
-                                                                                            type="button"
-                                                                                            title="Add to Wish List"
-                                                                                            onClick={() => cart.add(clothing.id)}
-                                                                                        >
-                                                                                            <i className="fa fa-heart" />
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="product-details">
-                                                                                <div className="caption">
-                                                                                    <h4>
-                                                                                        <Link to={`/clothing/details/${clothing.id}`}>{clothing.name}</Link>
-                                                                                    </h4>
-                                                                                    <p className="price">
-                                                                                        {clothing.price.toFixed(2)} лв.
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <span
-                                                    className="tablatest_default_width"
-                                                    style={{ display: "none", visibility: "hidden" }}
-                                                />
-                                            </div>
-                                            <div id="tab-special" className="tab-content">
-                                                <div className="box">
-                                                    <div className="box-content">
-                                                        <div className="box-product  productbox-grid" id="tabspecial-grid">
-                                                            {mostSold.clothes && mostSold.clothes.map((product) => (
-                                                                <div className="product-items" key={product.id}>
-                                                                    <div className="product-block product-thumb transition">
-                                                                        <div className="product-block-inner">
-                                                                            <div className="image">
-                                                                                <Link to={`/clothing/details/${product.id}`}>
-                                                                                    <img
-                                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`}
-                                                                                        title={product.name}
-                                                                                        alt={product.name}
-                                                                                        className="img-responsive reg-image"
-                                                                                    />
-
-                                                                                    {product.type !== "KIT" && (
-                                                                                        <img
-                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[1].path}`}
-                                                                                            title={product.name}
-                                                                                            alt={product.name}
-                                                                                            className="img-responsive hover-image"
-                                                                                        />
-                                                                                    )}
-
-                                                                                    {product.type === "KIT" && (
-                                                                                        <img
-                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`}
-                                                                                            title={product.name}
-                                                                                            alt={product.name}
-                                                                                            className="img-responsive hover-image"
-                                                                                        />
-                                                                                    )}
-                                                                                </Link>
-                                                                                <div className="product_hover_block">
-                                                                                    <div className="action">
-                                                                                        <button
-                                                                                            type="button"
-                                                                                            className="cart_button"
-                                                                                            onClick={() => cart.add(product.id)}
-                                                                                            title="Add to Cart"
-                                                                                        >
-                                                                                            <i className="fa fa-shopping-cart" aria-hidden="true" />
-                                                                                        </button>
-                                                                                        <button
-                                                                                            className="wishlist"
-                                                                                            type="button"
-                                                                                            title="Add to Wish List"
-                                                                                            onClick={() => cart.add(product.id)}
-                                                                                        >
-                                                                                            <i className="fa fa-heart" />
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="product-details">
-                                                                                <div className="caption">
-                                                                                    <h4>
-                                                                                        <Link to={`/clothing/details/${product.id}`}>
-                                                                                            {product.name}
-                                                                                        </Link>
-                                                                                    </h4>
-                                                                                    <p className="price">
-                                                                                        <span className="price-new">{product.price.toFixed(2)} лв.</span>
-                                                                                        {/* <span className="price-old">$122.00</span> */}
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <span
-                                                    className="tabspecial_default_width"
-                                                    style={{ display: "none", visibility: "hidden" }}
-                                                />
-                                            </div>
+                    <div id="content" className="col-sm-9 productpage">
+                        <div className="hometab box">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="tab-head">
+                                        <div className="hometab-heading box-heading">Нови и популярни артикули</div>
+                                        <div id="tabs" className="htabs">
+                                            <ul className="etabs">
+                                                <li className="tab"><a href="#tab-latest">Най-нови</a></li>
+                                                <li className="tab"></li>
+                                                <li className="tab"><a href="#tab-special">Най-продавани</a></li>
+                                            </ul>
                                         </div>
                                     </div>
+                                    <div id="tab-latest" className="tab-content">
+                                        <div className="box">
+                                            <div className="box-content">
+                                                <div className="customNavigation">
+                                                    <a className="fa prev fa-arrow-left">&nbsp;</a>
+                                                    <a className="fa next fa-arrow-right">&nbsp;</a>
+                                                </div>
+                                                <div className="box-product product-carousel" id="tablatest-carousel">
+                                                    {newest.clothes && newest.clothes.map((clothing) => (
+                                                        <div className="slider-item" key={clothing.id}>
+                                                            <div className="product-block product-thumb transition">
+                                                                <div className="product-block-inner">
+                                                                    <div className="image">
+                                                                        <Link to={`/clothing/details/${clothing.id}`}>
+                                                                            <img
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[0].path}`}
+                                                                                title={clothing.name}
+                                                                                alt={clothing.name}
+                                                                                className="img-responsive reg-image"
+                                                                            />
+                                                                            {clothing.type !== "KIT" && (
+                                                                                <img
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[1].path}`}
+                                                                                    title={clothing.name}
+                                                                                    alt={clothing.name}
+                                                                                    className="img-responsive hover-image"
+                                                                                />
+                                                                            )}
+                                                                            {clothing.type === "KIT" && (
+                                                                                <img
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[0].path}`}
+                                                                                    title={clothing.name}
+                                                                                    alt={clothing.name}
+                                                                                    className="img-responsive hover-image"
+                                                                                />
+                                                                            )}
+                                                                        </Link>
+                                                                        <div className="product_hover_block">
+                                                                            <div className="action">
+                                                                                <button
+                                                                                    type="button"
+                                                                                    className="cart_button"
+                                                                                    onClick={() => cart.add(clothing.id)}
+                                                                                    title="Add to Cart"
+                                                                                >
+                                                                                    <i className="fa fa-shopping-cart" area-hidden="true" />
+                                                                                </button>
+                                                                                <button
+                                                                                    className="wishlist"
+                                                                                    type="button"
+                                                                                    title="Add to Wish List"
+                                                                                    onClick={() => cart.add(clothing.id)}
+                                                                                >
+                                                                                    <i className="fa fa-heart" />
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="product-details">
+                                                                        <div className="caption">
+                                                                            <h4>
+                                                                                <Link to={`/clothing/details/${clothing.id}`}>{clothing.name}</Link>
+                                                                            </h4>
+                                                                            <p className="price">
+                                                                                {clothing.price.toFixed(2)} лв.
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span className="tablatest_default_width" style={{ display: "none", visibility: "hidden" }}/>
+                                    </div>
+                                    <div id="tab-special" className="tab-content">
+                                        <div className="box">
+                                            <div className="box-content">
+                                                <div className="box-product  productbox-grid" id="tabspecial-grid">
+                                                    {mostSold.clothes && mostSold.clothes.map((product) => (
+                                                        <div className="product-items" key={product.id}>
+                                                            <div className="product-block product-thumb transition">
+                                                                <div className="product-block-inner">
+                                                                    <div className="image">
+                                                                        <Link to={`/clothing/details/${product.id}`}>
+                                                                            <img
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`}
+                                                                                title={product.name}
+                                                                                alt={product.name}
+                                                                                className="img-responsive reg-image"
+                                                                            />
+
+                                                                            {product.type !== "KIT" && (
+                                                                                <img
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[1].path}`}
+                                                                                    title={product.name}
+                                                                                    alt={product.name}
+                                                                                    className="img-responsive hover-image"
+                                                                                />
+                                                                            )}
+
+                                                                            {product.type === "KIT" && (
+                                                                                <img
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`}
+                                                                                    title={product.name}
+                                                                                    alt={product.name}
+                                                                                    className="img-responsive hover-image"
+                                                                                />
+                                                                            )}
+                                                                        </Link>
+                                                                        <div className="product_hover_block">
+                                                                            <div className="action">
+                                                                                <button
+                                                                                    type="button"
+                                                                                    className="cart_button"
+                                                                                    onClick={() => cart.add(product.id)}
+                                                                                    title="Add to Cart"
+                                                                                >
+                                                                                    <i className="fa fa-shopping-cart" aria-hidden="true" />
+                                                                                </button>
+                                                                                <button
+                                                                                    className="wishlist"
+                                                                                    type="button"
+                                                                                    title="Add to Wish List"
+                                                                                    onClick={() => cart.add(product.id)}
+                                                                                >
+                                                                                    <i className="fa fa-heart" />
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="product-details">
+                                                                        <div className="caption">
+                                                                            <h4>
+                                                                                <a href={`/product&product_id=${product.id}`}>
+                                                                                    {product.name}
+                                                                                </a>
+                                                                            </h4>
+                                                                            <p className="price">
+                                                                                <span className="price-new">{product.price.toFixed(2)} лв.</span>
+                                                                                {/* <span className="price-old">$122.00</span> */}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span
+                                            className="tabspecial_default_width"
+                                            style={{ display: "none", visibility: "hidden" }}
+                                        />
+                                    </div>
                                 </div>
-                            )}
+                            </div>
                         </div>
                     </div>
                 </div>

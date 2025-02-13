@@ -22,6 +22,7 @@ export default function Catalog() {
     const [catalog, setCatalog] = useState([]);
     const [mostSold, setMostSold] = useState([]);
     const [productsCount, setProductsCount] = useState([]);
+console.log(productsCount);
 
     useEffect(() => {
         Promise.all([
@@ -196,7 +197,7 @@ export default function Catalog() {
                                                                 handleCategoryChange(category.id.toString())
                                                             }
                                                         />
-                                                        {category.name}
+                                                        {category.name} ({productsCount[category.id] || 0})
                                                     </label>
                                                 </div>
                                             ))}
