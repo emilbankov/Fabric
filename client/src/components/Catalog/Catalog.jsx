@@ -8,27 +8,34 @@ export default function Catalog() {
     const queryParams = new URLSearchParams(location.search);
     const type = queryParams.get("type") || "";
     const sort = queryParams.get("sort") || "";
+    const size = queryParams.get("size") || "";
     const [catalog, setCatalog] = useState([]);
 
     useEffect(() => {
         if (!type && !sort) return;
 
-        clothesService.getCatalog(type, sort)
+        clothesService.getCatalog(type, sort, size)
             .then(result => { setCatalog(result); })
             .catch(err => { console.log(err); });
 
         return () => setCatalog("clothes");
-    }, [type, sort]);
+    }, [type, sort, size]);
+console.log(catalog);
 
     const handleSortChange = (e) => {
         const newSort = e.target.value;
-        console.log(newSort);
 
         const params = new URLSearchParams(location.search);
-        console.log(params);
-
         params.set("sort", newSort);
-        console.log(params.set("sort", newSort));
+
+        navigate(`${location.pathname}?${params.toString()}`);
+    };
+
+    const handleSizeChange = (e) => {
+        const newSize = e.target.value;
+
+        const params = new URLSearchParams(location.search);
+        params.set("size", newSize);
 
         navigate(`${location.pathname}?${params.toString()}`);
     };
@@ -624,27 +631,25 @@ export default function Catalog() {
                                         </div>
                                     </div>
                                     <div className="show-wrapper">
-                                        {catalog.clothes && (
-                                            <div className="col-md-1 text-right show">
-                                                <label className="control-label" htmlFor="input-limit">
-                                                    Show:
-                                                </label>
-                                            </div>
-                                        )}
-                                        {catalog.clothes && (
-                                            <div className="col-md-2 text-right limit">
-                                                <select
-                                                    id="input-limit"
-                                                    className="form-control"
-                                                >
-                                                    <option value="productcatalog.html&limit=15 ">15</option>
-                                                    <option value="productcatalog.html&limit=25 ">25 </option>
-                                                    <option value="productcatalog.html&limit=50 ">50 </option>
-                                                    <option value="productcatalog.html&limit=75 ">75 </option>
-                                                    <option value="productcatalog.html&limit=100 ">100 </option>
-                                                </select>
-                                            </div>
-                                        )}
+                                        <div className="col-md-1 text-right show">
+                                            <label className="control-label" htmlFor="input-limit">
+                                                Подреди по:
+                                            </label>
+                                        </div>
+                                        <div className="col-md-2 text-right limit">
+                                            <select
+                                                id="input-limit"
+                                                className="form-control size"
+                                                onChange={handleSizeChange}
+                                                value={size}
+                                            >
+                                                <option value="20">20</option>
+                                                <option value="40">40</option>
+                                                <option value="60">60</option>
+                                                <option value="80">80</option>
+                                                <option value="100">100 </option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -963,22 +968,14 @@ export default function Catalog() {
                             <div className="pagination-wrapper">
                                 <div className="col-sm-6 text-left page-link">
                                     <ul className="pagination">
-                                        <li className="active">
-                                            <span>1</span>
-                                        </li>
-                                        <li>
-                                            <a href="catalog.html?page=2">2</a>
-                                        </li>
-                                        <li>
-                                            <a href="catalog.html?page=2">&gt;</a>
-                                        </li>
-                                        <li>
-                                            <a href="catalog.html?page=2">&gt;|</a>
-                                        </li>
+                                        <li className="active"><span>1</span></li>
+                                        <li><a href="catalog.html?page=2">2</a></li>
+                                        <li><a href="catalog.html?page=2">&gt;</a></li>
+                                        <li><a href="catalog.html?page=2">&gt;|</a></li>
                                     </ul>
                                 </div>
                                 <div className="col-sm-6 text-right page-result">
-                                    Showing 1 to {catalog.items_on_page} of 16 ({catalog.total_pages} Pages)
+                                    Showing 1 to {catalog.items_on_page} of {size} ({catalog.total_pages} Pages)
                                 </div>
                             </div>
                         </div>

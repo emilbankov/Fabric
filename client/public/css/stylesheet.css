@@ -7790,7 +7790,8 @@ button.list-group-item:hover {
 	border-radius: 0;
 }
 
-.sort .form-control.catalog {
+.sort .form-control.catalog,
+.limit .form-control.size {
 	padding: 5px 5px 5px 0 !important;
 }
 
