@@ -25,3 +25,23 @@ export const categoryTranslations = {
     "WORK": "Работни",
     "OTHERS": "Други"
 };
+
+export const categories = [
+    { id: "MARTIAL_SPORTS", name: "Бойни спортове" },
+    { id: "GAME_OF_THRONES", name: "Гейм Аф Тронс" },
+    { id: "TRUCKS", name: "Камиони" },
+    { id: "CHRISTMAS", name: "Коледа" },
+    { id: "CARS", name: "Коли" },
+    { id: "DOGS", name: "Кучета" },
+    { id: "HUNTING", name: "Лов" },
+    { id: "MOTORCYCLES", name: "Мотори" },
+    { id: "MUSIC", name: "Музика" },
+    { id: "PATRIOTIC", name: "Патриотични" },
+    { id: "WORK", name: "Работни" },
+    { id: "FISHING", name: "Риболов" },
+    { id: "UEFA_EURO_2024", name: "УЕФА ЕВРО 2024" },
+    { id: "MOVIES", name: "Филми" },
+    { id: "FORMULA_1", name: "Формула 1" },
+    { id: "FOOTBALL", name: "Футбол" },
+    { id: "OTHERS", name: "Други" }
+];

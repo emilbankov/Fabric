@@ -5303,9 +5303,9 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 .pagination>.active>span:hover,
 .pagination>.active>a:focus,
 .pagination>.active>span:focus {
-    background-color: #ffd200;
-    border-color: #ffd200;
-    color: #ffffff;
+    background-color: #252525;
+    border-color: #252525;
+    color: #ffffff !important;
     cursor: default;
     z-index: 2;
     border-radius: 5px;
