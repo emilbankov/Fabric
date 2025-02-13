@@ -45,3 +45,13 @@ export const categories = [
     { id: "FOOTBALL", name: "Футбол" },
     { id: "OTHERS", name: "Други" }
 ];
+
+export const filters = {
+    "new": "Най-нови",
+    "most-sold": "Най-продавани",
+    "t_shirt": "Тениски",
+    "long_t_shirt": "Блузи",
+    "sweatshirt": "Суитчъри",
+    "shorts": "Къси панталони",
+    "kit": "Комплекти"
+};
