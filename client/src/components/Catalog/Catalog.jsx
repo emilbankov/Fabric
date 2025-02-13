@@ -5,44 +5,57 @@ import { categories } from "../../lib/dictionary";
 
 export default function Catalog() {
     const location = useLocation();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     const queryParams = new URLSearchParams(location.search);
     const type = queryParams.get("type") || "";
     const sort = queryParams.get("sort") || "";
     const size = queryParams.get("size") || "";
     const page = parseInt(queryParams.get("page") || "1", 10);
+    const selectedCategories = queryParams.get("category") || "";
+    const categoryParam = queryParams.get("category") || "";
+    const categoryArray = categoryParam ? categoryParam.split(",") : [];
+
+    const [checkedCategories, setCheckedCategories] = useState(
+        selectedCategories ? selectedCategories.split(",") : []
+    );
     const [catalog, setCatalog] = useState([]);
     const [mostSold, setMostSold] = useState([]);
+    const [productsCount, setProductsCount] = useState([]);
 
     useEffect(() => {
         Promise.all([
-            clothesService.getCatalog(type, sort, size, page),
+            clothesService.getCatalog(type, sort, size, page, categoryArray),
             clothesService.getMostSold(),
+            clothesService.getProductsCount(),
         ])
-            .then(([catalog, mostSold]) => {
+            .then(([catalog, mostSold, productsCount]) => {
                 setCatalog(catalog);
                 setMostSold(mostSold);
+                setProductsCount(productsCount);
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error("Error fetching data:", err);
             });
-    }, [type, sort, size, page]);
+    }, [location.search, type, sort, size, page, selectedCategories]);
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const categoryParam = queryParams.get("category") || "";
+        setCheckedCategories(categoryParam ? categoryParam.split(",") : []);
+    }, [location.search]);
 
     const handleSortChange = (e) => {
         const newSort = e.target.value;
-
         const params = new URLSearchParams(location.search);
         params.set("sort", newSort);
-
         navigate(`${location.pathname}?${params.toString()}`);
     };
 
     const handleSizeChange = (e) => {
         const newSize = e.target.value;
-
         const params = new URLSearchParams(location.search);
         params.set("size", newSize);
-
         navigate(`${location.pathname}?${params.toString()}`);
     };
 
@@ -51,6 +64,39 @@ export default function Catalog() {
         params.set("page", newPage);
         navigate(`${location.pathname}?${params.toString()}`);
     };
+
+    const handleCategoryChange = (categoryId) => {
+        setCheckedCategories((prevCheckedCategories) => {
+            if (prevCheckedCategories.includes(categoryId)) {
+                return prevCheckedCategories.filter((id) => id !== categoryId);
+            } else {
+                return [...prevCheckedCategories, categoryId];
+            }
+        });
+    };
+
+    const applyFilter = () => {
+        const params = new URLSearchParams(location.search);
+        if (checkedCategories.length > 0) {
+            params.set("category", checkedCategories.join(","));
+            console.log("Selected categories:", checkedCategories);
+        } else {
+            params.delete("category");
+        }
+        navigate(`${location.pathname}?${params.toString()}`);
+    };
+
+    const resetFilters = () => {
+        const params = new URLSearchParams(location.search);
+
+        params.delete("category");
+        params.set("page", "1");
+
+        navigate(`${location.pathname}?${params.toString()}`);
+
+        setCheckedCategories([]);
+    };
+
 
     useEffect(() => {
         const gridButton = document.getElementById("grid-view");
@@ -62,7 +108,8 @@ export default function Catalog() {
             listButton.classList.remove("active");
 
             products.forEach((product) => {
-                product.className = "product-layout product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6";
+                product.className =
+                    "product-layout product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6";
             });
         };
 
@@ -92,8 +139,8 @@ export default function Catalog() {
             existingScript.parentNode.removeChild(existingScript);
         }
 
-        const script = document.createElement('script');
-        script.src = '/js/custom.js';
+        const script = document.createElement("script");
+        script.src = "/js/custom.js";
         script.async = true;
 
         document.body.appendChild(script);
@@ -107,7 +154,7 @@ export default function Catalog() {
 
     return (
         <>
-            <div className="product-category-20   layout-2 left-col">
+            <div className="product-category-20 layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">
                     <div className="container">
@@ -131,26 +178,45 @@ export default function Catalog() {
                         <aside id="column-left" className="col-sm-3 hidden-xs">
                             <div className="box">
                                 <div className="box-heading">Филтрирано търсене</div>
-                                <div className="list-group ">
-                                    {" "}
+                                <div className="list-group">
                                     <a className="list-group-item heading">Категории</a>
-                                    <div className="list-group-item  ">
+                                    <div className="list-group-item">
                                         <div id="filter-group1">
                                             {categories.map((category) => (
                                                 <div className="checkbox" key={category.id}>
                                                     <label>
-                                                        <input type="checkbox" name="filter[]" defaultValue={category.id} />
-                                                        {category.name} ()
+                                                        <input
+                                                            type="checkbox"
+                                                            name="filter[]"
+                                                            value={category.id}
+                                                            checked={checkedCategories.includes(
+                                                                category.id.toString()
+                                                            )}
+                                                            onChange={() =>
+                                                                handleCategoryChange(category.id.toString())
+                                                            }
+                                                        />
+                                                        {category.name}
                                                     </label>
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
                                     <div className="panel-footer text-right">
+                                        {checkedCategories.length !== 0 && (
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger btn-lg btn-block"
+                                                onClick={resetFilters}
+                                            >
+                                                Изчисти филтри
+                                            </button>
+                                        )}
                                         <button
                                             type="button"
                                             id="button-filter"
                                             className="btn btn-primary"
+                                            onClick={applyFilter}
                                         >
                                             Филтрирай
                                         </button>
@@ -163,7 +229,7 @@ export default function Catalog() {
                             />
                             <title>Untitled Document</title>
                             <div className="swiper-viewport">
-                                <div id="banner0" className="swiper-container  single-banner ">
+                                <div id="banner0" className="swiper-container single-banner">
                                     <div className="swiper-wrapper">
                                         <div className="swiper-slide">
                                             <a href="#">
@@ -175,76 +241,76 @@ export default function Catalog() {
                                             </a>
                                         </div>
                                     </div>
-                                    {/* If we need pagination */}
                                     <div className="swiper-pagination" />
                                 </div>
                             </div>
                             <div className="box latest">
                                 <div className="box-heading">Latest Product</div>
                                 <div className="box-content">
-                                    <div className="box-product  productbox-grid" id=" latest-grid">
-                                        {mostSold.clothes && mostSold.clothes.slice(0, 3).map((item) => (
-                                            <div className="product-items" key={item.id}>
-                                                <div className="product-items">
-                                                    <div className="product-block product-thumb transition">
-                                                        <div className="product-block-inner">
-                                                            <div className="image">
-                                                                <Link to={`/clothing/details/${item.id}`}>
-                                                                    <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
-                                                                        title="tote bags for women"
-                                                                        alt="tote bags for women"
-                                                                        className="img-responsive reg-image"
-                                                                    />
-
-                                                                    {item.type !== "KIT" && (
-                                                                        <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[1].path}`}
-                                                                            title="tote bags for women"
-                                                                            alt="tote bags for women"
-                                                                            className="img-responsive hover-image"
-                                                                        />
-                                                                    )}
-
-                                                                    {item.type === "KIT" && (
+                                    <div className="box-product productbox-grid" id=" latest-grid">
+                                        {mostSold.clothes &&
+                                            mostSold.clothes.slice(0, 3).map((item) => (
+                                                <div className="product-items" key={item.id}>
+                                                    <div className="product-items">
+                                                        <div className="product-block product-thumb transition">
+                                                            <div className="product-block-inner">
+                                                                <div className="image">
+                                                                    <Link to={`/clothing/details/${item.id}`}>
                                                                         <img
                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
                                                                             title="tote bags for women"
                                                                             alt="tote bags for women"
-                                                                            className="img-responsive hover-image"
+                                                                            className="img-responsive reg-image"
                                                                         />
-                                                                    )}
-                                                                </Link>
-                                                            </div>
-                                                            <div className="product-details">
-                                                                <div className="caption">
-                                                                    <h4>
-                                                                        <a href="=49 ">{item.name}</a>
-                                                                    </h4>
-                                                                    <p className="price">
-                                                                        {item.price.toFixed(2)} лв.
-                                                                    </p>
-                                                                </div>
-                                                                <div className="product_hover_block">
-                                                                    <div className="action">
-                                                                        <button
-                                                                            type="button"
-                                                                            className="cart_button"
-                                                                            title="Add to Cart"
-                                                                        >
-                                                                            <i
-                                                                                className="fa fa-shopping-cart"
-                                                                                area-hidden="true"
+
+                                                                        {item.type !== "KIT" && (
+                                                                            <img
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[1].path}`}
+                                                                                title="tote bags for women"
+                                                                                alt="tote bags for women"
+                                                                                className="img-responsive hover-image"
                                                                             />
-                                                                        </button>
+                                                                        )}
+
+                                                                        {item.type === "KIT" && (
+                                                                            <img
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
+                                                                                title="tote bags for women"
+                                                                                alt="tote bags for women"
+                                                                                className="img-responsive hover-image"
+                                                                            />
+                                                                        )}
+                                                                    </Link>
+                                                                </div>
+                                                                <div className="product-details">
+                                                                    <div className="caption">
+                                                                        <h4>
+                                                                            <a href="=49 ">{item.name}</a>
+                                                                        </h4>
+                                                                        <p className="price">
+                                                                            {item.price.toFixed(2)} лв.
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className="product_hover_block">
+                                                                        <div className="action">
+                                                                            <button
+                                                                                type="button"
+                                                                                className="cart_button"
+                                                                                title="Add to Cart"
+                                                                            >
+                                                                                <i
+                                                                                    className="fa fa-shopping-cart"
+                                                                                    area-hidden="true"
+                                                                                />
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))}
                                     </div>
                                 </div>
                             </div>
@@ -641,23 +707,28 @@ export default function Catalog() {
                             <div className="pagination-wrapper">
                                 <div className="col-sm-6 text-left page-link">
                                     <ul className="pagination">
-                                        {/* Show "First" and "Previous" only if NOT on Page 1 */}
                                         {page > 1 && (
                                             <>
                                                 <li>
-                                                    <a onClick={() => handlePageChange(1)} role="button" style={{ cursor: "pointer" }}>
+                                                    <a
+                                                        onClick={() => handlePageChange(1)}
+                                                        role="button"
+                                                        style={{ cursor: "pointer" }}
+                                                    >
                                                         |&lt;
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a onClick={() => handlePageChange(page - 1)} role="button" style={{ cursor: "pointer" }}>
+                                                    <a
+                                                        onClick={() => handlePageChange(page - 1)}
+                                                        role="button"
+                                                        style={{ cursor: "pointer" }}
+                                                    >
                                                         &lt;
                                                     </a>
                                                 </li>
                                             </>
                                         )}
-
-                                        {/* Page Number Logic (Show max 3 pages at a time) */}
                                         {(() => {
                                             const totalPages = Math.max(1, catalog.total_pages || 1);
                                             let startPage = Math.max(1, page - 1);
@@ -667,32 +738,45 @@ export default function Catalog() {
                                                 startPage = Math.max(1, endPage - 2);
                                             }
 
-                                            return [...Array(Math.max(0, endPage - startPage + 1))].map((_, index) => {
-                                                const pageNumber = startPage + index;
-                                                return (
-                                                    <li key={pageNumber} className={page === pageNumber ? "active" : ""}>
-                                                        <a
-                                                            onClick={() => handlePageChange(pageNumber)}
-                                                            role="button"
-                                                            style={{ cursor: "pointer" }}
+                                            return [...Array(Math.max(0, endPage - startPage + 1))].map(
+                                                (_, index) => {
+                                                    const pageNumber = startPage + index;
+                                                    return (
+                                                        <li
+                                                            key={pageNumber}
+                                                            className={page === pageNumber ? "active" : ""}
                                                         >
-                                                            {pageNumber}
-                                                        </a>
-                                                    </li>
-                                                );
-                                            });
+                                                            <a
+                                                                onClick={() => handlePageChange(pageNumber)}
+                                                                role="button"
+                                                                style={{ cursor: "pointer" }}
+                                                            >
+                                                                {pageNumber}
+                                                            </a>
+                                                        </li>
+                                                    );
+                                                }
+                                            );
                                         })()}
-
-                                        {/* Show "Next" and "Last" only if NOT on the last page */}
                                         {page < catalog.total_pages && (
                                             <>
                                                 <li>
-                                                    <a onClick={() => handlePageChange(page + 1)} role="button" style={{ cursor: "pointer" }}>
+                                                    <a
+                                                        onClick={() => handlePageChange(page + 1)}
+                                                        role="button"
+                                                        style={{ cursor: "pointer" }}
+                                                    >
                                                         &gt;
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a onClick={() => handlePageChange(catalog.total_pages)} role="button" style={{ cursor: "pointer" }}>
+                                                    <a
+                                                        onClick={() =>
+                                                            handlePageChange(catalog.total_pages)
+                                                        }
+                                                        role="button"
+                                                        style={{ cursor: "pointer" }}
+                                                    >
                                                         &gt;|
                                                     </a>
                                                 </li>
@@ -700,11 +784,9 @@ export default function Catalog() {
                                         )}
                                     </ul>
                                 </div>
-
-                                {/* Page Information */}
                                 <div className="col-sm-6 text-right page-result">
-                                    Показвани {catalog.items_on_page} от {size} ({catalog.total_pages} Страници)
-
+                                    Показвани {catalog.items_on_page} от {size} (
+                                    {catalog.total_pages} Страници)
                                 </div>
                             </div>
                         </div>
@@ -713,4 +795,4 @@ export default function Catalog() {
             </div>
         </>
     );
-};
+}
