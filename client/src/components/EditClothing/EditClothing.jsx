@@ -23,6 +23,7 @@ export default function EditClothing() {
                 setClothing(result);
             });
     }, [clothingId]);
+console.log(clothing);
 
     const editHandler = async (e) => {
         e.preventDefault();
@@ -203,7 +204,7 @@ export default function EditClothing() {
                                                 id="name"
                                                 name="name"
                                                 placeholder="Име"
-                                                value={clothing.name}
+                                                value={clothing?.clothing?.name}
                                                 onChange={onChange}
                                             />
                                         </div>
@@ -217,7 +218,7 @@ export default function EditClothing() {
                                                 name="description"
                                                 placeholder="Описание"
                                                 rows="4"
-                                                value={clothing.description}
+                                                value={clothing?.clothing?.description}
                                                 onChange={onChange}
                                             ></textarea>
                                         </div>
@@ -231,7 +232,7 @@ export default function EditClothing() {
                                                 id="price"
                                                 name="price"
                                                 placeholder="Цена"
-                                                value={clothing.price}
+                                                value={clothing?.clothing?.price}
                                                 onChange={onChange}
                                                 step="0.01"
                                                 min="0"
@@ -245,7 +246,7 @@ export default function EditClothing() {
                                                 className="form-control"
                                                 id="type"
                                                 name="type"
-                                                value={clothing.type}
+                                                value={clothing?.clothing?.type}
                                                 onChange={onChange}
                                             >
                                                 <option value="" hidden>Изберете тип</option>
@@ -264,7 +265,7 @@ export default function EditClothing() {
                                                 className="form-control"
                                                 id="gender"
                                                 name="gender"
-                                                value={clothing.gender}
+                                                value={clothing?.clothing?.gender}
                                                 onChange={onChange}
                                             >
                                                 <option value="" hidden>Изберете пол</option>
@@ -281,7 +282,7 @@ export default function EditClothing() {
                                                 className="form-control"
                                                 id="category"
                                                 name="category"
-                                                value={clothing.category}
+                                                value={clothing?.clothing?.category}
                                                 onChange={onChange}
                                             >
                                                 <option value="" hidden>Изберете категория</option>
@@ -314,7 +315,7 @@ export default function EditClothing() {
                                                 id="model"
                                                 name="model"
                                                 placeholder="Модел"
-                                                value={clothing.model}
+                                                value={clothing?.clothing?.model}
                                                 onChange={onChange}
                                             />
                                         </div>
@@ -331,7 +332,7 @@ export default function EditClothing() {
                                                 id="frontImage"
                                                 name="frontImage"
                                                 accept="image/*"
-                                                value={clothing.frontImage}
+                                                value={clothing?.clothing?.frontImage}
                                                 onChange={onChange}
                                             />
                                         </div>
@@ -345,7 +346,7 @@ export default function EditClothing() {
                                                 id="backImage"
                                                 name="backImage"
                                                 accept="image/*"
-                                                value={clothing.backImage}
+                                                value={clothing?.clothing?.backImage}
                                                 onChange={onChange}
                                             />
                                         </div>

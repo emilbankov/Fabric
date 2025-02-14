@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { useLocation, Route, Routes } from "react-router-dom";
 
 import { AuthProvider } from './contexts/AuthProvider';
 import AuthGuard from './guards/AuthGuard';
@@ -20,12 +20,13 @@ import Logout from './components/Logout/Logout';
 import Footer from "./components/Footer/Footer";
 
 function App() {
+    const location = useLocation();
     return (
         <>
             <AuthProvider>
                 <Header />
 
-                <Routes>
+                <Routes location={location} key={location.pathname}>
                     <Route path='/' element={<Home />} />
                     <Route path='/catalog' element={<Catalog />} />
                     <Route path='/search-results' element={<SearchResults />} />
