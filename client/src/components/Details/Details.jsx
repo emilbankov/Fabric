@@ -578,6 +578,69 @@ export default function Details() {
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <h3 className="ta-c">Къси панталони</h3>
+                                            <table className="table table-bordered" style={{ width: '100%' }}>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Размер</th>
+                                                        <th>Талия (см)</th>
+                                                        <th>Дължина (см)</th>
+                                                        <th>Ханш (см)</th>
+                                                        <th>Ориентировъчни килограми</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>XS</td>
+                                                        <td>36</td>
+                                                        <td>42</td>
+                                                        <td>50</td>
+                                                        <td>60 &lt;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>S</td>
+                                                        <td>38</td>
+                                                        <td>44</td>
+                                                        <td>52</td>
+                                                        <td>60-70</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>M</td>
+                                                        <td>40</td>
+                                                        <td>46</td>
+                                                        <td>54</td>
+                                                        <td>70-80</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>L</td>
+                                                        <td>42</td>
+                                                        <td>48</td>
+                                                        <td>56</td>
+                                                        <td>80-90</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>XL</td>
+                                                        <td>44</td>
+                                                        <td>50</td>
+                                                        <td>58</td>
+                                                        <td>90-100</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2XL</td>
+                                                        <td>46</td>
+                                                        <td>52</td>
+                                                        <td>60</td>
+                                                        <td>100-110</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3XL</td>
+                                                        <td>48</td>
+                                                        <td>54</td>
+                                                        <td>62</td>
+                                                        <td>110-125</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                         <div className="tab-pane" id="tab-review">
                                             <form className="form-horizontal" id="form-review">
@@ -764,7 +827,7 @@ export default function Details() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <span className="tablatest_default_width" style={{ display: "none", visibility: "hidden" }}/>
+                                        <span className="tablatest_default_width" style={{ display: "none", visibility: "hidden" }} />
                                     </div>
                                     <div id="tab-special" className="tab-content">
                                         <div className="box">
