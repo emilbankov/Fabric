@@ -16,9 +16,7 @@ export default function Catalog() {
     const categoryParam = queryParams.get("category") || "";
     const categoryArray = categoryParam ? categoryParam.split(",") : [];
 
-    const [checkedCategories, setCheckedCategories] = useState(
-        selectedCategories ? selectedCategories.split(",") : []
-    );
+    const [checkedCategories, setCheckedCategories] = useState(selectedCategories ? selectedCategories.split(",") : []);
     const [catalog, setCatalog] = useState([]);
     const [mostSold, setMostSold] = useState([]);
     const [productsCount, setProductsCount] = useState([]);
@@ -27,7 +25,7 @@ export default function Catalog() {
         Promise.all([
             clothesService.getCatalog(type, sort, size, page, categoryArray),
             clothesService.getMostSold(),
-            clothesService.getProductsCount(),
+            clothesService.getProductsCount(type),
         ])
             .then(([catalog, mostSold, productsCount]) => {
                 setCatalog(catalog);

@@ -225,8 +225,14 @@ table {
 td,
 th {
     padding: 0;
-    text-align: center;
+    text-align: left;
     vertical-align: middle;
+
+}
+
+.table-bordered tbody tr td,
+.table-bordered thead tr th {
+    text-align: center;
     border: 1px solid black !important;
     color: black !important;
 }

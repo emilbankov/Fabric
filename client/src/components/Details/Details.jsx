@@ -22,6 +22,16 @@ export default function Details() {
         Kids: ["98", "110", "122", "134", "146", "158"]
     };
 
+    const getUpdatedSizeOptions = () => {
+        if (gender === "Men" && clothing?.clothing?.type === "SWEATSHIRT") {
+            return sizeOptions["Men"].map((option) =>
+                option.startsWith("5XL") ? "5XL (+5.00лв.)" : option
+            );
+        }
+
+        return sizeOptions[gender];
+    };
+
     useEffect(() => {
         Promise.all([
             clothesService.getOne(clothingId),
@@ -53,14 +63,23 @@ export default function Details() {
         }
     };
 
+    useEffect(() => {
+        setSelectedSize(null);
+        setSelectedType(null);
+    }, [clothingId]);
+
+    useEffect(() => {
+        setSelectedSize(null);
+    }, [gender]);
+
     const calculatePrice = () => {
         let price = clothing.clothing.price;
 
-        if (selectedSize === "5XL") {
-            if (clothing.clothing.type === "T_SHIRT") {
-                price += 2;
-            } else {
+        if (selectedSize && selectedSize.includes("5XL")) {
+            if (clothing.clothing.type === "SWEATSHIRT") {
                 price += 5;
+            } else {
+                price += 2;
             }
         }
 
@@ -88,7 +107,7 @@ export default function Details() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [clothing.clothing, newest.clothes, mostSold.clothes]);
+    }, [newest.clothes]);
 
     return (
         <>
@@ -194,7 +213,7 @@ export default function Details() {
                                                             <div className="product-details">
                                                                 <div className="caption">
                                                                     <h4>
-                                                                        <a href="=49 ">{item.name}</a>
+                                                                        <Link to={`/clothing/details/${item.id}`}>{item.name}</Link>
                                                                     </h4>
                                                                     <p className="price">
                                                                         {item.price.toFixed(2)} лв.
@@ -343,10 +362,11 @@ export default function Details() {
                                                         </select>
 
                                                         <div className="options-container">
-                                                            <span className="desc">Размер: </span>
+                                                            <span className="desc">Избери размер: </span>
                                                             <div className="options">
-                                                                {sizeOptions[gender].map(size => (
-                                                                    <div key={size}
+                                                                {getUpdatedSizeOptions().map((size) => (
+                                                                    <div
+                                                                        key={size}
                                                                         className={`option ${selectedSize === size ? "selected" : ""}`}
                                                                         onClick={() => setSelectedSize(size)}
                                                                     >
@@ -359,7 +379,7 @@ export default function Details() {
 
                                                     {clothing.clothing.type === "T_SHIRT" && (
                                                         <div className="options-container last">
-                                                            <span className="desc">Вид: </span>
+                                                            <span className="desc">Избери вид: </span>
                                                             <div className="options">
                                                                 {["Тениска с къс ръкав", "Ватирана блуза с дълъг ръкав (+8.00лв.)"].map(type => (
                                                                     <div key={type}
@@ -466,7 +486,7 @@ export default function Details() {
                                             </p>
                                         </div>
                                         <div className="tab-pane" id="tab-specification">
-                                            {clothing.clothing.type === "T_SHIRT" && (
+                                            {(clothing.clothing.type === "T_SHIRT" || clothing.clothing.type === "LONG_T_SHIRT") && (
                                                 <div className="tab-pane" id="tab-specification">
                                                     <h3 className="ta-c">Мъжки / Дамски</h3>
                                                     <table className="table table-bordered">
@@ -525,6 +545,13 @@ export default function Details() {
                                                             <tr>
                                                                 <td>3XL</td>
                                                                 <td>60</td>
+                                                                <td>79</td>
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>5XL</td>
+                                                                <td>69</td>
                                                                 <td>79</td>
                                                                 <td>-</td>
                                                                 <td>-</td>
@@ -651,7 +678,7 @@ export default function Details() {
                                             )}
                                             {clothing.clothing.type === "SWEATSHIRT" && (
                                                 <div className="tab-pane" id="tab-specification">
-                                                    <h3 className="ta-c">Суитшърт</h3>
+                                                    <h3 className="ta-c">Мъжки / Дамски</h3>
                                                     <table className="table table-bordered" style={{ width: '100%' }}>
                                                         <thead>
                                                             <tr>
@@ -695,6 +722,185 @@ export default function Details() {
                                                                 <td>3XL</td>
                                                                 <td>69</td>
                                                                 <td>78</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>5XL</td>
+                                                                <td>72</td>
+                                                                <td>79</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <h3 className="ta-c">Детски</h3>
+                                                    <table className="table table-bordered" style={{ width: '100%' }}>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Размер</th>
+                                                                <th>Години</th>
+                                                                <th>Ширина (см)</th>
+                                                                <th>Дължина (см)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>122</td>
+                                                                <td>6-7</td>
+                                                                <td>40</td>
+                                                                <td>54</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>134</td>
+                                                                <td>8-9</td>
+                                                                <td>42</td>
+                                                                <td>56</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>146</td>
+                                                                <td>10-11</td>
+                                                                <td>44</td>
+                                                                <td>58</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>158</td>
+                                                                <td>12-13</td>
+                                                                <td>46</td>
+                                                                <td>58</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            )}
+                                            {clothing.clothing.type === "KIT" && (
+                                                <div className="tab-pane" id="tab-specification">
+                                                    <h3 className="ta-c">Тениска</h3>
+                                                    <table className="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Размер</th>
+                                                                <th>Мъжка Тениска - Ширина (см)</th>
+                                                                <th>Мъжка Тениска - Дължина (см)</th>
+                                                                <th>Дамска Тениска - Ширина (см)</th>
+                                                                <th>Дамска Тениска - Дължина (см)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>XS</td>
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                                <td>38</td>
+                                                                <td>59</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>S</td>
+                                                                <td>50</td>
+                                                                <td>69</td>
+                                                                <td>40</td>
+                                                                <td>60</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>M</td>
+                                                                <td>52</td>
+                                                                <td>71</td>
+                                                                <td>42</td>
+                                                                <td>60</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>L</td>
+                                                                <td>54</td>
+                                                                <td>72</td>
+                                                                <td>44</td>
+                                                                <td>61</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>XL</td>
+                                                                <td>56</td>
+                                                                <td>74</td>
+                                                                <td>47</td>
+                                                                <td>62</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2XL</td>
+                                                                <td>58</td>
+                                                                <td>76</td>
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3XL</td>
+                                                                <td>60</td>
+                                                                <td>79</td>
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>5XL</td>
+                                                                <td>69</td>
+                                                                <td>79</td>
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <h3 className="ta-c">Къси панталони</h3>
+                                                    <table className="table table-bordered" style={{ width: '100%' }}>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Размер</th>
+                                                                <th>Талия (см)</th>
+                                                                <th>Дължина (см)</th>
+                                                                <th>Ханш (см)</th>
+                                                                <th>Ориентировъчни килограми</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>XS</td>
+                                                                <td>36</td>
+                                                                <td>42</td>
+                                                                <td>50</td>
+                                                                <td>60 &lt;</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>S</td>
+                                                                <td>38</td>
+                                                                <td>44</td>
+                                                                <td>52</td>
+                                                                <td>60-70</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>M</td>
+                                                                <td>40</td>
+                                                                <td>46</td>
+                                                                <td>54</td>
+                                                                <td>70-80</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>L</td>
+                                                                <td>42</td>
+                                                                <td>48</td>
+                                                                <td>56</td>
+                                                                <td>80-90</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>XL</td>
+                                                                <td>44</td>
+                                                                <td>50</td>
+                                                                <td>58</td>
+                                                                <td>90-100</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2XL</td>
+                                                                <td>46</td>
+                                                                <td>52</td>
+                                                                <td>60</td>
+                                                                <td>100-110</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3XL</td>
+                                                                <td>48</td>
+                                                                <td>54</td>
+                                                                <td>62</td>
+                                                                <td>110-125</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -974,7 +1180,7 @@ export default function Details() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 };
