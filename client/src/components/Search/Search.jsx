@@ -63,7 +63,7 @@ export default function Search() {
                                             onClick={() => setQuery("")}
                                         >
                                             <div className="product-image col-sm-3 col-xs-4">
-                                                <img alt={product.name} src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images[0].path}`} />
+                                                <img alt={product.name} src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images.find(image => image.side === 'front')?.path}`} />
                                             </div>
                                             <div className="search-description col-sm-9 col-xs-8">
                                                 <div className="product-name">

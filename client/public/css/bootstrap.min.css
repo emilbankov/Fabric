@@ -2846,6 +2846,15 @@ fieldset[disabled] .btn-warning.active {
     background-color: #fff;
 }
 
+button.btn-danger.cancel-change {
+    position: absolute;
+    top: 0;
+    left: 160px;
+    border-top-right-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+    padding: 6px 15px;
+}
+
 .btn-danger {
     color: #fff;
     background-color: #d9534f;

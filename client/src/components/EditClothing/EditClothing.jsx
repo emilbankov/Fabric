@@ -35,7 +35,7 @@ export default function EditClothing() {
                 if (result.clothing.images?.length > 0) {
                     const frontImage = result.clothing.images.find(img => img.side === 'front');
                     const backImage = result.clothing.images.find(img => img.side === 'back');
-                    
+
                     if (frontImage) {
                         const frontPath = `https://res.cloudinary.com/dfttdd1vq/image/upload${frontImage.path}`;
                         setFrontImagePreview(frontPath);
@@ -54,7 +54,7 @@ export default function EditClothing() {
         e.preventDefault();
 
         const formData = new FormData();
-        
+
         Object.keys(clothing).forEach(key => {
             if (key !== 'frontImage' && key !== 'backImage' && key !== 'images') {
                 formData.append(key, clothing[key]);
@@ -80,21 +80,22 @@ export default function EditClothing() {
         }
 
         if (removedImages.length > 0) {
-            formData.append('removedImages', JSON.stringify(removedImages));
+            formData.append('removedImages', removedImages.join(','));
         }
 
-        console.log(removedImages);
+        console.log('Removed images:', removedImages);
+
         try {
             await clothesService.edit(clothingId, formData);
             navigate(`/clothing/details/${clothingId}`);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        
+
         if (name === 'type') {
             let newPrice = '';
             switch (value) {
@@ -116,7 +117,7 @@ export default function EditClothing() {
                 default:
                     newPrice = '';
             }
-            
+
             setClothing(state => ({
                 ...state,
                 [name]: value,
@@ -421,7 +422,7 @@ export default function EditClothing() {
                                                 id="model"
                                                 name="model"
                                                 placeholder="Модел"
-                                                value={clothing.model}
+                                                value={clothing.model.slice(0, 4)}
                                                 onChange={handleChange}
                                             />
                                         </div>
@@ -444,7 +445,7 @@ export default function EditClothing() {
                                             />
                                             {/* Front image preview */}
                                             {frontImagePreview && (
-                                                <div style={{ marginTop: "10px" }}>
+                                                <div style={{ marginTop: "10px", position: "relative" }}>
                                                     <img
                                                         src={frontImagePreview}
                                                         alt="Front Preview"
@@ -457,15 +458,13 @@ export default function EditClothing() {
                                                             padding: "10px",
                                                         }}
                                                     />
-                                                    {/* Only show cancel button if a new image is selected */}
                                                     {clothing.frontImage instanceof File && (
                                                         <button
                                                             type="button"
-                                                            className="btn btn-danger"
+                                                            className="btn btn-danger cancel-change"
                                                             onClick={() => handleCancelImage('front')}
-                                                            style={{ marginLeft: "10px" }}
                                                         >
-                                                            Отказ
+                                                            X
                                                         </button>
                                                     )}
                                                 </div>
@@ -488,7 +487,7 @@ export default function EditClothing() {
                                                 />
                                                 {/* Back image preview */}
                                                 {backImagePreview && (
-                                                    <div style={{ marginTop: "10px" }}>
+                                                    <div style={{ marginTop: "10px", position: "relative" }}>
                                                         <img
                                                             src={backImagePreview}
                                                             alt="Back Preview"
@@ -501,15 +500,13 @@ export default function EditClothing() {
                                                                 padding: "10px",
                                                             }}
                                                         />
-                                                        {/* Only show cancel button if a new image is selected */}
                                                         {clothing.backImage instanceof File && (
                                                             <button
                                                                 type="button"
-                                                                className="btn btn-danger"
+                                                                className="btn btn-danger cancel-change"
                                                                 onClick={() => handleCancelImage('back')}
-                                                                style={{ marginLeft: "10px" }}
                                                             >
-                                                                Отказ
+                                                                X
                                                             </button>
                                                         )}
                                                     </div>

@@ -43,14 +43,15 @@ export default function Details() {
                 setNewest(newest);
                 setMostSold(mostSold);
                 if (clothing?.clothing?.images?.length > 0) {
-                    setCurrentImage(clothing.clothing.images[0].path);
+                    const frontImage = clothing?.clothing.images.find(image => image.side == 'front');
+                    setCurrentImage(frontImage ? frontImage.path : null);
                 }
             })
             .catch(err => {
                 console.error("Error fetching data:", err);
             });
     }, [clothingId]);
-console.log(clothing);
+    console.log(clothing);
 
     const handleImageClick = (imagePath) => {
         setCurrentImage(imagePath);
@@ -186,7 +187,7 @@ console.log(clothing);
                                                             <div className="image">
                                                                 <Link to={`/clothing/details/${item.id}`}>
                                                                     <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images[0].path}`}
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
                                                                         title="tote bags for women"
                                                                         alt="tote bags for women"
                                                                         className="img-responsive reg-image"
@@ -194,7 +195,7 @@ console.log(clothing);
 
                                                                     {item.type !== "KIT" && (
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images[1].path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'back')?.path}`}
                                                                             title="tote bags for women"
                                                                             alt="tote bags for women"
                                                                             className="img-responsive hover-image"
@@ -203,7 +204,7 @@ console.log(clothing);
 
                                                                     {item.type === "KIT" && (
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images[0].path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
                                                                             title="tote bags for women"
                                                                             alt="tote bags for women"
                                                                             className="img-responsive hover-image"
@@ -278,7 +279,7 @@ console.log(clothing);
                                                                 <span className="fa next fa-arrow-right">&nbsp;</span>
                                                             </div>
                                                             <div id="additional-carousel" className="image-additional product-carousel">
-                                                                {clothing.clothing.images && clothing.clothing.images.map((image, index) => (
+                                                                {clothing.clothing.type !== 'KIT' && clothing.clothing.images && clothing.clothing.images.sort((a, b) => (a.side === "front" ? -1 : b.side === "front" ? 1 : 0)).map((image, index) => (
                                                                     <div className="slider-item" key={index}>
                                                                         <div className="product-block">
                                                                             <a
@@ -287,7 +288,46 @@ console.log(clothing);
                                                                                 className="elevatezoom-gallery"
                                                                                 onClick={(e) => {
                                                                                     e.preventDefault();
-                                                                                    handleImageClick(image.path)
+                                                                                    handleImageClick(image.path);
+                                                                                }}
+                                                                            >
+                                                                                <img
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${image.path}`}
+                                                                                    width={74}
+                                                                                    height={74}
+                                                                                    title={image.side}
+                                                                                    alt={image.side}
+                                                                                />
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                                {clothing.clothing.type === 'KIT' && clothing.clothing.images && clothing.clothing.images.sort((a, b) => {
+                                                                    if (clothing.clothing.type === "KIT") {
+                                                                        const order = ["KT_F", "_F", "_B", "K_F", "K_B"];
+
+                                                                        const getOrderIndex = (image) => {
+                                                                            if (image.publicId.includes("KT_F")) return 0;
+                                                                            if (image.publicId.includes("K_F")) return 3;
+                                                                            if (image.publicId.includes("K_B")) return 4;
+                                                                            if (image.publicId.includes("_F")) return 1;
+                                                                            if (image.publicId.includes("_B")) return 2;
+                                                                            return 5;
+                                                                        };
+
+                                                                        return getOrderIndex(a) - getOrderIndex(b);
+                                                                    }
+                                                                    return 0;
+                                                                }).map((image, index) => (
+                                                                    <div className="slider-item" key={index}>
+                                                                        <div className="product-block">
+                                                                            <a
+                                                                                href="#"
+                                                                                title={image.side}
+                                                                                className="elevatezoom-gallery"
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                    handleImageClick(image.path);
                                                                                 }}
                                                                             >
                                                                                 <img
@@ -1033,14 +1073,14 @@ console.log(clothing);
                                                                     <div className="image">
                                                                         <Link to={`/clothing/details/${clothing.id}`}>
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images[0].path}`}
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                 title={clothing.name}
                                                                                 alt={clothing.name}
                                                                                 className="img-responsive reg-image"
                                                                             />
                                                                             {clothing.type !== "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images[1].path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images.find(image => image.side === 'back')?.path}`}
                                                                                     title={clothing.name}
                                                                                     alt={clothing.name}
                                                                                     className="img-responsive hover-image"
@@ -1048,7 +1088,7 @@ console.log(clothing);
                                                                             )}
                                                                             {clothing.type === "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images[0].path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                     title={clothing.name}
                                                                                     alt={clothing.name}
                                                                                     className="img-responsive hover-image"
@@ -1106,7 +1146,7 @@ console.log(clothing);
                                                                     <div className="image">
                                                                         <Link to={`/clothing/details/${product.id}`}>
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images[0].path}`}
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images.find(image => image.side === 'front')?.path}`}
                                                                                 title={product.name}
                                                                                 alt={product.name}
                                                                                 className="img-responsive reg-image"
@@ -1114,7 +1154,7 @@ console.log(clothing);
 
                                                                             {product.type !== "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images[1].path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images.find(image => image.side === 'back')?.path}`}
                                                                                     title={product.name}
                                                                                     alt={product.name}
                                                                                     className="img-responsive hover-image"
@@ -1123,7 +1163,7 @@ console.log(clothing);
 
                                                                             {product.type === "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images[0].path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images.find(image => image.side === 'front')?.path}`}
                                                                                     title={product.name}
                                                                                     alt={product.name}
                                                                                     className="img-responsive hover-image"

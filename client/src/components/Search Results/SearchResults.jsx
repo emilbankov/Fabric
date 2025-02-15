@@ -667,14 +667,14 @@ export default function SearchResults() {
                                                 <div className="image">
                                                     <a href={`product/product&path=20&product_id=${item.id}`}>
                                                         <img
-                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_250,h_275${item.images[0].path}`}
+                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_250,h_275${item.images.find(image => image.side === 'front')?.path}`}
                                                             title={item.name}
                                                             alt={item.name}
                                                             className="img-responsive reg-image"
                                                         />
                                                         {item.type !== "KIT" && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images[1].path}`}
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'back')?.path}`}
                                                                 title={item.name}
                                                                 alt={item.name}
                                                                 className="img-responsive hover-image"
@@ -682,7 +682,7 @@ export default function SearchResults() {
                                                         )}
                                                         {item.type === "KIT" && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images[0].path}`}
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
                                                                 title={item.name}
                                                                 alt={item.name}
                                                                 className="img-responsive hover-image"
