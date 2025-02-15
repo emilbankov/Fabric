@@ -22,7 +22,6 @@ export function useForm(submitHandler, initialValues) {
         setValues((state) => {
             let newValues = { ...state, [e.target.name]: value };
 
-            // If changing "type", update "price"
             if (e.target.name === "type") {
                 newValues.price = priceMap[value] || "";
             }
