@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
 
 export default function EditClothing() {
     const navigate = useNavigate();
+    const location = useLocation();
     const { clothingId } = useParams();
     const [clothing, setClothing] = useState({
         name: '',
@@ -13,45 +14,166 @@ export default function EditClothing() {
         gender: '',
         category: '',
         model: '',
-        frontImage: '',
-        backImage: '',
+        frontImage: null,
+        backImage: null,
+    });
+
+    // Add image preview states
+    const [frontImagePreview, setFrontImagePreview] = useState(null);
+    const [backImagePreview, setBackImagePreview] = useState(null);
+
+    // Add state to store original image paths
+    const [originalImages, setOriginalImages] = useState({
+        front: null,
+        back: null
     });
 
     useEffect(() => {
         clothesService.getOne(clothingId)
             .then(result => {
-                setClothing(result);
+                setClothing(result.clothing);
+                if (result.clothing.images?.length > 0) {
+                    const frontImage = result.clothing.images.find(img => img.side === 'front');
+                    const backImage = result.clothing.images.find(img => img.side === 'back');
+                    
+                    if (frontImage) {
+                        const frontPath = `https://res.cloudinary.com/dfttdd1vq/image/upload${frontImage.path}`;
+                        setFrontImagePreview(frontPath);
+                        setOriginalImages(prev => ({ ...prev, front: frontPath }));
+                    }
+                    if (backImage) {
+                        const backPath = `https://res.cloudinary.com/dfttdd1vq/image/upload${backImage.path}`;
+                        setBackImagePreview(backPath);
+                        setOriginalImages(prev => ({ ...prev, back: backPath }));
+                    }
+                }
             });
     }, [clothingId]);
-console.log(clothing);
 
     const editHandler = async (e) => {
         e.preventDefault();
 
-        const values = Object.fromEntries(new FormData(e.currentTarget));
+        const formData = new FormData();
+        
+        Object.keys(clothing).forEach(key => {
+            if (key !== 'frontImage' && key !== 'backImage' && key !== 'images') {
+                formData.append(key, clothing[key]);
+            }
+        });
 
+        const removedImages = [];
+
+        if (clothing.frontImage instanceof File) {
+            formData.append('frontImage', clothing.frontImage);
+            const oldFrontImage = clothing.images?.find(img => img.side === 'front');
+            if (oldFrontImage) {
+                removedImages.push(oldFrontImage.path);
+            }
+        }
+
+        if (clothing.backImage instanceof File) {
+            formData.append('backImage', clothing.backImage);
+            const oldBackImage = clothing.images?.find(img => img.side === 'back');
+            if (oldBackImage) {
+                removedImages.push(oldBackImage.path);
+            }
+        }
+
+        if (removedImages.length > 0) {
+            formData.append('removedImages', JSON.stringify(removedImages));
+        }
+
+        console.log(removedImages);
         try {
-            clothesService.edit(clothingId, values);
-
+            await clothesService.edit(clothingId, formData);
             navigate(`/clothing/details/${clothingId}`);
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
-    const onChange = (e) => {
-        let value;
-
-        if (e.target.type === "file") {
-            value = e.target.files[0];
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        
+        if (name === 'type') {
+            let newPrice = '';
+            switch (value) {
+                case 'T_SHIRT':
+                    newPrice = '29.00';
+                    break;
+                case 'LONG_T_SHIRT':
+                    newPrice = '37.00';
+                    break;
+                case 'SHORTS':
+                    newPrice = '30.00';
+                    break;
+                case 'SWEATSHIRT':
+                    newPrice = '54.00';
+                    break;
+                case 'KIT':
+                    newPrice = '59.00';
+                    break;
+                default:
+                    newPrice = '';
+            }
+            
+            setClothing(state => ({
+                ...state,
+                [name]: value,
+                price: newPrice
+            }));
         } else {
-            value = e.target.value;
+            setClothing(state => ({
+                ...state,
+                [name]: value
+            }));
         }
+    };
 
-        setClothing((state) => ({
-            ...state,
-            [e.target.name]: value,
-        }));
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        const name = e.target.name;
+
+        if (file) {
+            // Update the clothing state with the file
+            setClothing(state => ({
+                ...state,
+                [name]: file
+            }));
+
+            // Create preview
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                if (name === 'frontImage') {
+                    setFrontImagePreview(event.target.result);
+                } else if (name === 'backImage') {
+                    setBackImagePreview(event.target.result);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleCancelImage = (side) => {
+        if (side === 'front') {
+            setFrontImagePreview(originalImages.front);
+            setClothing(state => ({
+                ...state,
+                frontImage: null
+            }));
+            // Reset file input
+            const input = document.getElementById('frontImage');
+            if (input) input.value = '';
+        } else {
+            setBackImagePreview(originalImages.back);
+            setClothing(state => ({
+                ...state,
+                backImage: null
+            }));
+            // Reset file input
+            const input = document.getElementById('backImage');
+            if (input) input.value = '';
+        }
     };
 
     useEffect(() => {
@@ -204,8 +326,8 @@ console.log(clothing);
                                                 id="name"
                                                 name="name"
                                                 placeholder="Име"
-                                                value={clothing?.clothing?.name}
-                                                onChange={onChange}
+                                                value={clothing.name}
+                                                onChange={handleChange}
                                             />
                                         </div>
                                     </div>
@@ -218,25 +340,9 @@ console.log(clothing);
                                                 name="description"
                                                 placeholder="Описание"
                                                 rows="4"
-                                                value={clothing?.clothing?.description}
-                                                onChange={onChange}
+                                                value={clothing.description}
+                                                onChange={handleChange}
                                             ></textarea>
-                                        </div>
-                                    </div>
-                                    <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="price">Цена</label>
-                                        <div className="col-sm-10">
-                                            <input
-                                                className="form-control"
-                                                type="number"
-                                                id="price"
-                                                name="price"
-                                                placeholder="Цена"
-                                                value={clothing?.clothing?.price}
-                                                onChange={onChange}
-                                                step="0.01"
-                                                min="0"
-                                            />
                                         </div>
                                     </div>
                                     <div className="form-group required">
@@ -246,8 +352,8 @@ console.log(clothing);
                                                 className="form-control"
                                                 id="type"
                                                 name="type"
-                                                value={clothing?.clothing?.type}
-                                                onChange={onChange}
+                                                value={clothing.type}
+                                                onChange={handleChange}
                                             >
                                                 <option value="" hidden>Изберете тип</option>
                                                 <option value="T_SHIRT">Тениска</option>
@@ -259,20 +365,20 @@ console.log(clothing);
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="gender">Пол</label>
+                                        <label className="col-sm-2 control-label" htmlFor="price">Цена</label>
                                         <div className="col-sm-10">
-                                            <select
+                                            <input
                                                 className="form-control"
-                                                id="gender"
-                                                name="gender"
-                                                value={clothing?.clothing?.gender}
-                                                onChange={onChange}
-                                            >
-                                                <option value="" hidden>Изберете пол</option>
-                                                <option value="MALE">Мъж</option>
-                                                <option value="FEMALE">Жена</option>
-                                                <option value="CHILD">Дете</option>
-                                            </select>
+                                                type="number"
+                                                id="price"
+                                                name="price"
+                                                placeholder="Цена"
+                                                value={clothing.price}
+                                                onChange={handleChange}
+                                                step="0.01"
+                                                min="0"
+                                                readOnly
+                                            />
                                         </div>
                                     </div>
                                     <div className="form-group required">
@@ -282,8 +388,8 @@ console.log(clothing);
                                                 className="form-control"
                                                 id="category"
                                                 name="category"
-                                                value={clothing?.clothing?.category}
-                                                onChange={onChange}
+                                                value={clothing.category}
+                                                onChange={handleChange}
                                             >
                                                 <option value="" hidden>Изберете категория</option>
                                                 <option value="UEFA_EURO_2024">УЕФА ЕВРО 2024</option>
@@ -315,8 +421,8 @@ console.log(clothing);
                                                 id="model"
                                                 name="model"
                                                 placeholder="Модел"
-                                                value={clothing?.clothing?.model}
-                                                onChange={onChange}
+                                                value={clothing.model}
+                                                onChange={handleChange}
                                             />
                                         </div>
                                     </div>
@@ -324,7 +430,9 @@ console.log(clothing);
                                 <fieldset>
                                     <legend>Качване на снимки</legend>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="frontImage">Снимка отпред</label>
+                                        <label className="col-sm-2 control-label" htmlFor="frontImage">
+                                            Снимка отпред
+                                        </label>
                                         <div className="col-sm-10">
                                             <input
                                                 className="form-control"
@@ -332,25 +440,83 @@ console.log(clothing);
                                                 id="frontImage"
                                                 name="frontImage"
                                                 accept="image/*"
-                                                value={clothing?.clothing?.frontImage}
-                                                onChange={onChange}
+                                                onChange={handleFileChange}
                                             />
+                                            {/* Front image preview */}
+                                            {frontImagePreview && (
+                                                <div style={{ marginTop: "10px" }}>
+                                                    <img
+                                                        src={frontImagePreview}
+                                                        alt="Front Preview"
+                                                        style={{
+                                                            width: "200px",
+                                                            height: "200px",
+                                                            objectFit: "cover",
+                                                            border: "2px solid black",
+                                                            borderRadius: "20px",
+                                                            padding: "10px",
+                                                        }}
+                                                    />
+                                                    {/* Only show cancel button if a new image is selected */}
+                                                    {clothing.frontImage instanceof File && (
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-danger"
+                                                            onClick={() => handleCancelImage('front')}
+                                                            style={{ marginLeft: "10px" }}
+                                                        >
+                                                            Отказ
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
-                                    <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="backImage">Снимка отзад</label>
-                                        <div className="col-sm-10">
-                                            <input
-                                                className="form-control"
-                                                type="file"
-                                                id="backImage"
-                                                name="backImage"
-                                                accept="image/*"
-                                                value={clothing?.clothing?.backImage}
-                                                onChange={onChange}
-                                            />
+                                    {clothing.type !== "KIT" && (
+                                        <div className="form-group required">
+                                            <label className="col-sm-2 control-label" htmlFor="backImage">
+                                                Снимка отзад
+                                            </label>
+                                            <div className="col-sm-10">
+                                                <input
+                                                    className="form-control"
+                                                    type="file"
+                                                    id="backImage"
+                                                    name="backImage"
+                                                    accept="image/*"
+                                                    onChange={handleFileChange}
+                                                />
+                                                {/* Back image preview */}
+                                                {backImagePreview && (
+                                                    <div style={{ marginTop: "10px" }}>
+                                                        <img
+                                                            src={backImagePreview}
+                                                            alt="Back Preview"
+                                                            style={{
+                                                                width: "200px",
+                                                                height: "200px",
+                                                                objectFit: "cover",
+                                                                border: "2px solid black",
+                                                                borderRadius: "20px",
+                                                                padding: "10px",
+                                                            }}
+                                                        />
+                                                        {/* Only show cancel button if a new image is selected */}
+                                                        {clothing.backImage instanceof File && (
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-danger"
+                                                                onClick={() => handleCancelImage('back')}
+                                                                style={{ marginLeft: "10px" }}
+                                                            >
+                                                                Отказ
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </fieldset>
                                 <div className="buttons">
                                     <div className="pull-right"><input type="submit" value="Промяна на продукт" className="btn btn-primary" /></div>
