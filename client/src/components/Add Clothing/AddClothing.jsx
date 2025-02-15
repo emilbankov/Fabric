@@ -5,6 +5,9 @@ import AuthContext from "../../contexts/AuthProvider";
 
 export default function AddClothing() {
     const { addClothHandler } = useContext(AuthContext);
+    const [frontImagePreview, setFrontImagePreview] = useState(null);
+    const [backImagePreview, setBackImagePreview] = useState(null);
+    const location = useLocation();
     const { values, onChange, onSubmit } = useForm(addClothHandler, {
         name: "",
         description: "",
@@ -15,13 +18,6 @@ export default function AddClothing() {
         frontImage: "",
         backImage: "",
     });
-
-    // Create state for image previews
-    const [frontImagePreview, setFrontImagePreview] = useState(null);
-    const [backImagePreview, setBackImagePreview] = useState(null);
-
-    // Use location to re-run the effect if pathname changes
-    const location = useLocation();
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -42,9 +38,7 @@ export default function AddClothing() {
         };
     }, [location.pathname]);
 
-    // New file change handler that calls your onChange and sets the preview
     const handleFileChange = (e) => {
-        // Update the form state via your custom onChange
         onChange(e);
 
         const file = e.target.files[0];

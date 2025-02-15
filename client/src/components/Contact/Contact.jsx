@@ -161,7 +161,7 @@ export default function Contact() {
                                             </div>
                                             <div className="telephone">
                                                 <strong>Telephone </strong>
-                                                <address>123456789 </address>
+                                                <address>+359899836901</address>
                                             </div>
                                             <div className="fax">
                                                 <strong>Fax </strong>
@@ -169,7 +169,7 @@ export default function Contact() {
                                             </div>
                                             <div className="time">
                                                 <strong>Opening Times</strong>
-                                                <address>9:00 AM to 6:00 PM</address>
+                                                <address>08:00 до 18:00ч.</address>
                                             </div>
                                             <div className="comment">
                                                 <strong>Comments</strong>

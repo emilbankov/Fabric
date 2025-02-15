@@ -50,6 +50,7 @@ export default function Details() {
                 console.error("Error fetching data:", err);
             });
     }, [clothingId]);
+console.log(clothing);
 
     const handleImageClick = (imagePath) => {
         setCurrentImage(imagePath);
@@ -128,7 +129,7 @@ export default function Details() {
                             </Link>
                         </li>
                         <li>
-                            <Link to={`/clothing/details/${clothingId}`}>Details</Link>
+                            <Link to={`/clothing/details/${clothingId}`}>Детайли</Link>
                         </li>
                     </ul>
                     <div className="row">
@@ -185,7 +186,7 @@ export default function Details() {
                                                             <div className="image">
                                                                 <Link to={`/clothing/details/${item.id}`}>
                                                                     <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images[0].path}`}
                                                                         title="tote bags for women"
                                                                         alt="tote bags for women"
                                                                         className="img-responsive reg-image"
@@ -193,7 +194,7 @@ export default function Details() {
 
                                                                     {item.type !== "KIT" && (
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[1].path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images[1].path}`}
                                                                             title="tote bags for women"
                                                                             alt="tote bags for women"
                                                                             className="img-responsive hover-image"
@@ -202,7 +203,7 @@ export default function Details() {
 
                                                                     {item.type === "KIT" && (
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${item.images[0].path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images[0].path}`}
                                                                             title="tote bags for women"
                                                                             alt="tote bags for women"
                                                                             className="img-responsive hover-image"
@@ -259,13 +260,13 @@ export default function Details() {
                                                         <div className="image">
                                                             <a
                                                                 className="thumbnail"
-                                                                href={`https://res.cloudinary.com/dfttdd1vq/image/upload/${currentImage}`}
+                                                                href={`https://res.cloudinary.com/dfttdd1vq/image/upload${currentImage}`}
                                                                 title={clothing.clothing.name}
                                                             >
                                                                 <img
                                                                     id="tmzoom"
-                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${currentImage}`}
-                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload/${currentImage}`}
+                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${currentImage}`}
+                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload${currentImage}`}
                                                                     title={clothing.clothing.name}
                                                                     alt={clothing.clothing.name}
                                                                 />
@@ -290,7 +291,7 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${image.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${image.path}`}
                                                                                     width={74}
                                                                                     height={74}
                                                                                     title={image.side}
@@ -1032,14 +1033,14 @@ export default function Details() {
                                                                     <div className="image">
                                                                         <Link to={`/clothing/details/${clothing.id}`}>
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[0].path}`}
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images[0].path}`}
                                                                                 title={clothing.name}
                                                                                 alt={clothing.name}
                                                                                 className="img-responsive reg-image"
                                                                             />
                                                                             {clothing.type !== "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[1].path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images[1].path}`}
                                                                                     title={clothing.name}
                                                                                     alt={clothing.name}
                                                                                     className="img-responsive hover-image"
@@ -1047,7 +1048,7 @@ export default function Details() {
                                                                             )}
                                                                             {clothing.type === "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${clothing.images[0].path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images[0].path}`}
                                                                                     title={clothing.name}
                                                                                     alt={clothing.name}
                                                                                     className="img-responsive hover-image"
@@ -1105,7 +1106,7 @@ export default function Details() {
                                                                     <div className="image">
                                                                         <Link to={`/clothing/details/${product.id}`}>
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`}
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images[0].path}`}
                                                                                 title={product.name}
                                                                                 alt={product.name}
                                                                                 className="img-responsive reg-image"
@@ -1113,7 +1114,7 @@ export default function Details() {
 
                                                                             {product.type !== "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[1].path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images[1].path}`}
                                                                                     title={product.name}
                                                                                     alt={product.name}
                                                                                     className="img-responsive hover-image"
@@ -1122,7 +1123,7 @@ export default function Details() {
 
                                                                             {product.type === "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/${product.images[0].path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images[0].path}`}
                                                                                     title={product.name}
                                                                                     alt={product.name}
                                                                                     className="img-responsive hover-image"

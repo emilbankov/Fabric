@@ -316,10 +316,10 @@ export default function Header() {
                                                         <Link to="/">Начало</Link>
                                                     </li>
                                                     <li className="new menu-item">
-                                                        <Link to="/catalog">Нова колекция</Link>
+                                                        <Link to="/catalog?sort=new&size=20">Нова колекция</Link>
                                                     </li>
                                                     <li className="hot menu-item">
-                                                        <Link to="/catalog">Специални</Link>
+                                                        <Link to="/catalog?sort=most-sold&size=20">Специални</Link>
                                                     </li>
                                                     <li>
                                                         <Link to="/contact">Контакти</Link>
