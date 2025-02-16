@@ -55,3 +55,15 @@ export const filters = {
     "shorts": "Къси панталони",
     "kit": "Комплекти"
 };
+
+export const gender = {
+    "MALE": "Мъжки",
+    "FEMALE": "Дамски",
+    "CHILD": "Детски",
+}
+
+export const size = {
+    "5XL ": "Мъжки",
+    "FEMALE": "Дамски",
+    "CHILD": "Детски",
+}

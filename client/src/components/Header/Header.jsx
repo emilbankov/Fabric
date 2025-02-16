@@ -257,7 +257,7 @@ export default function Header() {
                     <div className="header_bottom">
                         <div className="container">
                             <div className="row">
-                                <div className="box-category-top"><div className="box-heading">Категории</div></div>
+                                <div className="box-category-top"><div className="box-heading">Пазарувай по категории</div></div>
                                 <div className="box-content-category">
                                     <ul id="nav-one" className="dropmenu box-category">
                                         <li className="top_level"><Link to="/catalog?sort=new&size=20">Най-нови</Link></li>
