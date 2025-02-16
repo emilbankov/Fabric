@@ -14,35 +14,42 @@ export function CartProvider({ children }) {
         localStorage.setItem("cart", JSON.stringify(cart));
     }, [cart]);
 
-    const addToCart = (product) => {
+    const addToCart = (product, selectedSize, gender, quantity, selectedType, price) => {
         setCart((prevCart) => {
-            const existingItem = prevCart.find(item => item.id === product.id);
+            const existingItem = prevCart.find(item => item.id === product.id && item.size === selectedSize && item.gender === gender && item.type === selectedType);
+
             if (existingItem) {
                 return prevCart.map(item =>
-                    item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+                    item.id === product.id && item.size === selectedSize && item.gender === gender && item.type === selectedType
+                        ? { ...item, quantity: item.quantity + quantity, price }
+                        : item
                 );
             }
-            return [...prevCart, { ...product, quantity: 1 }];
+
+            // If not in the cart, add it with the selected type (if available)
+            return [...prevCart, { ...product, size: selectedSize, gender, quantity, type: selectedType, price }];
         });
     };
 
-    const removeFromCart = (id) => {
-        setCart(prevCart => prevCart.filter(item => item.id !== id));
+    const removeFromCart = (id, size, gender, type) => {
+        setCart(prevCart =>
+            prevCart.filter(item =>
+                !(item.id === id && item.size === size && item.gender === gender && item.type === type)
+            )
+        );
+    };
+
+    const decreaseQuantity = (id, size, gender, type) => {
+        setCart((prevCart) => {
+            return prevCart.map(item =>
+                item.id === id && item.size === size && item.gender === gender && item.type === type
+                    ? { ...item, quantity: Math.max(item.quantity - 1, 1) } // Prevent quantity from going below 1
+                    : item
+            );
+        });
     };
 
     const clearCart = () => setCart([]);
-
-    const decreaseQuantity = (id) => {
-        setCart((prevCart) => {
-            const existingItem = prevCart.find(item => item.id === id);
-            if (existingItem && existingItem.quantity > 1) {
-                return prevCart.map(item =>
-                    item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-                );
-            }
-            return prevCart;
-        });
-    };
 
     const updateQuantity = (id, quantity) => {
         setCart((prevCart) => {
