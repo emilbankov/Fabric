@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import ReactDOM from 'react-dom';
 import { Link, useParams } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
 import { categoryTranslations, typeTranslations } from "../../lib/dictionary";
@@ -15,6 +16,7 @@ export default function Details() {
     const [mostSold, setMostSold] = useState({});
     const [gender, setGender] = useState("Men");
     const [quantity, setQuantity] = useState(1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const increaseQuantity = () => setQuantity((prev) => prev + 1);
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -112,6 +114,15 @@ export default function Details() {
             }
         };
     }, [newest.clothes]);
+
+    const openModal = (e) => {
+        e.preventDefault();
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     return (
         <>
@@ -265,6 +276,7 @@ export default function Details() {
                                                                 className="thumbnail"
                                                                 href="#"
                                                                 title={clothing.clothing.name}
+                                                                onClick={openModal}
                                                             >
                                                                 <img
                                                                     id="tmzoom"
@@ -1225,6 +1237,59 @@ export default function Details() {
                     </div>
                 </div>
             </div >
+
+            {isModalOpen && ReactDOM.createPortal(
+                <div 
+                    className="image-modal-overlay" 
+                    onClick={closeModal}
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 9999
+                    }}
+                >
+                    <div 
+                        className="image-modal"
+                        onClick={e => e.stopPropagation()}
+                        style={{
+                            position: 'relative',
+                            maxWidth: '90vw',
+                            maxHeight: '90vh'
+                        }}
+                    >
+                        <span 
+                            className="close-button" 
+                            onClick={closeModal}
+                            style={{
+                                position: 'absolute',
+                                right: '-40px',
+                                fontSize: '30px',
+                                color: 'white',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            &times;
+                        </span>
+                        <img
+                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${currentImage}`}
+                            alt={clothing.clothing?.name}
+                            style={{
+                                maxWidth: '100%',
+                                maxHeight: '90vh',
+                                objectFit: 'contain'
+                            }}
+                        />
+                    </div>
+                </div>,
+                document.body
+            )}
         </>
     );
 };
