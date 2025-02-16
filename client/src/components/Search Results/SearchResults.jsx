@@ -85,7 +85,7 @@ export default function SearchResults() {
                 <div id="product-special" className="container">
                     <ul className="breadcrumb">
                         <li><Link to="/"><i className="fa fa-home" /></Link></li>
-                        <li><Link to="/catalog">Men</Link></li>
+                        <li><Link to={`/search-results?query=${query}`}>Резултати от търсене</Link></li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
@@ -525,7 +525,7 @@ export default function SearchResults() {
                             />
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h2 className="page-title">Men</h2>
+                            <h2 className="page-title">Резултати от търсене</h2>
                             <div className="row category_thumb">
                                 <div className="col-sm-2 category_img">
                                     <img
@@ -534,29 +534,6 @@ export default function SearchResults() {
                                         title="Men"
                                         className="img-thumbnail"
                                     />
-                                </div>
-                                <div className="col-sm-10 category_description">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                    ever since the 1500s, when an unknown printer took a galley of type
-                                    and scrambled it to make a type specimen book. It has survived not
-                                    only five centuries, but also the leap into electronic{" "}
-                                </div>
-                            </div>
-                            <h3 className="refine-search">Refine Search</h3>
-                            <div className="row">
-                                <div className="col-sm-12 category_list">
-                                    <ul>
-                                        <li>
-                                            <a href="product/category&path=20_59">Pocket Squares (5)</a>
-                                        </li>
-                                        <li>
-                                            <a href="product/category&path=20_26">Luxe (4)</a>
-                                        </li>
-                                        <li>
-                                            <a href="product/category&path=20_27">Topwear (6)</a>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                             <div className="category_filter">
@@ -579,11 +556,6 @@ export default function SearchResults() {
                                             <i className="fa fa-th-list" />
                                         </button>
                                     </div>
-                                </div>
-                                <div className="compare-total">
-                                    <a href="product/compare" id="compare-total">
-                                        Product Compare (0)
-                                    </a>
                                 </div>
                                 <div className="pagination-right">
                                     <div className="sort-by-wrapper">
@@ -665,7 +637,7 @@ export default function SearchResults() {
                                         <div className="product-block product-thumb">
                                             <div className="product-block-inner">
                                                 <div className="image">
-                                                    <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                    <Link to={`/clothing/details/${item.id}`}>
                                                         <img
                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_250,h_275${item.images.find(image => image.side === 'front')?.path}`}
                                                             title={item.name}
@@ -688,7 +660,7 @@ export default function SearchResults() {
                                                                 className="img-responsive hover-image"
                                                             />
                                                         )}
-                                                    </a>
+                                                    </Link>
                                                     <div className="product_hover_block">
                                                         <div className="action">
                                                             <button
@@ -721,9 +693,9 @@ export default function SearchResults() {
                                                 <div className="product-details list">
                                                     <div className="caption">
                                                         <h4>
-                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                            <Link to={`/clothing/details/${item.id}`}>
                                                                 {item.name}
-                                                            </a>
+                                                            </Link>
                                                         </h4>
                                                         <p className="desc">
                                                             {item.description}

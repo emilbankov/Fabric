@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../contexts/AuthProvider";
 import Search from "../Search/Search";
 import $ from 'jquery';
+import Cart from "../Cart/Cart";
 
 export default function Header() {
     const { isAuthenticated, isAdmin } = useContext(AuthContext);
@@ -244,27 +245,9 @@ export default function Header() {
                                         {/* {isAuthenticated && <div className="compare"><Link to="/account" id="compare-total" title="Product Compare" />{" "}</div>} */}
                                         <div className="compare"><Link to="/account" id="compare-total" title="Product Compare" />{" "}</div>
                                         <div className="whishlist"><span>0</span><a href="/wishlist" id="wishlist-total" title={0} />{" "}</div>
-                                        <div className="col-sm-3 header_cart">
-                                            <div id="cart" className="btn-group btn-block">
-                                                <button type="button" data-toggle="dropdown" data-loading-text="Loading..." className="btn btn-inverse btn-block btn-lg dropdown-toggle">
-                                                    <div className="cart_detail">
-                                                        <div className="cart_image" />
-                                                        <span id="cart-total">
-                                                            <span className="item-count">0</span>
-                                                            <span className="price"> $0.00 </span>
-                                                            <span className="mycart">My cart</span>
-                                                        </span>
-                                                    </div>
-                                                </button>
-                                                <ul className="dropdown-menu pull-right cart-menu">
-                                                    <li>
-                                                        <p className="text-center">
-                                                            Your shopping bag is empty!
-                                                        </p>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
+
+                                        <Cart />
+
                                         {isAuthenticated && <div className="compare logout"><Link to="/logout" id="compare-total" title="Product Compare" />{" "}</div>}
                                     </div>
                                 </div>
@@ -274,7 +257,7 @@ export default function Header() {
                     <div className="header_bottom">
                         <div className="container">
                             <div className="row">
-                                <div className="box-category-top"><div className="box-heading">Shop By Categories</div></div>
+                                <div className="box-category-top"><div className="box-heading">Категории</div></div>
                                 <div className="box-content-category">
                                     <ul id="nav-one" className="dropmenu box-category">
                                         <li className="top_level"><Link to="/catalog?sort=new&size=20">Най-нови</Link></li>

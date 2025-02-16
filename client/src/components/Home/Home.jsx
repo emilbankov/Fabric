@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
 
 export default function Home() {
-    let location = useLocation();
+    const location = useLocation();
+    const navigate = useNavigate();
     const [newest, setNewest] = useState([]);
     const [mostSold, setMostSold] = useState([]);
 
@@ -165,7 +166,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                
+
                 <div className="hometab box">
                     <div className="container">
                         <div className="row">
@@ -221,10 +222,10 @@ export default function Home() {
                                                                         <button
                                                                             type="button"
                                                                             className="cart_button"
-                                                                            onClick={() => cart.add(clothing.id)}
                                                                             title="Add to Cart"
+                                                                            onClick={() => navigate(`/clothing/details/${clothing.id}`)}
                                                                         >
-                                                                            <i className="fa fa-shopping-cart" area-hidden="true" />
+                                                                            <i className="fa fa-shopping-cart" aria-hidden="true" />
                                                                         </button>
                                                                         <button
                                                                             className="wishlist"
@@ -299,7 +300,7 @@ export default function Home() {
                                                                         <button
                                                                             type="button"
                                                                             className="cart_button"
-                                                                            onClick={() => cart.add(product.id)}
+                                                                            onClick={() => navigate(`/clothing/details/${product.id}`)}
                                                                             title="Add to Cart"
                                                                         >
                                                                             <i className="fa fa-shopping-cart" aria-hidden="true" />
