@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react";
 import $ from "jquery";
 import { CartContext } from "../../contexts/CartProvider";
 import { Link } from "react-router-dom";
+import { gender } from "../../lib/dictionary";
 
 export default function Cart() {
     const { cart, removeFromCart } = useContext(CartContext);
@@ -17,6 +18,7 @@ export default function Cart() {
             $("#cart .dropdown-toggle").off("click");
         };
     }, []);
+
     console.log(cart);
 
     // Calculate total price
@@ -42,19 +44,26 @@ export default function Cart() {
                             <li>
                                 <table className="table table-striped">
                                     <tbody>
-                                        {cart.map((item) => (
-                                            <tr key={item.id}>
+                                        {cart.map((item, index) => (
+                                            <tr key={`${item.id}-${item.size}-${item.gender}-${item.type}-${index}`}>
                                                 <td className="text-center">
                                                     <Link to={`/clothing/details/${item.id}`}>
                                                         <img
-                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_55,h_68${item.images.find(image => image.side === 'front')?.path}`}
+                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_55,h_68${item.image}`}
                                                             alt={item.name}
                                                             className="img-thumbnail"
                                                         />
                                                     </Link>
                                                 </td>
                                                 <td className="text-left">
-                                                    <Link t={`/clothing/details/${item.id}`}>{item.name}</Link>
+                                                    <Link to={`/clothing/details/${item.id}`}>{item.name}</Link>
+                                                    <br />
+                                                    {item.model.length === 4 ? (
+                                                        <><small>{item.size.slice(0, 3)}</small> | <small>{gender[item.gender]}</small> | <small>{item.type.slice(0, 28)}</small></>
+                                                    ) : (
+                                                        <><small>{item.size.slice(0, 3)}</small> | <small>{gender[item.gender]}</small></>
+                                                    )}
+
                                                 </td>
                                                 <td className="text-right">x{item.quantity}</td>
                                                 <td className="text-right">{(item.price * item.quantity).toFixed(2)} лв.</td>
@@ -62,7 +71,7 @@ export default function Cart() {
                                                     <button
                                                         type="button"
                                                         className="btn btn-danger btn-xs"
-                                                        onClick={() => removeFromCart(item.id)}
+                                                        onClick={() => removeFromCart(item.id, item.size, item.gender, item.type)}
                                                     >
                                                         <i className="fa fa-times" />
                                                     </button>
