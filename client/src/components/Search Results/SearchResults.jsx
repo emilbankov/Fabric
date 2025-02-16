@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
 
 export default function SearchResults() {
     const location = useLocation();
+    const navigate = useNavigate();
     const queryParams = new URLSearchParams(location.search);
     const query = queryParams.get("query") || "";
     const [results, setResults] = useState([]);
@@ -666,6 +667,7 @@ export default function SearchResults() {
                                                             <button
                                                                 type="button"
                                                                 className="cart_button"
+                                                                onClick={() => navigate(`/clothing/details/${item.id}`)}
                                                                 title="Add to Cart"
                                                             >
                                                                 <i className="fa fa-shopping-cart" aria-hidden="true" />{" "}

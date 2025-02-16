@@ -294,6 +294,7 @@ export default function Catalog() {
                                                                             <button
                                                                                 type="button"
                                                                                 className="cart_button"
+                                                                                onClick={() => navigate(`/clothing/details/${item.id}`)}
                                                                                 title="Add to Cart"
                                                                             >
                                                                                 <i
@@ -426,6 +427,7 @@ export default function Catalog() {
                                                             <button
                                                                 type="button"
                                                                 className="cart_button"
+                                                                onClick={() => navigate(`/clothing/details/${item.id}`)}
                                                                 title="Add to Cart"
                                                             >
                                                                 <i className="fa fa-shopping-cart" aria-hidden="true" />{" "}
