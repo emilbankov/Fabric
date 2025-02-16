@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import ReactDOM from 'react-dom';
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
 import { categoryTranslations, typeTranslations } from "../../lib/dictionary";
 import AuthContext from "../../contexts/AuthProvider";
+import ReactDOM from 'react-dom';
+import { CartContext } from "../../contexts/CartProvider";
 
 export default function Details() {
+    const navigate = useNavigate();
     const { isAdmin } = useContext(AuthContext);
+    const { addToCart } = useContext(CartContext);
     const { clothingId } = useParams();
     const [clothing, setClothing] = useState({});
     const [currentImage, setCurrentImage] = useState("");
@@ -14,7 +17,7 @@ export default function Details() {
     const [selectedType, setSelectedType] = useState(null);
     const [newest, setNewest] = useState({});
     const [mostSold, setMostSold] = useState({});
-    const [gender, setGender] = useState("Men");
+    const [gender, setGender] = useState("MALE");
     const [quantity, setQuantity] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -22,14 +25,14 @@ export default function Details() {
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
     const sizeOptions = {
-        Men: ["S", "M", "L", "XL", "2XL", "3XL", "5XL (+2.00лв.)"],
-        Women: ["XS", "S", "M", "L", "XL"],
-        Kids: ["98", "110", "122", "134", "146", "158"]
+        MALE: ["S", "M", "L", "XL", "2XL", "3XL", "5XL (+2.00лв.)"],
+        FEMALE: ["XS", "S", "M", "L", "XL"],
+        CHILD: ["98", "110", "122", "134", "146", "158"]
     };
 
     const getUpdatedSizeOptions = () => {
-        if (gender === "Men" && clothing?.clothing?.type === "SWEATSHIRT") {
-            return sizeOptions["Men"].map((option) =>
+        if (gender === "MALE" && clothing?.clothing?.type === "SWEATSHIRT") {
+            return sizeOptions["MALE"].map((option) =>
                 option.startsWith("5XL") ? "5XL (+5.00лв.)" : option
             );
         }
@@ -72,11 +75,7 @@ export default function Details() {
     useEffect(() => {
         setSelectedSize(null);
         setSelectedType(null);
-    }, [clothingId]);
-
-    useEffect(() => {
-        setSelectedSize(null);
-    }, [gender]);
+    }, [clothingId, gender]);
 
     const calculatePrice = () => {
         let price = clothing.clothing.price;
@@ -94,6 +93,15 @@ export default function Details() {
         }
 
         return price.toFixed(2);
+    };
+
+    const openModal = (e) => {
+        e.preventDefault();
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
     };
 
     useEffect(() => {
@@ -114,15 +122,6 @@ export default function Details() {
             }
         };
     }, [newest.clothes]);
-
-    const openModal = (e) => {
-        e.preventDefault();
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
 
     return (
         <>
@@ -240,6 +239,7 @@ export default function Details() {
                                                                             type="button"
                                                                             className="cart_button"
                                                                             title="Add to Cart"
+                                                                            onClick={() => navigate(`/clothing/details/${item.id}`)}
                                                                         >
                                                                             <i
                                                                                 className="fa fa-shopping-cart"
@@ -277,6 +277,18 @@ export default function Details() {
                                                                 href="#"
                                                                 title={clothing.clothing.name}
                                                                 onClick={openModal}
+                                                                style={{
+                                                                    display: 'block',
+                                                                    overflow: 'hidden',
+                                                                    position: 'relative'
+                                                                }}
+                                                                onMouseMove={(e) => {
+                                                                    const image = e.currentTarget.querySelector('img');
+                                                                    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+                                                                    const x = (e.clientX - left) / width * 100;
+                                                                    const y = (e.clientY - top) / height * 100;
+                                                                    image.style.transformOrigin = `${x}% ${y}%`;
+                                                                }}
                                                             >
                                                                 <img
                                                                     id="tmzoom"
@@ -284,6 +296,16 @@ export default function Details() {
                                                                     data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload${currentImage}`}
                                                                     title={clothing.clothing.name}
                                                                     alt={clothing.clothing.name}
+                                                                    style={{
+                                                                        transition: 'transform 0.1s ease',
+                                                                        width: '100%',
+                                                                        height: 'auto'
+                                                                    }}
+                                                                    onMouseEnter={e => e.target.style.transform = 'scale(1.5)'}
+                                                                    onMouseLeave={e => {
+                                                                        e.target.style.transform = 'scale(1)';
+                                                                        e.target.style.transformOrigin = 'center center';
+                                                                    }}
                                                                 />
                                                             </a>
                                                         </div>
@@ -409,11 +431,10 @@ export default function Details() {
                                                     <h3 className="product-option">Налични опции</h3>
 
                                                     <div className={`options-container ${clothing.clothing.type !== "T_SHIRT" && "last"}`}>
-                                                        <span className="desc">Избери пол:</span>
                                                         <select id="gender" style={{ marginBottom: "15px" }} className="form-control" value={gender} onChange={(e) => setGender(e.target.value)}>
-                                                            <option value="Men">Мъжки</option>
-                                                            <option value="Women">Дамски</option>
-                                                            <option value="Kids">Детски</option>
+                                                            <option value="MALE">Мъжки</option>
+                                                            <option value="FEMALE">Дамски</option>
+                                                            <option value="CHILD">Детски</option>
                                                         </select>
 
                                                         <div className="options-container">
@@ -456,6 +477,7 @@ export default function Details() {
                                                                 name="quantity"
                                                                 value={quantity}
                                                                 id="input-quantity"
+                                                                onChange={(e) => setQuantity(e.target.value)}
                                                                 className="form-control text-center"
                                                                 readOnly
                                                             />
@@ -465,6 +487,21 @@ export default function Details() {
                                                             type="button"
                                                             id="button-cart"
                                                             className="btn btn-primary btn-lg btn-block card-disabled"
+                                                            onClick={() =>
+                                                                addToCart(
+                                                                    {
+                                                                        id: clothing.clothing.id,
+                                                                        name: clothing.clothing.name,
+                                                                        model: clothing.clothing.model,
+                                                                        image: clothing.clothing.images.find(image => image.side === 'front')?.path,
+                                                                    },
+                                                                    selectedSize,
+                                                                    gender,
+                                                                    quantity,
+                                                                    selectedType,
+                                                                    calculatePrice()
+                                                                )
+                                                            }
                                                             disabled={clothing.clothing.type === "T_SHIRT" ? (!gender || !selectedSize || !selectedType) : (!gender || !selectedSize)}
                                                         >
                                                             Добави в количка
@@ -1115,7 +1152,7 @@ export default function Details() {
                                                                                 <button
                                                                                     type="button"
                                                                                     className="cart_button"
-                                                                                    onClick={() => cart.add(clothing.id)}
+                                                                                    onClick={() => navigate(`/clothing/details/${clothing.id}`)}
                                                                                     title="Add to Cart"
                                                                                 >
                                                                                     <i className="fa fa-shopping-cart" area-hidden="true" />
@@ -1190,7 +1227,7 @@ export default function Details() {
                                                                                 <button
                                                                                     type="button"
                                                                                     className="cart_button"
-                                                                                    onClick={() => cart.add(product.id)}
+                                                                                    onClick={() => navigate(`/clothing/details/${product.id}`)}
                                                                                     title="Add to Cart"
                                                                                 >
                                                                                     <i className="fa fa-shopping-cart" aria-hidden="true" />
@@ -1239,8 +1276,8 @@ export default function Details() {
             </div >
 
             {isModalOpen && ReactDOM.createPortal(
-                <div 
-                    className="image-modal-overlay" 
+                <div
+                    className="image-modal-overlay"
                     onClick={closeModal}
                     style={{
                         position: 'fixed',
@@ -1255,7 +1292,7 @@ export default function Details() {
                         zIndex: 9999
                     }}
                 >
-                    <div 
+                    <div
                         className="image-modal"
                         onClick={e => e.stopPropagation()}
                         style={{
@@ -1264,8 +1301,8 @@ export default function Details() {
                             maxHeight: '90vh'
                         }}
                     >
-                        <span 
-                            className="close-button" 
+                        <span
+                            className="close-button"
                             onClick={closeModal}
                             style={{
                                 position: 'absolute',
