@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
 import { Link } from "react-router-dom";
 
@@ -6,6 +7,7 @@ export default function Search() {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate(); // Hook for navigation
 
     useEffect(() => {
         if (query.length < 1) {
@@ -31,7 +33,8 @@ export default function Search() {
     }, [query]);
 
     const handleViewAllResultsClick = () => {
-        setQuery("");
+        navigate(`/search-results?query=${query}`);
+        setQuery(""); // Clear input after navigation
     };
 
     return (
@@ -44,11 +47,14 @@ export default function Search() {
                             name="search"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Search for products..."
+                            placeholder="Търси продукти..."
                             className="form-control input-lg"
                         />
                         <span className="input-group-btn">
-                            <button type="button" className="btn btn-default btn-lg"> Search </button>
+                            {/* Update button to navigate to the search results page */}
+                            <button type="button" className="btn btn-default btn-lg" onClick={handleViewAllResultsClick}>
+                                Търси
+                            </button>
                         </span>
                     </div>
                     {query && query.length > 0 && (
