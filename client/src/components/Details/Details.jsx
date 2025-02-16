@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
 import { categoryTranslations, typeTranslations } from "../../lib/dictionary";
 import AuthContext from "../../contexts/AuthProvider";
 
 export default function Details() {
-    const location = useLocation();
     const { isAdmin } = useContext(AuthContext);
     const { clothingId } = useParams();
     const [clothing, setClothing] = useState({});
@@ -15,6 +14,10 @@ export default function Details() {
     const [newest, setNewest] = useState({});
     const [mostSold, setMostSold] = useState({});
     const [gender, setGender] = useState("Men");
+    const [quantity, setQuantity] = useState(1);
+
+    const increaseQuantity = () => setQuantity((prev) => prev + 1);
+    const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
     const sizeOptions = {
         Men: ["S", "M", "L", "XL", "2XL", "3XL", "5XL (+2.00лв.)"],
@@ -51,7 +54,6 @@ export default function Details() {
                 console.error("Error fetching data:", err);
             });
     }, [clothingId]);
-    console.log(clothing);
 
     const handleImageClick = (imagePath) => {
         setCurrentImage(imagePath);
@@ -261,7 +263,7 @@ export default function Details() {
                                                         <div className="image">
                                                             <a
                                                                 className="thumbnail"
-                                                                href={`https://res.cloudinary.com/dfttdd1vq/image/upload${currentImage}`}
+                                                                href="#"
                                                                 title={clothing.clothing.name}
                                                             >
                                                                 <img
@@ -435,22 +437,23 @@ export default function Details() {
                                                     )}
 
                                                     <div className="form-group qty">
-                                                        <label className="control-label" htmlFor="input-quantity">
-                                                            Кол
-                                                        </label>
-                                                        <input
-                                                            type="text"
-                                                            name="quantity"
-                                                            defaultValue={1}
-                                                            size={2}
-                                                            id="input-quantity"
-                                                            className="form-control"
-                                                        />
-                                                        <input type="hidden" name="product_id" defaultValue={47} />
+                                                        <div className="input-group quantity-group">
+                                                            <button type="button" className="btn decrease-quantity" onClick={decreaseQuantity}>-</button>
+                                                            <input
+                                                                type="text"
+                                                                name="quantity"
+                                                                value={quantity}
+                                                                id="input-quantity"
+                                                                className="form-control text-center"
+                                                                readOnly
+                                                            />
+                                                            <button type="button" className="btn increase-quantity" onClick={increaseQuantity}>+</button>
+                                                        </div>
                                                         <button
                                                             type="button"
                                                             id="button-cart"
-                                                            className="btn btn-primary btn-lg btn-block"
+                                                            className="btn btn-primary btn-lg btn-block card-disabled"
+                                                            disabled={clothing.clothing.type === "T_SHIRT" ? (!gender || !selectedSize || !selectedType) : (!gender || !selectedSize)}
                                                         >
                                                             Добави в количка
                                                         </button>
