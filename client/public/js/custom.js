@@ -87,17 +87,16 @@ $(document).ready(function () {
 
 	});
 
-	/* search */
-	$("#cart .dropdown-toggle").click(function () {
-		$(this).toggleClass("active");
-		$(".cart-menu").slideToggle("slow");
-		$(".myaccount-menu").slideUp("slow");
-		/*$(".language-menu").slideUp("slow");
-		$(".currency-menu").slideUp("slow");*/
-		$(".myaccount .dropdown-toggle").removeClass('active');
-		$(".menu_toggle").slideUp("slow");
-		return false;
-	});
+	// $("#cart .dropdown-toggle").click(function () {
+	// 	$(this).toggleClass("active");
+	// 	$(".cart-menu").slideToggle("slow");
+	// 	$(".myaccount-menu").slideUp("slow");
+	// 	/*$(".language-menu").slideUp("slow");
+	// 	$(".currency-menu").slideUp("slow");*/
+	// 	$(".myaccount .dropdown-toggle").removeClass('active');
+	// 	$(".menu_toggle").slideUp("slow");
+	// 	return false;
+	// });
 
 	$("#form-currency .dropdown-toggle").click(function () {
 		$('#form-currency').toggleClass("active");
@@ -111,6 +110,7 @@ $(document).ready(function () {
 		//$(".header-search.dropdown-toggle").removeClass('active');
 		return false;
 	});
+
 	$("#form-language .dropdown-toggle").click(function () {
 		$('#form-language').toggleClass("active");
 		$(".currency-menu").slideUp("slow");
@@ -123,7 +123,7 @@ $(document).ready(function () {
 		//$(".header-search.dropdown-toggle").removeClass('active');
 		return false;
 	});
-
+	
 	$(".myaccount > .dropdown-toggle").click(function () {
 		$(".cart-menu").slideUp("slow");
 		$(".myaccount-menu").slideToggle("slow");
@@ -134,11 +134,9 @@ $(document).ready(function () {
 		$(".menu_toggle").slideUp("slow");
 		return false;
 	});
-
 });
 
 $(document).click(function () {
-	$(".cart-menu").slideUp('slow');
 	$(".myaccount-menu").slideUp('slow');
 	$(".language-menu").slideUp("slow");
 	$(".currency-menu").slideUp("slow");

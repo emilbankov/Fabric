@@ -230,11 +230,27 @@ th {
 
 }
 
-.table-bordered tbody tr td,
-.table-bordered thead tr th {
+.tab-pane .table-bordered tbody tr td,
+.tab-pane .table-bordered thead tr th {
     text-align: center;
     border: 1px solid black !important;
     color: black !important;
+}
+
+.cart-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-table .table-bordered tbody tr td {
+    width: 50%;
+    text-align: center;
+}
+
+.cart-table .table-bordered tbody tr td strong {
+    margin: 0;
 }
 
 thead tr th {
@@ -2295,6 +2311,21 @@ textarea.form-control {
 
 input[type=date] {
     line-height: 34px;
+}
+
+.productpage #button-cart.btn.btn-primary.btn-lg.btn-block.card-disabled:disabled {
+    border: none;
+    background-color: #585454 !important;
+}
+
+.form-group .input-group button.increase-quantity,
+.form-group .input-group button.decrease-quantity {
+    background-color: #000;
+    color: #fff;
+}
+
+.form-group .input-group.quantity-group {
+    display: inline-block;
 }
 
 .form-group {
