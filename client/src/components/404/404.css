@@ -1,0 +1,234 @@
+.error-page {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.content-wrapper {
+    width: 100%;
+    max-width: 896px;
+    position: relative;
+}
+
+.background-image {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    background-size: cover;
+    background-position: center;
+    border-radius: 24px;
+}
+
+.decorative-blob {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border-radius: 9999px;
+    filter: blur(24px);
+}
+
+.decorative-blob-top {
+    top: -80px;
+    left: -80px;
+}
+
+.decorative-blob-bottom {
+    bottom: -80px;
+    right: -80px;
+}
+
+.content-card {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 32px;
+}
+
+@media (min-width: 768px) {
+    .content-card {
+        padding: 48px;
+    }
+}
+
+.content-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+}
+
+.icon-container {
+    position: relative;
+}
+
+.icon-wrapper {
+    position: relative;
+    animation: pulse-scale 2s infinite;
+}
+
+.main-icon {
+    width: 80px;
+    height: 80px;
+    animation: pulse-color 2s infinite;
+}
+
+.secondary-icon {
+    width: 48px;
+    height: 48px;
+    color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    transform: rotate(45deg);
+}
+
+.error-code {
+    position: relative;
+    font-size: 96px;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+}
+
+@media (min-width: 768px) {
+    .error-code {
+        font-size: 128px;
+    }
+}
+
+.error-digit {
+    color: black;
+}
+
+.error-digit-fade {
+    color: white;
+    font-weight: bold;
+    text-shadow: -4px -4px 0 black,
+        4px -4px 0 black,
+        -4px 4px 0 black,
+        4px 4px 0 black;
+}
+
+
+.fabric-texture {
+    position: absolute;
+    inset: 0;
+    background-blend-mode: overlay;
+    mix-blend-mode: overlay;
+    opacity: 0.2;
+}
+
+.error-message {
+    margin-top: 8px;
+}
+
+.error-title {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+@media (min-width: 768px) {
+    .error-title {
+        font-size: 30px;
+        line-height: 36px;
+    }
+}
+
+.error-description {
+    color: rgba(0, 0, 0, 0.6);
+    max-width: 448px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    padding-top: 16px;
+}
+
+@media (min-width: 640px) {
+    .button-container {
+        flex-direction: row;
+    }
+}
+
+.button {
+    padding: 12px 32px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    cursor: pointer !important;
+}
+
+.button-secondary {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.button-secondary:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.button-primary {
+    background-color: black;
+    color: white;
+}
+
+.button-primary:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.pattern-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 96px;
+    background-image: linear-gradient(45deg, transparent 25%, rgba(0, 0, 0, 0.02) 25%, rgba(0, 0, 0, 0.02) 50%, transparent 50%, transparent 75%, rgba(0, 0, 0, 0.02) 75%);
+    background-size: 20px 20px;
+    opacity: 0.3;
+}
+
+.grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(transparent 0%, transparent calc(100% - 1px), rgba(0, 0, 0, 0.05) calc(100% - 1px)),
+        linear-gradient(90deg, transparent 0%, transparent calc(100% - 1px), rgba(0, 0, 0, 0.05) calc(100% - 1px));
+    background-size: 40px 40px;
+    pointer-events: none;
+    border-radius: 16px;
+    opacity: 0.2;
+}
+
+@keyframes pulse-scale {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse-color {
+    0% {
+        color: black;
+    }
+
+    50% {
+        color: rgba(0, 0, 0, 0.4);
+    }
+
+    100% {
+        color: black;
+    }
+}
