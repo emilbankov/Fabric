@@ -1,4 +1,4 @@
-import { useLocation, Route, Routes } from "react-router-dom";
+import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 
 import { CartProvider } from "./contexts/CartProvider";  // CartProvider should be on top
 import { AuthProvider } from "./contexts/AuthProvider";
@@ -19,6 +19,7 @@ import Blogs from "./components/Blogs/Blogs";
 import Account from "./components/Account/Account";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import Error404 from "./components/404/404";
 import Logout from "./components/Logout/Logout";
 import Footer from "./components/Footer/Footer";
 
@@ -42,6 +43,8 @@ function App() {
                     <Route path="/blogs" element={<Blogs />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/404" element={<Error404 />} />
+                    <Route path="*" element={<Error404 />} />
 
                     <Route path="/clothing/edit/:clothingId" element={<EditClothing />} />
                     <Route element={<AuthGuard />}>
