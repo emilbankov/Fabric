@@ -7,7 +7,26 @@ export const getMostSold = async () => await get(`${baseUrl}/catalog?sort=most-s
 export const getOne = async (clothingId) => await get(`${baseUrl}/${clothingId}`);
 export const getCatalog = async (type, sort, size, page, category) => await get(`${baseUrl}/catalog?type=${type}&sort=${sort}&size=${size}&page=${page}&category=${category}`);
 export const getProductsCount = async (type) => await get(`${baseUrl}/category?type=${type}`);
-export const search = async (value) => await get(`${baseUrl}/search?name=${value}`);
+
+export const search = async (name) => {
+    const response = await fetch(`${baseUrl}/search?name=${name}`);
+    const result = await response.json();
+    return result;
+};
+
+export const searchWithFilters = async (name, sort, size, page, type) => {
+    try {
+        const response = await fetch(`${baseUrl}/search?name=${name}&sort=${sort}&type=${type}&size=${size}&page=${page}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error('Search error:', error);
+        throw error;
+    }
+};
 
 export const create = (name, description, price, type, category, model, frontImage, backImage) => {
     const formData = new FormData();
