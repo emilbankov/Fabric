@@ -20,6 +20,11 @@ export default function Header() {
     }, []);
 
     useEffect(() => {
+        $(".box-content-category").hide();
+        $(".box-category-top").removeClass("active");
+    }, [location.pathname, location.search]);
+
+    useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/navigation.js"]');
         if (existingScript && existingScript.parentNode) {
             existingScript.parentNode.removeChild(existingScript);

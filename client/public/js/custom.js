@@ -123,7 +123,7 @@ $(document).ready(function () {
 		//$(".header-search.dropdown-toggle").removeClass('active');
 		return false;
 	});
-	
+
 	$(".myaccount > .dropdown-toggle").click(function () {
 		$(".cart-menu").slideUp("slow");
 		$(".myaccount-menu").slideToggle("slow");

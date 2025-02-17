@@ -9,6 +9,7 @@ import Home from "./components/Home/Home";
 import Catalog from "./components/Catalog/Catalog";
 import Details from "./components/Details/Details";
 import ViewCart from "./components/View Cart/ViewCart";
+import Checkout from "./components/Checkout/Checkout";
 import AddClothing from "./components/Add Clothing/AddClothing";
 import EditClothing from "./components/Edit Clothing/EditClothing";
 import SearchResults from "./components/Search Results/SearchResults";
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/catalog" element={<Catalog />} />
                     <Route path="/clothing/details/:clothingId" element={<Details />} />
                     <Route path="/view-cart" element={<ViewCart />} />
+                    <Route path="/checkout" element={<Checkout />} />
                     <Route path="/search-results" element={<SearchResults />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
