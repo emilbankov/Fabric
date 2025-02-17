@@ -10,7 +10,7 @@ import Catalog from "./components/Catalog/Catalog";
 import Details from "./components/Details/Details";
 import ViewCart from "./components/View Cart/ViewCart";
 import AddClothing from "./components/Add Clothing/AddClothing";
-import EditClothing from "./components/EditClothing/EditClothing";
+import EditClothing from "./components/Edit Clothing/EditClothing";
 import SearchResults from "./components/Search Results/SearchResults";
 import Contact from "./components/Contact/Contact";
 import About from "./components/About/About";

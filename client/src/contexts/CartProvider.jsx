@@ -26,7 +26,6 @@ export function CartProvider({ children }) {
                 );
             }
 
-            // If not in the cart, add it with the selected type (if available)
             return [...prevCart, { ...product, size: selectedSize, gender, quantity, type: selectedType, price }];
         });
     };
@@ -43,7 +42,7 @@ export function CartProvider({ children }) {
         setCart((prevCart) => {
             return prevCart.map(item =>
                 item.id === id && item.size === size && item.gender === gender && item.type === type
-                    ? { ...item, quantity: Math.max(item.quantity - 1, 1) } // Prevent quantity from going below 1
+                    ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
                     : item
             );
         });

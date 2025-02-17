@@ -1,10 +1,11 @@
 import { useEffect, useContext } from "react";
 import $ from "jquery";
 import { CartContext } from "../../contexts/CartProvider";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { gender } from "../../lib/dictionary";
 
 export default function Cart() {
+    const location = useLocation();
     const { cart, removeFromCart } = useContext(CartContext);
 
     useEffect(() => {
@@ -19,9 +20,11 @@ export default function Cart() {
         };
     }, []);
 
-    console.log(cart);
+    useEffect(() => {
+        $(".cart-menu").hide();
+        $("#cart .dropdown-toggle").removeClass("active");
+    }, [location.pathname]);
 
-    // Calculate total price
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     return (
@@ -65,8 +68,8 @@ export default function Cart() {
                                                     )}
 
                                                 </td>
-                                                <td className="text-right">x{item.quantity}</td>
-                                                <td className="text-right">{(item.price * item.quantity).toFixed(2)} лв.</td>
+                                                <td className="text-center">x{item.quantity}</td>
+                                                <td className="text-center">{(item.price * item.quantity).toFixed(2)} лв.</td>
                                                 <td className="text-center">
                                                     <button
                                                         type="button"
@@ -84,11 +87,10 @@ export default function Cart() {
 
                             <li>
                                 <div className="cart-table">
-                                    <table className="table table-bordered">
+                                    <table className="table table-bordered table-price">
                                         <tbody>
                                             <tr>
-                                                <td className="text-right"><strong>Общо</strong></td>
-                                                <td className="text-right">{total.toFixed(2)} лв.</td>
+                                                <td className="text-center"><strong>Общо: {total.toFixed(2)} лв.</strong></td>
                                             </tr>
                                         </tbody>
                                     </table>

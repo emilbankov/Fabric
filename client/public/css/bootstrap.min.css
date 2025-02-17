@@ -1924,15 +1924,39 @@ th {
     margin-bottom: 20px;
 }
 
+form .table-responsive table.shopping-cart thead tr td,
+form .table-responsive table.shopping-cart tbody tr td,
+ul.cart-menu li .table-striped tbody tr td {
+    vertical-align: middle;
+}
+
+form .table-responsive table.shopping-cart tbody tr td div.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form .table-responsive table.shopping-cart tbody tr td div.input-group .btn-primary {
+    height: 100%;
+    border-radius: 5px !important;
+    padding: 3px 15px !important;
+}
+
+div.col-sm-4.col-sm-offset-8 table.table tbody tr td {
+    text-align: center;
+}
+
+table.table-price {
+    margin-bottom: 0 !important;
+}
+
 .table>thead>tr>th,
 .table>tbody>tr>th,
 .table>tfoot>tr>th,
 .table>thead>tr>td,
 .table>tbody>tr>td,
 .table>tfoot>tr>td {
-
     vertical-align: top;
-
     background-color: #fff;
     width: auto;
 }
@@ -2991,13 +3015,9 @@ fieldset[disabled] .btn-link:focus {
 }
 
 .btn-xs {
-    padding: 1px 5px;
+    padding: 3px 7px 0 7px;
     font-size: 12px;
     line-height: 1.5;
-    /*border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	-khtml-border-radius: 3px;*/
 }
 
 .btn-block {

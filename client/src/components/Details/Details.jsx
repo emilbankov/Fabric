@@ -487,7 +487,7 @@ export default function Details() {
                                                             type="button"
                                                             id="button-cart"
                                                             className="btn btn-primary btn-lg btn-block card-disabled"
-                                                            onClick={() =>
+                                                            onClick={() => {
                                                                 addToCart(
                                                                     {
                                                                         id: clothing.clothing.id,
@@ -500,8 +500,10 @@ export default function Details() {
                                                                     quantity,
                                                                     selectedType,
                                                                     calculatePrice()
-                                                                )
-                                                            }
+                                                                );
+                                                                setSelectedSize(null);
+                                                                setSelectedType(null);
+                                                            }}
                                                             disabled={clothing.clothing.type === "T_SHIRT" ? (!gender || !selectedSize || !selectedType) : (!gender || !selectedSize)}
                                                         >
                                                             Добави в количка
@@ -1326,7 +1328,8 @@ export default function Details() {
                     </div>
                 </div>,
                 document.body
-            )}
+            )
+            }
         </>
     );
 };

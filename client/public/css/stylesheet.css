@@ -183,7 +183,7 @@ input[type="color"].form-control {
 }
 
 #checkout-cart .table-responsive .input-group .form-control {
-	padding: 10px !important;
+	padding: 3px 0 !important;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-khtml-border-radius: 5px;
@@ -4654,7 +4654,7 @@ header #cart li {
 }
 
 #cart .dropdown-menu {
-	width: 350px;
+	width: 370px;
 	padding: 10px;
 	border: none;
 	overflow: hidden;
@@ -4905,9 +4905,9 @@ header #cart li {
 }
 
 #checkout-cart .btn.btn-primary:hover {
-	background: #333333 !important;
-	border-color: #333333 !important;
+	background: #000 !important;
 	color: #fff !important;
+	border: none !important;
 }
 
 #compare-total {
