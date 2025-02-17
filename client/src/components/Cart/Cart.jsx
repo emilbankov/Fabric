@@ -93,7 +93,7 @@ export default function Cart() {
                                         </tbody>
                                     </table>
                                     <p className="text-right button-container">
-                                        <a href="#"><strong> Виж количка</strong></a>
+                                        <Link to={`/view-cart`}><strong> Виж количка</strong></Link>
                                         &nbsp;&nbsp;&nbsp;
                                         <a href="#"><strong> Поръчай</strong></a>
                                     </p>
