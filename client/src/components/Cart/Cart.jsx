@@ -23,7 +23,7 @@ export default function Cart() {
     useEffect(() => {
         $(".cart-menu").hide();
         $("#cart .dropdown-toggle").removeClass("active");
-    }, [location.pathname]);
+    }, [location.pathname, location.search]);
 
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -97,15 +97,13 @@ export default function Cart() {
                                     <p className="text-right button-container">
                                         <Link to={`/view-cart`}><strong> Виж количка</strong></Link>
                                         &nbsp;&nbsp;&nbsp;
-                                        <a href="#"><strong> Поръчай</strong></a>
+                                        <Link to="/checkout"><strong> Поръчай</strong></Link>
                                     </p>
                                 </div>
                             </li>
                         </>
                     ) : (
-                        <li>
-                            <p className="text-center">Your shopping bag is empty!</p>
-                        </li>
+                        <li><p className="text-center">Количката ви е празна!</p></li>
                     )}
                 </ul>
             </div>

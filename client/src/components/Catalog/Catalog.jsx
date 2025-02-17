@@ -243,7 +243,7 @@ export default function Catalog() {
                                 </div>
                             </div>
                             <div className="box latest">
-                                <div className="box-heading">Latest Product</div>
+                                <div className="box-heading">Най-продавани</div>
                                 <div className="box-content">
                                     <div className="box-product productbox-grid" id=" latest-grid">
                                         {mostSold.clothes &&

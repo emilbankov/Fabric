@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Search() {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (query.length < 1) {
@@ -33,8 +32,14 @@ export default function Search() {
     }, [query]);
 
     const handleViewAllResultsClick = () => {
-        navigate(`/search-results?query=${query}`);
-        setQuery(""); // Clear input after navigation
+        setQuery("");
+    };
+
+    const handleSearchClick = () => {
+        if (query.trim()) {
+            navigate(`/search-results?name=${query}`);
+            setQuery("");
+        }
     };
 
     return (
@@ -47,13 +52,21 @@ export default function Search() {
                             name="search"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Търси продукти..."
+                            placeholder="Search for products..."
                             className="form-control input-lg"
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSearchClick();
+                                }
+                            }}
                         />
                         <span className="input-group-btn">
-                            {/* Update button to navigate to the search results page */}
-                            <button type="button" className="btn btn-default btn-lg" onClick={handleViewAllResultsClick}>
-                                Търси
+                            <button
+                                type="button"
+                                className="btn btn-default btn-lg"
+                                onClick={handleSearchClick}
+                            >
+                                Search
                             </button>
                         </span>
                     </div>
@@ -88,11 +101,11 @@ export default function Search() {
                             </ul>
                             <div className="result-text">
                                 <Link
-                                    to={`/search-results?query=${query}`}
+                                    to={`/search-results?name=${query}`}
                                     className="view-all-results"
                                     onClick={handleViewAllResultsClick}
                                 >
-                                    View all results ({results.clothes && results.clothes.length})
+                                    Виж всички резултати ({results.total_items})
                                 </Link>
                             </div>
                         </div>
