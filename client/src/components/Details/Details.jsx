@@ -5,6 +5,7 @@ import { categoryTranslations, typeTranslations } from "../../lib/dictionary";
 import AuthContext from "../../contexts/AuthProvider";
 import ReactDOM from 'react-dom';
 import { CartContext } from "../../contexts/CartProvider";
+import "./Details.css";
 
 export default function Details() {
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function Details() {
     const [gender, setGender] = useState("MALE");
     const [quantity, setQuantity] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     const increaseQuantity = () => setQuantity((prev) => prev + 1);
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -105,14 +107,14 @@ export default function Details() {
     };
 
     const deleteHandler = () => {
-        const hasConfirmed = confirm(`Сигурни ли сте че искате да изтриете ${typeTranslations[clothing.clothing.type]} ${clothing.clothing.name} #${clothing.clothing.model}`);
+        setShowConfirmModal(true);
+    };
 
-        if (hasConfirmed) {
-            clothesService.deleteProduct(clothingId);
-
-            navigate(-1);
-        }
-    }
+    const confirmDelete = () => {
+        clothesService.deleteProduct(clothingId);
+        setShowConfirmModal(false);
+        navigate(-1);
+    };
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -1341,6 +1343,19 @@ export default function Details() {
                 document.body
             )
             }
+
+            {showConfirmModal && (
+                <div className="confirmation-modal-overlay">
+                    <div className="confirmation-modal">
+                        <h3>Потвърждаване на изтриване</h3>
+                        <p>Сигурни ли сте че искате да изтриете {typeTranslations[clothing.clothing.type]} {clothing.clothing.name} #{clothing.clothing.model}?</p>
+                        <div className="modal-buttons">
+                            <button onClick={() => setShowConfirmModal(false)} className="cancel-btn">Отказ</button>
+                            <button onClick={confirmDelete} className="delete-btn">Изтриване</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 };
