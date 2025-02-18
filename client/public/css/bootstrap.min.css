@@ -2736,6 +2736,10 @@ fieldset[disabled] .btn-default.active {
     background-color: #333;
 }
 
+.login-fr {
+    float: right;
+}
+
 .btn-primary {
     color: #fff;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);

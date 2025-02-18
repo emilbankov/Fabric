@@ -372,7 +372,7 @@ export default function EditClothing() {
                                                 id="price"
                                                 name="price"
                                                 placeholder="Цена"
-                                                value={clothing.price}
+                                                value={Number(clothing.price).toFixed(2)}
                                                 onChange={handleChange}
                                                 step="0.01"
                                                 min="0"

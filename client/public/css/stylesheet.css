@@ -393,7 +393,8 @@ div.required .control-label:before {
 	text-decoration: underline;
 }
 
-.account-login .well .form-group a.forgotten-password {
+.account-login .well .form-group a.forgotten-password,
+.form-group a.forgotten-password {
 	line-height: 0;
 	margin-top: 5px;
 	text-decoration: underline;

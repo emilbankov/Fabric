@@ -189,9 +189,9 @@ export default function Login() {
                                                     onChange={onChange}
                                                     value={values.password}
                                                 />
-                                                <a className="forgotten-password" href="/forgotten">Забравена парола</a>
+                                                <a className="forgotten-password" href="/forgotten">Забравена парола?</a>
                                             </div>
-                                            <input type="submit" value="Вход" className="btn btn-primary" />
+                                            <input type="submit" value="Вход" className="btn btn-primary login-fr" />
                                         </form>
                                     </div>
                                 </div>
