@@ -104,6 +104,16 @@ export default function Details() {
         setIsModalOpen(false);
     };
 
+    const deleteHandler = () => {
+        const hasConfirmed = confirm(`Сигурни ли сте че искате да изтриете ${typeTranslations[clothing.clothing.type]} ${clothing.clothing.name} #${clothing.clothing.model}`);
+
+        if (hasConfirmed) {
+            clothesService.deleteProduct(clothingId);
+
+            navigate(-1);
+        }
+    }
+
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
@@ -522,6 +532,7 @@ export default function Details() {
                                                                         type="button"
                                                                         id="button-delete"
                                                                         className="btn btn-danger btn-lg btn-block"
+                                                                        onClick={deleteHandler}
                                                                     >
                                                                         Delete
                                                                     </button>

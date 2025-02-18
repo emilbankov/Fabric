@@ -52,10 +52,8 @@ export const edit = async (clothingId, clothData) => {
     return result;
 };
 
-// export const getLatest = async () => {
-//     const result = await get(`${baseUrl}?sortBy=_createdOn%20desc&offset=0&pageSize=4`);
+export const deleteProduct = async (clothingId) => {
+    const result = await del(`${baseUrl}/${clothingId}`);
 
-//     return result;
-// }
-
-// export const deleteGame = async (gameId) => await del(`${baseUrl}/${gameId}`);
+    return result;
+};
