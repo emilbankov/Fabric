@@ -10,8 +10,17 @@ AuthContext.displayName = 'AuthContext';
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
     const [auth, setAuth] = useState(() => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        const accessToken = localStorage.getItem('accessToken');
+        const refreshToken = localStorage.getItem('refreshToken');
+        const roles = localStorage.getItem('roles') ? JSON.parse(localStorage.getItem('roles')) : [];
+
+        if (accessToken && refreshToken) {
+            return {
+                accessToken,
+                refreshToken,
+                roles
+            };
+        }
 
         return {};
     });
@@ -35,7 +44,7 @@ export const AuthProvider = ({ children }) => {
                 payload.backImage
             );
             
-            navigate("/catalog");
+            navigate("/catalog?sort=new&size=20");
         } catch (error) {
             console.error(error);
         }
@@ -49,6 +58,7 @@ export const AuthProvider = ({ children }) => {
             setAuth(result);
             localStorage.setItem('accessToken', result.accessToken);
             localStorage.setItem('refreshToken', result.refreshToken);
+            localStorage.setItem('roles', JSON.stringify(result.roles || []));
             navigate("/");
         } catch (error) {
             console.log(error);
@@ -63,6 +73,7 @@ export const AuthProvider = ({ children }) => {
                 setAuth(result);
                 localStorage.setItem('accessToken', result.accessToken);
                 localStorage.setItem('refreshToken', result.refreshToken);
+                localStorage.setItem('roles', JSON.stringify(result.roles || []));
                 navigate("/");
             }
         } catch (error) {
@@ -74,6 +85,7 @@ export const AuthProvider = ({ children }) => {
         setAuth({});
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
+        localStorage.removeItem('roles');
         navigate("/");
     };
 

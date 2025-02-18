@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 const priceMap = {
-    T_SHIRT: 29,
-    SWEATSHIRT: 54,
-    KIT: 59,
-    SHORTS: 30,
-    LONG_T_SHIRT: 37
+    T_SHIRT: "29.00",
+    SWEATSHIRT: "54.00",
+    KIT: "59.00",
+    SHORTS: "30.00",
+    LONG_T_SHIRT: "37.00"
 };
 
 export function useForm(submitHandler, initialValues) {

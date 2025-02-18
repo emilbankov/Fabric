@@ -52,8 +52,8 @@ export const edit = async (clothingId, clothData) => {
     return result;
 };
 
-export const deleteProduct = async (clothingId) => {
-    const result = await del(`${baseUrl}/${clothingId}`);
+export const deleteProduct = (clothingId) => {
+    const result = del(`${baseUrl}/${clothingId}`);
 
     return result;
 };
