@@ -45,19 +45,8 @@ export default function Error404() {
                             </div>
 
                             <div className="button-container">
-                                <button
-                                    onClick={() => {
-                                        if (window.history.length > 1) {
-                                            navigate(-1);
-                                        } else {
-                                            window.history.back();
-                                        }
-                                    }}
-                                    className="button button-secondary"
-                                >
-                                    Назад
-                                </button>
-                                <button onClick={() => navigate("/catalog?sort=new&size=20")} className="button button-primary">Разгледайте колекцията</button>
+                                <button onClick={() => navigate(-1, { replace: true })} className="button button-secondary">Назад</button>
+                                <button onClick={() => navigate("/catalog?sort=new&size=20", { replace: true })} className="button button-primary">Разгледайте колекцията</button>
                             </div>
                         </div>
                     </div>

@@ -43,15 +43,16 @@ function App() {
                     <Route path="/blogs" element={<Blogs />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/404" element={<Error404 />} />
-                    <Route path="*" element={<Error404 />} />
-
-                    <Route path="/clothing/edit/:clothingId" element={<EditClothing />} />
+                    
                     <Route element={<AuthGuard />}>
                         <Route path="/account" element={<Account />} />
                         <Route path="/add-clothing" element={<AddClothing />} />
+                        <Route path="/clothing/edit/:clothingId" element={<EditClothing />} />
                         <Route path="/logout" element={<Logout />} />
                     </Route>
+
+                    <Route path="/404" element={<Navigate to="*" replace />} />
+                    <Route path="*" element={<Error404 />} />
                 </Routes>
 
                 <Footer />
