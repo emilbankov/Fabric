@@ -1,9 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
+import AuthContext from "../../contexts/AuthProvider";
+// import * as econtService from "../../services/econtService";
 
 export default function Checkout() {
     const location = useLocation();
-
+    const { isAuthenticated } = useContext(AuthContext);
+    const [isGuestCheckout, setIsGuestCheckout] = useState(false);
+    const [showLoginForm, setShowLoginForm] = useState(false);
+    const [offices, setOffices] = useState([]);
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
@@ -23,6 +28,52 @@ export default function Checkout() {
         };
     }, [location.pathname]);
 
+    const handleGuestCheckout = () => {
+        const guestRadio = document.querySelector('input[value="guest"]');
+        const registerRadio = document.querySelector('input[value="register"]');
+        
+        if (guestRadio && guestRadio.checked) {
+            setIsGuestCheckout(true);
+            setShowLoginForm(false);
+            
+            const step1Content = document.getElementById('collapse-checkout-option');
+            const step2Content = document.getElementById('collapse-payment-address');
+            
+            if (step1Content) {
+                step1Content.classList.remove('in');
+            }
+            if (step2Content) {
+                step2Content.classList.add('in');
+            }
+        } else if (registerRadio && registerRadio.checked) {
+            setIsGuestCheckout(false);
+            setShowLoginForm(true);
+        }
+    };
+
+    const handleRadioChange = (e) => {
+        if (e.target.value === 'guest') {
+            setIsGuestCheckout(false);
+            setShowLoginForm(false);
+        } else if (e.target.value === 'register') {
+            setIsGuestCheckout(false);
+            setShowLoginForm(true);
+        }
+    };
+
+    // useEffect(() => {
+    //     Promise.all([
+    //         econtService.getCitiesByName("София"),
+    //     ])
+    //         .then(([offices]) => {
+    //             setOffices(offices);
+    //         })
+    //         .catch(err => {
+    //             console.error("Error fetching data:", err);
+    //         });
+    // }, [location.pathname]);
+    // console.log(offices);
+    
     return (
         <>
             <div className="checkout-checkout   layout-2 left-col">
@@ -200,7 +251,6 @@ export default function Checkout() {
                                                                     <button
                                                                         type="button"
                                                                         className="cart_button"
-                                                                        onclick="cart.add('49 ');"
                                                                         title="Add to Cart"
                                                                     >
                                                                         <i
@@ -221,7 +271,6 @@ export default function Checkout() {
                                                                         className="wishlist"
                                                                         type="button"
                                                                         title="Add to Wish List "
-                                                                        onclick="wishlist.add('49 ');"
                                                                     >
                                                                         <i className="fa fa-heart" />
                                                                     </button>
@@ -229,7 +278,6 @@ export default function Checkout() {
                                                                         className="compare_button"
                                                                         type="button"
                                                                         title="Add to compare "
-                                                                        onclick="compare.add('49 ');"
                                                                     >
                                                                         <i className="fa fa-exchange" />
                                                                     </button>
@@ -298,7 +346,6 @@ export default function Checkout() {
                                                                     <button
                                                                         type="button"
                                                                         className="cart_button"
-                                                                        onclick="cart.add('48 ');"
                                                                         title="Add to Cart"
                                                                     >
                                                                         <i
@@ -319,7 +366,6 @@ export default function Checkout() {
                                                                         className="wishlist"
                                                                         type="button"
                                                                         title="Add to Wish List "
-                                                                        onclick="wishlist.add('48 ');"
                                                                     >
                                                                         <i className="fa fa-heart" />
                                                                     </button>
@@ -327,7 +373,6 @@ export default function Checkout() {
                                                                         className="compare_button"
                                                                         type="button"
                                                                         title="Add to compare "
-                                                                        onclick="compare.add('48 ');"
                                                                     >
                                                                         <i className="fa fa-exchange" />
                                                                     </button>
@@ -397,7 +442,6 @@ export default function Checkout() {
                                                                     <button
                                                                         type="button"
                                                                         className="cart_button"
-                                                                        onclick="cart.add('47 ');"
                                                                         title="Add to Cart"
                                                                     >
                                                                         <i
@@ -418,7 +462,6 @@ export default function Checkout() {
                                                                         className="wishlist"
                                                                         type="button"
                                                                         title="Add to Wish List "
-                                                                        onclick="wishlist.add('47 ');"
                                                                     >
                                                                         <i className="fa fa-heart" />
                                                                     </button>
@@ -426,7 +469,6 @@ export default function Checkout() {
                                                                         className="compare_button"
                                                                         type="button"
                                                                         title="Add to compare "
-                                                                        onclick="compare.add('47 ');"
                                                                     >
                                                                         <i className="fa fa-exchange" />
                                                                     </button>
@@ -465,66 +507,68 @@ export default function Checkout() {
                             </ul>
                             <h1>Checkout</h1>
                             <div className="panel-group" id="accordion">
-                                <div className="panel panel-default">
+                                <div className="panel panel-default" style={{ display: isAuthenticated ? 'none' : 'block' }}>
                                     <div className="panel-heading">
                                         <h4 className="panel-title">
                                             <a
                                                 href="#collapse-checkout-option"
                                                 data-toggle="collapse"
                                                 data-parent="#accordion"
-                                                className="accordion-toggle collapsed"
-                                                aria-expanded="false"
+                                                className={`accordion-toggle ${isGuestCheckout ? 'collapsed' : ''}`}
+                                                aria-expanded={!isGuestCheckout}
                                             >
-                                                Step 1: Checkout Options <i className="fa fa-caret-down" />
+                                                Стъпка 1: Вход или продължаване като гост <i className="fa fa-caret-down" />
                                             </a>
                                         </h4>
                                     </div>
                                     <div
-                                        className="panel-collapse collapse"
+                                        className={`panel-collapse collapse ${isGuestCheckout ? '' : 'in'}`}
                                         id="collapse-checkout-option"
-                                        aria-expanded="false"
-                                        style={{ height: 0 }}
+                                        aria-expanded={!isGuestCheckout}
                                     >
                                         <div className="panel-body">
                                             <div className="row">
                                                 <div className="col-sm-6">
-                                                    <h2>New Customer</h2>
-                                                    <p>Checkout Options:</p>
+                                                    <h2>Нов клиент</h2>
                                                     <div className="radio">
                                                         <label>
                                                             {" "}
                                                             <input
                                                                 type="radio"
                                                                 name="account"
-                                                                defaultValue="register"
-                                                                defaultChecked="checked"
+                                                                value="register"
+                                                                onChange={handleRadioChange}
                                                             />
-                                                            Register Account
+                                                            Влез в профил
                                                         </label>
                                                     </div>
                                                     <div className="radio">
                                                         <label>
                                                             {" "}
-                                                            <input type="radio" name="account" defaultValue="guest" />
-                                                            Guest Checkout
+                                                            <input
+                                                                type="radio"
+                                                                name="account"
+                                                                value="guest"
+                                                                onChange={handleRadioChange}
+                                                            />
+                                                            Продължаване като гост
                                                         </label>
                                                     </div>
                                                     <p>
-                                                        By creating an account you will be able to shop faster, be
-                                                        up to date on an order's status, and keep track of the
-                                                        orders you have previously made.
+                                                        Ако имате профил и влезете в него, ще можете да пазарувате 
+                                                        още по-бързо, данните ще бъдат попълнени автоматично.
                                                     </p>
                                                     <input
                                                         type="button"
-                                                        defaultValue="Continue"
+                                                        defaultValue="Продължи"
                                                         id="button-account"
                                                         data-loading-text="Loading..."
                                                         className="btn btn-primary"
+                                                        onClick={handleGuestCheckout}
                                                     />
                                                 </div>
-                                                <div className="col-sm-6">
-                                                    <h2>Returning Customer</h2>
-                                                    <p>I am a returning customer</p>
+                                                <div className="col-sm-6 login-form" style={{display: showLoginForm ? 'block' : 'none'}}>
+                                                    <h2>Заврщащ се клиент</h2>
                                                     <div className="form-group">
                                                         <label className="control-label" htmlFor="input-email">
                                                             E-Mail
@@ -540,26 +584,26 @@ export default function Checkout() {
                                                     </div>
                                                     <div className="form-group">
                                                         <label className="control-label" htmlFor="input-password">
-                                                            Password
+                                                            Парола
                                                         </label>
                                                         <input
                                                             type="password"
                                                             name="password"
                                                             defaultValue=""
-                                                            placeholder="Password"
+                                                            placeholder="Парола"
                                                             id="input-password"
                                                             className="form-control"
                                                         />
-                                                        <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/forgotten">
-                                                            Forgotten Password
+                                                        <a className="forgotten-password" href="#">
+                                                            Забравена парола?
                                                         </a>
                                                     </div>
                                                     <input
                                                         type="button"
-                                                        defaultValue="Login"
+                                                        defaultValue="Вход"
                                                         id="button-login"
                                                         data-loading-text="Loading..."
-                                                        className="btn btn-primary"
+                                                        className="btn btn-primary login-fr"
                                                     />
                                                 </div>
                                             </div>
@@ -573,18 +617,17 @@ export default function Checkout() {
                                                 href="#collapse-payment-address"
                                                 data-toggle="collapse"
                                                 data-parent="#accordion"
-                                                className="accordion-toggle collapsed"
-                                                aria-expanded="false"
+                                                className={`accordion-toggle ${isAuthenticated || isGuestCheckout ? '' : 'collapsed'}`}
+                                                aria-expanded={isAuthenticated || isGuestCheckout}
                                             >
-                                                Step 2: Billing Details <i className="fa fa-caret-down" />
+                                                Стъпка 2: Детайли на доставката <i className="fa fa-caret-down" />
                                             </a>
                                         </h4>
                                     </div>
                                     <div
-                                        className="panel-collapse collapse"
+                                        className={`panel-collapse collapse ${isAuthenticated || isGuestCheckout ? 'in' : ''}`}
                                         id="collapse-payment-address"
-                                        aria-expanded="false"
-                                        style={{ height: 0 }}
+                                        aria-expanded={isAuthenticated || isGuestCheckout}
                                     >
                                         <div className="panel-body">
                                             <div className="row">
@@ -610,13 +653,13 @@ export default function Checkout() {
                                                                 className="control-label"
                                                                 htmlFor="input-payment-firstname"
                                                             >
-                                                                First Name
+                                                                Име
                                                             </label>
                                                             <input
                                                                 type="text"
                                                                 name="firstname"
                                                                 defaultValue=""
-                                                                placeholder="First Name"
+                                                                placeholder="Име"
                                                                 id="input-payment-firstname"
                                                                 className="form-control"
                                                             />
@@ -626,13 +669,13 @@ export default function Checkout() {
                                                                 className="control-label"
                                                                 htmlFor="input-payment-lastname"
                                                             >
-                                                                Last Name
+                                                                Фамилия
                                                             </label>
                                                             <input
                                                                 type="text"
                                                                 name="lastname"
                                                                 defaultValue=""
-                                                                placeholder="Last Name"
+                                                                placeholder="Фамилия"
                                                                 id="input-payment-lastname"
                                                                 className="form-control"
                                                             />
@@ -658,13 +701,13 @@ export default function Checkout() {
                                                                 className="control-label"
                                                                 htmlFor="input-payment-telephone"
                                                             >
-                                                                Telephone
+                                                                Телефон
                                                             </label>
                                                             <input
                                                                 type="text"
                                                                 name="telephone"
                                                                 defaultValue=""
-                                                                placeholder="Telephone"
+                                                                placeholder="Телефон"
                                                                 id="input-payment-telephone"
                                                                 className="form-control"
                                                             />
@@ -679,13 +722,13 @@ export default function Checkout() {
                                                                 className="control-label"
                                                                 htmlFor="input-payment-address-1"
                                                             >
-                                                                Address 1
+                                                                Адрес
                                                             </label>
                                                             <input
                                                                 type="text"
                                                                 name="address_1"
                                                                 defaultValue=""
-                                                                placeholder="Address 1"
+                                                                placeholder="Адрес"
                                                                 id="input-payment-address-1"
                                                                 className="form-control"
                                                             />
@@ -695,13 +738,13 @@ export default function Checkout() {
                                                                 className="control-label"
                                                                 htmlFor="input-payment-city"
                                                             >
-                                                                City
+                                                                Град или село
                                                             </label>
                                                             <input
                                                                 type="text"
                                                                 name="city"
                                                                 defaultValue=""
-                                                                placeholder="City"
+                                                                placeholder="Град"
                                                                 id="input-payment-city"
                                                                 className="form-control"
                                                             />
@@ -711,13 +754,13 @@ export default function Checkout() {
                                                                 className="control-label"
                                                                 htmlFor="input-payment-postcode"
                                                             >
-                                                                Post Code
+                                                                Пощенски код
                                                             </label>
                                                             <input
                                                                 type="text"
                                                                 name="postcode"
                                                                 defaultValue=""
-                                                                placeholder="Post Code"
+                                                                placeholder="Пощенски код"
                                                                 id="input-payment-postcode"
                                                                 className="form-control"
                                                             />
@@ -729,7 +772,7 @@ export default function Checkout() {
                                                 <div className="pull-right">
                                                     <input
                                                         type="button"
-                                                        defaultValue="Continue"
+                                                        defaultValue="Продължи"
                                                         id="button-guest"
                                                         data-loading-text="Loading..."
                                                         className="btn btn-primary"
@@ -746,15 +789,15 @@ export default function Checkout() {
                                                 href="#collapse-checkout-confirm"
                                                 data-toggle="collapse"
                                                 data-parent="#accordion"
-                                                className="accordion-toggle"
+                                                className="accordion-toggle collapsed"
                                                 aria-expanded="true"
                                             >
-                                                Step 3: Confirm Order <i className="fa fa-caret-down" />
+                                                Стъпка 3: Подтвърждаване на поръчката <i className="fa fa-caret-down" />
                                             </a>
                                         </h4>
                                     </div>
                                     <div
-                                        className="panel-collapse collapse in"
+                                        className="panel-collapse collapse"
                                         id="collapse-checkout-confirm"
                                         aria-expanded="true"
                                         style={{}}
