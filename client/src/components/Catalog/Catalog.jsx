@@ -22,6 +22,14 @@ export default function Catalog() {
     const [productsCount, setProductsCount] = useState([]);
 
     useEffect(() => {
+        return () => {
+            setCatalog([]);
+            setMostSold([]);
+            setProductsCount([]);
+        };
+    }, []);
+
+    useEffect(() => {
         Promise.all([
             clothesService.getCatalog(type, sort, size, page, categoryArray),
             clothesService.getMostSold(),
@@ -94,7 +102,6 @@ export default function Catalog() {
 
         setCheckedCategories([]);
     };
-
 
     useEffect(() => {
         const gridButton = document.getElementById("grid-view");

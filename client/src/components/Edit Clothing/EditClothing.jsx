@@ -18,11 +18,9 @@ export default function EditClothing() {
         backImage: null,
     });
 
-    // Add image preview states
     const [frontImagePreview, setFrontImagePreview] = useState(null);
     const [backImagePreview, setBackImagePreview] = useState(null);
 
-    // Add state to store original image paths
     const [originalImages, setOriginalImages] = useState({
         front: null,
         back: null

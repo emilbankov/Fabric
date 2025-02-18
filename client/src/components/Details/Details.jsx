@@ -110,10 +110,15 @@ export default function Details() {
         setShowConfirmModal(true);
     };
 
-    const confirmDelete = () => {
-        clothesService.deleteProduct(clothingId);
-        setShowConfirmModal(false);
-        navigate(-1);
+    const confirmDelete = async () => {
+        try {
+            await clothesService.deleteProduct(clothingId);
+            setShowConfirmModal(false);
+
+            navigate(-1);
+        } catch (error) {
+            console.error('Error deleting product:', error);
+        }
     };
 
     useEffect(() => {
