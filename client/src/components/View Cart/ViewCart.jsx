@@ -447,77 +447,104 @@ export default function ViewCart() {
                         <div id="content" className="col-sm-9">
                             <h1 className="page-title">Количка</h1>
                             <form action="" method="">
-                                <table className="table table-bordered shopping-cart responsive">
-                                    <tbody>
-                                        <tr>
-                                            <td className="text-center">Image</td>
-                                            <td className="text-center">
-                                                {" "}
-                                                <a href="/index.php?route=product/product&product_id=48">
-                                                    <img
-                                                        src="#"
-                                                        alt="Men's lace up Shoes"
-                                                        title="Men's lace up Shoes"
-                                                        className="img-thumbnail"
-                                                    />
-                                                </a>{" "}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="text-center">Product Name</td>
-                                            <td className="text-center">
-                                                <a href="/index.php?route=product/product&product_id=48">
-                                                    Men's lace up Shoes
-                                                </a>{" "}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="text-center">Model</td>
-                                            <td className="text-center">product 20</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="text-center">Quantity</td>
-                                            <td className="text-center">
-                                                <div
-                                                    className="input-group btn-block"
-                                                    style={{ maxWidth: 200 }}
-                                                >
-                                                    <input
-                                                        type="text"
-                                                        name="quantity[17]"
-                                                        defaultValue={2}
-                                                        size={1}
-                                                        className="form-control"
-                                                    />
-                                                    <span className="input-group-btn">
-                                                        <button
-                                                            type="submit"
-                                                            title="Update"
-                                                            className="btn btn-primary"
-                                                        >
-                                                            <i className="fa fa-refresh" />
-                                                        </button>
+                                {cart && cart.map((item, index) => (
+                                    <table key={`${item.id}-${item.size}-${item.type || "default"}`} className="table table-bordered shopping-cart responsive">
+                                        <tbody>
+                                            <tr>
+                                                <td className="text-center">Име</td>
+                                                <td className="text-center">
+                                                    <Link to={`/clothing/details/${item.id}`}>
+                                                        {item.name}
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-center">Снимка</td>
+                                                <td className="text-center">
+                                                    <Link to={`/clothing/details/${item.id}`}>
+                                                        <img
+                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_55,h_68${item.image}`}
+                                                            alt={item.name}
+                                                            title={item.name}
+                                                            className="img-thumbnail"
+                                                        />
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-center">Модел</td>
+                                                <td className="text-center">
+                                                    #{item.model}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-center">Размер</td>
+                                                <td className="text-center">
+                                                    {item.size.slice(0, 3)}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-center">Пол</td>
+                                                <td className="text-center">
+                                                    {gender[item.gender]}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-center">Тип</td>
+                                                <td className="text-center">
+                                                    {item?.type?.slice(0, 28) || "—"}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-center">Количество</td>
+                                                <td className="text-center">
+                                                    <div className="input-group btn-block" style={{ maxWidth: 200 }}>
                                                         <button
                                                             type="button"
-                                                            title="Remove"
-                                                            className="btn btn-danger"
+                                                            className="btn btn-primary"
+                                                            onClick={() => decreaseQuantity(item.id, item.size, item.gender, item.type)}
                                                         >
-                                                            <i className="fa fa-times-circle" />
+                                                            -
                                                         </button>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="text-center">Unit Price</td>
-                                            <td className="text-center">$122.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="text-center">Total</td>
-                                            <td className="text-center total">$244.00</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                        <input
+                                                            type="text"
+                                                            name={`quantity[${item.id}]`}
+                                                            value={item.quantity}
+                                                            size={1}
+                                                            className="form-control text-center"
+                                                            readOnly
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-primary"
+                                                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                                        >
+                                                            +
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-center">Общо</td>
+                                                <td className="text-center">
+                                                    {(item.price * item.quantity).toFixed(2)} лв.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-center"></td>
+                                                <td className="text-center">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-danger btn-xs"
+                                                        onClick={() => removeFromCart(item.id, item.size, item.gender, item.type)}
+                                                    >
+                                                        <i className="fa fa-times" />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                ))}
                             </form>
                             <form action="" method="">
                                 <div className="table-responsive">
