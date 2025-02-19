@@ -609,6 +609,11 @@ cite {
     font-style: normal;
 }
 
+.w-85m-30 {
+    width: 85%;
+    margin-top: 30px;
+}
+
 .text-left {
     text-align: left;
 }

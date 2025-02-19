@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-
+import AuthContext from "../../contexts/AuthProvider";
 export default function Account() {
     let location = useLocation();
+    const { isAuthenticated, userProfile } = useContext(AuthContext);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -51,10 +52,14 @@ export default function Account() {
                                 <div className="box-heading">Account</div>
                                 <div className="user-profile">
                                     <div className="user-avatar">
-                                        <img src="/images/avatar7.png" alt="Maxwell Admin" />
+                                        <img src="/images/avatar7.png" alt="User Avatar" />
                                     </div>
-                                    <h2 className="user-name">Yuki Hayashi</h2>
-                                    <h3 className="user-email">yuki@Maxwell.com</h3>
+                                    {isAuthenticated && userProfile && (
+                                        <>
+                                            <h2 className="user-name">{`${userProfile.firstName} ${userProfile.lastName}`}</h2>
+                                            <h3 className="user-email">{userProfile.email}</h3>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                             <div className="swiper-viewport">
@@ -112,54 +117,58 @@ export default function Account() {
                             <div className="row">
                                 <div className="card h-100">
                                     <div className="card-body">
-                                        <div className="row gutters">
-                                            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                <div className="form-group">
-                                                    <label htmlFor="fullName">Full Name</label>
-                                                    <span>Yuki Maxwell Hayashi</span>
+                                        {isAuthenticated && userProfile ? (
+                                            <div className="row gutters">
+                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="fullName">Име</label>
+                                                        <span>{userProfile.firstName}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="fullName">Фамилия</label>
+                                                        <span>{userProfile.lastName}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="email">E-mail</label>
+                                                        <span>{userProfile.email}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="phone">Телефон</label>
+                                                        <span>{userProfile.phoneNumber}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="street">Адрес</label>
+                                                        <span>{userProfile.address}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="city">Град</label>
+                                                        <span>{userProfile.city}</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                <div className="form-group">
-                                                    <label htmlFor="email">Email</label>
-                                                    <span>yuki@maxwell.com</span>
-                                                </div>
-                                            </div>
-                                            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                <div className="form-group">
-                                                    <label htmlFor="phone">Phone</label>
-                                                    <span>0512 123 361</span>
-                                                </div>
-                                            </div>
-                                            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                <div className="form-group">
-                                                    <label htmlFor="street">Street</label>
-                                                    <span>ul. Rakovski 25</span>
-                                                </div>
-                                            </div>
-                                            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                <div className="form-group">
-                                                    <label htmlFor="city">City</label>
-                                                    <span>Sofia</span>
-                                                </div>
-                                            </div>
-                                            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                <div className="form-group">
-                                                    <label htmlFor="zip">Zip Code</label>
-                                                    <span>6000</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        ) : (
+                                            <div>Please log in to view your profile information.</div>
+                                        )}
                                         <div className="row gutters">
                                             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                                <div className="text-right">
+                                                <div className="text-right w-85m-30">
                                                     <button
                                                         type="button"
                                                         id="submit"
                                                         name="submit"
                                                         className="btn btn-primary"
                                                     >
-                                                        Edit
+                                                        Редактиране
                                                     </button>
                                                 </div>
                                             </div>
