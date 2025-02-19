@@ -6,7 +6,6 @@ import { gender } from "../../lib/dictionary";
 export default function ViewCart() {
     const location = useLocation();
     const { cart, updateQuantity, decreaseQuantity, removeFromCart } = useContext(CartContext);
-    console.log(cart);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');

@@ -59,6 +59,11 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('accessToken', result.accessToken);
             localStorage.setItem('refreshToken', result.refreshToken);
             localStorage.setItem('roles', JSON.stringify(result.roles || []));
+            
+            const currentPath = window.location.pathname;
+            if (currentPath === '/checkout') {
+                return;
+            }
             navigate("/");
         } catch (error) {
             console.log(error);
