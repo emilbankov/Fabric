@@ -19,3 +19,5 @@ export const register = (firstName, lastName, email, phoneNumber, address, passw
         password,
     });
 };
+
+export const profile = async () => await get(`${baseUrl}/profile`);

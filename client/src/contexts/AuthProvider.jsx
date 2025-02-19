@@ -1,5 +1,5 @@
-import { createContext, useState } from "react";
-import { login, register } from '../services/authService';
+import { createContext, useState, useEffect } from "react";
+import { login, register, profile } from '../services/authService';
 import * as clothesService from "../services/clothesService"
 import { useNavigate } from "react-router-dom";
 
@@ -13,17 +13,33 @@ export const AuthProvider = ({ children }) => {
         const accessToken = localStorage.getItem('accessToken');
         const refreshToken = localStorage.getItem('refreshToken');
         const roles = localStorage.getItem('roles') ? JSON.parse(localStorage.getItem('roles')) : [];
+        const userProfile = localStorage.getItem('userProfile') ? JSON.parse(localStorage.getItem('userProfile')) : null;
 
         if (accessToken && refreshToken) {
             return {
                 accessToken,
                 refreshToken,
-                roles
+                roles,
+                userProfile
             };
         }
 
         return {};
     });
+
+    useEffect(() => {
+        if (auth.accessToken && !auth.userProfile) {
+            profile()
+                .then(profileData => {
+                    setAuth(state => ({
+                        ...state,
+                        userProfile: profileData
+                    }));
+                    localStorage.setItem('userProfile', JSON.stringify(profileData));
+                })
+                .catch(error => console.error('Failed to fetch profile:', error));
+        }
+    }, [auth.accessToken]);
 
     const addClothHandler = async (values) => {
         try {
@@ -53,9 +69,14 @@ export const AuthProvider = ({ children }) => {
     const loginSubmitHandler = async (values) => {
         try {
             const result = await login(values.email, values.password);
-            console.log(result);
-
-            setAuth(result);
+            
+            localStorage.removeItem('userProfile');
+            
+            setAuth({
+                ...result,
+                userProfile: null
+            });
+            
             localStorage.setItem('accessToken', result.accessToken);
             localStorage.setItem('refreshToken', result.refreshToken);
             localStorage.setItem('roles', JSON.stringify(result.roles || []));
@@ -91,11 +112,21 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('roles');
+        localStorage.removeItem('userProfile');
         navigate("/");
     };
 
     return (
-        <AuthContext.Provider value={{ addClothHandler, loginSubmitHandler, registerSubmitHandler, logoutHandler, email: auth.email, isAuthenticated: !!auth.accessToken, isAdmin: auth?.roles?.includes("ADMIN") || false }}>
+        <AuthContext.Provider value={{
+            addClothHandler,
+            loginSubmitHandler,
+            registerSubmitHandler,
+            logoutHandler,
+            email: auth.email,
+            isAuthenticated: !!auth.accessToken,
+            isAdmin: auth?.roles?.includes("ADMIN") || false,
+            userProfile: auth.userProfile
+        }}>
             {children}
         </AuthContext.Provider>
     );
