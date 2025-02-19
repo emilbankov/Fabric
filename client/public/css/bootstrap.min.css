@@ -1926,7 +1926,9 @@ th {
 
 form .table-responsive table.shopping-cart thead tr td,
 form .table-responsive table.shopping-cart tbody tr td,
-ul.cart-menu li .table-striped tbody tr td {
+ul.cart-menu li .table-striped tbody tr td,
+.panel-body table.table tbody tr td,
+.panel-body table.table thead tr td {
     vertical-align: middle;
 }
 

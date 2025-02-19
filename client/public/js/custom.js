@@ -697,7 +697,11 @@ $(window).load(function () {
 	$("#spinner").fadeOut("slow");
 });
 
-$('#tabs a').tabs();
+$(document).ready(function () {
+	if ($.fn.tabs) {
+		$('#tabs a').tabs();
+	}
+});
 $(document).ready(function () {
 	$('.blogcarousel').owlCarousel({
 		items: 3,
