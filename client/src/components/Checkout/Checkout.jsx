@@ -10,7 +10,7 @@ import { useForm } from "../../hooks/useForm";
 export default function Checkout() {
     const location = useLocation();
 
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, userProfile } = useContext(AuthContext);
     const { loginSubmitHandler } = useContext(AuthContext);
 
     const { values, onChange, onSubmit } = useForm(loginSubmitHandler, {
@@ -22,7 +22,7 @@ export default function Checkout() {
     const [showLoginForm, setShowLoginForm] = useState(true);
     const { cart } = useContext(CartContext);
     const [cities, setCities] = useState([]);
-    const [deliveryType, setDeliveryType] = useState('office');
+    const [deliveryType, setDeliveryType] = useState(isAuthenticated ? 'address' : 'office');
     const [searchTerm, setSearchTerm] = useState('');
     const [offices, setOffices] = useState([]);
     const [selectedOffice, setSelectedOffice] = useState(null);
@@ -31,6 +31,40 @@ export default function Checkout() {
     const [manualAddress, setManualAddress] = useState(false);
     const [step1Complete, setStep1Complete] = useState(false);
     const [step2Complete, setStep2Complete] = useState(false);
+
+    // Add form values state
+    const [formValues, setFormValues] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        telephone: '',
+        city: '',
+        address: '',
+        postcode: ''
+    });
+
+    // Pre-fill form with user profile data when authenticated
+    useEffect(() => {
+        if (isAuthenticated && userProfile) {
+            setFormValues({
+                firstName: userProfile.firstName || '',
+                lastName: userProfile.lastName || '',
+                email: userProfile.email || '',
+                telephone: userProfile.phoneNumber || '',
+                city: userProfile.city || '',
+                address: userProfile.address || '',
+                postcode: ''
+            });
+        }
+    }, [isAuthenticated, userProfile]);
+
+    const handleFormChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
     const handleGuestCheckout = () => {
         const guestRadio = document.querySelector('input[value="guest"]');
@@ -67,7 +101,39 @@ export default function Checkout() {
     };
 
     const handleDeliveryTypeChange = (e) => {
-        setDeliveryType(e.target.value);
+        const newDeliveryType = e.target.value;
+        setDeliveryType(newDeliveryType);
+        
+        if (newDeliveryType === 'office') {
+            // Clear address-related fields when switching to office delivery
+            setFormValues(prev => ({
+                ...prev,
+                city: '',
+                address: '',
+                postcode: ''
+            }));
+            // Clear office search state
+            setSearchTerm('');
+            setSelectedOffice(null);
+            setOffices([]);
+            setManualAddress(false);
+        } else {
+            // Clear office-related fields when switching to address delivery
+            setSearchTerm('');
+            setSelectedOffice(null);
+            setOffices([]);
+            setManualAddress(false);
+            
+            // If user is authenticated, restore their address details
+            if (isAuthenticated && userProfile) {
+                setFormValues(prev => ({
+                    ...prev,
+                    city: userProfile.city || '',
+                    address: userProfile.address || '',
+                    postcode: ''
+                }));
+            }
+        }
     };
 
     const handleCitySearch = async (value) => {
@@ -158,6 +224,22 @@ export default function Checkout() {
             setStep1Complete(true);
         }
     }, [isAuthenticated]);
+
+    const handleStep2Continue = () => {
+        // Add validation here if needed
+        setStep2Complete(true);
+
+        // Close step 2 panel and open step 3
+        const step2Content = document.getElementById('collapse-payment-address');
+        const step3Content = document.getElementById('collapse-checkout-confirm');
+
+        if (step2Content) {
+            step2Content.classList.remove('in');
+        }
+        if (step3Content) {
+            step3Content.classList.add('in');
+        }
+    };
 
     return (
         <>
@@ -740,8 +822,9 @@ export default function Checkout() {
                                                             </label>
                                                             <input
                                                                 type="text"
-                                                                name="firstname"
-                                                                defaultValue=""
+                                                                name="firstName"
+                                                                value={formValues.firstName}
+                                                                onChange={handleFormChange}
                                                                 placeholder="Име"
                                                                 id="input-payment-firstname"
                                                                 className="form-control"
@@ -756,8 +839,9 @@ export default function Checkout() {
                                                             </label>
                                                             <input
                                                                 type="text"
-                                                                name="lastname"
-                                                                defaultValue=""
+                                                                name="lastName"
+                                                                value={formValues.lastName}
+                                                                onChange={handleFormChange}
                                                                 placeholder="Фамилия"
                                                                 id="input-payment-lastname"
                                                                 className="form-control"
@@ -773,7 +857,8 @@ export default function Checkout() {
                                                             <input
                                                                 type="text"
                                                                 name="email"
-                                                                defaultValue=""
+                                                                value={formValues.email}
+                                                                onChange={handleFormChange}
                                                                 placeholder="E-Mail"
                                                                 id="input-payment-email"
                                                                 className="form-control"
@@ -789,7 +874,8 @@ export default function Checkout() {
                                                             <input
                                                                 type="text"
                                                                 name="telephone"
-                                                                defaultValue=""
+                                                                value={formValues.telephone}
+                                                                onChange={handleFormChange}
                                                                 placeholder="Телефон"
                                                                 id="input-payment-telephone"
                                                                 className="form-control"
@@ -822,13 +908,13 @@ export default function Checkout() {
                                                                         checked={deliveryType === 'address'}
                                                                         onChange={handleDeliveryTypeChange}
                                                                     />
-                                                                    Собствен адрес
+                                                                    До адрес
                                                                 </label>
                                                             </div>
                                                         </div>
 
                                                         {deliveryType === 'office' ? (
-                                                            <div className="form-group required">
+                                                            <div className="form-group">
                                                                 <label className="control-label" htmlFor="input-payment-city">
                                                                     Търсене на офис
                                                                 </label>
@@ -888,7 +974,7 @@ export default function Checkout() {
 
                                                                 {manualAddress && (
                                                                     <div className="manual-address-input">
-                                                                        <div className="form-group required">
+                                                                        <div className="form-group">
                                                                             <label className="control-label" htmlFor="input-manual-office">
                                                                                 Въведете адрес на офис ръчно
                                                                             </label>
@@ -904,40 +990,43 @@ export default function Checkout() {
                                                             </div>
                                                         ) : (
                                                             <>
-                                                                <div className="form-group required">
+                                                                <div className="form-group">
                                                                     <label className="control-label" htmlFor="input-payment-city">
                                                                         Град или село
                                                                     </label>
                                                                     <input
                                                                         type="text"
                                                                         name="city"
-                                                                        defaultValue=""
+                                                                        value={formValues.city}
+                                                                        onChange={handleFormChange}
                                                                         placeholder="Град"
                                                                         id="input-payment-city"
                                                                         className="form-control"
                                                                     />
                                                                 </div>
-                                                                <div className="form-group required">
+                                                                <div className="form-group">
                                                                     <label className="control-label" htmlFor="input-payment-address-1">
                                                                         Адрес
                                                                     </label>
                                                                     <input
                                                                         type="text"
-                                                                        name="address_1"
-                                                                        defaultValue=""
+                                                                        name="address"
+                                                                        value={formValues.address}
+                                                                        onChange={handleFormChange}
                                                                         placeholder="Адрес"
                                                                         id="input-payment-address-1"
                                                                         className="form-control"
                                                                     />
                                                                 </div>
-                                                                <div className="form-group required">
+                                                                <div className="form-group">
                                                                     <label className="control-label" htmlFor="input-payment-postcode">
                                                                         Пощенски код
                                                                     </label>
                                                                     <input
                                                                         type="text"
                                                                         name="postcode"
-                                                                        defaultValue=""
+                                                                        value={formValues.postcode}
+                                                                        onChange={handleFormChange}
                                                                         placeholder="Пощенски код"
                                                                         id="input-payment-postcode"
                                                                         className="form-control"
@@ -952,10 +1041,11 @@ export default function Checkout() {
                                                 <div className="pull-right">
                                                     <input
                                                         type="button"
-                                                        defaultValue="Продължи"
+                                                        value="Продължи"
                                                         id="button-guest"
                                                         data-loading-text="Loading..."
                                                         className="btn btn-primary"
+                                                        onClick={handleStep2Continue}
                                                     />
                                                 </div>
                                             </div>
@@ -1111,7 +1201,7 @@ export default function Checkout() {
                                                             <td className="text-right total">
                                                                 {cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
                                                                     ? "Безплатна"
-                                                                    : "6.90 лв."}
+                                                                    : (deliveryType === 'address' ? "9.00 лв." : "6.90 лв.")}
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -1120,8 +1210,10 @@ export default function Checkout() {
                                                             </td>
                                                             <td className="text-right total">
                                                                 {(cart.reduce((total, item) => total + (item.price * item.quantity), 0) +
-                                                                    (cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100 ? 0 : 6.90)
-                                                                ).toFixed(2)} лв.
+                                                                    (cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
+                                                                        ? 0
+                                                                        : (deliveryType === 'address' ? 9.00 : 6.90)
+                                                                    )).toFixed(2)} лв.
                                                             </td>
                                                         </tr>
                                                     </tfoot>
