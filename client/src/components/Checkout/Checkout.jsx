@@ -1,14 +1,17 @@
 import "./Checkout.css";
 import { useEffect, useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthProvider";
 import { CartContext } from "../../contexts/CartProvider";
 import { Link } from "react-router-dom";
 import { gender } from "../../lib/dictionary";
 import * as econtService from "../../services/econtService";
 import { useForm } from "../../hooks/useForm";
+import * as orderService from '../../services/ordersService';
+
 export default function Checkout() {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const { isAuthenticated, userProfile } = useContext(AuthContext);
     const { loginSubmitHandler } = useContext(AuthContext);
@@ -20,7 +23,7 @@ export default function Checkout() {
 
     const [isGuestCheckout, setIsGuestCheckout] = useState(false);
     const [showLoginForm, setShowLoginForm] = useState(true);
-    const { cart } = useContext(CartContext);
+    const { cart, clearCart } = useContext(CartContext);
     const [cities, setCities] = useState([]);
     const [deliveryType, setDeliveryType] = useState(isAuthenticated ? 'address' : 'office');
     const [searchTerm, setSearchTerm] = useState('');
@@ -31,6 +34,7 @@ export default function Checkout() {
     const [manualAddress, setManualAddress] = useState(false);
     const [step1Complete, setStep1Complete] = useState(false);
     const [step2Complete, setStep2Complete] = useState(false);
+console.log(cart);
 
     // Add form values state
     const [formValues, setFormValues] = useState({
@@ -40,7 +44,6 @@ export default function Checkout() {
         telephone: '',
         city: '',
         address: '',
-        postcode: ''
     });
 
     // Pre-fill form with user profile data when authenticated
@@ -53,7 +56,6 @@ export default function Checkout() {
                 telephone: userProfile.phoneNumber || '',
                 city: userProfile.city || '',
                 address: userProfile.address || '',
-                postcode: ''
             });
         }
     }, [isAuthenticated, userProfile]);
@@ -110,7 +112,6 @@ export default function Checkout() {
                 ...prev,
                 city: '',
                 address: '',
-                postcode: ''
             }));
             // Clear office search state
             setSearchTerm('');
@@ -130,7 +131,6 @@ export default function Checkout() {
                     ...prev,
                     city: userProfile.city || '',
                     address: userProfile.address || '',
-                    postcode: ''
                 }));
             }
         }
@@ -175,8 +175,6 @@ export default function Checkout() {
             }
         };
     }, [searchTimeout]);
-
-    console.log(offices);
 
 
     useEffect(() => {
@@ -226,6 +224,40 @@ export default function Checkout() {
     }, [isAuthenticated]);
 
     const handleStep2Continue = () => {
+        // Create office data structure for both selected office and manual input
+        let officeData = null;
+        
+        if (deliveryType === 'office') {
+            if (selectedOffice) {
+                officeData = selectedOffice.address.fullAddress;
+            } else if (manualAddress && searchTerm) {
+                officeData = searchTerm;
+            }
+        }
+
+        // Calculate total price
+        const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        const deliveryCost = totalPrice >= 100 ? 0 : (deliveryType === 'address' ? 9.00 : 6.90);
+        const finalPrice = totalPrice + deliveryCost;
+
+        // Log all form fields and delivery information
+        console.log('Form Values:', {
+            ...formValues,
+            deliveryType,
+            selectedOffice: officeData,
+            cart: cart.map(item => ({
+                id: item.id,
+                quantity: item.quantity,
+                price: item.price,
+                size: item.size,
+                gender: item.gender,
+                type: item.type
+            })),
+            totalPrice: Number(totalPrice.toFixed(2)),
+            deliveryCost: Number(deliveryCost.toFixed(2)),
+            finalPrice: Number(finalPrice.toFixed(2))
+        });
+
         // Add validation here if needed
         setStep2Complete(true);
 
@@ -238,6 +270,56 @@ export default function Checkout() {
         }
         if (step3Content) {
             step3Content.classList.add('in');
+        }
+    };
+
+    const handleOrderSubmit = async () => {
+        // Create office data structure for both selected office and manual input
+        let officeData = null;
+        
+        if (deliveryType === 'office') {
+            if (selectedOffice) {
+                officeData = {
+                    address: selectedOffice.address.fullAddress,
+                    name: selectedOffice.name
+                };
+            } else if (manualAddress && searchTerm) {
+                officeData = {
+                    address: searchTerm,
+                    name: 'Manually entered office'
+                };
+            }
+        }
+
+        // Calculate total price
+        const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        const deliveryCost = totalPrice >= 100 ? 0 : (deliveryType === 'address' ? 9.00 : 6.90);
+        const finalPrice = totalPrice + deliveryCost;
+
+        const orderData = {
+            ...formValues,
+            deliveryType,
+            selectedOffice: officeData,
+            cart: cart.map(item => ({
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity,
+                size: item.size
+            })),
+            totalPrice: Number(totalPrice.toFixed(2)),
+            deliveryCost: Number(deliveryCost.toFixed(2)),
+            finalPrice: Number(finalPrice.toFixed(2)),
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        };
+
+        try {
+            await orderService.createOrder(orderData);
+            clearCart();
+            navigate('/order-success');
+        } catch (error) {
+            console.error('Failed to create order:', error);
         }
     };
 
@@ -983,6 +1065,8 @@ export default function Checkout() {
                                                                                 id="input-manual-office"
                                                                                 className="form-control"
                                                                                 placeholder="Въведете пълния адрес на офиса"
+                                                                                value={searchTerm}
+                                                                                onChange={(e) => setSearchTerm(e.target.value)}
                                                                             />
                                                                         </div>
                                                                     </div>
@@ -1015,20 +1099,6 @@ export default function Checkout() {
                                                                         onChange={handleFormChange}
                                                                         placeholder="Адрес"
                                                                         id="input-payment-address-1"
-                                                                        className="form-control"
-                                                                    />
-                                                                </div>
-                                                                <div className="form-group">
-                                                                    <label className="control-label" htmlFor="input-payment-postcode">
-                                                                        Пощенски код
-                                                                    </label>
-                                                                    <input
-                                                                        type="text"
-                                                                        name="postcode"
-                                                                        value={formValues.postcode}
-                                                                        onChange={handleFormChange}
-                                                                        placeholder="Пощенски код"
-                                                                        id="input-payment-postcode"
                                                                         className="form-control"
                                                                     />
                                                                 </div>
@@ -1223,10 +1293,10 @@ export default function Checkout() {
                                                 <div className="pull-right">
                                                     <input
                                                         type="button"
-                                                        defaultValue="Потвърди поръчка"
+                                                        value="Потвърди поръчка"
                                                         id="button-confirm"
-                                                        data-loading-text="Loading..."
                                                         className="btn btn-primary"
+                                                        onClick={handleOrderSubmit}
                                                     />
                                                 </div>
                                             </div>
