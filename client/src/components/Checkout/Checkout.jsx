@@ -34,16 +34,17 @@ export default function Checkout() {
     const [manualAddress, setManualAddress] = useState(false);
     const [step1Complete, setStep1Complete] = useState(false);
     const [step2Complete, setStep2Complete] = useState(false);
-console.log(cart);
+    console.log(cart);
 
     // Add form values state
     const [formValues, setFormValues] = useState({
         firstName: '',
         lastName: '',
         email: '',
-        telephone: '',
+        phoneNumber: '',
         city: '',
         address: '',
+        region: '',
     });
 
     // Pre-fill form with user profile data when authenticated
@@ -53,9 +54,10 @@ console.log(cart);
                 firstName: userProfile.firstName || '',
                 lastName: userProfile.lastName || '',
                 email: userProfile.email || '',
-                telephone: userProfile.phoneNumber || '',
+                phoneNumber: userProfile.phoneNumber || '',
                 city: userProfile.city || '',
                 address: userProfile.address || '',
+                region: userProfile.region || '',
             });
         }
     }, [isAuthenticated, userProfile]);
@@ -105,13 +107,14 @@ console.log(cart);
     const handleDeliveryTypeChange = (e) => {
         const newDeliveryType = e.target.value;
         setDeliveryType(newDeliveryType);
-        
+
         if (newDeliveryType === 'office') {
             // Clear address-related fields when switching to office delivery
             setFormValues(prev => ({
                 ...prev,
                 city: '',
                 address: '',
+                region: '',
             }));
             // Clear office search state
             setSearchTerm('');
@@ -124,13 +127,14 @@ console.log(cart);
             setSelectedOffice(null);
             setOffices([]);
             setManualAddress(false);
-            
+
             // If user is authenticated, restore their address details
             if (isAuthenticated && userProfile) {
                 setFormValues(prev => ({
                     ...prev,
                     city: userProfile.city || '',
                     address: userProfile.address || '',
+                    region: userProfile.region || '',
                 }));
             }
         }
@@ -226,7 +230,7 @@ console.log(cart);
     const handleStep2Continue = () => {
         // Create office data structure for both selected office and manual input
         let officeData = null;
-        
+
         if (deliveryType === 'office') {
             if (selectedOffice) {
                 officeData = selectedOffice.address.fullAddress;
@@ -276,18 +280,12 @@ console.log(cart);
     const handleOrderSubmit = async () => {
         // Create office data structure for both selected office and manual input
         let officeData = null;
-        
+
         if (deliveryType === 'office') {
             if (selectedOffice) {
-                officeData = {
-                    address: selectedOffice.address.fullAddress,
-                    name: selectedOffice.name
-                };
+                officeData = selectedOffice.address.fullAddress;
             } else if (manualAddress && searchTerm) {
-                officeData = {
-                    address: searchTerm,
-                    name: 'Manually entered office'
-                };
+                officeData = searchTerm;
             }
         }
 
@@ -302,20 +300,20 @@ console.log(cart);
             selectedOffice: officeData,
             cart: cart.map(item => ({
                 id: item.id,
-                name: item.name,
                 price: item.price,
                 quantity: item.quantity,
-                size: item.size
+                size: item.size,
+                type: item.type,
+                gender: item.gender
             })),
             totalPrice: Number(totalPrice.toFixed(2)),
             deliveryCost: Number(deliveryCost.toFixed(2)),
             finalPrice: Number(finalPrice.toFixed(2)),
-            status: 'pending',
-            createdAt: new Date().toISOString()
         };
 
+        console.log(orderData);
         try {
-            await orderService.createOrder(orderData);
+            await orderService.createOrder({ ...orderData });
             clearCart();
             navigate('/order-success');
         } catch (error) {
@@ -949,17 +947,17 @@ console.log(cart);
                                                         <div className="form-group required">
                                                             <label
                                                                 className="control-label"
-                                                                htmlFor="input-payment-telephone"
+                                                                htmlFor="input-payment-phoneNumber"
                                                             >
                                                                 Телефон
                                                             </label>
                                                             <input
                                                                 type="text"
-                                                                name="telephone"
-                                                                value={formValues.telephone}
+                                                                name="phoneNumber"
+                                                                value={formValues.phoneNumber}
                                                                 onChange={handleFormChange}
                                                                 placeholder="Телефон"
-                                                                id="input-payment-telephone"
+                                                                id="input-payment-phoneNumber"
                                                                 className="form-control"
                                                             />
                                                         </div>
@@ -1074,6 +1072,20 @@ console.log(cart);
                                                             </div>
                                                         ) : (
                                                             <>
+                                                                <div className="form-group">
+                                                                    <label className="control-label" htmlFor="input-payment-region">
+                                                                        Област
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        name="region"
+                                                                        value={formValues.region}
+                                                                        onChange={handleFormChange}
+                                                                        placeholder="Област"
+                                                                        id="input-payment-region"
+                                                                        className="form-control"
+                                                                    />
+                                                                </div>
                                                                 <div className="form-group">
                                                                     <label className="control-label" htmlFor="input-payment-city">
                                                                         Град или село
