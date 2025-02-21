@@ -1,4 +1,50 @@
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import OrderDetailsModal from "./Order Details/OrderDetails";
+import * as ordersService from "../../services/ordersService";
+
 export default function OrdersHistoryAdmin() {
+    const location = useLocation();
+    const [showModal, setShowModal] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [orders, setOrders] = useState([]);
+
+    useEffect(() => {
+        Promise.all([
+            ordersService.ordersHistoryAdmin(),
+        ])
+            .then(([orders]) => {
+                setOrders(orders);
+            })
+            .catch(err => {
+                console.error('Search Error:', err);
+            })
+    }, [location.pathname]);
+
+    useEffect(() => {
+        const existingScript = document.querySelector('script[src="/js/custom.js"]');
+        if (existingScript && existingScript.parentNode) {
+            existingScript.parentNode.removeChild(existingScript);
+        }
+
+        const script = document.createElement('script');
+        script.src = '/js/custom.js';
+        script.async = true;
+
+        document.body.appendChild(script);
+
+        return () => {
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
+        };
+    }, [location.pathname]);
+
+    const handleViewOrder = (orderId) => {
+        setSelectedOrder(orderId);
+        setShowModal(true);
+    };
+
     return (
         <>
             <div className="account-order   layout-2 left-col">
@@ -12,21 +58,8 @@ export default function OrdersHistoryAdmin() {
                 </div>
                 <div id="account-order" className="container">
                     <ul className="breadcrumb">
-                        <li>
-                            <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=common/home">
-                                <i className="fa fa-home" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/account">
-                                Account
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/order">
-                                Order History
-                            </a>
-                        </li>
+                        <li><Link to="/"><i className="fa fa-home" /></Link></li>
+                        <li><Link to="/orders-history-admin">Поръчки</Link></li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
@@ -119,7 +152,7 @@ export default function OrdersHistoryAdmin() {
                                         <div className="swiper-slide">
                                             <a href="#">
                                                 <img
-                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/left-banner-272x340.jpg"
+                                                    src="./images/left-banner-272x340.jpg"
                                                     alt="Left Banner1"
                                                     className="img-responsive"
                                                 />
@@ -173,62 +206,58 @@ export default function OrdersHistoryAdmin() {
                             </div>
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h1>Order History</h1>
+                            <h1>Поръчки</h1>
                             <div className="table-responsive">
                                 <table className="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <td className="text-right">Order ID</td>
-                                            <td className="text-left">Customer</td>
-                                            <td className="text-right">No. of Products</td>
-                                            <td className="text-left">Status</td>
-                                            <td className="text-right">Total</td>
-                                            <td className="text-left">Date Added</td>
-                                            <td />
+                                            <td className="text-center">Order ID</td>
+                                            <td className="text-center">Клиент</td>
+                                            <td className="text-center">Брой продукти</td>
+                                            <td className="text-center">Статус</td>
+                                            <td className="text-center">Общо</td>
+                                            <td className="text-center">Дата на поръчка</td>
+                                            <td className="text-center">Детайли</td>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td className="text-right">#1</td>
-                                            <td className="text-left">asd asd</td>
-                                            <td className="text-right">1</td>
-                                            <td className="text-left">Pending</td>
-                                            <td className="text-right">$253.00</td>
-                                            <td className="text-left">27 Jan 2025</td>
-                                            <td className="text-right">
-                                                <a
-                                                    href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/order/info&order_id=1"
-                                                    data-toggle="tooltip"
-                                                    title="View"
+                                        {orders.orders && orders.orders.map(order => (
+                                            <tr key={order.id}>
+                                                <td className="text-center">#{order.id}</td>
+                                            <td className="text-center">{order.customer}</td>
+                                            <td className="text-center">{order.quantity}</td>
+                                            <td className="text-center">{order.status}</td>
+                                            <td className="text-center">{order.totalPrice} лв.</td>
+                                            <td className="text-center">{order.createdAt.split(' ')[0]}</td>
+                                            <td className="text-center">
+                                                <button
+                                                    onClick={() => handleViewOrder(order.id)}
                                                     className="btn btn-info"
                                                 >
                                                     <i className="fa fa-eye" />
-                                                </a>
+                                                </button>
                                             </td>
                                         </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>
                             <div className="row">
                                 <div className="col-sm-6 text-left" />
-                                <div className="col-sm-6 text-right">
-                                    Showing 1 to 1 of 1 (1 Pages)
-                                </div>
-                            </div>
-                            <div className="buttons clearfix">
-                                <div className="pull-right">
-                                    <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/account"
-                                        className="btn btn-primary"
-                                    >
-                                        Continue
-                                    </a>
+                                <div className="col-sm-6 text-right pages-left">
+                                    Showing {orders.total_items} of 10 ({orders.total_pages} Pages)
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <OrderDetailsModal 
+                show={showModal}
+                onClose={() => setShowModal(false)}
+                orderId={selectedOrder}
+            />
         </>
     );
 }
