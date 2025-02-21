@@ -74,7 +74,7 @@ export default function AddClothing() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/register">Добавяне на продукт</Link>
+                            <Link to="/add-clothing">Добавяне на продукт</Link>
                         </li>
                     </ul>
                     <div className="row">

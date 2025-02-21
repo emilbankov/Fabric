@@ -1,7 +1,8 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { login, register, profile } from '../services/authService';
 import * as clothesService from "../services/clothesService"
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "./CartProvider";
 
 const AuthContext = createContext();
 
@@ -9,6 +10,7 @@ AuthContext.displayName = 'AuthContext';
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
+    const { clearCart } = useContext(CartContext);
     const [auth, setAuth] = useState(() => {
         const accessToken = localStorage.getItem('accessToken');
         const refreshToken = localStorage.getItem('refreshToken');
@@ -94,8 +96,17 @@ export const AuthProvider = ({ children }) => {
     const registerSubmitHandler = async (values) => {
         try {
             if (values.password === values.confirmPassword) {
-                const result = await register(values.firstName, values.lastName, values.email, values.phoneNumber, values.address, values.password);
-                console.log(result);
+                const result = await register(
+                    values.firstName, 
+                    values.lastName, 
+                    values.email, 
+                    values.phoneNumber, 
+                    values.address,
+                    values.region,
+                    values.city,
+                    values.password
+                );
+                
                 setAuth(result);
                 localStorage.setItem('accessToken', result.accessToken);
                 localStorage.setItem('refreshToken', result.refreshToken);
@@ -113,6 +124,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('roles');
         localStorage.removeItem('userProfile');
+        clearCart();
         navigate("/");
     };
 

@@ -12,6 +12,9 @@ export default function Register() {
         lastName: '',
         email: '',
         phoneNumber: '',
+        address: '',
+        region: '',
+        city: '',
         password: '',
         confirmPassword: ''
     });
@@ -240,6 +243,34 @@ export default function Register() {
                                                 placeholder="Адрес"
                                                 onChange={onChange}
                                                 values={values.address}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="form-group required">
+                                        <label className="col-sm-2 control-label" htmlFor="region">Област</label>
+                                        <div className="col-sm-10">
+                                            <input
+                                                className="form-control"
+                                                type="text"
+                                                id="region"
+                                                name="region"
+                                                placeholder="Област"
+                                                onChange={onChange}
+                                                values={values.region}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="form-group required">
+                                        <label className="col-sm-2 control-label" htmlFor="city">Град</label>
+                                        <div className="col-sm-10">
+                                            <input
+                                                className="form-control"
+                                                type="text"
+                                                id="city"
+                                                name="city"
+                                                placeholder="Град"
+                                                onChange={onChange}
+                                                values={values.city}
                                             />
                                         </div>
                                     </div>

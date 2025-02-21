@@ -9,13 +9,15 @@ export const login = (email, password) => {
     });
 };
 
-export const register = (firstName, lastName, email, phoneNumber, address, password) => {
+export const register = (firstName, lastName, email, phoneNumber, address, region, city, password) => {
     return post(`${baseUrl}/register`, {
         firstName,
         lastName,
         email,
         phoneNumber,
         address,
+        region,
+        city,
         password,
     });
 };

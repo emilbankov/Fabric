@@ -213,7 +213,7 @@ export default function EditClothing() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/register">Добавяне на продукт</Link>{" "}
+                            <Link to={`/clothing/edit/${clothingId}`}>Промяна на продукт</Link>{" "}
                         </li>
                     </ul>
                     <div className="row">
