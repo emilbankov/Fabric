@@ -2820,9 +2820,9 @@ fieldset[disabled] .btn-success.active {
 }
 
 .btn-info {
-    color: #000;
-    background: #333333;
-    border: 1px solid #333333;
+    color: #fff;
+    background-color: #252525;
+    border: 1px solid #252525;
     border-radius: 5px;
 }
 

@@ -320,6 +320,11 @@ export default function Header() {
                                                             <Link to="/add-clothing">Добавяне на продукт</Link>
                                                         </li>
                                                     )}
+                                                    {isAdmin && (
+                                                        <li className="toplink">
+                                                            <Link to="/orders-history-admin">История на поръчките</Link>
+                                                        </li>
+                                                    )}
                                                 </ul>
                                             </div>
                                         </div>

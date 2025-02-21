@@ -7099,6 +7099,10 @@ footer .tm-about-logo {
 	clear: both;
 }
 
+#account-order .col-sm-6.text-right.pages-left {
+	text-align: left;
+}
+
 #contact ul li,
 .newsletter ul li {
 	line-height: 22px;
@@ -24637,4 +24641,13 @@ input[type=file]::file-selector-button:hover {
 	border: 1px solid rgb(240, 240, 240);
 	padding: 7px 22.5px;
 	background-color: #eeeeee;
+}
+
+div.modal div.modal-dialog div.modal-content div.modal-body div table.table-order-details thead tr td,
+div.modal div.modal-dialog div.modal-content div.modal-body div table.table-order-details tbody tr td,
+div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-details tbody tr td,
+div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-details thead tr td,
+#content div.table-responsive table.table-bordered thead tr td,
+#content div.table-responsive table.table-bordered tbody tr td {
+	vertical-align: middle !important;
 }

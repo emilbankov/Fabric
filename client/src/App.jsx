@@ -13,6 +13,8 @@ import Checkout from "./components/Checkout/Checkout";
 import AddClothing from "./components/Add Clothing/AddClothing";
 import EditClothing from "./components/Edit Clothing/EditClothing";
 import SearchResults from "./components/Search Results/SearchResults";
+import OrdersHistoryAdmin from "./components/Orders History/OrdersHistoryAdmin";
+import OrdersHistoryUsers from "./components/Orders History/OrdersHistoryUsers";
 import Contact from "./components/Contact/Contact";
 import About from "./components/About/About";
 import Blogs from "./components/Blogs/Blogs";
@@ -38,6 +40,8 @@ function App() {
                     <Route path="/view-cart" element={<ViewCart />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/search-results" element={<SearchResults />} />
+                    <Route path="/orders-history-admin" element={<OrdersHistoryAdmin />} />
+                    <Route path="/orders-history-users" element={<OrdersHistoryUsers />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/blogs" element={<Blogs />} />

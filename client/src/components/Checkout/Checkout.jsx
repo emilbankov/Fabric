@@ -315,7 +315,7 @@ export default function Checkout() {
         try {
             await orderService.createOrder({ ...orderData });
             clearCart();
-            navigate('/order-success');
+            navigate('/orders-history-users');
         } catch (error) {
             console.error('Failed to create order:', error);
         }
