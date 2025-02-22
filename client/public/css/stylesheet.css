@@ -24663,6 +24663,27 @@ input[type=file]::file-selector-button:hover {
 	background-color: #eeeeee;
 }
 
+.input-with-prefix {
+    position: relative;
+}
+
+.input-with-prefix::before {
+    content: "+359";
+    position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+	border: 1px solid rgb(240, 240, 240);
+	padding: 7px 15px;
+	background-color: #eeeeee;
+}
+
+.phone-field {
+    padding-left: 82px !important;
+}
+
 div.modal div.modal-dialog div.modal-content div.modal-body div table.table-order-details thead tr td,
 div.modal div.modal-dialog div.modal-content div.modal-body div table.table-order-details tbody tr td,
 div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-details tbody tr td,
