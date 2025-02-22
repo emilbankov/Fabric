@@ -26,6 +26,30 @@ export default function OrdersHistoryAdmin() {
         fetchOrders();
     }, [location.pathname, currentPage, orderStatus]);
 
+    const handleViewOrder = (orderId) => {
+        setSelectedOrder(orderId);
+        setShowModal(true);
+    };
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const handleStatusChange = (e) => {
+        setOrderStatus(e.target.value);
+        setCurrentPage(1);
+    };
+
+    const handleReload = async () => {
+        try {
+            const response = await ordersService.ordersHistoryAdmin(currentPage, orderStatus);
+            setOrders(response.orders);
+            setTotalPages(response.total_pages);
+        } catch (err) {
+            console.error("Reload Error:", err);
+        }
+    };
+
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
@@ -44,20 +68,6 @@ export default function OrdersHistoryAdmin() {
             }
         };
     }, [location.pathname]);
-
-    const handleViewOrder = (orderId) => {
-        setSelectedOrder(orderId);
-        setShowModal(true);
-    };
-
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
-
-    const handleStatusChange = (e) => {
-        setOrderStatus(e.target.value);
-        setCurrentPage(1);
-    };
 
     return (
         <>
@@ -226,19 +236,27 @@ export default function OrdersHistoryAdmin() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Поръчки</h1>
-                            <div className="form-group">
-                                <label htmlFor="orderStatus">Статус:</label>
-                                <select
-                                    id="orderStatus"
-                                    className="form-control"
-                                    value={orderStatus}
-                                    onChange={handleStatusChange}
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <div className="form-group" style={{ flex: 1, marginRight: '10px' }}>
+                                    <label htmlFor="orderStatus">Статус:</label>
+                                    <select
+                                        id="orderStatus"
+                                        className="form-control"
+                                        value={orderStatus}
+                                        onChange={handleStatusChange}
+                                    >
+                                        <option value="all">Всички</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Confirmed">Confirmed</option>
+                                        <option value="Rejected">Rejected</option>
+                                    </select>
+                                </div>
+                                <button
+                                    onClick={handleReload}
+                                    className="btn btn-primary"
                                 >
-                                    <option value="all">Всички</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Confirmed">Confirmed</option>
-                                    <option value="Rejected">Rejected</option>
-                                </select>
+                                    <i className="fa fa-refresh"></i> Обнови
+                                </button>
                             </div>
                             <div className="table-responsive">
                                 <table className="table table-bordered table-hover">
