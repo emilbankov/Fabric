@@ -1787,6 +1787,26 @@ header li {
 	float: none;
 }
 
+div.account-order div#account-order div.row div#content div.form-group {
+	width: 200px !important;
+	text-align: center !important;
+	float: right !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+div.account-order div#account-order div.row div#content div.form-group select {
+	text-align: center !important;
+	width: 100% !important;
+	padding: 5px 5px 5px 0 !important;
+}
+
+div.account-order div#account-order div.row div#content div.form-group label {
+	margin: 5px 10px 0 !important;
+}
+
+
 #account-return .btn.btn-default {
 	padding: 5px 12px !important;
 	background: #333333;
