@@ -11,6 +11,7 @@ export default function OrdersHistoryAdmin() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [orderStatus, setOrderStatus] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -41,12 +42,15 @@ export default function OrdersHistoryAdmin() {
     };
 
     const handleReload = async () => {
+        setIsLoading(true);
         try {
             const response = await ordersService.ordersHistoryAdmin(currentPage, orderStatus);
             setOrders(response.orders);
             setTotalPages(response.total_pages);
         } catch (err) {
             console.error("Reload Error:", err);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -259,41 +263,45 @@ export default function OrdersHistoryAdmin() {
                                 </button>
                             </div>
                             <div className="table-responsive">
-                                <table className="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <td className="text-center">Order ID</td>
-                                            <td className="text-center">Клиент</td>
-                                            <td className="text-center">Брой продукти</td>
-                                            <td className="text-center">Статус</td>
-                                            <td className="text-center">Общо</td>
-                                            <td className="text-center">Дата на поръчка</td>
-                                            <td className="text-center">Детайли</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {orders.map((order) => (
-                                            <tr key={order.id}>
-                                                <td className="text-center">#{order.id}</td>
-                                                <td className="text-center">{order.customer}</td>
-                                                <td className="text-center">{order.quantity}</td>
-                                                <td className="text-center">{order.status}</td>
-                                                <td className="text-center">{order.totalPrice} лв.</td>
-                                                <td className="text-center">
-                                                    {order.createdAt.split(" ")[0]}
-                                                </td>
-                                                <td className="text-center">
-                                                    <button
-                                                        onClick={() => handleViewOrder(order.id)}
-                                                        className="btn btn-info"
-                                                    >
-                                                        <i className="fa fa-eye" />
-                                                    </button>
-                                                </td>
+                                {isLoading ? (
+                                    <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>
+                                ) : (
+                                    <table className="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td className="text-center">Order ID</td>
+                                                <td className="text-center">Клиент</td>
+                                                <td className="text-center">Брой продукти</td>
+                                                <td className="text-center">Статус</td>
+                                                <td className="text-center">Общо</td>
+                                                <td className="text-center">Дата на поръчка</td>
+                                                <td className="text-center">Детайли</td>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            {orders.map((order) => (
+                                                <tr key={order.id}>
+                                                    <td className="text-center">#{order.id}</td>
+                                                    <td className="text-center">{order.customer}</td>
+                                                    <td className="text-center">{order.quantity}</td>
+                                                    <td className="text-center">{order.status}</td>
+                                                    <td className="text-center">{order.totalPrice} лв.</td>
+                                                    <td className="text-center">
+                                                        {order.createdAt.split(" ")[0]}
+                                                    </td>
+                                                    <td className="text-center">
+                                                        <button
+                                                            onClick={() => handleViewOrder(order.id)}
+                                                            className="btn btn-info"
+                                                        >
+                                                            <i className="fa fa-eye" />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                )}
                             </div>
 
                             {/* Updated Pagination Section */}
