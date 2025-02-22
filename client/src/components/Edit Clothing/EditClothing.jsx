@@ -395,7 +395,7 @@ export default function EditClothing() {
                                                 <option value="PATRIOTIC">Патриотични</option>
                                                 <option value="TRUCKS">Камиони</option>
                                                 <option value="MOVIES">Филми</option>
-                                                <option value="CHRISTMAS">Коледа</option>
+                                                <option value="CHRISTMAS">Коледни</option>
                                                 <option value="FOOTBALL">Футбол</option>
                                                 <option value="MOTORCYCLES">Мотори</option>
                                                 <option value="GAME_OF_THRONES">Гейм Аф Тронс</option>

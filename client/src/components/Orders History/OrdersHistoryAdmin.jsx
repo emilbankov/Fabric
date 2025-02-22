@@ -298,7 +298,7 @@ export default function OrdersHistoryAdmin() {
 
                             {/* Updated Pagination Section */}
                             <div className="pagination-wrapper">
-                                <div className="col-sm-6 text-left page-link">
+                                <div className="col-sm-6 text-right page-link">
                                     <ul className="pagination">
                                         {currentPage > 1 && (
                                             <>
@@ -375,7 +375,7 @@ export default function OrdersHistoryAdmin() {
                                         )}
                                     </ul>
                                 </div>
-                                <div className="col-sm-6 text-right page-result">
+                                <div className="col-sm-6 text-left page-result">
                                     Показвани {orders.length} от 10 поръчки ({totalPages} Страници)
                                 </div>
                             </div>
