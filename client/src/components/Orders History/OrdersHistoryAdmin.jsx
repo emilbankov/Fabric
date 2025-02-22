@@ -285,7 +285,7 @@ export default function OrdersHistoryAdmin() {
                                                     <td className="text-center">{order.customer}</td>
                                                     <td className="text-center">{order.quantity}</td>
                                                     <td className="text-center">{order.status}</td>
-                                                    <td className="text-center">{order.totalPrice} лв.</td>
+                                                    <td className="text-center">{order.totalPrice.toFixed(2)} лв.</td>
                                                     <td className="text-center">
                                                         {order.createdAt.split(" ")[0]}
                                                     </td>

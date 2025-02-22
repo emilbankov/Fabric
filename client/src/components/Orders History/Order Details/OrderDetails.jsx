@@ -197,14 +197,12 @@ export default function OrderDetailsModal({ show, onClose, orderId, refreshOrder
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div className="modal-footer">
-                                        {order.status !== "Confirmed" && order.status !== "Rejected" && (
-                                            <>
-                                                <button className="btn btn-danger" onClick={() => setShowRejectModal(true)}>Отхвърли поръчка</button>
-                                                <button className="btn btn-primary" onClick={() => setShowConfirmModal(true)}>Потвърди поръчка</button>
-                                            </>
-                                        )}
-                                    </div>
+                                    {order.status !== "Confirmed" && order.status !== "Rejected" && (
+                                        <div className="modal-footer">
+                                            <button className="btn btn-danger" onClick={() => setShowRejectModal(true)}>Отхвърли поръчка</button>
+                                            <button className="btn btn-primary" onClick={() => setShowConfirmModal(true)}>Потвърди поръчка</button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )}
