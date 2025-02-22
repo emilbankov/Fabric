@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as ordersService from '../../../services/ordersService';
 import { gender } from '../../../lib/dictionary';
 
-export default function OrderDetailsModal({ show, onClose, orderId }) {
+export default function OrderDetailsModal({ show, onClose, orderId, refreshOrders }) {
     const [order, setOrder] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -27,7 +27,29 @@ export default function OrderDetailsModal({ show, onClose, orderId }) {
             fetchOrderDetails();
         }
     }, [show, orderId]);
-    console.log(order);
+
+    const handleConfirmOrder = async () => {
+        try {
+            await ordersService.confirmOrder(orderId);
+            console.log('Order confirmed successfully');
+            onClose();
+            window.location.reload();
+        } catch (error) {
+            console.error('Error confirming order:', error);
+        }
+    };
+
+    const handleRejectOrder = async () => {
+        try {
+            await ordersService.rejectOrder(orderId);
+            console.log('Order rejected successfully');
+            onClose();
+            window.location.reload();
+        } catch (error) {
+            console.error('Error rejecting order:', error);
+        }
+    };
+
     if (!show) return null;
 
     return (
@@ -172,6 +194,14 @@ export default function OrderDetailsModal({ show, onClose, orderId }) {
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div className="modal-footer">
+                                    {order.status !== "Confirmed" && order.status !== "Rejected" && (
+                                        <>
+                                            <button className="btn btn-danger" onClick={handleRejectOrder}>Отхвърли поръчка</button>
+                                            <button className="btn btn-primary" onClick={handleConfirmOrder}>Потвърди поръчка</button>
+                                        </>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     )}
