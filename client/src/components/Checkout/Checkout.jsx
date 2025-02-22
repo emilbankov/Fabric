@@ -62,12 +62,35 @@ export default function Checkout() {
         }
     }, [isAuthenticated, userProfile]);
 
+    const formatPhoneNumber = (value) => {
+        // Remove all non-digit characters
+        const digits = value.replace(/\D/g, '');
+        
+        // Split into groups of 3 and join with spaces
+        const formatted = digits.match(/.{1,3}/g)?.join(' ') || digits;
+        
+        return formatted;
+    };
+
     const handleFormChange = (e) => {
         const { name, value } = e.target;
-        setFormValues(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        
+        if (name === 'phoneNumber') {
+            // Remove spaces and limit to 9 digits
+            const cleanValue = value.replace(/\s/g, '');
+            if (cleanValue.length <= 9) {
+                const formatted = formatPhoneNumber(cleanValue);
+                setFormValues(prev => ({
+                    ...prev,
+                    [name]: formatted
+                }));
+            }
+        } else {
+            setFormValues(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        }
     };
 
     const handleGuestCheckout = () => {
@@ -218,21 +241,19 @@ export default function Checkout() {
         if (registerRadio) {
             registerRadio.checked = true;
         }
-    }, []); // Run once when component mounts
+    }, []);
 
-    // Update step completion when authentication status changes
     useEffect(() => {
         if (isAuthenticated) {
             setStep1Complete(true);
-            setDeliveryType('address'); // Set delivery type to address when user logs in
+            setDeliveryType('address');
 
-            // Pre-fill form with user profile data
             if (userProfile) {
                 setFormValues({
                     firstName: userProfile.firstName || '',
                     lastName: userProfile.lastName || '',
                     email: userProfile.email || '',
-                    phoneNumber: userProfile.phoneNumber || '',
+                    phoneNumber: userProfile.phoneNumber?.replace('+359 ', '') || '',
                     city: userProfile.city || '',
                     address: userProfile.address || '',
                     region: userProfile.region || '',
@@ -309,6 +330,7 @@ export default function Checkout() {
 
         const orderData = {
             ...formValues,
+            phoneNumber: '+359 ' + formValues.phoneNumber,
             deliveryType,
             selectedOffice: officeData,
             cart: cart.map(item => ({
@@ -965,12 +987,10 @@ export default function Checkout() {
                                                                     type="tel"
                                                                     id="input-payment-phoneNumber"
                                                                     name="phoneNumber"
-                                                                    placeholder="Телефонен номер"
+                                                                    placeholder="+359 8** *** ***"
                                                                     onChange={handleFormChange}
-                                                                    values={formValues.phoneNumber}
-                                                                    pattern="[0-9]{9}"
-                                                                    title="Please enter 9 digits (without the country code)"
-                                                                    maxLength="9"
+                                                                    value={formValues.phoneNumber}
+                                                                    maxLength="11"
                                                                     required
                                                                 />
                                                             </div>

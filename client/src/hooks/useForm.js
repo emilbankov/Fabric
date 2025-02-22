@@ -8,7 +8,7 @@ const priceMap = {
     LONG_T_SHIRT: "37.00"
 };
 
-export function useForm(submitHandler, initialValues) {
+export const useForm = (submitHandler, initialValues) => {
     const [values, setValues] = useState(initialValues);
 
     const onChange = (e) => {
@@ -32,7 +32,14 @@ export function useForm(submitHandler, initialValues) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        submitHandler(values);
+
+        const formValues = { ...values };
+        
+        if (formValues.phoneNumber) {
+            formValues.phoneNumber = '+359 ' + formValues.phoneNumber;
+        }
+
+        submitHandler(formValues);
     };
 
     return {
@@ -40,4 +47,4 @@ export function useForm(submitHandler, initialValues) {
         onChange,
         onSubmit,
     };
-}
+};

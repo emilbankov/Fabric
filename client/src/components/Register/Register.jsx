@@ -19,6 +19,14 @@ export default function Register() {
         confirmPassword: ''
     });
 
+    const formatPhoneNumber = (value) => {
+        const digits = value.replace(/\D/g, '');
+        
+        const formatted = digits.match(/.{1,3}/g)?.join(' ') || digits;
+        
+        return formatted;
+    };
+
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
@@ -227,12 +235,21 @@ export default function Register() {
                                                     type="tel"
                                                     id="phoneNumber"
                                                     name="phoneNumber"
-                                                    placeholder="Телефонен номер"
-                                                    onChange={onChange}
-                                                    values={values.phoneNumber}
-                                                    pattern="[0-9]{9}"
-                                                    title="Please enter 9 digits (without the country code)"
-                                                    maxLength="9"
+                                                    placeholder="089 123 456"
+                                                    onChange={(e) => {
+                                                        const cleanValue = e.target.value.replace(/\s/g, '');
+                                                        if (cleanValue.length <= 9) {
+                                                            const formatted = formatPhoneNumber(cleanValue);
+                                                            onChange({
+                                                                target: {
+                                                                    name: 'phoneNumber',
+                                                                    value: formatted
+                                                                }
+                                                            });
+                                                        }
+                                                    }}
+                                                    value={values.phoneNumber}
+                                                    maxLength="11"
                                                     required
                                                 />
                                             </div>
