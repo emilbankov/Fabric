@@ -33,7 +33,6 @@ export default function OrderDetailsModal({ show, onClose, orderId, refreshOrder
             await ordersService.confirmOrder(orderId);
             console.log('Order confirmed successfully');
             onClose();
-            window.location.reload();
         } catch (error) {
             console.error('Error confirming order:', error);
         }
@@ -44,7 +43,6 @@ export default function OrderDetailsModal({ show, onClose, orderId, refreshOrder
             await ordersService.rejectOrder(orderId);
             console.log('Order rejected successfully');
             onClose();
-            window.location.reload();
         } catch (error) {
             console.error('Error rejecting order:', error);
         }

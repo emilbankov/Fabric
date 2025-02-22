@@ -224,11 +224,24 @@ export default function Checkout() {
     useEffect(() => {
         if (isAuthenticated) {
             setStep1Complete(true);
+            setDeliveryType('address'); // Set delivery type to address when user logs in
+            
+            // Pre-fill form with user profile data
+            if (userProfile) {
+                setFormValues({
+                    firstName: userProfile.firstName || '',
+                    lastName: userProfile.lastName || '',
+                    email: userProfile.email || '',
+                    phoneNumber: userProfile.phoneNumber || '',
+                    city: userProfile.city || '',
+                    address: userProfile.address || '',
+                    region: userProfile.region || '',
+                });
+            }
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, userProfile]);
 
     const handleStep2Continue = () => {
-        // Create office data structure for both selected office and manual input
         let officeData = null;
 
         if (deliveryType === 'office') {
