@@ -8,18 +8,23 @@ export default function OrdersHistoryAdmin() {
     const [showModal, setShowModal] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [orders, setOrders] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [orderStatus, setOrderStatus] = useState("");
 
     useEffect(() => {
-        Promise.all([
-            ordersService.ordersHistoryAdmin(),
-        ])
-            .then(([orders]) => {
-                setOrders(orders);
-            })
-            .catch(err => {
-                console.error('Search Error:', err);
-            })
-    }, [location.pathname]);
+        const fetchOrders = async () => {
+            try {
+                const response = await ordersService.ordersHistoryAdmin(currentPage, orderStatus);
+                setOrders(response.orders);
+                setTotalPages(response.total_pages);
+            } catch (err) {
+                console.error("Search Error:", err);
+            }
+        };
+
+        fetchOrders();
+    }, [location.pathname, currentPage, orderStatus]);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -27,8 +32,8 @@ export default function OrdersHistoryAdmin() {
             existingScript.parentNode.removeChild(existingScript);
         }
 
-        const script = document.createElement('script');
-        script.src = '/js/custom.js';
+        const script = document.createElement("script");
+        script.src = "/js/custom.js";
         script.async = true;
 
         document.body.appendChild(script);
@@ -45,21 +50,36 @@ export default function OrdersHistoryAdmin() {
         setShowModal(true);
     };
 
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const handleStatusChange = (e) => {
+        setOrderStatus(e.target.value);
+        setCurrentPage(1);
+    };
+
     return (
         <>
-            <div className="account-order   layout-2 left-col">
+            <div className="account-order layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">
                     <div className="container">
                         <div className="row">
-                            <div id="title-content"></div>
+                            <div id="title-content" />
                         </div>
                     </div>
                 </div>
                 <div id="account-order" className="container">
                     <ul className="breadcrumb">
-                        <li><Link to="/"><i className="fa fa-home" /></Link></li>
-                        <li><Link to="/orders-history-admin">Поръчки</Link></li>
+                        <li>
+                            <Link to="/">
+                                <i className="fa fa-home" />
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/orders-history-admin">Поръчки</Link>
+                        </li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
@@ -67,17 +87,17 @@ export default function OrdersHistoryAdmin() {
                                 <div className="box-heading">Account</div>
                                 <div className="list-group">
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/account "
+                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/account"
                                         className="list-group-item"
                                     >
-                                        My Account{" "}
+                                        My Account
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/edit "
+                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/edit"
                                         className="list-group-item"
                                     >
                                         Edit Account
-                                    </a>{" "}
+                                    </a>
                                     <a
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/password"
                                         className="list-group-item"
@@ -89,65 +109,65 @@ export default function OrdersHistoryAdmin() {
                                         className="list-group-item"
                                     >
                                         Address Book
-                                    </a>{" "}
+                                    </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/wishlist "
+                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/wishlist"
                                         className="list-group-item"
                                     >
-                                        Wish List{" "}
-                                    </a>{" "}
+                                        Wish List
+                                    </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/order "
+                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/order"
                                         className="list-group-item"
                                     >
-                                        Order History{" "}
-                                    </a>{" "}
+                                        Order History
+                                    </a>
                                     <a
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/download"
                                         className="list-group-item"
                                     >
-                                        Downloads{" "}
+                                        Downloads
                                     </a>
                                     <a
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/recurring"
                                         className="list-group-item"
                                     >
-                                        Recurring payments{" "}
-                                    </a>{" "}
+                                        Recurring payments
+                                    </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/reward "
+                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/reward"
                                         className="list-group-item"
                                     >
-                                        Reward Points{" "}
-                                    </a>{" "}
+                                        Reward Points
+                                    </a>
                                     <a
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/return"
                                         className="list-group-item"
                                     >
-                                        Returns{" "}
-                                    </a>{" "}
+                                        Returns
+                                    </a>
                                     <a
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/transaction"
                                         className="list-group-item"
                                     >
-                                        Transactions{" "}
-                                    </a>{" "}
+                                        Transactions
+                                    </a>
                                     <a
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/newsletter"
                                         className="list-group-item"
                                     >
-                                        Newsletter{" "}
+                                        Newsletter
                                     </a>
                                     <a
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/logout"
                                         className="list-group-item"
                                     >
-                                        Logout{" "}
+                                        Logout
                                     </a>
                                 </div>
                             </div>
                             <div className="swiper-viewport">
-                                <div id="banner0" className="swiper-container  single-banner ">
+                                <div id="banner0" className="swiper-container single-banner">
                                     <div className="swiper-wrapper">
                                         <div className="swiper-slide">
                                             <a href="#">
@@ -159,7 +179,6 @@ export default function OrdersHistoryAdmin() {
                                             </a>
                                         </div>
                                     </div>
-                                    {/* If we need pagination */}
                                     <div className="swiper-pagination" />
                                 </div>
                             </div>
@@ -170,43 +189,57 @@ export default function OrdersHistoryAdmin() {
                                         className="list-group-item"
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/information&information_id=4"
                                     >
-                                        About Us{" "}
+                                        About Us
                                     </a>
                                     <a
                                         className="list-group-item"
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/information&information_id=6"
                                     >
-                                        Delivery Information{" "}
+                                        Delivery Information
                                     </a>
                                     <a
                                         className="list-group-item"
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/information&information_id=3"
                                     >
-                                        Privacy Policy{" "}
+                                        Privacy Policy
                                     </a>
                                     <a
                                         className="list-group-item"
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/information&information_id=5"
                                     >
-                                        Terms &amp; Conditions{" "}
+                                        Terms &amp; Conditions
                                     </a>
                                     <a
                                         className="list-group-item"
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/contact"
                                     >
-                                        Contact Us{" "}
+                                        Contact Us
                                     </a>
                                     <a
                                         className="list-group-item"
                                         href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/sitemap"
                                     >
-                                        Site Map{" "}
+                                        Site Map
                                     </a>
                                 </div>
                             </div>
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Поръчки</h1>
+                            <div className="form-group">
+                                <label htmlFor="orderStatus">Статус:</label>
+                                <select
+                                    id="orderStatus"
+                                    className="form-control"
+                                    value={orderStatus}
+                                    onChange={handleStatusChange}
+                                >
+                                    <option value="all">Всички</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Confirmed">Confirmed</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                            </div>
                             <div className="table-responsive">
                                 <table className="table table-bordered table-hover">
                                     <thead>
@@ -221,31 +254,111 @@ export default function OrdersHistoryAdmin() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {orders.orders && orders.orders.map(order => (
+                                        {orders.map((order) => (
                                             <tr key={order.id}>
                                                 <td className="text-center">#{order.id}</td>
-                                            <td className="text-center">{order.customer}</td>
-                                            <td className="text-center">{order.quantity}</td>
-                                            <td className="text-center">{order.status}</td>
-                                            <td className="text-center">{order.totalPrice} лв.</td>
-                                            <td className="text-center">{order.createdAt.split(' ')[0]}</td>
-                                            <td className="text-center">
-                                                <button
-                                                    onClick={() => handleViewOrder(order.id)}
-                                                    className="btn btn-info"
-                                                >
-                                                    <i className="fa fa-eye" />
-                                                </button>
-                                            </td>
-                                        </tr>
+                                                <td className="text-center">{order.customer}</td>
+                                                <td className="text-center">{order.quantity}</td>
+                                                <td className="text-center">{order.status}</td>
+                                                <td className="text-center">{order.totalPrice} лв.</td>
+                                                <td className="text-center">
+                                                    {order.createdAt.split(" ")[0]}
+                                                </td>
+                                                <td className="text-center">
+                                                    <button
+                                                        onClick={() => handleViewOrder(order.id)}
+                                                        className="btn btn-info"
+                                                    >
+                                                        <i className="fa fa-eye" />
+                                                    </button>
+                                                </td>
+                                            </tr>
                                         ))}
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="row">
-                                <div className="col-sm-6 text-left" />
-                                <div className="col-sm-6 text-right pages-left">
-                                    Showing {orders.total_items} of 10 ({orders.total_pages} Pages)
+
+                            {/* Updated Pagination Section */}
+                            <div className="pagination-wrapper">
+                                <div className="col-sm-6 text-left page-link">
+                                    <ul className="pagination">
+                                        {currentPage > 1 && (
+                                            <>
+                                                <li>
+                                                    <a
+                                                        onClick={() => handlePageChange(1)}
+                                                        role="button"
+                                                        style={{ cursor: "pointer" }}
+                                                    >
+                                                        |&lt;
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        onClick={() => handlePageChange(currentPage - 1)}
+                                                        role="button"
+                                                        style={{ cursor: "pointer" }}
+                                                    >
+                                                        &lt;
+                                                    </a>
+                                                </li>
+                                            </>
+                                        )}
+                                        {(() => {
+                                            const totalPagesCalc = Math.max(1, totalPages || 1);
+                                            let startPage = Math.max(1, currentPage - 1);
+                                            let endPage = Math.min(totalPagesCalc, startPage + 2);
+
+                                            if (endPage - startPage < 2) {
+                                                startPage = Math.max(1, endPage - 2);
+                                            }
+
+                                            return [...Array(Math.max(0, endPage - startPage + 1))].map(
+                                                (_, index) => {
+                                                    const pageNumber = startPage + index;
+                                                    return (
+                                                        <li
+                                                            key={pageNumber}
+                                                            className={currentPage === pageNumber ? "active" : ""}
+                                                        >
+                                                            <a
+                                                                onClick={() => handlePageChange(pageNumber)}
+                                                                role="button"
+                                                                style={{ cursor: "pointer" }}
+                                                            >
+                                                                {pageNumber}
+                                                            </a>
+                                                        </li>
+                                                    );
+                                                }
+                                            );
+                                        })()}
+                                        {currentPage < totalPages && (
+                                            <>
+                                                <li>
+                                                    <a
+                                                        onClick={() => handlePageChange(currentPage + 1)}
+                                                        role="button"
+                                                        style={{ cursor: "pointer" }}
+                                                    >
+                                                        &gt;
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        onClick={() => handlePageChange(totalPages)}
+                                                        role="button"
+                                                        style={{ cursor: "pointer" }}
+                                                    >
+                                                        &gt;|
+                                                    </a>
+                                                </li>
+                                            </>
+                                        )}
+                                    </ul>
+                                </div>
+                                <div className="col-sm-6 text-right page-result">
+                                    Показвани {orders.length} от 10 поръчки ({totalPages} Страници)
                                 </div>
                             </div>
                         </div>
@@ -253,7 +366,7 @@ export default function OrdersHistoryAdmin() {
                 </div>
             </div>
 
-            <OrderDetailsModal 
+            <OrderDetailsModal
                 show={showModal}
                 onClose={() => setShowModal(false)}
                 orderId={selectedOrder}
