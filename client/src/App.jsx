@@ -24,7 +24,7 @@ import Register from "./components/Register/Register";
 import Error404 from "./components/404/404";
 import Logout from "./components/Logout/Logout";
 import Footer from "./components/Footer/Footer";
-
+import ScrollToTop from "./components/Scroll To Top/ScrollToTop";
 function App() {
     const location = useLocation();
 
@@ -32,6 +32,8 @@ function App() {
         <CartProvider>
             <AuthProvider>
                 <Header />
+                
+                <ScrollToTop />
 
                 <Routes location={location} key={location.pathname}>
                     <Route path="/" element={<Home />} />
