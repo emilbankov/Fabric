@@ -225,7 +225,7 @@ export default function Checkout() {
         if (isAuthenticated) {
             setStep1Complete(true);
             setDeliveryType('address'); // Set delivery type to address when user logs in
-            
+
             // Pre-fill form with user profile data
             if (userProfile) {
                 setFormValues({
@@ -958,21 +958,22 @@ export default function Checkout() {
                                                             />
                                                         </div>
                                                         <div className="form-group required">
-                                                            <label
-                                                                className="control-label"
-                                                                htmlFor="input-payment-phoneNumber"
-                                                            >
-                                                                Телефон
-                                                            </label>
-                                                            <input
-                                                                type="text"
-                                                                name="phoneNumber"
-                                                                value={formValues.phoneNumber}
-                                                                onChange={handleFormChange}
-                                                                placeholder="Телефон"
-                                                                id="input-payment-phoneNumber"
-                                                                className="form-control"
-                                                            />
+                                                            <label className="control-label" htmlFor="input-payment-phoneNumber">Телефонен номер</label>
+                                                            <div className="input-with-prefix">
+                                                                <input
+                                                                    className="form-control phone-field"
+                                                                    type="tel"
+                                                                    id="input-payment-phoneNumber"
+                                                                    name="phoneNumber"
+                                                                    placeholder="Телефонен номер"
+                                                                    onChange={handleFormChange}
+                                                                    values={formValues.phoneNumber}
+                                                                    pattern="[0-9]{9}"
+                                                                    title="Please enter 9 digits (without the country code)"
+                                                                    maxLength="9"
+                                                                    required
+                                                                />
+                                                            </div>
                                                         </div>
                                                     </fieldset>
                                                 </div>

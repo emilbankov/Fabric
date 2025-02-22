@@ -221,15 +221,21 @@ export default function Register() {
                                     <div className="form-group required">
                                         <label className="col-sm-2 control-label" htmlFor="phoneNumber">Телефонен номер</label>
                                         <div className="col-sm-10">
-                                            <input
-                                                className="form-control"
-                                                type="tel"
-                                                id="phoneNumber"
-                                                name="phoneNumber"
-                                                placeholder="Телефонен номер"
-                                                onChange={onChange}
-                                                values={values.phoneNumber}
-                                            />
+                                            <div className="input-with-prefix">
+                                                <input
+                                                    className="form-control phone-field"
+                                                    type="tel"
+                                                    id="phoneNumber"
+                                                    name="phoneNumber"
+                                                    placeholder="Телефонен номер"
+                                                    onChange={onChange}
+                                                    values={values.phoneNumber}
+                                                    pattern="[0-9]{9}"
+                                                    title="Please enter 9 digits (without the country code)"
+                                                    maxLength="9"
+                                                    required
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="form-group required">
