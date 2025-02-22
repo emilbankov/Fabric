@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import OrderDetailsModal from "./Order Details/OrderDetails";
 import * as ordersService from "../../services/ordersService";
 
-export default function OrdersHistoryAdmin() {
+export default function OrdersHistory() {
     const location = useLocation();
     const [showModal, setShowModal] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
@@ -16,7 +16,7 @@ export default function OrdersHistoryAdmin() {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await ordersService.ordersHistoryAdmin(currentPage, orderStatus);
+                const response = await ordersService.ordersHistory(currentPage, orderStatus);
                 setOrders(response.orders);
                 setTotalPages(response.total_pages);
             } catch (err) {
@@ -44,7 +44,7 @@ export default function OrdersHistoryAdmin() {
     const handleReload = async () => {
         setIsLoading(true);
         try {
-            const response = await ordersService.ordersHistoryAdmin(currentPage, orderStatus);
+            const response = await ordersService.or(currentPage, orderStatus);
             setOrders(response.orders);
             setTotalPages(response.total_pages);
         } catch (err) {
@@ -92,7 +92,7 @@ export default function OrdersHistoryAdmin() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/orders-history-admin">Поръчки</Link>
+                            <Link to="/orders-history">Поръчки</Link>
                         </li>
                     </ul>
                     <div className="row">

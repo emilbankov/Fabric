@@ -5,6 +5,7 @@ import { AuthProvider } from "./contexts/AuthProvider";
 import AuthGuard from "./guards/AuthGuard";
 
 import Header from "./components/Header/Header";
+import ScrollToTop from "./components/Scroll To Top/ScrollToTop";
 import Home from "./components/Home/Home";
 import Catalog from "./components/Catalog/Catalog";
 import Details from "./components/Details/Details";
@@ -13,8 +14,7 @@ import Checkout from "./components/Checkout/Checkout";
 import AddClothing from "./components/Add Clothing/AddClothing";
 import EditClothing from "./components/Edit Clothing/EditClothing";
 import SearchResults from "./components/Search Results/SearchResults";
-import OrdersHistoryAdmin from "./components/Orders History/OrdersHistoryAdmin";
-import OrdersHistoryUsers from "./components/Orders History/OrdersHistoryUsers";
+import OrdersHistory from "./components/Orders History/OrdersHistory";
 import Contact from "./components/Contact/Contact";
 import About from "./components/About/About";
 import Blogs from "./components/Blogs/Blogs";
@@ -24,7 +24,6 @@ import Register from "./components/Register/Register";
 import Error404 from "./components/404/404";
 import Logout from "./components/Logout/Logout";
 import Footer from "./components/Footer/Footer";
-import ScrollToTop from "./components/Scroll To Top/ScrollToTop";
 function App() {
     const location = useLocation();
 
@@ -32,7 +31,7 @@ function App() {
         <CartProvider>
             <AuthProvider>
                 <Header />
-                
+
                 <ScrollToTop />
 
                 <Routes location={location} key={location.pathname}>
@@ -42,8 +41,7 @@ function App() {
                     <Route path="/view-cart" element={<ViewCart />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/search-results" element={<SearchResults />} />
-                    <Route path="/orders-history-admin" element={<OrdersHistoryAdmin />} />
-                    <Route path="/orders-history-users" element={<OrdersHistoryUsers />} />
+                    <Route path="/orders-history" element={<OrdersHistory />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/blogs" element={<Blogs />} />

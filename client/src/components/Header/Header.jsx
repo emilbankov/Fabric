@@ -322,7 +322,12 @@ export default function Header() {
                                                     )}
                                                     {isAdmin && (
                                                         <li className="toplink">
-                                                            <Link to="/orders-history-admin">Поръчки</Link>
+                                                            <Link to="/orders-history">Поръчки</Link>
+                                                        </li>
+                                                    )}
+                                                    {isAuthenticated && !isAdmin && (
+                                                        <li className="toplink">
+                                                            <Link to="/orders-history">Мои поръчки</Link>
                                                         </li>
                                                     )}
                                                 </ul>
