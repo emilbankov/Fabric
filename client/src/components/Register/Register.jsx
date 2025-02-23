@@ -6,7 +6,7 @@ import AuthContext from "../../contexts/AuthProvider";
 
 export default function Register() {
     let location = useLocation();
-    const { registerSubmitHandler } = useContext(AuthContext);
+    const { registerSubmitHandler, authError } = useContext(AuthContext);
 
     const formatPhoneNumber = (value) => {
         const digits = value.replace(/\D/g, '');
@@ -164,6 +164,11 @@ export default function Register() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Регистрация на акаунт</h1>
+                            {authError && (
+                                <div className="alert alert-danger" role="alert" style={{ textAlign: 'center' }}>
+                                    {authError}
+                                </div>
+                            )}
                             <Formik
                                 initialValues={{
                                     firstName: '',

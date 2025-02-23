@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
 
         return {};
     });
+    const [authError, setAuthError] = useState(null);
 
     useEffect(() => {
         if (auth.accessToken && !auth.userProfile) {
@@ -94,6 +95,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const registerSubmitHandler = async (values) => {
+        setAuthError(null);
         try {
             if (values.password === values.confirmPassword) {
                 const result = await register(
@@ -114,7 +116,8 @@ export const AuthProvider = ({ children }) => {
                 navigate("/");
             }
         } catch (error) {
-            console.log(error);
+            setAuthError(error.errors?.[0].includes('Email') ? 'Акаунт с този имейл вече съществува' : 'Регистрацията не е успешна');
+            throw error;
         }
     };
 
@@ -137,7 +140,9 @@ export const AuthProvider = ({ children }) => {
             email: auth.email,
             isAuthenticated: !!auth.accessToken,
             isAdmin: auth?.roles?.includes("ADMIN") || false,
-            userProfile: auth.userProfile
+            userProfile: auth.userProfile,
+            authError,
+            clearAuthError: () => setAuthError(null)
         }}>
             {children}
         </AuthContext.Provider>
