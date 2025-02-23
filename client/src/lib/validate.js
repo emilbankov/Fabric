@@ -33,3 +33,28 @@ export const registerValidationSchema = Yup.object({
         .oneOf([Yup.ref('password'), null], 'Паролите не съвпадат')
         .required('Задължително поле'),
 });
+
+export const addClothingValidationSchema = Yup.object({
+    name: Yup.string()
+        .min(4, 'Името трябва да бъде поне 4 символа')
+        .required('Задължително поле'),
+    description: Yup.string()
+        .min(10, 'Описанието трябва да бъде поне 10 символа')
+        .required('Задължително поле'),
+    type: Yup.string()
+        .notOneOf([''], 'Моля изберете тип')
+        .required('Задължително поле'),
+    category: Yup.string()
+        .notOneOf([''], 'Моля изберете категория')
+        .required('Задължително поле'),
+    model: Yup.string()
+        .matches(/^\d{4}$/, 'Моделът трябва да бъде точно 4 цифри')
+        .required('Задължително поле'),
+    frontImage: Yup.mixed()
+        .required('Задължително е да качите снимка отпред'),
+    backImage: Yup.mixed()
+        .test('isRequired', 'Задължително е да качите снимка отзад', function(value) {
+            // Only require back image if type is not KIT
+            return this.parent.type === 'KIT' ? true : !!value;
+        }),
+});
