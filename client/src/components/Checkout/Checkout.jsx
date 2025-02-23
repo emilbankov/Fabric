@@ -8,13 +8,14 @@ import { gender } from "../../lib/dictionary";
 import * as econtService from "../../services/econtService";
 import { useForm } from "../../hooks/useForm";
 import * as orderService from '../../services/ordersService';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 
 export default function Checkout() {
     const location = useLocation();
     const navigate = useNavigate();
 
     const { isAuthenticated, userProfile, loginSubmitHandler, authError, clearAuthError } = useContext(AuthContext);
-    const { loginSubmitHandler: authLoginSubmitHandler } = useContext(AuthContext);
 
     const { values, onChange, onSubmit } = useForm(loginSubmitHandler, {
         email: '',
@@ -36,7 +37,6 @@ export default function Checkout() {
     const [step2Complete, setStep2Complete] = useState(false);
     console.log(cart);
 
-    // Add form values state
     const [formValues, setFormValues] = useState({
         firstName: '',
         lastName: '',
@@ -47,7 +47,6 @@ export default function Checkout() {
         region: '',
     });
 
-    // Pre-fill form with user profile data when authenticated
     useEffect(() => {
         if (isAuthenticated && userProfile) {
             setFormValues({
@@ -63,10 +62,8 @@ export default function Checkout() {
     }, [isAuthenticated, userProfile]);
 
     const formatPhoneNumber = (value) => {
-        // Remove all non-digit characters
         const digits = value.replace(/\D/g, '');
         
-        // Split into groups of 3 and join with spaces
         const formatted = digits.match(/.{1,3}/g)?.join(' ') || digits;
         
         return formatted;
@@ -76,7 +73,6 @@ export default function Checkout() {
         const { name, value } = e.target;
         
         if (name === 'phoneNumber') {
-            // Remove spaces and limit to 9 digits
             const cleanValue = value.replace(/\s/g, '');
             if (cleanValue.length <= 9) {
                 const formatted = formatPhoneNumber(cleanValue);
@@ -132,26 +128,22 @@ export default function Checkout() {
         setDeliveryType(newDeliveryType);
 
         if (newDeliveryType === 'office') {
-            // Clear address-related fields when switching to office delivery
             setFormValues(prev => ({
                 ...prev,
                 city: '',
                 address: '',
                 region: '',
             }));
-            // Clear office search state
             setSearchTerm('');
             setSelectedOffice(null);
             setOffices([]);
             setManualAddress(false);
         } else {
-            // Clear office-related fields when switching to address delivery
             setSearchTerm('');
             setSelectedOffice(null);
             setOffices([]);
             setManualAddress(false);
 
-            // If user is authenticated, restore their address details
             if (isAuthenticated && userProfile) {
                 setFormValues(prev => ({
                     ...prev,
@@ -166,18 +158,15 @@ export default function Checkout() {
     const handleCitySearch = async (value) => {
         setSearchTerm(value);
 
-        // Clear any existing timeout
         if (searchTimeout) {
             clearTimeout(searchTimeout);
         }
 
-        // If the search term is empty, clear results and return
         if (!value.trim()) {
             setOffices([]);
             return;
         }
 
-        // Set a new timeout
         const timeoutId = setTimeout(async () => {
             setIsSearching(true);
             try {
@@ -189,12 +178,11 @@ export default function Checkout() {
             } finally {
                 setIsSearching(false);
             }
-        }, 500); // Wait 500ms after the user stops typing
+        }, 500);
 
         setSearchTimeout(timeoutId);
     };
 
-    // Clean up timeout on component unmount
     useEffect(() => {
         return () => {
             if (searchTimeout) {
@@ -236,7 +224,6 @@ export default function Checkout() {
     }, [location.pathname]);
 
     useEffect(() => {
-        // Set the register radio button as checked by default
         const registerRadio = document.querySelector('input[value="register"]');
         if (registerRadio) {
             registerRadio.checked = true;
@@ -263,43 +250,40 @@ export default function Checkout() {
     }, [isAuthenticated, userProfile]);
 
     const handleStep2Continue = () => {
-        let officeData = null;
-
-        if (deliveryType === 'office') {
-            if (selectedOffice) {
-                officeData = selectedOffice.address.fullAddress;
-            } else if (manualAddress && searchTerm) {
-                officeData = searchTerm;
-            }
-        }
-
         // Calculate total price
         const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
         const deliveryCost = totalPrice >= 100 ? 0 : (deliveryType === 'address' ? 9.00 : 6.90);
         const finalPrice = totalPrice + deliveryCost;
 
-        // Log all form fields and delivery information
-        console.log('Form Values:', {
-            ...formValues,
-            deliveryType,
-            selectedOffice: officeData,
-            cart: cart.map(item => ({
-                id: item.id,
-                quantity: item.quantity,
-                price: item.price,
-                size: item.size,
-                gender: item.gender,
-                type: item.type
-            })),
-            totalPrice: Number(totalPrice.toFixed(2)),
-            deliveryCost: Number(deliveryCost.toFixed(2)),
-            finalPrice: Number(finalPrice.toFixed(2))
+        // Log step 3 data
+        console.log('Step 3 Data:', {
+            personalInfo: {
+                firstName: formValues.firstName,
+                lastName: formValues.lastName,
+                email: formValues.email,
+                phoneNumber: formValues.phoneNumber,
+            },
+            deliveryInfo: {
+                type: deliveryType,
+                ...(deliveryType === 'office' 
+                    ? { officeAddress: selectedOffice ? selectedOffice.address.fullAddress : searchTerm }
+                    : {
+                        region: formValues.region,
+                        city: formValues.city,
+                        address: formValues.address,
+                    }
+                )
+            },
+            orderDetails: {
+                items: cart,
+                totalPrice: Number(totalPrice.toFixed(2)),
+                deliveryCost: Number(deliveryCost.toFixed(2)),
+                finalPrice: Number(finalPrice.toFixed(2))
+            }
         });
 
-        // Add validation here if needed
         setStep2Complete(true);
 
-        // Close step 2 panel and open step 3
         const step2Content = document.getElementById('collapse-payment-address');
         const step3Content = document.getElementById('collapse-checkout-confirm');
 
@@ -312,27 +296,18 @@ export default function Checkout() {
     };
 
     const handleOrderSubmit = async () => {
-        // Create office data structure for both selected office and manual input
-        let officeData = null;
-
-        if (deliveryType === 'office') {
-            if (selectedOffice) {
-                officeData = selectedOffice.address.fullAddress;
-            } else if (manualAddress && searchTerm) {
-                officeData = searchTerm;
-            }
-        }
-
         // Calculate total price
         const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
         const deliveryCost = totalPrice >= 100 ? 0 : (deliveryType === 'address' ? 9.00 : 6.90);
         const finalPrice = totalPrice + deliveryCost;
 
+        // Base order data
         const orderData = {
-            ...formValues,
+            firstName: formValues.firstName,
+            lastName: formValues.lastName,
+            email: formValues.email,
             phoneNumber: '+359 ' + formValues.phoneNumber,
             deliveryType,
-            selectedOffice: officeData,
             cart: cart.map(item => ({
                 id: item.id,
                 price: item.price,
@@ -346,9 +321,20 @@ export default function Checkout() {
             finalPrice: Number(finalPrice.toFixed(2)),
         };
 
-        console.log(orderData);
+        // Add delivery-specific data
+        if (deliveryType === 'office') {
+            orderData.selectedOffice = selectedOffice ? selectedOffice.address.fullAddress : searchTerm;
+        } else {
+            orderData.city = formValues.city;
+            orderData.address = formValues.address;
+            orderData.region = formValues.region;
+        }
+
+        // Log what's being sent to backend
+        console.log('Sending to backend:', orderData);
+
         try {
-            await orderService.createOrder({ ...orderData });
+            await orderService.createOrder(orderData);
             clearCart();
             navigate('/orders-history');
         } catch (error) {
@@ -359,6 +345,55 @@ export default function Checkout() {
     useEffect(() => {
         return () => clearAuthError();
     }, [location.pathname]);
+
+    const deliverySchema = Yup.object().shape({
+        firstName: Yup.string()
+            .matches(/^[А-Я][а-я]+$/, 'Името трябва да започва с главна буква и да съдържа само кирилица')
+            .required('Задължително поле'),
+        lastName: Yup.string()
+            .matches(/^[А-Я][а-я]+$/, 'Фамилията трябва да започва с главна буква и да съдържа само кирилица')
+            .required('Задължително поле'),
+        email: Yup.string()
+            .email('Невалиден имейл адрес')
+            .required('Задължително поле'),
+        phoneNumber: Yup.string()
+            .matches(/^8[7-9][0-9] [0-9]{3} [0-9]{3}$/, 'Въведете валиден български телефонен номер')
+            .required('Задължително поле'),
+        deliveryType: Yup.string()
+            .oneOf(['address', 'office'], 'Невалиден тип доставка')
+            .required('Задължително поле'),
+        region: Yup.string().when('deliveryType', {
+            is: 'address',
+            then: () => Yup.string()
+                .matches(/^[А-Я][а-я]+$/, 'Областта трябва да започва с главна буква и да съдържа само кирилица')
+                .required('Задължително поле'),
+            otherwise: () => Yup.string().notRequired(),
+        }),
+        city: Yup.string().when('deliveryType', {
+            is: 'address',
+            then: () => Yup.string()
+                .matches(/^[А-Я][а-я]+$/, 'Градът трябва да започва с главна буква и да съдържа само кирилица')
+                .required('Задължително поле'),
+            otherwise: () => Yup.string().notRequired(),
+        }),
+        address: Yup.string().when('deliveryType', {
+            is: 'address',
+            then: () => Yup.string()
+                .matches(/^ул\. [А-Я].*/, 'Адресът трябва да започва с "ул. " и главна буква на кирилица')
+                .required('Задължително поле'),
+            otherwise: () => Yup.string().notRequired(),
+        }),
+        officeAddress: Yup.string().when(['deliveryType', 'manualAddress'], {
+            is: (deliveryType, manualAddress) => deliveryType === 'office' && !manualAddress,
+            then: () => Yup.string().required('Задължително поле'),
+            otherwise: () => Yup.string().notRequired(),
+        }),
+        manualOfficeAddress: Yup.string().when(['deliveryType', 'manualAddress'], {
+            is: (deliveryType, manualAddress) => deliveryType === 'office' && manualAddress,
+            then: () => Yup.string().required('Задължително поле'),
+            otherwise: () => Yup.string().notRequired(),
+        }),
+    });
 
     return (
         <>
@@ -919,261 +954,319 @@ export default function Checkout() {
                                         style={{ pointerEvents: !step1Complete ? 'none' : 'auto' }}
                                     >
                                         <div className="panel-body">
-                                            <div className="row">
-                                                <div className="col-sm-6">
-                                                    <fieldset id="account">
-                                                        <legend>Лични данни</legend>
-                                                        <div className="form-group" style={{ display: "none" }}>
-                                                            <label className="control-label">Customer Group</label>
-                                                            <div className="radio">
-                                                                <label>
-                                                                    <input
-                                                                        type="radio"
-                                                                        name="customer_group_id"
-                                                                        defaultValue={1}
-                                                                        defaultChecked="checked"
-                                                                    />
-                                                                    Default
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div className="form-group required">
-                                                            <label
-                                                                className="control-label"
-                                                                htmlFor="input-payment-firstname"
-                                                            >
-                                                                Име
-                                                            </label>
-                                                            <input
-                                                                type="text"
-                                                                name="firstName"
-                                                                value={formValues.firstName}
-                                                                onChange={handleFormChange}
-                                                                placeholder="Име"
-                                                                id="input-payment-firstname"
-                                                                className="form-control"
-                                                            />
-                                                        </div>
-                                                        <div className="form-group required">
-                                                            <label
-                                                                className="control-label"
-                                                                htmlFor="input-payment-lastname"
-                                                            >
-                                                                Фамилия
-                                                            </label>
-                                                            <input
-                                                                type="text"
-                                                                name="lastName"
-                                                                value={formValues.lastName}
-                                                                onChange={handleFormChange}
-                                                                placeholder="Фамилия"
-                                                                id="input-payment-lastname"
-                                                                className="form-control"
-                                                            />
-                                                        </div>
-                                                        <div className="form-group required">
-                                                            <label
-                                                                className="control-label"
-                                                                htmlFor="input-payment-email"
-                                                            >
-                                                                E-Mail
-                                                            </label>
-                                                            <input
-                                                                type="text"
-                                                                name="email"
-                                                                value={formValues.email}
-                                                                onChange={handleFormChange}
-                                                                placeholder="E-Mail"
-                                                                id="input-payment-email"
-                                                                className="form-control"
-                                                            />
-                                                        </div>
-                                                        <div className="form-group required">
-                                                            <label className="control-label" htmlFor="input-payment-phoneNumber">Телефонен номер</label>
-                                                            <div className="input-with-prefix">
-                                                                <input
-                                                                    className="form-control phone-field"
-                                                                    type="tel"
-                                                                    id="input-payment-phoneNumber"
-                                                                    name="phoneNumber"
-                                                                    placeholder="+359 8** *** ***"
-                                                                    onChange={handleFormChange}
-                                                                    value={formValues.phoneNumber}
-                                                                    maxLength="11"
-                                                                    required
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-                                                </div>
-                                                <div className="col-sm-6">
-                                                    <fieldset id="address" className="">
-                                                        <legend>Адрес</legend>
-                                                        <div className="form-group">
-                                                            <div className="radio">
-                                                                <label>
-                                                                    <input
-                                                                        type="radio"
-                                                                        name="delivery_type"
-                                                                        value="office"
-                                                                        checked={deliveryType === 'office'}
-                                                                        onChange={handleDeliveryTypeChange}
-                                                                    />
-                                                                    Офис на Еконт
-                                                                </label>
-                                                            </div>
-                                                            <div className="radio">
-                                                                <label>
-                                                                    <input
-                                                                        type="radio"
-                                                                        name="delivery_type"
-                                                                        value="address"
-                                                                        checked={deliveryType === 'address'}
-                                                                        onChange={handleDeliveryTypeChange}
-                                                                    />
-                                                                    До адрес
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                            <Formik
+                                                initialValues={{
+                                                    firstName: formValues.firstName,
+                                                    lastName: formValues.lastName,
+                                                    email: formValues.email,
+                                                    phoneNumber: formValues.phoneNumber,
+                                                    deliveryType: deliveryType,
+                                                    region: formValues.region,
+                                                    city: formValues.city,
+                                                    address: formValues.address,
+                                                    officeAddress: searchTerm,
+                                                    selectedOffice: selectedOffice,
+                                                    manualAddress: manualAddress,
+                                                }}
+                                                validationSchema={deliverySchema}
+                                                onSubmit={(values) => {
+                                                    // Update form values
+                                                    setFormValues({
+                                                        firstName: values.firstName,
+                                                        lastName: values.lastName,
+                                                        email: values.email,
+                                                        phoneNumber: values.phoneNumber,
+                                                        region: values.region,
+                                                        city: values.city,
+                                                        address: values.address,
+                                                    });
+                                                    
+                                                    // Set delivery related state
+                                                    if (values.deliveryType === 'office') {
+                                                        setSearchTerm(values.officeAddress);
+                                                    }
+                                                    
+                                                    setStep2Complete(true);
+                                                    
+                                                    const step2Content = document.getElementById('collapse-payment-address');
+                                                    const step3Content = document.getElementById('collapse-checkout-confirm');
 
-                                                        {deliveryType === 'office' ? (
-                                                            <div className="form-group">
-                                                                <label className="control-label" htmlFor="input-payment-city">
-                                                                    Търсене на офис
-                                                                </label>
-                                                                <div className="position-relative">
-                                                                    <input
-                                                                        type="text"
-                                                                        value={searchTerm}
-                                                                        onChange={(e) => handleCitySearch(e.target.value)}
-                                                                        placeholder="Въведете населено място"
-                                                                        className="form-control"
-                                                                        disabled={manualAddress}
-                                                                    />
-                                                                    {isSearching && !manualAddress && <div className="searching">Търсене...</div>}
-                                                                    {offices.length > 0 && searchTerm && !manualAddress && (
-                                                                        <div className="offices-dropdown">
-                                                                            {offices.map((office) => (
-                                                                                <div
-                                                                                    key={`${office.id}-${office.address.fullAddress}`}
-                                                                                    className="office-item"
-                                                                                    onClick={() => {
-                                                                                        setSelectedOffice(office);
-                                                                                        setSearchTerm(office.address.fullAddress);
-                                                                                        setOffices([]);
-                                                                                    }}
-                                                                                >
-                                                                                    {office.address.fullAddress}
-                                                                                </div>
-                                                                            ))}
-                                                                        </div>
-                                                                    )}
-                                                                </div>
-                                                                {selectedOffice && !manualAddress && (
-                                                                    <div className="selected-office-info">
-                                                                        <p>Град: {selectedOffice.address.fullAddress.trim().split(" ")[0] || 'N/A'}</p>
-                                                                        <p>Име на офис: {selectedOffice.name || 'N/A'}</p>
-                                                                        <p>Адрес: {selectedOffice.address.fullAddress.split(" ").slice(2).join(" ") || 'N/A'}</p>
-                                                                    </div>
-                                                                )}
-
-                                                                <div className="manual-address-option">
-                                                                    <label className="checkbox-container">
-                                                                        <input
-                                                                            type="checkbox"
-                                                                            checked={manualAddress}
-                                                                            onChange={(e) => {
-                                                                                setManualAddress(e.target.checked);
-                                                                                if (e.target.checked) {
-                                                                                    setSearchTerm('');
-                                                                                    setSelectedOffice(null);
-                                                                                    setOffices([]);
-                                                                                }
-                                                                            }}
+                                                    if (step2Content) {
+                                                        step2Content.classList.remove('in');
+                                                    }
+                                                    if (step3Content) {
+                                                        step3Content.classList.add('in');
+                                                    }
+                                                }}
+                                            >
+                                                {({ errors, touched, values, setFieldValue }) => (
+                                                    <Form>
+                                                        <div className="row">
+                                                            <div className="col-sm-6">
+                                                                <fieldset id="account">
+                                                                    <legend>Лични данни</legend>
+                                                                    
+                                                                    <div className="form-group required">
+                                                                        <label className="control-label" htmlFor="firstName">Име</label>
+                                                                        <Field
+                                                                            type="text"
+                                                                            name="firstName"
+                                                                            className={`form-control ${errors.firstName && touched.firstName ? 'is-invalid' : ''}`}
+                                                                            placeholder="Име"
                                                                         />
-                                                                        Не намирам офиса, който търся
-                                                                    </label>
-                                                                </div>
+                                                                        {errors.firstName && touched.firstName && (
+                                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                {errors.firstName}
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
 
-                                                                {manualAddress && (
-                                                                    <div className="manual-address-input">
-                                                                        <div className="form-group">
-                                                                            <label className="control-label" htmlFor="input-manual-office">
-                                                                                Въведете адрес на офис ръчно
-                                                                            </label>
-                                                                            <input
-                                                                                type="text"
-                                                                                id="input-manual-office"
-                                                                                className="form-control"
-                                                                                placeholder="Въведете пълния адрес на офиса"
-                                                                                value={searchTerm}
-                                                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                                                    <div className="form-group required">
+                                                                        <label className="control-label" htmlFor="lastName">Фамилия</label>
+                                                                        <Field
+                                                                            type="text"
+                                                                            name="lastName"
+                                                                            className={`form-control ${errors.lastName && touched.lastName ? 'is-invalid' : ''}`}
+                                                                            placeholder="Фамилия"
+                                                                        />
+                                                                        {errors.lastName && touched.lastName && (
+                                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                {errors.lastName}
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+
+                                                                    <div className="form-group required">
+                                                                        <label className="control-label" htmlFor="email">E-Mail</label>
+                                                                        <Field
+                                                                            type="email"
+                                                                            name="email"
+                                                                            className={`form-control ${errors.email && touched.email ? 'is-invalid' : ''}`}
+                                                                            placeholder="E-Mail"
+                                                                        />
+                                                                        {errors.email && touched.email && (
+                                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                {errors.email}
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+
+                                                                    <div className="form-group required">
+                                                                        <label className="control-label" htmlFor="phoneNumber">Телефонен номер</label>
+                                                                        <div className="input-with-prefix">
+                                                                            <Field
+                                                                                className={`form-control phone-field ${errors.phoneNumber && touched.phoneNumber ? 'is-invalid' : ''}`}
+                                                                                type="tel"
+                                                                                id="phoneNumber"
+                                                                                name="phoneNumber"
+                                                                                placeholder="8** *** ***"
+                                                                                onChange={(e) => {
+                                                                                    const cleanValue = e.target.value.replace(/\s/g, '');
+                                                                                    if (cleanValue.length <= 9) {
+                                                                                        const formatted = formatPhoneNumber(cleanValue);
+                                                                                        setFieldValue('phoneNumber', formatted);
+                                                                                    }
+                                                                                }}
+                                                                                value={values.phoneNumber}
+                                                                                maxLength="11"
                                                                             />
                                                                         </div>
+                                                                        {errors.phoneNumber && touched.phoneNumber && (
+                                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                {errors.phoneNumber}
+                                                                            </div>
+                                                                        )}
                                                                     </div>
-                                                                )}
+                                                                </fieldset>
                                                             </div>
-                                                        ) : (
-                                                            <>
-                                                                <div className="form-group">
-                                                                    <label className="control-label" htmlFor="input-payment-region">
-                                                                        Област
-                                                                    </label>
-                                                                    <input
-                                                                        type="text"
-                                                                        name="region"
-                                                                        value={formValues.region}
-                                                                        onChange={handleFormChange}
-                                                                        placeholder="Област"
-                                                                        id="input-payment-region"
-                                                                        className="form-control"
-                                                                    />
-                                                                </div>
-                                                                <div className="form-group">
-                                                                    <label className="control-label" htmlFor="input-payment-city">
-                                                                        Град или село
-                                                                    </label>
-                                                                    <input
-                                                                        type="text"
-                                                                        name="city"
-                                                                        value={formValues.city}
-                                                                        onChange={handleFormChange}
-                                                                        placeholder="Град"
-                                                                        id="input-payment-city"
-                                                                        className="form-control"
-                                                                    />
-                                                                </div>
-                                                                <div className="form-group">
-                                                                    <label className="control-label" htmlFor="input-payment-address-1">
-                                                                        Адрес
-                                                                    </label>
-                                                                    <input
-                                                                        type="text"
-                                                                        name="address"
-                                                                        value={formValues.address}
-                                                                        onChange={handleFormChange}
-                                                                        placeholder="Адрес"
-                                                                        id="input-payment-address-1"
-                                                                        className="form-control"
-                                                                    />
-                                                                </div>
-                                                            </>
-                                                        )}
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                            <div className="buttons">
-                                                <div className="pull-right">
-                                                    <input
-                                                        type="button"
-                                                        value="Продължи"
-                                                        id="button-guest"
-                                                        data-loading-text="Loading..."
-                                                        className="btn btn-primary"
-                                                        onClick={handleStep2Continue}
-                                                    />
-                                                </div>
-                                            </div>
+
+                                                            <div className="col-sm-6">
+                                                                <fieldset id="address">
+                                                                    <legend>Адрес</legend>
+                                                                    
+                                                                    <div className="form-group">
+                                                                        <div className="radio">
+                                                                            <label>
+                                                                                <Field
+                                                                                    type="radio"
+                                                                                    name="deliveryType"
+                                                                                    value="office"
+                                                                                    onChange={(e) => {
+                                                                                        setFieldValue('deliveryType', e.target.value);
+                                                                                        handleDeliveryTypeChange(e);
+                                                                                    }}
+                                                                                />
+                                                                                Офис на Еконт
+                                                                            </label>
+                                                                        </div>
+                                                                        <div className="radio">
+                                                                            <label>
+                                                                                <Field
+                                                                                    type="radio"
+                                                                                    name="deliveryType"
+                                                                                    value="address"
+                                                                                    onChange={(e) => {
+                                                                                        setFieldValue('deliveryType', e.target.value);
+                                                                                        handleDeliveryTypeChange(e);
+                                                                                    }}
+                                                                                />
+                                                                                До адрес
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    {values.deliveryType === 'office' ? (
+                                                                        <div className="form-group">
+                                                                            <label className="control-label" htmlFor="officeAddress">Търсене на офис</label>
+                                                                            <div className="position-relative">
+                                                                                <Field
+                                                                                    type="text"
+                                                                                    name="officeAddress"
+                                                                                    className={`form-control ${errors.officeAddress && touched.officeAddress ? 'is-invalid' : ''}`}
+                                                                                    placeholder="Въведете населено място"
+                                                                                    value={searchTerm}
+                                                                                    onChange={(e) => {
+                                                                                        setFieldValue('officeAddress', e.target.value);
+                                                                                        handleCitySearch(e.target.value);
+                                                                                    }}
+                                                                                    disabled={manualAddress}
+                                                                                />
+                                                                                {isSearching && !manualAddress && <div className="searching">Търсене...</div>}
+                                                                                {offices.length > 0 && searchTerm && !manualAddress && (
+                                                                                    <div className="offices-dropdown">
+                                                                                        {offices.map((office) => (
+                                                                                            <div
+                                                                                                key={`${office.id}-${office.address.fullAddress}`}
+                                                                                                className="office-item"
+                                                                                                onClick={() => {
+                                                                                                    setSelectedOffice(office);
+                                                                                                    setSearchTerm(office.address.fullAddress);
+                                                                                                    setFieldValue('officeAddress', office.address.fullAddress);
+                                                                                                    setOffices([]);
+                                                                                                }}
+                                                                                            >
+                                                                                                {office.address.fullAddress}
+                                                                                            </div>
+                                                                                        ))}
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+                                                                            {errors.officeAddress && touched.officeAddress && (
+                                                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                    {errors.officeAddress}
+                                                                                </div>
+                                                                            )}
+                                                                            
+                                                                            {selectedOffice && !manualAddress && (
+                                                                                <div className="selected-office-info">
+                                                                                    <p>Град: {selectedOffice.address.fullAddress.trim().split(" ")[0] || 'N/A'}</p>
+                                                                                    <p>Име на офис: {selectedOffice.name || 'N/A'}</p>
+                                                                                    <p>Адрес: {selectedOffice.address.fullAddress.split(" ").slice(2).join(" ") || 'N/A'}</p>
+                                                                                </div>
+                                                                            )}
+
+                                                                            <div className="manual-address-option">
+                                                                                <label className="checkbox-container">
+                                                                                    <input
+                                                                                        type="checkbox"
+                                                                                        checked={manualAddress}
+                                                                                        onChange={(e) => {
+                                                                                            setManualAddress(e.target.checked);
+                                                                                            if (e.target.checked) {
+                                                                                                setSearchTerm('');
+                                                                                                setSelectedOffice(null);
+                                                                                                setOffices([]);
+                                                                                                setFieldValue('officeAddress', '');
+                                                                                            }
+                                                                                        }}
+                                                                                    />
+                                                                                    Не намирам офиса, който търся
+                                                                                </label>
+                                                                            </div>
+
+                                                                            {manualAddress && (
+                                                                                <div className="manual-address-input">
+                                                                                    <div className="form-group">
+                                                                                        <label className="control-label" htmlFor="input-manual-office">
+                                                                                            Въведете адрес на офис ръчно
+                                                                                        </label>
+                                                                                        <input
+                                                                                            type="text"
+                                                                                            id="input-manual-office"
+                                                                                            className="form-control"
+                                                                                            placeholder="Въведете пълния адрес на офиса"
+                                                                                            value={searchTerm}
+                                                                                            onChange={(e) => {
+                                                                                                setSearchTerm(e.target.value);
+                                                                                                setFieldValue('officeAddress', e.target.value);
+                                                                                            }}
+                                                                                        />
+                                                                                    </div>
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    ) : (
+                                                                        <>
+                                                                            <div className="form-group">
+                                                                                <label className="control-label" htmlFor="region">Област</label>
+                                                                                <Field
+                                                                                    type="text"
+                                                                                    name="region"
+                                                                                    className={`form-control ${errors.region && touched.region ? 'is-invalid' : ''}`}
+                                                                                    placeholder="Област"
+                                                                                />
+                                                                                {errors.region && touched.region && (
+                                                                                    <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                        {errors.region}
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+
+                                                                            <div className="form-group">
+                                                                                <label className="control-label" htmlFor="city">Град или село</label>
+                                                                                <Field
+                                                                                    type="text"
+                                                                                    name="city"
+                                                                                    className={`form-control ${errors.city && touched.city ? 'is-invalid' : ''}`}
+                                                                                    placeholder="Град"
+                                                                                />
+                                                                                {errors.city && touched.city && (
+                                                                                    <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                        {errors.city}
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+
+                                                                            <div className="form-group">
+                                                                                <label className="control-label" htmlFor="address">Адрес</label>
+                                                                                <Field
+                                                                                    type="text"
+                                                                                    name="address"
+                                                                                    className={`form-control ${errors.address && touched.address ? 'is-invalid' : ''}`}
+                                                                                    placeholder="Адрес"
+                                                                                />
+                                                                                {errors.address && touched.address && (
+                                                                                    <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                        {errors.address}
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+                                                                        </>
+                                                                    )}
+                                                                </fieldset>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="buttons">
+                                                            <div className="pull-right">
+                                                                <button type="submit" className="btn btn-primary">
+                                                                    Продължи
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </Form>
+                                                )}
+                                            </Formik>
                                         </div>
                                     </div>
                                 </div>
