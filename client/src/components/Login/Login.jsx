@@ -6,7 +6,7 @@ import { Formik } from "formik";
 
 export default function Login() {
     const location = useLocation();
-    const { loginSubmitHandler, authError } = useContext(AuthContext);
+    const { loginSubmitHandler, authError, clearAuthError } = useContext(AuthContext);
 
     const { values, onChange, onSubmit } = useForm(loginSubmitHandler, {
         email: '',
@@ -32,6 +32,10 @@ export default function Login() {
         };
     }, [location.pathname]);
 
+    useEffect(() => {
+        return () => clearAuthError();
+    }, [location.pathname]);
+
     return (
         <>
             <div className="account-login   layout-2 left-col">
@@ -46,7 +50,7 @@ export default function Login() {
                 <div id="account-login" className="container">
                     <ul className="breadcrumb">
                         <li><Link to="/"><i className="fa fa-home" /></Link></li>
-                        <li><Link to="/login">Login</Link></li>
+                        <li><Link to="/login">Вход</Link></li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">

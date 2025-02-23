@@ -6,7 +6,7 @@ import AuthContext from "../../contexts/AuthProvider";
 
 export default function Register() {
     let location = useLocation();
-    const { registerSubmitHandler, authError } = useContext(AuthContext);
+    const { registerSubmitHandler, authError, clearAuthError } = useContext(AuthContext);
 
     const formatPhoneNumber = (value) => {
         const digits = value.replace(/\D/g, '');
@@ -44,6 +44,10 @@ export default function Register() {
         };
     }, [location.pathname]);
 
+    useEffect(() => {
+        return () => clearAuthError();
+    }, [location.pathname]);
+
     return (
         <>
             <div className="account-register   layout-2 left-col">
@@ -63,7 +67,7 @@ export default function Register() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/register">Register</Link>{" "}
+                            <Link to="/register">Регистрация</Link>{" "}
                         </li>
                     </ul>
                     <div className="row">

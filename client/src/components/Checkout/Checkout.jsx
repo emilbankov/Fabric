@@ -13,8 +13,8 @@ export default function Checkout() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { isAuthenticated, userProfile } = useContext(AuthContext);
-    const { loginSubmitHandler } = useContext(AuthContext);
+    const { isAuthenticated, userProfile, loginSubmitHandler, authError, clearAuthError } = useContext(AuthContext);
+    const { loginSubmitHandler: authLoginSubmitHandler } = useContext(AuthContext);
 
     const { values, onChange, onSubmit } = useForm(loginSubmitHandler, {
         email: '',
@@ -355,6 +355,10 @@ export default function Checkout() {
             console.error('Failed to create order:', error);
         }
     };
+
+    useEffect(() => {
+        return () => clearAuthError();
+    }, [location.pathname]);
 
     return (
         <>
@@ -847,6 +851,11 @@ export default function Checkout() {
                                                 </div>
                                                 <div className="col-sm-6 login-form" style={{ display: showLoginForm ? 'block' : 'none' }}>
                                                     <h2>Заврщащ се клиент</h2>
+                                                    {authError && (
+                                                        <div className="alert alert-danger" role="alert">
+                                                            {authError}
+                                                        </div>
+                                                    )}
                                                     <form onSubmit={onSubmit}>
                                                         <div className="form-group">
                                                             <label className="control-label" htmlFor="email">E-mail</label>
