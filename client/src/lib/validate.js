@@ -58,3 +58,33 @@ export const addClothingValidationSchema = Yup.object({
             return this.parent.type === 'KIT' ? true : !!value;
         }),
 });
+
+export const editClothingValidationSchema = Yup.object({
+    name: Yup.string()
+        .min(4, 'Името трябва да бъде поне 4 символа')
+        .required('Задължително поле'),
+    description: Yup.string()
+        .min(10, 'Описанието трябва да бъде поне 10 символа')
+        .required('Задължително поле'),
+    type: Yup.string()
+        .notOneOf([''], 'Моля изберете тип')
+        .required('Задължително поле'),
+    category: Yup.string()
+        .notOneOf([''], 'Моля изберете категория')
+        .required('Задължително поле'),
+    model: Yup.string()
+        .matches(/^\d{4}$/, 'Моделът трябва да бъде точно 4 цифри')
+        .required('Задължително поле'),
+    frontImage: Yup.mixed()
+        .test('frontImage', 'Задължително е да качите снимка отпред', function(value) {
+            // Consider the image valid if it's a File or if there's a preview (existing image)
+            return value instanceof File || this.parent.images?.some(img => img.side === 'front');
+        }),
+    backImage: Yup.mixed()
+        .test('backImage', 'Задължително е да качите снимка отзад', function(value) {
+            // Only require back image if type is not KIT and validate similarly to front image
+            return this.parent.type === 'KIT' || 
+                   value instanceof File || 
+                   this.parent.images?.some(img => img.side === 'back');
+        }),
+});

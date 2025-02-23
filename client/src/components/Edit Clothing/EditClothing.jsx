@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
+import { Formik } from 'formik';
+import { editClothingValidationSchema } from '../../lib/validate';
 
 export default function EditClothing() {
     const navigate = useNavigate();
@@ -25,6 +27,8 @@ export default function EditClothing() {
         front: null,
         back: null
     });
+
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         clothesService.getOne(clothingId)
@@ -51,43 +55,57 @@ export default function EditClothing() {
     const editHandler = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-
-        Object.keys(clothing).forEach(key => {
-            if (key !== 'frontImage' && key !== 'backImage' && key !== 'images') {
-                formData.append(key, clothing[key]);
-            }
-        });
-
-        const removedImages = [];
-
-        if (clothing.frontImage instanceof File) {
-            formData.append('frontImage', clothing.frontImage);
-            const oldFrontImage = clothing.images?.find(img => img.side === 'front');
-            if (oldFrontImage) {
-                removedImages.push(oldFrontImage.path);
-            }
-        }
-
-        if (clothing.backImage instanceof File) {
-            formData.append('backImage', clothing.backImage);
-            const oldBackImage = clothing.images?.find(img => img.side === 'back');
-            if (oldBackImage) {
-                removedImages.push(oldBackImage.path);
-            }
-        }
-
-        if (removedImages.length > 0) {
-            formData.append('removedImages', removedImages.join(','));
-        }
-
-        console.log('Removed images:', removedImages);
-
         try {
+            // Validate the form data
+            await editClothingValidationSchema.validate(clothing, { abortEarly: false });
+
+            const formData = new FormData();
+
+            Object.keys(clothing).forEach(key => {
+                if (key !== 'frontImage' && key !== 'backImage' && key !== 'images') {
+                    formData.append(key, clothing[key]);
+                }
+            });
+
+            const removedImages = [];
+
+            if (clothing.frontImage instanceof File) {
+                formData.append('frontImage', clothing.frontImage);
+                const oldFrontImage = clothing.images?.find(img => img.side === 'front');
+                if (oldFrontImage) {
+                    removedImages.push(oldFrontImage.path);
+                }
+            }
+
+            if (clothing.backImage instanceof File) {
+                formData.append('backImage', clothing.backImage);
+                const oldBackImage = clothing.images?.find(img => img.side === 'back');
+                if (oldBackImage) {
+                    removedImages.push(oldBackImage.path);
+                }
+            }
+
+            if (removedImages.length > 0) {
+                formData.append('removedImages', removedImages.join(','));
+            }
+
+            console.log('Removed images:', removedImages);
+
             await clothesService.edit(clothingId, formData);
             navigate(`/clothing/details/${clothingId}`);
         } catch (error) {
+            if (error.name === 'ValidationError') {
+                // Handle Yup validation errors
+                const validationErrors = {};
+                error.inner.forEach((err) => {
+                    validationErrors[err.path] = err.message;
+                });
+                setErrors(validationErrors);
+                return;
+            }
+            // Handle other errors
             console.error(error);
+            setErrors({ submit: 'Възникна грешка при обновяването на продукта.' });
         }
     };
 
@@ -314,13 +332,18 @@ export default function EditClothing() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Промяна на продукт</h1>
+                            {errors.submit && (
+                                <div className="alert alert-danger" role="alert" style={{ textAlign: 'center' }}>
+                                    {errors.submit}
+                                </div>
+                            )}
                             <form className="form-horizontal" onSubmit={editHandler}>
                                 <fieldset id="account">
                                     <div className="form-group required">
                                         <label className="col-sm-2 control-label" htmlFor="name">Име</label>
                                         <div className="col-sm-10">
                                             <input
-                                                className="form-control"
+                                                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                                                 type="text"
                                                 id="name"
                                                 name="name"
@@ -328,27 +351,37 @@ export default function EditClothing() {
                                                 value={clothing.name}
                                                 onChange={handleChange}
                                             />
+                                            {errors.name && (
+                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                    {errors.name}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="form-group required">
                                         <label className="col-sm-2 control-label" htmlFor="description">Описание</label>
                                         <div className="col-sm-10">
                                             <textarea
-                                                className="form-control"
+                                                className={`form-control ${errors.description ? 'is-invalid' : ''}`}
                                                 id="description"
                                                 name="description"
                                                 placeholder="Описание"
-                                                rows="4"
                                                 value={clothing.description}
                                                 onChange={handleChange}
+                                                rows="4"
                                             ></textarea>
+                                            {errors.description && (
+                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                    {errors.description}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="form-group required">
                                         <label className="col-sm-2 control-label" htmlFor="type">Тип</label>
                                         <div className="col-sm-10">
                                             <select
-                                                className="form-control"
+                                                className={`form-control ${errors.type ? 'is-invalid' : ''}`}
                                                 id="type"
                                                 name="type"
                                                 value={clothing.type}
@@ -361,6 +394,11 @@ export default function EditClothing() {
                                                 <option value="SWEATSHIRT">Суитчъри</option>
                                                 <option value="KIT">Комплекти</option>
                                             </select>
+                                            {errors.type && (
+                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                    {errors.type}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="form-group required">
@@ -384,7 +422,7 @@ export default function EditClothing() {
                                         <label className="col-sm-2 control-label" htmlFor="category">Категория</label>
                                         <div className="col-sm-10">
                                             <select
-                                                className="form-control"
+                                                className={`form-control ${errors.category ? 'is-invalid' : ''}`}
                                                 id="category"
                                                 name="category"
                                                 value={clothing.category}
@@ -409,22 +447,35 @@ export default function EditClothing() {
                                                 <option value="WORK">Работни</option>
                                                 <option value="OTHERS">Други</option>
                                             </select>
+                                            {errors.category && (
+                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                    {errors.category}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="form-group required">
-                                        <label className="col-sm-2 control-label" htmlFor="model">Модел</label>
-                                        <div className="col-sm-10">
-                                            <input
-                                                className="form-control"
-                                                type="text"
-                                                id="model"
-                                                name="model"
-                                                placeholder="Модел"
-                                                value={clothing.model.slice(0, 4)}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                    </div>
+                                                <label className="col-sm-2 control-label" htmlFor="model">Модел</label>
+                                                <div className="col-sm-10">
+                                                    <div className="input-with-hash">
+                                                        <input
+                                                            className={`form-control model-field ${errors.model ? 'is-invalid' : ''}`}
+                                                            type="text"
+                                                            id="model"
+                                                            name="model"
+                                                            placeholder="Модел"
+                                                            onChange={handleChange}
+                                                            value={clothing.model}
+                                                            maxLength="4"
+                                                        />
+                                                    </div>
+                                                    {errors.model && (
+                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                            {errors.model}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
                                 </fieldset>
                                 <fieldset>
                                     <legend>Качване на снимки</legend>
@@ -434,13 +485,18 @@ export default function EditClothing() {
                                         </label>
                                         <div className="col-sm-10">
                                             <input
-                                                className="form-control"
+                                                className={`form-control ${errors.frontImage ? 'is-invalid' : ''}`}
                                                 type="file"
                                                 id="frontImage"
                                                 name="frontImage"
                                                 accept="image/*"
                                                 onChange={handleFileChange}
                                             />
+                                            {errors.frontImage && (
+                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                    {errors.frontImage}
+                                                </div>
+                                            )}
                                             {/* Front image preview */}
                                             {frontImagePreview && (
                                                 <div style={{ marginTop: "10px", position: "relative" }}>
@@ -476,13 +532,18 @@ export default function EditClothing() {
                                             </label>
                                             <div className="col-sm-10">
                                                 <input
-                                                    className="form-control"
+                                                    className={`form-control ${errors.backImage ? 'is-invalid' : ''}`}
                                                     type="file"
                                                     id="backImage"
                                                     name="backImage"
                                                     accept="image/*"
                                                     onChange={handleFileChange}
                                                 />
+                                                {errors.backImage && (
+                                                    <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                        {errors.backImage}
+                                                    </div>
+                                                )}
                                                 {/* Back image preview */}
                                                 {backImagePreview && (
                                                     <div style={{ marginTop: "10px", position: "relative" }}>
