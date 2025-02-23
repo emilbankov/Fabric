@@ -2,10 +2,11 @@ import { useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import AuthContext from "../../contexts/AuthProvider";
+import { Formik } from "formik";
 
 export default function Login() {
     const location = useLocation();
-    const { loginSubmitHandler } = useContext(AuthContext);
+    const { loginSubmitHandler, authError } = useContext(AuthContext);
 
     const { values, onChange, onSubmit } = useForm(loginSubmitHandler, {
         email: '',
@@ -163,36 +164,47 @@ export default function Login() {
                                 <div className="col-sm-6">
                                     <div className="well">
                                         <h2>Завръщащ се потребител</h2>
-                                        <form onSubmit={onSubmit}>
-                                            <div className="form-group">
-                                                <label className="control-label" htmlFor="email">E-mail</label>
-                                                <input
-                                                    className="form-control"
-                                                    type="email"
-                                                    id="email"
-                                                    name="email"
-                                                    placeholder="E-mail"
-                                                    onChange={onChange}
-                                                    value={values.email}
-                                                />
+                                        {authError && (
+                                            <div className="alert alert-danger" role="alert" style={{ textAlign: 'center' }}>
+                                                {authError}
                                             </div>
-                                            <div className="form-group">
-                                                <label className="control-label" htmlFor="password">
-                                                    Парола
-                                                </label>
-                                                <input
-                                                    className="form-control mb-5"
-                                                    type="password"
-                                                    id="password"
-                                                    name="password"
-                                                    placeholder="Парола"
-                                                    onChange={onChange}
-                                                    value={values.password}
-                                                />
-                                                <a className="forgotten-password" href="/forgotten">Забравена парола?</a>
-                                            </div>
-                                            <input type="submit" value="Вход" className="btn btn-primary login-fr" />
-                                        </form>
+                                        )}
+                                        <Formik
+                                            onSubmit={onSubmit}
+                                        >
+                                            {({ isSubmitting }) => (
+                                                <form onSubmit={onSubmit}>
+                                                    <div className="form-group">
+                                                        <label className="control-label" htmlFor="email">E-mail</label>
+                                                        <input
+                                                            className="form-control"
+                                                            type="email"
+                                                            id="email"
+                                                            name="email"
+                                                            placeholder="E-mail"
+                                                            onChange={onChange}
+                                                            value={values.email}
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label className="control-label" htmlFor="password">
+                                                            Парола
+                                                        </label>
+                                                        <input
+                                                            className="form-control mb-5"
+                                                            type="password"
+                                                            id="password"
+                                                            name="password"
+                                                            placeholder="Парола"
+                                                            onChange={onChange}
+                                                            value={values.password}
+                                                        />
+                                                        <a className="forgotten-password" href="/forgotten">Забравена парола?</a>
+                                                    </div>
+                                                    <input type="submit" value="Вход" className="btn btn-primary login-fr" disabled={isSubmitting} />
+                                                </form>
+                                            )}
+                                        </Formik>
                                     </div>
                                 </div>
                             </div>

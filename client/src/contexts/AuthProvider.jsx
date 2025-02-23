@@ -70,6 +70,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const loginSubmitHandler = async (values) => {
+        setAuthError(null);
         try {
             const result = await login(values.email, values.password);
             
@@ -90,7 +91,12 @@ export const AuthProvider = ({ children }) => {
             }
             navigate("/");
         } catch (error) {
-            console.log(error);
+            if (error?.errors?.[0] === "Bad credentials") {
+                setAuthError("Невалиден имейл или парола");
+            } else {
+                setAuthError("Възникна грешка при влизането");
+            }
+            throw error;
         }
     };
 
