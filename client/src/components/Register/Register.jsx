@@ -293,25 +293,6 @@ export default function Register() {
                                                 </div>
                                             </div>
                                             <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="address">Адрес</label>
-                                                <div className="col-sm-10">
-                                                    <input
-                                                        className={`form-control ${errors.address && touched.address ? 'is-invalid' : ''}`}
-                                                        type="text"
-                                                        id="address"
-                                                        name="address"
-                                                        placeholder="Адрес"
-                                                        onChange={handleChange}
-                                                        value={values.address}
-                                                    />
-                                                    {errors.address && touched.address && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.address}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="form-group required">
                                                 <label className="col-sm-2 control-label" htmlFor="region">Област</label>
                                                 <div className="col-sm-10">
                                                     <input
@@ -345,6 +326,25 @@ export default function Register() {
                                                     {errors.city && touched.city && (
                                                         <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
                                                             {errors.city}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="form-group required">
+                                                <label className="col-sm-2 control-label" htmlFor="address">Адрес</label>
+                                                <div className="col-sm-10">
+                                                    <input
+                                                        className={`form-control ${errors.address && touched.address ? 'is-invalid' : ''}`}
+                                                        type="text"
+                                                        id="address"
+                                                        name="address"
+                                                        placeholder="ул. Улица"
+                                                        onChange={handleChange}
+                                                        value={values.address}
+                                                    />
+                                                    {errors.address && touched.address && (
+                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                            {errors.address}
                                                         </div>
                                                     )}
                                                 </div>

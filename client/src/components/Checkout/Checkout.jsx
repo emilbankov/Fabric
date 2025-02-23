@@ -9,7 +9,7 @@ import * as econtService from "../../services/econtService";
 import { useForm } from "../../hooks/useForm";
 import * as orderService from '../../services/ordersService';
 import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
+import { deliverySchema } from '../../lib/validate';
 
 export default function Checkout() {
     const location = useLocation();
@@ -63,15 +63,15 @@ export default function Checkout() {
 
     const formatPhoneNumber = (value) => {
         const digits = value.replace(/\D/g, '');
-        
+
         const formatted = digits.match(/.{1,3}/g)?.join(' ') || digits;
-        
+
         return formatted;
     };
 
     const handleFormChange = (e) => {
         const { name, value } = e.target;
-        
+
         if (name === 'phoneNumber') {
             const cleanValue = value.replace(/\s/g, '');
             if (cleanValue.length <= 9) {
@@ -265,7 +265,7 @@ export default function Checkout() {
             },
             deliveryInfo: {
                 type: deliveryType,
-                ...(deliveryType === 'office' 
+                ...(deliveryType === 'office'
                     ? { officeAddress: selectedOffice ? selectedOffice.address.fullAddress : searchTerm }
                     : {
                         region: formValues.region,
@@ -345,55 +345,6 @@ export default function Checkout() {
     useEffect(() => {
         return () => clearAuthError();
     }, [location.pathname]);
-
-    const deliverySchema = Yup.object().shape({
-        firstName: Yup.string()
-            .matches(/^[А-Я][а-я]+$/, 'Името трябва да започва с главна буква и да съдържа само кирилица')
-            .required('Задължително поле'),
-        lastName: Yup.string()
-            .matches(/^[А-Я][а-я]+$/, 'Фамилията трябва да започва с главна буква и да съдържа само кирилица')
-            .required('Задължително поле'),
-        email: Yup.string()
-            .email('Невалиден имейл адрес')
-            .required('Задължително поле'),
-        phoneNumber: Yup.string()
-            .matches(/^8[7-9][0-9] [0-9]{3} [0-9]{3}$/, 'Въведете валиден български телефонен номер')
-            .required('Задължително поле'),
-        deliveryType: Yup.string()
-            .oneOf(['address', 'office'], 'Невалиден тип доставка')
-            .required('Задължително поле'),
-        region: Yup.string().when('deliveryType', {
-            is: 'address',
-            then: () => Yup.string()
-                .matches(/^[А-Я][а-я]+$/, 'Областта трябва да започва с главна буква и да съдържа само кирилица')
-                .required('Задължително поле'),
-            otherwise: () => Yup.string().notRequired(),
-        }),
-        city: Yup.string().when('deliveryType', {
-            is: 'address',
-            then: () => Yup.string()
-                .matches(/^[А-Я][а-я]+$/, 'Градът трябва да започва с главна буква и да съдържа само кирилица')
-                .required('Задължително поле'),
-            otherwise: () => Yup.string().notRequired(),
-        }),
-        address: Yup.string().when('deliveryType', {
-            is: 'address',
-            then: () => Yup.string()
-                .matches(/^ул\. [А-Я].*/, 'Адресът трябва да започва с "ул. " и главна буква на кирилица')
-                .required('Задължително поле'),
-            otherwise: () => Yup.string().notRequired(),
-        }),
-        officeAddress: Yup.string().when(['deliveryType', 'manualAddress'], {
-            is: (deliveryType, manualAddress) => deliveryType === 'office' && !manualAddress,
-            then: () => Yup.string().required('Задължително поле'),
-            otherwise: () => Yup.string().notRequired(),
-        }),
-        manualOfficeAddress: Yup.string().when(['deliveryType', 'manualAddress'], {
-            is: (deliveryType, manualAddress) => deliveryType === 'office' && manualAddress,
-            then: () => Yup.string().required('Задължително поле'),
-            otherwise: () => Yup.string().notRequired(),
-        }),
-    });
 
     return (
         <>
@@ -956,18 +907,18 @@ export default function Checkout() {
                                         <div className="panel-body">
                                             <Formik
                                                 initialValues={{
-                                                    firstName: formValues.firstName,
-                                                    lastName: formValues.lastName,
-                                                    email: formValues.email,
-                                                    phoneNumber: formValues.phoneNumber,
+                                                    firstName: isAuthenticated && userProfile ? userProfile.firstName : formValues.firstName,
+                                                    lastName: isAuthenticated && userProfile ? userProfile.lastName : formValues.lastName,
+                                                    email: isAuthenticated && userProfile ? userProfile.email : formValues.email,
+                                                    phoneNumber: isAuthenticated && userProfile ? userProfile.phoneNumber?.replace('+359 ', '') : formValues.phoneNumber,
                                                     deliveryType: deliveryType,
-                                                    region: formValues.region,
-                                                    city: formValues.city,
-                                                    address: formValues.address,
+                                                    region: isAuthenticated && userProfile ? userProfile.region : formValues.region,
+                                                    city: isAuthenticated && userProfile ? userProfile.city : formValues.city,
+                                                    address: isAuthenticated && userProfile ? userProfile.address : formValues.address,
                                                     officeAddress: searchTerm,
                                                     selectedOffice: selectedOffice,
-                                                    manualAddress: manualAddress,
                                                 }}
+                                                enableReinitialize={true}
                                                 validationSchema={deliverySchema}
                                                 onSubmit={(values) => {
                                                     // Update form values
@@ -980,14 +931,14 @@ export default function Checkout() {
                                                         city: values.city,
                                                         address: values.address,
                                                     });
-                                                    
+
                                                     // Set delivery related state
                                                     if (values.deliveryType === 'office') {
                                                         setSearchTerm(values.officeAddress);
                                                     }
-                                                    
+
                                                     setStep2Complete(true);
-                                                    
+
                                                     const step2Content = document.getElementById('collapse-payment-address');
                                                     const step3Content = document.getElementById('collapse-checkout-confirm');
 
@@ -1005,7 +956,7 @@ export default function Checkout() {
                                                             <div className="col-sm-6">
                                                                 <fieldset id="account">
                                                                     <legend>Лични данни</legend>
-                                                                    
+
                                                                     <div className="form-group required">
                                                                         <label className="control-label" htmlFor="firstName">Име</label>
                                                                         <Field
@@ -1083,7 +1034,7 @@ export default function Checkout() {
                                                             <div className="col-sm-6">
                                                                 <fieldset id="address">
                                                                     <legend>Адрес</legend>
-                                                                    
+
                                                                     <div className="form-group">
                                                                         <div className="radio">
                                                                             <label>
@@ -1151,12 +1102,12 @@ export default function Checkout() {
                                                                                     </div>
                                                                                 )}
                                                                             </div>
-                                                                            {errors.officeAddress && touched.officeAddress && (
+                                                                            {!manualAddress && errors.officeAddress && touched.officeAddress && (
                                                                                 <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
                                                                                     {errors.officeAddress}
                                                                                 </div>
                                                                             )}
-                                                                            
+
                                                                             {selectedOffice && !manualAddress && (
                                                                                 <div className="selected-office-info">
                                                                                     <p>Град: {selectedOffice.address.fullAddress.trim().split(" ")[0] || 'N/A'}</p>
@@ -1171,8 +1122,9 @@ export default function Checkout() {
                                                                                         type="checkbox"
                                                                                         checked={manualAddress}
                                                                                         onChange={(e) => {
-                                                                                            setManualAddress(e.target.checked);
-                                                                                            if (e.target.checked) {
+                                                                                            const isChecked = e.target.checked;
+                                                                                            setManualAddress(isChecked);
+                                                                                            if (isChecked) {
                                                                                                 setSearchTerm('');
                                                                                                 setSelectedOffice(null);
                                                                                                 setOffices([]);
@@ -1193,14 +1145,19 @@ export default function Checkout() {
                                                                                         <input
                                                                                             type="text"
                                                                                             id="input-manual-office"
-                                                                                            className="form-control"
-                                                                                            placeholder="Въведете пълния адрес на офиса"
+                                                                                            className={`form-control ${errors.officeAddress && touched.officeAddress ? 'is-invalid' : ''}`}
+                                                                                            placeholder="Град (Област) ул. Улица"
                                                                                             value={searchTerm}
                                                                                             onChange={(e) => {
                                                                                                 setSearchTerm(e.target.value);
                                                                                                 setFieldValue('officeAddress', e.target.value);
                                                                                             }}
                                                                                         />
+                                                                                        {manualAddress && errors.officeAddress && touched.officeAddress && (
+                                                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                                {errors.officeAddress}
+                                                                                            </div>
+                                                                                        )}
                                                                                     </div>
                                                                                 </div>
                                                                             )}
