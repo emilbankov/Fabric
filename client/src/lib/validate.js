@@ -23,7 +23,6 @@ export const registerValidationSchema = Yup.object({
         .required('Задължително поле'),
     password: Yup.string()
         .min(4, 'Паролата трябва да бъде поне 4 символа')
-        .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&])/, 'Паролата трябва да съдържа поне една главна буква, една малка буква, една цифра и един специален символ (@$!%*?&)')
         .required('Задължително поле'),
     confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Паролите не съвпадат')
@@ -135,7 +134,6 @@ export const forgottenPasswordSchema = Yup.object({
 export const resetPasswordSchema = Yup.object({
     password: Yup.string()
         .min(4, 'Паролата трябва да бъде поне 4 символа')
-        .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&])/, 'Паролата трябва да съдържа поне една главна буква, една малка буква, една цифра и един специален символ (@$!%*?&)')
         .required('Задължително поле'),
     confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Паролите не съвпадат')
