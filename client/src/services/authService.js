@@ -23,3 +23,5 @@ export const register = (firstName, lastName, email, phoneNumber, address, regio
 };
 
 export const profile = async () => await get(`${baseUrl}/profile`);
+export const forgottenPassword = async (email) => await post(`${baseUrl}/forgot-password`, { email });
+export const resetPassword = async (password, token) => await post(`${baseUrl}/reset-password`, { password, token });

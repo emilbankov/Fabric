@@ -49,7 +49,7 @@ export const addClothingValidationSchema = Yup.object({
     frontImage: Yup.mixed()
         .required('Задължително е да качите снимка отпред'),
     backImage: Yup.mixed()
-        .test('isRequired', 'Задължително е да качите снимка отзад', function(value) {
+        .test('isRequired', 'Задължително е да качите снимка отзад', function (value) {
             return this.parent.type === 'KIT' ? true : !!value;
         }),
 });
@@ -71,14 +71,14 @@ export const editClothingValidationSchema = Yup.object({
         .matches(/^\d{4}$/, 'Моделът трябва да бъде точно 4 цифри')
         .required('Задължително поле'),
     frontImage: Yup.mixed()
-        .test('frontImage', 'Задължително е да качите снимка отпред', function(value) {
+        .test('frontImage', 'Задължително е да качите снимка отпред', function (value) {
             return value instanceof File || this.parent.images?.some(img => img.side === 'front');
         }),
     backImage: Yup.mixed()
-        .test('backImage', 'Задължително е да качите снимка отзад', function(value) {
-            return this.parent.type === 'KIT' || 
-                   value instanceof File || 
-                   this.parent.images?.some(img => img.side === 'back');
+        .test('backImage', 'Задължително е да качите снимка отзад', function (value) {
+            return this.parent.type === 'KIT' ||
+                value instanceof File ||
+                this.parent.images?.some(img => img.side === 'back');
         }),
 });
 
@@ -124,5 +124,21 @@ export const deliverySchema = Yup.object().shape({
             .required('Задължително поле'),
         otherwise: () => Yup.string().notRequired(),
     }),
+});
+
+export const forgottenPasswordSchema = Yup.object({
+    email: Yup.string()
+        .email('Невалиден имейл адрес')
+        .required('Задължително поле'),
+});
+
+export const resetPasswordSchema = Yup.object({
+    password: Yup.string()
+        .min(4, 'Паролата трябва да бъде поне 4 символа')
+        .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&])/, 'Паролата трябва да съдържа поне една главна буква, една малка буква, една цифра и един специален символ (@$!%*?&)')
+        .required('Задължително поле'),
+    confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Паролите не съвпадат')
+        .required('Задължително поле'),
 });
 
