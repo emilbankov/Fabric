@@ -21,9 +21,12 @@ import Blogs from "./components/Blogs/Blogs";
 import Account from "./components/Account/Account";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import ForgottenPassword from "./components/Forgotten Password/ForgottenPassword";
+import ResetPassword from "./components/Reset Password/ResetPassword";
 import Error404 from "./components/404/404";
 import Logout from "./components/Logout/Logout";
 import Footer from "./components/Footer/Footer";
+
 function App() {
     const location = useLocation();
 
@@ -47,6 +50,8 @@ function App() {
                     <Route path="/blogs" element={<Blogs />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/forgotten-password" element={<ForgottenPassword />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
                     
                     <Route element={<AuthGuard />}>
                         <Route path="/account" element={<Account />} />

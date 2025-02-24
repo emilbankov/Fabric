@@ -203,7 +203,7 @@ export default function Login() {
                                                             onChange={onChange}
                                                             value={values.password}
                                                         />
-                                                        <a className="forgotten-password" href="/forgotten">Забравена парола?</a>
+                                                        <Link className="forgotten-password" to="/forgotten-password">Забравена парола?</Link>
                                                     </div>
                                                     <input type="submit" value="Вход" className="btn btn-primary login-fr" disabled={isSubmitting} />
                                                 </form>

@@ -1,11 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Shirt, Scissors } from 'lucide-react';
 import './404.css';
-
 export default function Error404() {
-    const navigate = useNavigate();
-
     return (
         <>
             <div className="error-page">
@@ -45,8 +42,8 @@ export default function Error404() {
                             </div>
 
                             <div className="button-container">
-                                <button onClick={() => navigate(-1, { replace: true })} className="button button-secondary">Назад</button>
-                                <button onClick={() => navigate("/catalog?sort=new&size=20", { replace: true })} className="button button-primary">Разгледайте колекцията</button>
+                                <Link to={-1} className="button button-secondary">Назад</Link>
+                                <Link to="/catalog?sort=new&size=20" className="button button-primary">Разгледайте колекцията</Link>
                             </div>
                         </div>
                     </div>

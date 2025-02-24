@@ -157,19 +157,20 @@
     }
 }
 
-.button {
+.button-container a.button {
     padding: 12px 32px;
     border-radius: 8px;
     transition: all 0.2s;
     cursor: pointer !important;
 }
 
-.button-secondary {
+.button-container a.button-secondary {
     background-color: white;
     color: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(0, 0, 0, 1);
 }
 
-.button-secondary:hover {
+.button-container a.button-secondary:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
@@ -180,6 +181,7 @@
 
 .button-primary:hover {
     background-color: rgba(0, 0, 0, 0.9);
+    color: white;
 }
 
 .pattern-overlay {

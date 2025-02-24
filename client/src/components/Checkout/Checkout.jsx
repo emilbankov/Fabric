@@ -205,25 +205,6 @@ export default function Checkout() {
     }, [location.pathname]);
 
     useEffect(() => {
-        const existingScript = document.querySelector('script[src="/js/custom.js"]');
-        if (existingScript && existingScript.parentNode) {
-            existingScript.parentNode.removeChild(existingScript);
-        }
-
-        const script = document.createElement('script');
-        script.src = '/js/custom.js';
-        script.async = true;
-
-        document.body.appendChild(script);
-
-        return () => {
-            if (script.parentNode) {
-                script.parentNode.removeChild(script);
-            }
-        };
-    }, [location.pathname]);
-
-    useEffect(() => {
         const registerRadio = document.querySelector('input[value="register"]');
         if (registerRadio) {
             registerRadio.checked = true;
@@ -344,6 +325,25 @@ export default function Checkout() {
 
     useEffect(() => {
         return () => clearAuthError();
+    }, [location.pathname]);
+
+    useEffect(() => {
+        const existingScript = document.querySelector('script[src="/js/custom.js"]');
+        if (existingScript && existingScript.parentNode) {
+            existingScript.parentNode.removeChild(existingScript);
+        }
+
+        const script = document.createElement('script');
+        script.src = '/js/custom.js';
+        script.async = true;
+
+        document.body.appendChild(script);
+
+        return () => {
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
+        };
     }, [location.pathname]);
 
     return (
@@ -868,7 +868,7 @@ export default function Checkout() {
                                                                 onChange={onChange}
                                                                 value={values.password}
                                                             />
-                                                            <a className="forgotten-password" href="/forgotten">Забравена парола?</a>
+                                                            <Link className="forgotten-password" to="/forgotten-password">Забравена парола?</Link>
                                                         </div>
                                                         <input type="submit" value="Вход" className="btn btn-primary login-fr" />
                                                     </form>
