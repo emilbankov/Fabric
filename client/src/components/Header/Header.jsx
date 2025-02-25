@@ -154,8 +154,8 @@ export default function Header() {
                                                     <li className="top_level"><Link to="/catalog?type=sweatshirt&sort=new&size=20">Суитчъри</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=shorts&sort=new&size=20">Къси панталони</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=kit&sort=new&size=20">Комплекти</Link></li>
-                                                    {/* {isAdmin && (<li className="top_level"><Link to="/orders-history">Поръчки</Link></li>)} */}
-                                                    {/* {isAuthenticated && !isAdmin && (<li className="top_level"><Link to="/orders-history">Мои поръчки</Link></li>)} */}
+                                                    {(isAdmin || isModerator) && (<li className="top_level"><Link to="/orders-history">Поръчки</Link></li>)}
+                                                    {isAuthenticated && !isAdmin && !isModerator && (<li className="top_level"><Link to="/orders-history">Мои поръчки</Link></li>)}
                                                 </ul>
                                             </div>
                                             <div className="static-menu">

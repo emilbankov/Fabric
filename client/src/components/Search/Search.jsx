@@ -52,7 +52,7 @@ export default function Search() {
                             name="search"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Search for products..."
+                            placeholder="Търсене на продукти..."
                             className="form-control input-lg"
                             onKeyPress={(e) => {
                                 if (e.key === 'Enter') {
