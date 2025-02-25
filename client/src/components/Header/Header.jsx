@@ -77,153 +77,11 @@ export default function Header() {
                                 Безплатна доставка за поръчки над 100 лв.
                             </div>
                         </div>
-                        <div className="nav_right">
-                            <div className="account">
-                                <li className="dropdown myaccount">
-                                    <Link
-                                        to="/account"
-                                        title="My Account"
-                                        className="dropdown-toggle"
-                                        data-toggle="dropdown"
-                                    >
-                                        <span className="hidden-xs hidden-sm hidden-md">My Account</span>
-                                        <i className="fa fa-caret-down" aria-hidden="true" />
-                                    </Link>
-                                    <ul className="dropdown-menu dropdown-menu-right myaccount-menu">
-                                        <div className="drop_account">
-                                            <div className="login_acc">
-                                                <li>
-                                                    <Link className="login" to="/login">
-                                                        Login
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link className="reg" to="/register">
-                                                        Register
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <a href="/checkout" title="Checkout">
-                                                        <span className="checkout">Checkout</span>
-                                                    </a>
-                                                </li>
-                                            </div>
-                                        </div>
-                                    </ul>
-                                </li>
+                        {!isAuthenticated && (
+                            <div className="nav_right">
+                                <Link to="/login">Вход</Link> / <Link to="/register">Регистрация</Link>
                             </div>
-                            <div className="lang-curr-wrapper">
-                                <div className="pull-left wd-language">
-                                    <form
-                                        action="/language/language"
-                                        method="post"
-                                        encType="multipart/form-data"
-                                        id="form-language"
-                                    >
-                                        <div className="btn-group">
-                                            <button
-                                                className="btn btn-link dropdown-toggle"
-                                                data-toggle="dropdown"
-                                            >
-                                                <span className="hidden-xs hidden-sm hidden-md">
-                                                    <img
-                                                        src="/images/en-gb.png"
-                                                        alt="English"
-                                                        title="English"
-                                                    />
-                                                    Lang
-                                                    <i className="fa fa-caret-down" aria-hidden="true" />
-                                                </span>
-                                            </button>
-                                            <ul className="dropdoen-menu language-menu">
-                                                <li>
-                                                    <button
-                                                        className="btn btn-link btn-block language-select"
-                                                        type="button"
-                                                        name="en-gb"
-                                                    >
-                                                        <img
-                                                            src="/images/en-gb.png"
-                                                            alt="English"
-                                                            title="English"
-                                                        />{" "}
-                                                        English
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button
-                                                        className="btn btn-link btn-block language-select"
-                                                        type="button"
-                                                        name="ar"
-                                                    >
-                                                        <img
-                                                            src="/images/ar.png"
-                                                            alt="Arabic"
-                                                            title="Arabic"
-                                                        />
-                                                        Arabic
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <input type="hidden" name="code" defaultValue="" />
-                                        <input type="hidden" name="redirect" defaultValue="/home" />
-                                    </form>
-                                </div>
-                                <div className="pull-left wd-currency">
-                                    <form
-                                        action="/currency/currency"
-                                        method="post"
-                                        encType="multipart/form-data"
-                                        id="form-currency"
-                                    >
-                                        <div className="btn-group">
-                                            <button
-                                                className="btn btn-link dropdown-toggle"
-                                                data-toggle="dropdown"
-                                            >
-                                                <span className="hidden-xs hidden-sm hidden-md">
-                                                    <strong>$</strong>
-                                                    Curr
-                                                    <i className="fa fa-caret-down" aria-hidden="true" />
-                                                </span>
-                                            </button>
-                                            <ul className="dropdoen-menu currency-menu">
-                                                <li>
-                                                    <button
-                                                        className="currency-select btn btn-link btn-block"
-                                                        type="button"
-                                                        name="EUR"
-                                                    >
-                                                        € Euro
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button
-                                                        className="currency-select btn btn-link btn-block"
-                                                        type="button"
-                                                        name="GBP"
-                                                    >
-                                                        £ Pound Sterling
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button
-                                                        className="currency-select btn btn-link btn-block"
-                                                        type="button"
-                                                        name="USD"
-                                                    >
-                                                        $ US Dollar
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <input type="hidden" name="code" defaultValue="" />
-                                        <input type="hidden" name="redirect" defaultValue="/home" />
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        )}
                     </div>
                 </nav>
                 <header>
@@ -296,6 +154,8 @@ export default function Header() {
                                                     <li className="top_level"><Link to="/catalog?type=sweatshirt&sort=new&size=20">Суитчъри</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=shorts&sort=new&size=20">Къси панталони</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=kit&sort=new&size=20">Комплекти</Link></li>
+                                                    {/* {isAdmin && (<li className="top_level"><Link to="/orders-history">Поръчки</Link></li>)} */}
+                                                    {/* {isAuthenticated && !isAdmin && (<li className="top_level"><Link to="/orders-history">Мои поръчки</Link></li>)} */}
                                                 </ul>
                                             </div>
                                             <div className="static-menu">
