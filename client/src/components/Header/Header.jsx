@@ -6,7 +6,7 @@ import $ from 'jquery';
 import Cart from "../Cart/Cart";
 
 export default function Header() {
-    const { isAuthenticated, isAdmin } = useContext(AuthContext);
+    const { isAuthenticated, isAdmin, isModerator } = useContext(AuthContext);
 
     useEffect(() => {
         $(".box-category-top").click(function () {
@@ -180,12 +180,12 @@ export default function Header() {
                                                             <Link to="/add-clothing">Добавяне на продукт</Link>
                                                         </li>
                                                     )}
-                                                    {isAdmin && (
+                                                    {isModerator && (
                                                         <li className="toplink">
                                                             <Link to="/orders-history">Поръчки</Link>
                                                         </li>
                                                     )}
-                                                    {isAuthenticated && !isAdmin && (
+                                                    {isAuthenticated && !isAdmin && !isModerator && (
                                                         <li className="toplink">
                                                             <Link to="/orders-history">Мои поръчки</Link>
                                                         </li>

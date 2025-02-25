@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import * as ordersService from '../../../services/ordersService';
 import { gender } from '../../../lib/dictionary';
+import AuthContext from '../../../contexts/AuthProvider';
 
 export default function OrderDetailsModal({ show, onClose, orderId, refreshOrders }) {
+    const { isAdmin } = useContext(AuthContext);
     const [order, setOrder] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -197,7 +199,7 @@ export default function OrderDetailsModal({ show, onClose, orderId, refreshOrder
                                             </tr>
                                         </tbody>
                                     </table>
-                                    {order.status !== "Confirmed" && order.status !== "Rejected" && (
+                                    {order.status !== "Confirmed" && order.status !== "Rejected" && isAdmin && (
                                         <div className="modal-footer">
                                             <button className="btn btn-danger" onClick={() => setShowRejectModal(true)}>Отхвърли поръчка</button>
                                             <button className="btn btn-primary" onClick={() => setShowConfirmModal(true)}>Потвърди поръчка</button>

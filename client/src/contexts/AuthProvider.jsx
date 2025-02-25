@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
                 payload.frontImage,
                 payload.backImage
             );
-            
+
             navigate("/catalog?sort=new&size=20");
         } catch (error) {
             console.error(error);
@@ -73,18 +73,18 @@ export const AuthProvider = ({ children }) => {
         setAuthError(null);
         try {
             const result = await login(values.email, values.password);
-            
+
             localStorage.removeItem('userProfile');
-            
+
             setAuth({
                 ...result,
                 userProfile: null
             });
-            
+
             localStorage.setItem('accessToken', result.accessToken);
             localStorage.setItem('refreshToken', result.refreshToken);
             localStorage.setItem('roles', JSON.stringify(result.roles || []));
-            
+
             const currentPath = window.location.pathname;
             if (currentPath === '/checkout') {
                 return;
@@ -105,16 +105,16 @@ export const AuthProvider = ({ children }) => {
         try {
             if (values.password === values.confirmPassword) {
                 const result = await register(
-                    values.firstName, 
-                    values.lastName, 
-                    values.email, 
-                    values.phoneNumber, 
+                    values.firstName,
+                    values.lastName,
+                    values.email,
+                    values.phoneNumber,
                     values.address,
                     values.region,
                     values.city,
                     values.password
                 );
-                
+
                 setAuth(result);
                 localStorage.setItem('accessToken', result.accessToken);
                 localStorage.setItem('refreshToken', result.refreshToken);
@@ -146,6 +146,7 @@ export const AuthProvider = ({ children }) => {
             email: auth.email,
             isAuthenticated: !!auth.accessToken,
             isAdmin: auth?.roles?.includes("ADMIN") || false,
+            isModerator: auth?.roles?.includes("MODERATOR") || false,
             userProfile: auth.userProfile,
             authError,
             clearAuthError: () => setAuthError(null)

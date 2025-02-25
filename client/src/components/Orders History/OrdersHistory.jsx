@@ -44,7 +44,7 @@ export default function OrdersHistory() {
     const handleReload = async () => {
         setIsLoading(true);
         try {
-            const response = await ordersService.or(currentPage, orderStatus);
+            const response = await ordersService.ordersHistory(currentPage, orderStatus);
             setOrders(response.orders);
             setTotalPages(response.total_pages);
         } catch (err) {

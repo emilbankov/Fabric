@@ -500,7 +500,7 @@ export default function ViewCart() {
                                                     <div className="input-group btn-block" style={{ maxWidth: 200 }}>
                                                         <button
                                                             type="button"
-                                                            className="btn btn-primary"
+                                                            className="btn btn-primary responsive-buttons"
                                                             onClick={() => decreaseQuantity(item.id, item.size, item.gender, item.type)}
                                                         >
                                                             -
@@ -515,7 +515,7 @@ export default function ViewCart() {
                                                         />
                                                         <button
                                                             type="button"
-                                                            className="btn btn-primary"
+                                                            className="btn btn-primary responsive-buttons"
                                                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                                                         >
                                                             +
