@@ -39,7 +39,7 @@ export default function Home() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [newest.clothes, mostSold.clothes]);
+    }, [location.pathname, newest.clothes]);
 
     return (
         <>

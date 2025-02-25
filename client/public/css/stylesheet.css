@@ -20991,11 +20991,11 @@ h3 .fa {
 		justify-content: center;
 	}
 
-	.form-control {
+	/* .form-control {
 		padding: 3px 0 !important;
 		max-width: 35px;
 		border-radius: 5px !important;
-	}
+	} */
 
 	form .table-responsive table.shopping-cart tbody tr td div.input-group .btn-primary {
 		padding: 3px 12px !important;
@@ -21059,6 +21059,8 @@ h3 .fa {
 
 	.shopping-cart.responsive .input-group.btn-block .form-control {
 		width: 100%;
+		max-width: 35px;
+		border-radius: 5px !important;
 	}
 
 	form .table-responsive table.shopping-cart tbody tr td div.input-group .btn-primary {

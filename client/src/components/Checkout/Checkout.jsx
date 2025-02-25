@@ -317,7 +317,12 @@ export default function Checkout() {
         try {
             await orderService.createOrder(orderData);
             clearCart();
-            navigate('/orders-history');
+
+            if (isAuthenticated) {
+                navigate('/orders-history');
+            } else {
+                navigate('/');
+            }
         } catch (error) {
             console.error('Failed to create order:', error);
         }
@@ -918,10 +923,9 @@ export default function Checkout() {
                                                     officeAddress: searchTerm,
                                                     selectedOffice: selectedOffice,
                                                 }}
-                                                enableReinitialize={true}
+                                                enableReinitialize={false}
                                                 validationSchema={deliverySchema}
                                                 onSubmit={(values) => {
-                                                    // Update form values
                                                     setFormValues({
                                                         firstName: values.firstName,
                                                         lastName: values.lastName,
@@ -932,7 +936,6 @@ export default function Checkout() {
                                                         address: values.address,
                                                     });
 
-                                                    // Set delivery related state
                                                     if (values.deliveryType === 'office') {
                                                         setSearchTerm(values.officeAddress);
                                                     }
