@@ -270,6 +270,17 @@ input[type="color"].form-control {
 	width: auto;
 }
 
+	.nav_right a,
+	.nav_right a:hover,
+	.nav_right a:focus,
+	.nav_right a:active {
+		color: #bfbfbf;
+	}
+
+	.nav_right a:hover {
+		color: #fff;
+	}
+
 .nav_right .account {
 	float: left;
 	width: auto;
@@ -19373,6 +19384,15 @@ h3 .fa {
 }
 
 @media (max-width: 979px) {
+	form .table-responsive table.shopping-cart tbody tr td div.input-group .btn-primary {
+		padding: 3px 12px !important;
+		border-radius: 5px !important;
+	}
+
+	div.modal-content div div.modal-body div.modal-footer button.btn-danger {
+		margin-bottom: 10px !important;
+	}
+
 	#footer #block_4.footer-area {
 		padding-left: 0;
 	}
@@ -20664,6 +20684,15 @@ h3 .fa {
 }
 
 @media (max-width: 479px) {
+	form .table-responsive table.shopping-cart tbody tr td div.input-group .btn-primary {
+		padding: 3px 12px !important;
+		border-radius: 5px !important;
+	}
+
+	div.modal-content div div.modal-body div.modal-footer button.btn-danger {
+		margin-bottom: 10px !important;
+	}
+
 	#cart .cart_image .mycart {
 		display: none;
 	}
@@ -20957,6 +20986,24 @@ h3 .fa {
 	.shopping-cart.responsive .input-group.btn-block {
 		max-width: 100% !important;
 		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.form-control {
+		padding: 3px 0 !important;
+		max-width: 35px;
+		border-radius: 5px !important;
+	}
+
+	form .table-responsive table.shopping-cart tbody tr td div.input-group .btn-primary {
+		padding: 3px 12px !important;
+		border-radius: 5px !important;
+	}
+
+	div.modal-content div div.modal-body div.modal-footer button.btn-danger {
+		margin-bottom: 10px !important;
 	}
 
 	.shopping-cart.responsive .input-group.btn-block .form-control {
@@ -20993,6 +21040,15 @@ h3 .fa {
 		width: 100%;
 		margin: 12px 0 0 0;
 	}
+
+	form .table-responsive table.shopping-cart tbody tr td div.input-group .btn-primary {
+		padding: 3px 12px !important;
+		border-radius: 5px !important;
+	}
+
+	div.modal-content div div.modal-body div.modal-footer button.btn-danger {
+		margin-bottom: 10px !important;
+	}
 }
 
 @media only screen and (max-width: 479px) {
@@ -21004,9 +21060,26 @@ h3 .fa {
 	.shopping-cart.responsive .input-group.btn-block .form-control {
 		width: 100%;
 	}
+
+	form .table-responsive table.shopping-cart tbody tr td div.input-group .btn-primary {
+		padding: 3px 12px !important;
+		border-radius: 5px !important;
+	}
+
+	div.modal-content div div.modal-body div.modal-footer button.btn-danger {
+		margin-bottom: 10px !important;
+	}
 }
 
 @media (max-width: 767px) {
+	form .table-responsive table.shopping-cart tbody tr td div.input-group .btn-primary {
+		padding: 3px 12px !important;
+		border-radius: 5px !important;
+	}
+
+	div.modal-content div div.modal-body div.modal-footer button.btn-danger {
+		margin-bottom: 10px !important;
+	}
 
 	.hometab.box,
 	.category_tab .tabs,
@@ -22469,6 +22542,15 @@ h3 .fa {
 		text-align: center;
 		margin: 0;
 	}
+
+	form .table-responsive table.shopping-cart tbody tr td div.input-group .btn-primary {
+		padding: 3px 12px !important;
+		border-radius: 5px !important;
+	}
+
+	div.modal-content div div.modal-body div.modal-footer button.btn-danger {
+		margin-bottom: 10px !important;
+	}
 }
 
 @media only screen and (max-width: 543px) {
@@ -22642,8 +22724,14 @@ h3 .fa {
 	}
 
 	.compare a {
+		background-size: 17px;
+		margin: 0;
+		width: 34px;
+	}
+
+	.logout a {
 		background-size: 23px;
-		margin: 0px 5px 0 0;
+		margin: 2px 0 0 13px;
 		width: 34px;
 	}
 
@@ -23707,8 +23795,17 @@ h3 .fa {
 		padding: 6px 6px;
 	}
 
-	#checkout-cart .btn.btn-primary {
-		padding: 6px 10px;
+	#checkout-cart .btn.btn-primary.responsive-buttons {
+		padding: 3px 15px !important;
+		border-radius: 5px !important;
+	}
+
+	div.buttons.clearfix a.btn-primary {
+		padding: 7px 15px !important;
+	}
+
+	div.modal-content div div.modal-body div.modal-footer button.btn-danger {
+		margin-bottom: 10px !important;
 	}
 
 	.category_tab {
@@ -24660,12 +24757,12 @@ input[type=file]::file-selector-button:hover {
 }
 
 .input-with-prefix {
-    position: relative;
+	position: relative;
 }
 
 .input-with-prefix::before {
-    content: "+359";
-    position: absolute;
+	content: "+359";
+	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
 	font-size: 12px;
@@ -24677,7 +24774,7 @@ input[type=file]::file-selector-button:hover {
 }
 
 .phone-field {
-    padding-left: 62px !important;
+	padding-left: 62px !important;
 }
 
 div.modal div.modal-dialog div.modal-content div.modal-body div table.table-order-details thead tr td,

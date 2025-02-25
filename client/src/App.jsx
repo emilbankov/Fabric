@@ -1,8 +1,9 @@
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 
-import { CartProvider } from "./contexts/CartProvider";  // CartProvider should be on top
+import { CartProvider } from "./contexts/CartProvider";
 import { AuthProvider } from "./contexts/AuthProvider";
 import AuthGuard from "./guards/AuthGuard";
+import GuestGuard from "./guards/GuestGuard";
 
 import Header from "./components/Header/Header";
 import ScrollToTop from "./components/Scroll To Top/ScrollToTop";
@@ -48,11 +49,14 @@ function App() {
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/blogs" element={<Blogs />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/forgotten-password" element={<ForgottenPassword />} />
-                    <Route path="/reset-password" element={<ResetPassword />} />
-                    
+
+                    <Route element={<GuestGuard />}>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/forgotten-password" element={<ForgottenPassword />} />
+                        <Route path="/reset-password" element={<ResetPassword />} />
+                    </Route>
+
                     <Route element={<AuthGuard />}>
                         <Route path="/account" element={<Account />} />
                         <Route path="/add-clothing" element={<AddClothing />} />
