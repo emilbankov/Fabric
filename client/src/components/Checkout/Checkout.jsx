@@ -836,7 +836,7 @@ export default function Checkout() {
                                                     />
                                                 </div>
                                                 <div className="col-sm-6 login-form" style={{ display: showLoginForm ? 'block' : 'none' }}>
-                                                    <h2>Заврщащ се клиент</h2>
+                                                    <h2>Завръщащ се клиент</h2>
                                                     {authError && (
                                                         <div className="alert alert-danger" role="alert">
                                                             {authError}

@@ -27,7 +27,9 @@ export default function Details() {
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
     const sizeOptions = {
-        MALE: ["S", "M", "L", "XL", "2XL", "3XL", "5XL (+2.00лв.)"],
+        MALE: clothing?.clothing?.type === "SHORTS" 
+            ? ["S", "M", "L", "XL", "2XL", "3XL"]
+            : ["S", "M", "L", "XL", "2XL", "3XL", "5XL (+2.00лв.)"],
         FEMALE: ["XS", "S", "M", "L", "XL"],
         CHILD: ["98", "110", "122", "134", "146", "158"]
     };
@@ -441,8 +443,12 @@ export default function Details() {
                                                 </div>
                                                 <ul className="list-unstyled">
                                                     <li><h4>Цена: {calculatePrice()} лв.</h4></li>
-                                                    <li className="phone"><i className="fas fa-phone"></i>{" "}За бърза поръчка: +359 898 739 178 (08-17ч.)</li>
+                                                    <li className="phone"><i className="fas fa-phone"></i>{" "}&nbsp;За бърза поръчка: <a href="tel:+359898739178">+359 898 739 178</a> (08-17ч.)</li>
                                                     <li className="rewardpoint"><i className="fas fa-shipping-fast"></i> Безплатна доставка над 100 лв.</li>
+                                                    <li className="phone" style={{ display: 'flex', alignItems: 'center' }}>
+                                                        <i class="fa-solid fa-shirt"></i> &nbsp;
+                                                        <p style={{ margin: '0' }}>За персонализиран дизайн позвънете (+5.00 лв.) [лого, надпис или картинка]</p>
+                                                    </li>
                                                 </ul>
                                                 <div id="product">
                                                     <h3 className="product-option">Налични опции</h3>

@@ -43,13 +43,13 @@ export default function Account() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/account">Account</Link>
+                            <Link to="/account">Профил</Link>
                         </li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
                             <div className="box">
-                                <div className="box-heading">Account</div>
+                                <div className="box-heading">Профил</div>
                                 <div className="user-profile">
                                     <div className="user-avatar">
                                         <img src="/images/avatar7.png" alt="User Avatar" />
@@ -75,7 +75,6 @@ export default function Account() {
                                             </a>
                                         </div>
                                     </div>
-                                    {/* If we need pagination */}
                                     <div className="swiper-pagination" />
                                 </div>
                             </div>
@@ -113,7 +112,7 @@ export default function Account() {
                             </div>
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h1>Personal Information</h1>
+                            <h1>Лична информация</h1>
                             <div className="row">
                                 <div className="card h-100">
                                     <div className="card-body">
@@ -133,8 +132,20 @@ export default function Account() {
                                                 </div>
                                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                     <div className="form-group">
+                                                        <label htmlFor="street">Град</label>
+                                                        <span>{userProfile.city}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div className="form-group">
                                                         <label htmlFor="email">E-mail</label>
                                                         <span>{userProfile.email}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="city">Област</label>
+                                                        <span>{userProfile.region}</span>
                                                     </div>
                                                 </div>
                                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -145,14 +156,8 @@ export default function Account() {
                                                 </div>
                                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                     <div className="form-group">
-                                                        <label htmlFor="street">Адрес</label>
+                                                        <label htmlFor="city">Адрес</label>
                                                         <span>{userProfile.address}</span>
-                                                    </div>
-                                                </div>
-                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                                    <div className="form-group">
-                                                        <label htmlFor="city">Град</label>
-                                                        <span>{userProfile.city}</span>
                                                     </div>
                                                 </div>
                                             </div>

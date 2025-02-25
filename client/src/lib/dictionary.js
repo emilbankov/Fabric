@@ -67,3 +67,11 @@ export const size = {
     "FEMALE": "Дамски",
     "CHILD": "Детски",
 }
+
+export const priceMap = {
+    T_SHIRT: "29.00",
+    SWEATSHIRT: "54.00",
+    KIT: "59.00",
+    SHORTS: "30.00",
+    LONG_T_SHIRT: "37.00"
+};

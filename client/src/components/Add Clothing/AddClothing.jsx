@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import AuthContext from "../../contexts/AuthProvider";
 import { Formik } from 'formik';
 import { addClothingValidationSchema } from '../../lib/validate';
+import { priceMap } from '../../lib/dictionary';
 
 export default function AddClothing() {
     const { addClothHandler } = useContext(AuthContext);
@@ -49,6 +50,12 @@ export default function AddClothing() {
     const handleSubmit = async (values, { setSubmitting }) => {
         await addClothHandler(values);
         setSubmitting(false);
+    };
+
+    const handleTypeChange = (e, setFieldValue) => {
+        const type = e.target.value;
+        setFieldValue('type', type);
+        setFieldValue('price', priceMap[type] || '');
     };
 
     return (
@@ -235,7 +242,7 @@ export default function AddClothing() {
                                                         className={`form-control ${errors.type && touched.type ? 'is-invalid' : ''}`}
                                                         id="type"
                                                         name="type"
-                                                        onChange={handleChange}
+                                                        onChange={(e) => handleTypeChange(e, setFieldValue)}
                                                         value={values.type}
                                                     >
                                                         <option value="" hidden>Изберете тип</option>
