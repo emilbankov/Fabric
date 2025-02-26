@@ -22,12 +22,13 @@ export default function Details() {
     const [quantity, setQuantity] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const increaseQuantity = () => setQuantity((prev) => prev + 1);
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
     const sizeOptions = {
-        MALE: clothing?.clothing?.type === "SHORTS" 
+        MALE: clothing?.clothing?.type === "SHORTS"
             ? ["S", "M", "L", "XL", "2XL", "3XL"]
             : ["S", "M", "L", "XL", "2XL", "3XL", "5XL (+2.00лв.)"],
         FEMALE: ["XS", "S", "M", "L", "XL"],
@@ -113,13 +114,15 @@ export default function Details() {
     };
 
     const confirmDelete = async () => {
+        setIsLoading(true);
         try {
             await clothesService.deleteProduct(clothingId);
             setShowConfirmModal(false);
-
             navigate(-1);
         } catch (error) {
             console.error('Error deleting product:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -1357,14 +1360,17 @@ export default function Details() {
 
             {showConfirmModal && (
                 <div className="confirmation-modal-overlay">
-                    <div className="confirmation-modal">
-                        <h3>Потвърждаване на изтриване</h3>
-                        <p>Сигурни ли сте че искате да изтриете {typeTranslations[clothing.clothing.type]} {clothing.clothing.name} #{clothing.clothing.model}?</p>
-                        <div className="modal-buttons">
-                            <button onClick={() => setShowConfirmModal(false)} className="cancel-btn">Отказ</button>
-                            <button onClick={confirmDelete} className="delete-btn">Изтриване</button>
+                    {isLoading && <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
+                    {!isLoading && (
+                        <div className="confirmation-modal">
+                            <h3>Потвърждаване на изтриване</h3>
+                            <p>Сигурни ли сте че искате да изтриете {typeTranslations[clothing.clothing.type]} {clothing.clothing.name} #{clothing.clothing.model}?</p>
+                            <div className="modal-buttons">
+                                <button onClick={() => setShowConfirmModal(false)} className="cancel-btn">Отказ</button>
+                                <button onClick={confirmDelete} className="delete-btn">Изтриване</button>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             )}
         </>

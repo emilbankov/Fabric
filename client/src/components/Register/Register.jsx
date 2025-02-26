@@ -1,12 +1,14 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Formik } from 'formik';
 import { registerValidationSchema } from '../../lib/validate';
 import AuthContext from "../../contexts/AuthProvider";
 
 export default function Register() {
-    let location = useLocation();
+    const location = useLocation();
     const { registerSubmitHandler, authError, clearAuthError } = useContext(AuthContext);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const formatPhoneNumber = (value) => {
         const digits = value.replace(/\D/g, '');
@@ -17,12 +19,19 @@ export default function Register() {
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
+        setIsLoading(true);
         const formattedValues = {
             ...values,
             phoneNumber: '+359 ' + values.phoneNumber
         };
-        await registerSubmitHandler(formattedValues);
-        setSubmitting(false);
+        try {
+            await registerSubmitHandler(formattedValues);
+        } catch (error) {
+            console.error("Registration error:", error);
+        } finally {
+            setIsLoading(false);
+            setSubmitting(false);
+        }
     };
 
     useEffect(() => {
@@ -173,231 +182,234 @@ export default function Register() {
                                     {authError}
                                 </div>
                             )}
-                            <Formik
-                                initialValues={{
-                                    firstName: '',
-                                    lastName: '',
-                                    email: '',
-                                    phoneNumber: '',
-                                    address: '',
-                                    region: '',
-                                    city: '',
-                                    password: '',
-                                    confirmPassword: ''
-                                }}
-                                validationSchema={registerValidationSchema}
-                                onSubmit={handleSubmit}
-                            >
-                                {({ values, errors, touched, handleChange, handleSubmit, setFieldValue }) => (
-                                    <form className="form-horizontal" onSubmit={handleSubmit}>
-                                        <fieldset id="account">
-                                            <div className="form-group required" style={{ display: "none" }}>
-                                                <label className="col-sm-2 control-label">Customer Group</label>
-                                                <div className="col-sm-10">
-                                                    <div className="radio">
-                                                        <label>
-                                                            <input
-                                                                type="radio"
-                                                                name="customer_group_id"
-                                                                defaultValue={1}
-                                                                defaultChecked="checked"
-                                                            />
-                                                            Default
-                                                        </label>
+                            {isLoading && (<div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>)}
+                            {!isLoading && (
+                                <Formik
+                                    initialValues={{
+                                        firstName: '',
+                                        lastName: '',
+                                        email: '',
+                                        phoneNumber: '',
+                                        address: '',
+                                        region: '',
+                                        city: '',
+                                        password: '',
+                                        confirmPassword: ''
+                                    }}
+                                    validationSchema={registerValidationSchema}
+                                    onSubmit={handleSubmit}
+                                >
+                                    {({ values, errors, touched, handleChange, handleSubmit, setFieldValue }) => (
+                                        <form className="form-horizontal" onSubmit={handleSubmit}>
+                                            <fieldset id="account">
+                                                <div className="form-group required" style={{ display: "none" }}>
+                                                    <label className="col-sm-2 control-label">Customer Group</label>
+                                                    <div className="col-sm-10">
+                                                        <div className="radio">
+                                                            <label>
+                                                                <input
+                                                                    type="radio"
+                                                                    name="customer_group_id"
+                                                                    defaultValue={1}
+                                                                    defaultChecked="checked"
+                                                                />
+                                                                Default
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="firstName">Име</label>
-                                                <div className="col-sm-10">
-                                                    <input
-                                                        className={`form-control ${errors.firstName && touched.firstName ? 'is-invalid' : ''}`}
-                                                        type="text"
-                                                        id="firstName"
-                                                        name="firstName"
-                                                        placeholder="Име"
-                                                        onChange={handleChange}
-                                                        value={values.firstName}
-                                                    />
-                                                    {errors.firstName && touched.firstName && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.firstName}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="lastName">Фамилия</label>
-                                                <div className="col-sm-10">
-                                                    <input
-                                                        className={`form-control ${errors.lastName && touched.lastName ? 'is-invalid' : ''}`}
-                                                        type="text"
-                                                        id="lastName"
-                                                        name="lastName"
-                                                        placeholder="Фамилия"
-                                                        onChange={handleChange}
-                                                        value={values.lastName}
-                                                    />
-                                                    {errors.lastName && touched.lastName && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.lastName}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="email">E-mail</label>
-                                                <div className="col-sm-10">
-                                                    <input
-                                                        className={`form-control ${errors.email && touched.email ? 'is-invalid' : ''}`}
-                                                        type="email"
-                                                        id="email"
-                                                        name="email"
-                                                        placeholder="E-mail"
-                                                        onChange={handleChange}
-                                                        value={values.email}
-                                                    />
-                                                    {errors.email && touched.email && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.email}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="phoneNumber">Телефонен номер</label>
-                                                <div className="col-sm-10">
-                                                    <div className="input-with-prefix">
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="firstName">Име</label>
+                                                    <div className="col-sm-10">
                                                         <input
-                                                            className={`form-control phone-field ${errors.phoneNumber && touched.phoneNumber ? 'is-invalid' : ''}`}
-                                                            type="tel"
-                                                            id="phoneNumber"
-                                                            name="phoneNumber"
-                                                            placeholder="8** *** ***"
-                                                            onChange={(e) => {
-                                                                const cleanValue = e.target.value.replace(/\s/g, '');
-                                                                if (cleanValue.length <= 9) {
-                                                                    const formatted = formatPhoneNumber(cleanValue);
-                                                                    setFieldValue('phoneNumber', formatted);
-                                                                }
-                                                            }}
-                                                            value={values.phoneNumber}
-                                                            maxLength="11"
+                                                            className={`form-control ${errors.firstName && touched.firstName ? 'is-invalid' : ''}`}
+                                                            type="text"
+                                                            id="firstName"
+                                                            name="firstName"
+                                                            placeholder="Име"
+                                                            onChange={handleChange}
+                                                            value={values.firstName}
                                                         />
+                                                        {errors.firstName && touched.firstName && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.firstName}
+                                                            </div>
+                                                        )}
                                                     </div>
-                                                    {errors.phoneNumber && touched.phoneNumber && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.phoneNumber}
-                                                        </div>
-                                                    )}
                                                 </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="region">Област</label>
-                                                <div className="col-sm-10">
-                                                    <input
-                                                        className={`form-control ${errors.region && touched.region ? 'is-invalid' : ''}`}
-                                                        type="text"
-                                                        id="region"
-                                                        name="region"
-                                                        placeholder="Област"
-                                                        onChange={handleChange}
-                                                        value={values.region}
-                                                    />
-                                                    {errors.region && touched.region && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.region}
-                                                        </div>
-                                                    )}
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="lastName">Фамилия</label>
+                                                    <div className="col-sm-10">
+                                                        <input
+                                                            className={`form-control ${errors.lastName && touched.lastName ? 'is-invalid' : ''}`}
+                                                            type="text"
+                                                            id="lastName"
+                                                            name="lastName"
+                                                            placeholder="Фамилия"
+                                                            onChange={handleChange}
+                                                            value={values.lastName}
+                                                        />
+                                                        {errors.lastName && touched.lastName && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.lastName}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="city">Град</label>
-                                                <div className="col-sm-10">
-                                                    <input
-                                                        className={`form-control ${errors.city && touched.city ? 'is-invalid' : ''}`}
-                                                        type="text"
-                                                        id="city"
-                                                        name="city"
-                                                        placeholder="Град"
-                                                        onChange={handleChange}
-                                                        value={values.city}
-                                                    />
-                                                    {errors.city && touched.city && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.city}
-                                                        </div>
-                                                    )}
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="email">E-mail</label>
+                                                    <div className="col-sm-10">
+                                                        <input
+                                                            className={`form-control ${errors.email && touched.email ? 'is-invalid' : ''}`}
+                                                            type="email"
+                                                            id="email"
+                                                            name="email"
+                                                            placeholder="E-mail"
+                                                            onChange={handleChange}
+                                                            value={values.email}
+                                                        />
+                                                        {errors.email && touched.email && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.email}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="address">Адрес</label>
-                                                <div className="col-sm-10">
-                                                    <input
-                                                        className={`form-control ${errors.address && touched.address ? 'is-invalid' : ''}`}
-                                                        type="text"
-                                                        id="address"
-                                                        name="address"
-                                                        placeholder="ул. Улица"
-                                                        onChange={handleChange}
-                                                        value={values.address}
-                                                    />
-                                                    {errors.address && touched.address && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.address}
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="phoneNumber">Телефонен номер</label>
+                                                    <div className="col-sm-10">
+                                                        <div className="input-with-prefix">
+                                                            <input
+                                                                className={`form-control phone-field ${errors.phoneNumber && touched.phoneNumber ? 'is-invalid' : ''}`}
+                                                                type="tel"
+                                                                id="phoneNumber"
+                                                                name="phoneNumber"
+                                                                placeholder="8** *** ***"
+                                                                onChange={(e) => {
+                                                                    const cleanValue = e.target.value.replace(/\s/g, '');
+                                                                    if (cleanValue.length <= 9) {
+                                                                        const formatted = formatPhoneNumber(cleanValue);
+                                                                        setFieldValue('phoneNumber', formatted);
+                                                                    }
+                                                                }}
+                                                                value={values.phoneNumber}
+                                                                maxLength="11"
+                                                            />
                                                         </div>
-                                                    )}
+                                                        {errors.phoneNumber && touched.phoneNumber && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.phoneNumber}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <legend>Вашата парола</legend>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="password">Парола</label>
-                                                <div className="col-sm-10">
-                                                    <input
-                                                        className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
-                                                        type="password"
-                                                        id="password"
-                                                        name="password"
-                                                        placeholder="Парола"
-                                                        onChange={handleChange}
-                                                        value={values.password}
-                                                    />
-                                                    {errors.password && touched.password && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.password}
-                                                        </div>
-                                                    )}
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="region">Област</label>
+                                                    <div className="col-sm-10">
+                                                        <input
+                                                            className={`form-control ${errors.region && touched.region ? 'is-invalid' : ''}`}
+                                                            type="text"
+                                                            id="region"
+                                                            name="region"
+                                                            placeholder="Област"
+                                                            onChange={handleChange}
+                                                            value={values.region}
+                                                        />
+                                                        {errors.region && touched.region && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.region}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="confirmPassword">Потвърди парола</label>
-                                                <div className="col-sm-10">
-                                                    <input
-                                                        className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
-                                                        type="password"
-                                                        id="confirmPassword"
-                                                        name="confirmPassword"
-                                                        placeholder="Потвърди парола"
-                                                        onChange={handleChange}
-                                                        value={values.confirmPassword}
-                                                    />
-                                                    {errors.confirmPassword && touched.confirmPassword && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.confirmPassword}
-                                                        </div>
-                                                    )}
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="city">Град</label>
+                                                    <div className="col-sm-10">
+                                                        <input
+                                                            className={`form-control ${errors.city && touched.city ? 'is-invalid' : ''}`}
+                                                            type="text"
+                                                            id="city"
+                                                            name="city"
+                                                            placeholder="Град"
+                                                            onChange={handleChange}
+                                                            value={values.city}
+                                                        />
+                                                        {errors.city && touched.city && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.city}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="address">Адрес</label>
+                                                    <div className="col-sm-10">
+                                                        <input
+                                                            className={`form-control ${errors.address && touched.address ? 'is-invalid' : ''}`}
+                                                            type="text"
+                                                            id="address"
+                                                            name="address"
+                                                            placeholder="ул. Улица"
+                                                            onChange={handleChange}
+                                                            value={values.address}
+                                                        />
+                                                        {errors.address && touched.address && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.address}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <legend>Вашата парола</legend>
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="password">Парола</label>
+                                                    <div className="col-sm-10">
+                                                        <input
+                                                            className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
+                                                            type="password"
+                                                            id="password"
+                                                            name="password"
+                                                            placeholder="Парола"
+                                                            onChange={handleChange}
+                                                            value={values.password}
+                                                        />
+                                                        {errors.password && touched.password && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.password}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="confirmPassword">Потвърди парола</label>
+                                                    <div className="col-sm-10">
+                                                        <input
+                                                            className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
+                                                            type="password"
+                                                            id="confirmPassword"
+                                                            name="confirmPassword"
+                                                            placeholder="Потвърди парола"
+                                                            onChange={handleChange}
+                                                            value={values.confirmPassword}
+                                                        />
+                                                        {errors.confirmPassword && touched.confirmPassword && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.confirmPassword}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <div className="buttons">
+                                                <div className="pull-right"><input type="submit" value="Регистрация" className="btn btn-primary" disabled={isLoading} /></div>
+                                                <p>Вече имате акаунт? Влезте {" "}<Link className="bold" to="/login">тук</Link>.</p>
                                             </div>
-                                        </fieldset>
-                                        <div className="buttons">
-                                            <div className="pull-right"><input type="submit" value="Регистрация" className="btn btn-primary" /></div>
-                                            <p>Вече имате акаунт? Влезте {" "}<Link className="bold" to="/login">тук</Link>.</p>
-                                        </div>
-                                    </form>
-                                )}
-                            </Formik>
+                                        </form>
+                                    )}
+                                </Formik>
+                            )}
                         </div>
                     </div>
                 </div>

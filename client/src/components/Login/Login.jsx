@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import AuthContext from "../../contexts/AuthProvider";
@@ -8,7 +8,18 @@ export default function Login() {
     const location = useLocation();
     const { loginSubmitHandler, authError, clearAuthError } = useContext(AuthContext);
 
-    const { values, onChange, onSubmit } = useForm(loginSubmitHandler, {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { values, onChange, onSubmit } = useForm(async (data) => {
+        setIsLoading(true);
+        try {
+            await loginSubmitHandler(data);
+        } catch (error) {
+            console.error("Login error:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, {
         email: '',
         password: ''
     });
@@ -150,68 +161,71 @@ export default function Login() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Влизане в акаунт</h1>
-                            <div className="row">
-                                <div className="col-sm-6">
-                                    <div className="well">
-                                        <h2>Нов потребител</h2>
-                                        <p>
-                                            <strong>Регистрация на акаунт</strong>
-                                        </p>
-                                        <p className="form-group">
-                                            Създавайки акаунт, вие ще можете да пазарувате по-бързо, да сте в течение на статуса на поръчката и да следите поръчките, които сте направили преди това.
-                                        </p>
-                                        <Link to="/register" className="btn btn-primary">
-                                            Продължи към регистрация
-                                        </Link>
+                            {isLoading && (<div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>)}
+                            {!isLoading && (
+                                <div className="row">
+                                    <div className="col-sm-6">
+                                        <div className="well">
+                                            <h2>Нов потребител</h2>
+                                            <p>
+                                                <strong>Регистрация на акаунт</strong>
+                                            </p>
+                                            <p className="form-group">
+                                                Създавайки акаунт, вие ще можете да пазарувате по-бързо, да сте в течение на статуса на поръчката и да следите поръчките, които сте направили преди това.
+                                            </p>
+                                            <Link to="/register" className="btn btn-primary">
+                                                Продължи към регистрация
+                                            </Link>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="col-sm-6">
-                                    <div className="well">
-                                        <h2>Завръщащ се потребител</h2>
-                                        {authError && (
-                                            <div className="alert alert-danger" role="alert" style={{ textAlign: 'center' }}>
-                                                {authError}
-                                            </div>
-                                        )}
-                                        <Formik
-                                            onSubmit={onSubmit}
-                                        >
-                                            {({ isSubmitting }) => (
-                                                <form onSubmit={onSubmit}>
-                                                    <div className="form-group">
-                                                        <label className="control-label" htmlFor="email">E-mail</label>
-                                                        <input
-                                                            className="form-control"
-                                                            type="email"
-                                                            id="email"
-                                                            name="email"
-                                                            placeholder="E-mail"
-                                                            onChange={onChange}
-                                                            value={values.email}
-                                                        />
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label className="control-label" htmlFor="password">
-                                                            Парола
-                                                        </label>
-                                                        <input
-                                                            className="form-control mb-5"
-                                                            type="password"
-                                                            id="password"
-                                                            name="password"
-                                                            placeholder="Парола"
-                                                            onChange={onChange}
-                                                            value={values.password}
-                                                        />
-                                                        <Link className="forgotten-password" to="/forgotten-password">Забравена парола?</Link>
-                                                    </div>
-                                                    <input type="submit" value="Вход" className="btn btn-primary login-fr" disabled={isSubmitting} />
-                                                </form>
+                                    <div className="col-sm-6">
+                                        <div className="well">
+                                            <h2>Завръщащ се потребител</h2>
+                                            {authError && (
+                                                <div className="alert alert-danger" role="alert" style={{ textAlign: 'center' }}>
+                                                    {authError}
+                                                </div>
                                             )}
-                                        </Formik>
+                                            <Formik
+                                                onSubmit={onSubmit}
+                                            >
+                                                {({ isSubmitting }) => (
+                                                    <form onSubmit={onSubmit}>
+                                                        <div className="form-group">
+                                                            <label className="control-label" htmlFor="email">E-mail</label>
+                                                            <input
+                                                                className="form-control"
+                                                                type="email"
+                                                                id="email"
+                                                                name="email"
+                                                                placeholder="E-mail"
+                                                                onChange={onChange}
+                                                                value={values.email}
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label className="control-label" htmlFor="password">
+                                                                Парола
+                                                            </label>
+                                                            <input
+                                                                className="form-control mb-5"
+                                                                type="password"
+                                                                id="password"
+                                                                name="password"
+                                                                placeholder="Парола"
+                                                                onChange={onChange}
+                                                                value={values.password}
+                                                            />
+                                                            <Link className="forgotten-password" to="/forgotten-password">Забравена парола?</Link>
+                                                        </div>
+                                                        <input type="submit" value="Вход" className="btn btn-primary login-fr" disabled={isSubmitting || isLoading} />
+                                                    </form>
+                                                )}
+                                            </Formik>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
