@@ -20,6 +20,7 @@ export default function Catalog() {
     const [catalog, setCatalog] = useState([]);
     const [mostSold, setMostSold] = useState([]);
     const [productsCount, setProductsCount] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         return () => {
@@ -30,6 +31,7 @@ export default function Catalog() {
     }, []);
 
     useEffect(() => {
+        setIsLoading(true);
         Promise.all([
             clothesService.getCatalog(type, sort, size, page, categoryArray),
             clothesService.getMostSold(),
@@ -42,6 +44,9 @@ export default function Catalog() {
             })
             .catch((err) => {
                 console.error("Error fetching data:", err);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }, [location.search, type, sort, size, page, selectedCategories]);
 
@@ -400,316 +405,83 @@ export default function Catalog() {
                             </div>
                             <br />
                             <div className="row">
-                                {catalog.clothes && catalog.clothes.map(item => (
-                                    <div className="product-layout product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6" key={item.id}>
-                                        <div className="product-block product-thumb">
-                                            <div className="product-block-inner">
-                                                <div className="image">
-                                                    <Link to={`/clothing/details/${item.id}`}>
-                                                        <img
-                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_250,h_275${item.images.find(image => image.side === 'front')?.path}`}
-                                                            title={item.name}
-                                                            alt={item.name}
-                                                            className="img-responsive reg-image"
-                                                        />
-                                                        {item.type !== "KIT" && (
+                                {isLoading && <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
+                                {!isLoading && catalog.clothes && catalog.clothes.map(item => (
+                                        <div className="product-layout product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6" key={item.id}>
+                                            <div className="product-block product-thumb">
+                                                <div className="product-block-inner">
+                                                    <div className="image">
+                                                        <Link to={`/clothing/details/${item.id}`}>
                                                             <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'back')?.path}`}
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_250,h_275${item.images.find(image => image.side === 'front')?.path}`}
                                                                 title={item.name}
                                                                 alt={item.name}
-                                                                className="img-responsive hover-image"
+                                                                className="img-responsive reg-image"
                                                             />
-                                                        )}
-                                                        {item.type === "KIT" && (
-                                                            <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
-                                                                title={item.name}
-                                                                alt={item.name}
-                                                                className="img-responsive hover-image"
-                                                            />
-                                                        )}
-                                                    </Link>
-                                                    <div className="product_hover_block">
-                                                        <div className="action">
-                                                            <button
-                                                                type="button"
-                                                                className="cart_button"
-                                                                onClick={() => navigate(`/clothing/details/${item.id}`)}
-                                                                title="Add to Cart"
-                                                            >
-                                                                <i className="fa fa-shopping-cart" aria-hidden="true" />{" "}
-                                                            </button>
-                                                            <button
-                                                                className="wishlist"
-                                                                type="button"
-                                                                title="Add to Wish List "
-                                                            >
-                                                                <i className="fa fa-heart" />
-                                                            </button>
+                                                            {item.type !== "KIT" && (
+                                                                <img
+                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'back')?.path}`}
+                                                                    title={item.name}
+                                                                    alt={item.name}
+                                                                    className="img-responsive hover-image"
+                                                                />
+                                                            )}
+                                                            {item.type === "KIT" && (
+                                                                <img
+                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
+                                                                    title={item.name}
+                                                                    alt={item.name}
+                                                                    className="img-responsive hover-image"
+                                                                />
+                                                            )}
+                                                        </Link>
+                                                        <div className="product_hover_block">
+                                                            <div className="action">
+                                                                <button
+                                                                    type="button"
+                                                                    className="cart_button"
+                                                                    onClick={() => navigate(`/clothing/details/${item.id}`)}
+                                                                    title="Add to Cart"
+                                                                >
+                                                                    <i className="fa fa-shopping-cart" aria-hidden="true" />{" "}
+                                                                </button>
+                                                                <button
+                                                                    className="wishlist"
+                                                                    type="button"
+                                                                    title="Add to Wish List "
+                                                                >
+                                                                    <i className="fa fa-heart" />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="product-details grid">
+                                                        <div className="caption">
+                                                            <h4>
+                                                                <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                                    {item.name}
+                                                                </a>
+                                                            </h4>
+                                                            <p className="price">{item.price.toFixed(2)} лв.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="product-details list">
+                                                        <div className="caption">
+                                                            <h4>
+                                                                <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                                    {item.name}
+                                                                </a>
+                                                            </h4>
+                                                            <p className="desc">
+                                                                {item.description}
+                                                            </p>
+                                                            <p className="price">{item.price.toFixed(2)} лв.</p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="product-details grid">
-                                                    <div className="caption">
-                                                        <h4>
-                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
-                                                                {item.name}
-                                                            </a>
-                                                        </h4>
-                                                        <p className="price">{item.price.toFixed(2)} лв.</p>
-                                                    </div>
-                                                </div>
-                                                <div className="product-details list">
-                                                    <div className="caption">
-                                                        <h4>
-                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
-                                                                {item.name}
-                                                            </a>
-                                                        </h4>
-                                                        <p className="desc">
-                                                            {item.description}
-                                                        </p>
-                                                        <p className="price">{item.price.toFixed(2)} лв.</p>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
-                                {/* <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image outstock">
-                                                <a href="product/product&path=20&product_id=35">
-                                                    <img
-                                                        src="/images/2-264x380.jpg"
-                                                        title="black v neck cashmere sweater"
-                                                        alt="black v neck cashmere sweater"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/20-264x380.jpg"
-                                                        title="black v neck cashmere sweater"
-                                                        alt="black v neck cashmere sweater"
-                                                    />
-                                                </a>
-                                            </div>
-                                            <div className="status_stock">
-                                                Out of stock
-                                                <button
-                                                    className="wishlist_button"
-                                                    type="button"
-                                                    data-toggle="tooltip"
-                                                    title="Add to Wish List "
-                                                >
-                                                    <i className="fa fa-heart" />
-                                                </button>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=35">
-                                                            black v neck cashmere sweater
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">$122.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=35">
-                                                            black v neck cashmere sweater
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        Lorem Ipsum is simply dummy text of the printing and
-                                                        typesetting industry. Lorem Ipsum has been the industry's
-                                                        standard dummy text ever since the 1500s, when an unknown
-                                                        printer took a galley of type a..
-                                                    </p>
-                                                    <p className="price">$122.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product-layout product-list col-xs-12">
-                                    <div className="product-block product-thumb">
-                                        <div className="product-block-inner">
-                                            <div className="image">
-                                                <a href="product/product&path=20&product_id=42">
-                                                    <img
-                                                        src="/images/1-264x380.jpg"
-                                                        title="Hoodie for men"
-                                                        alt="Hoodie for men"
-                                                        className="img-responsive reg-image"
-                                                    />
-                                                    <img
-                                                        className="img-responsive hover-image"
-                                                        src="/images/14-264x380.jpg"
-                                                        title="Hoodie for men"
-                                                        alt="Hoodie for men"
-                                                    />
-                                                </a>
-                                                <div className="saleback">
-                                                    <div className="saleicon sale">10%</div>
-                                                </div>
-                                                <div className="product_hover_block">
-                                                    <div className="action">
-                                                        <button
-                                                            type="button"
-                                                            className="cart_button"
-                                                            title="Add to Cart"
-                                                        >
-                                                            <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
-                                                        </button>
-                                                        <div className="quickview-button">
-                                                            <a
-                                                                className="quickbox"
-                                                                title="Add To quickview"
-                                                                href="product/quick_view&path=20&product_id=42"
-                                                            >
-                                                                <i className="fa fa-eye" />
-                                                            </a>
-                                                        </div>
-                                                        <button
-                                                            className="wishlist"
-                                                            type="button"
-                                                            title="Add to Wish List "
-                                                        >
-                                                            <i className="fa fa-heart" />
-                                                        </button>
-                                                        <button
-                                                            className="compare_button"
-                                                            type="button"
-                                                            title="Add to compare "
-                                                        >
-                                                            <i className="fa fa-exchange" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="product-details grid">
-                                                <div className="caption">
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=42">
-                                                            Hoodie for men
-                                                        </a>
-                                                    </h4>
-                                                    <p className="price">
-                                                        <span className="price-new">$110.00</span>{" "}
-                                                        <span className="price-old">$122.00</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="product-details list">
-                                                <div className="caption">
-                                                    <h4>
-                                                        <a href="product/product&path=20&product_id=42">
-                                                            Hoodie for men
-                                                        </a>
-                                                    </h4>
-                                                    <div className="rating">
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star fa-stack-2x" />
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                        <span className="fa fa-stack">
-                                                            <i className="fa fa-star-o fa-stack-2x" />
-                                                        </span>
-                                                    </div>
-                                                    <p className="desc">
-                                                        The 30-inch Apple Cinema HD Display delivers an amazing
-                                                        2560 x 1600 pixel resolution. Designed specifically for
-                                                        the creative professional, this display provides more
-                                                        space for easier access to all the..
-                                                    </p>
-                                                    <p className="price">
-                                                        <span className="price-new">$110.00</span>{" "}
-                                                        <span className="price-old">$122.00</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                                    ))}
                             </div>
                             <div className="pagination-wrapper">
                                 <div className="col-sm-6 text-left page-link">
