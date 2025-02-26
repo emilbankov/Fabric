@@ -181,7 +181,7 @@ export default function AddClothing() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Добавяне на продукт</h1>
-                            {isLoading && <div style={{ margin: '50% auto 0 auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
+                            {isLoading && <div style={{ margin: '30% auto 0 auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
                             {!isLoading && (
                                 <Formik
                                     initialValues={{
