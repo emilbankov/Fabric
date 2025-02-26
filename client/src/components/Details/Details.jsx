@@ -446,7 +446,7 @@ export default function Details() {
                                                     <li className="phone"><i className="fas fa-phone"></i>{" "}&nbsp;За бърза поръчка: <a href="tel:+359898739178">+359 898 739 178</a> (08-17ч.)</li>
                                                     <li className="rewardpoint"><i className="fas fa-shipping-fast"></i> Безплатна доставка над 100 лв.</li>
                                                     <li className="phone" style={{ display: 'flex', alignItems: 'center' }}>
-                                                        <i class="fa-solid fa-shirt"></i> &nbsp;
+                                                        <i className="fa-solid fa-shirt"></i> &nbsp;
                                                         <p style={{ margin: '0' }}>За персонализиран дизайн позвънете (+5.00 лв.) [лого, надпис или картинка]</p>
                                                     </li>
                                                 </ul>

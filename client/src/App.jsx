@@ -4,6 +4,7 @@ import { CartProvider } from "./contexts/CartProvider";
 import { AuthProvider } from "./contexts/AuthProvider";
 import AuthGuard from "./guards/AuthGuard";
 import GuestGuard from "./guards/GuestGuard";
+import ErrorBoundary from "./guards/ErrorBoundary";
 
 import Header from "./components/Header/Header";
 import ScrollToTop from "./components/Scroll To Top/ScrollToTop";
@@ -32,45 +33,48 @@ function App() {
     const location = useLocation();
 
     return (
-        <CartProvider>
-            <AuthProvider>
-                <Header />
+        <ErrorBoundary>
+            <CartProvider>
+                <AuthProvider>
+                    <Header />
 
-                <ScrollToTop />
+                    <ScrollToTop />
 
-                <Routes location={location} key={location.pathname}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/catalog" element={<Catalog />} />
-                    <Route path="/clothing/details/:clothingId" element={<Details />} />
-                    <Route path="/view-cart" element={<ViewCart />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/search-results" element={<SearchResults />} />
-                    <Route path="/orders-history" element={<OrdersHistory />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/blogs" element={<Blogs />} />
+                    <Routes location={location} key={location.pathname}>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/catalog" element={<Catalog />} />
+                        <Route path="/clothing/details/:clothingId" element={<Details />} />
+                        <Route path="/view-cart" element={<ViewCart />} />
+                        <Route path="/checkout" element={<Checkout />} />
+                        <Route path="/search-results" element={<SearchResults />} />
+                        <Route path="/orders-history" element={<OrdersHistory />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/blogs" element={<Blogs />} />
 
-                    <Route element={<GuestGuard />}>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/forgotten-password" element={<ForgottenPassword />} />
-                        <Route path="/reset-password" element={<ResetPassword />} />
-                    </Route>
+                        <Route element={<GuestGuard />}>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/forgotten-password" element={<ForgottenPassword />} />
+                            <Route path="/reset-password" element={<ResetPassword />} />
+                        </Route>
 
-                    <Route element={<AuthGuard />}>
-                        <Route path="/account" element={<Account />} />
-                        <Route path="/add-clothing" element={<AddClothing />} />
-                        <Route path="/clothing/edit/:clothingId" element={<EditClothing />} />
-                        <Route path="/logout" element={<Logout />} />
-                    </Route>
+                        <Route element={<AuthGuard />}>
+                            <Route path="/account" element={<Account />} />
+                            <Route path="/add-clothing" element={<AddClothing />} />
+                            <Route path="/clothing/edit/:clothingId" element={<EditClothing />} />
+                            <Route path="/logout" element={<Logout />} />
+                        </Route>
 
-                    <Route path="/404" element={<Navigate to="*" replace />} />
-                    <Route path="*" element={<Error404 />} />
-                </Routes>
+                        <Route path="/404" element={<Navigate to="*" replace />} />
+                        <Route path="*" element={<Error404 />} />
+                    </Routes>
 
-                <Footer />
-            </AuthProvider>
-        </CartProvider>
+                    <Footer />
+                </AuthProvider>
+            </CartProvider>
+        </ErrorBoundary>
+
     );
 }
 

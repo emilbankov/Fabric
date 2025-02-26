@@ -22,6 +22,9 @@ export default function Header() {
     useEffect(() => {
         $(".box-content-category").hide();
         $(".box-category-top").removeClass("active");
+
+        $(".main-navigation").hide();
+        $(".expandable").removeClass("active");
     }, [location.pathname, location.search]);
 
     useEffect(() => {
@@ -140,7 +143,7 @@ export default function Header() {
                                                 className="main-menu nav-container1 responsive-menu"
                                             >
                                                 <div className="nav-responsive">
-                                                    <span>Menu</span>
+                                                    <span>Меню</span>
                                                     <div className="expandable" />
                                                 </div>
                                                 <ul className="main-navigation">

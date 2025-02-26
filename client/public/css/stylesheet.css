@@ -270,16 +270,16 @@ input[type="color"].form-control {
 	width: auto;
 }
 
-	.nav_right a,
-	.nav_right a:hover,
-	.nav_right a:focus,
-	.nav_right a:active {
-		color: #bfbfbf;
-	}
+.nav_right a,
+.nav_right a:hover,
+.nav_right a:focus,
+.nav_right a:active {
+	color: #bfbfbf;
+}
 
-	.nav_right a:hover {
-		color: #fff;
-	}
+.nav_right a:hover {
+	color: #fff;
+}
 
 .nav_right .account {
 	float: left;
@@ -24786,4 +24786,230 @@ div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-de
 #content div.table-responsive table.table-bordered thead tr td,
 #content div.table-responsive table.table-bordered tbody tr td {
 	vertical-align: middle !important;
+}
+
+.error-boundary {
+	text-align: center;
+	padding: 2rem;
+	margin: 0;
+	width: 1200px;
+	max-width: 90%;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.error-boundary h1 {
+	color: #dc3545;
+	margin-bottom: 1rem;
+	font-size: 2.5rem;
+}
+
+.error-boundary p {
+	color: #666;
+	margin-bottom: 1.5rem;
+	font-size: 1.2rem;
+	line-height: 1.6;
+}
+
+.error-boundary button {
+	padding: 0.8rem 1.5rem;
+	font-size: 1.1rem;
+}
+
+.error-boundary details {
+	text-align: left;
+	background: #f8f9fa;
+	padding: 1.5rem;
+	border-radius: 4px;
+	margin-top: 1.5rem;
+	font-size: 1.5rem;
+}
+
+@media (min-width: 2560px) {
+	.error-boundary {
+		width: 1800px;
+		padding: 3rem;
+	}
+
+	.error-boundary h1 {
+		font-size: 3.5rem;
+	}
+
+	.error-boundary p {
+		font-size: 1.8rem;
+	}
+
+	.error-boundary button {
+		padding: 1rem 2rem;
+		font-size: 1.5rem;
+	}
+}
+
+@media (max-width: 1920px) {
+	.error-boundary {
+		width: 800px;
+	}
+
+	.error-boundary h1 {
+		font-size: 2.8rem;
+	}
+
+	.error-boundary p {
+		font-size: 1.4rem;
+	}
+}
+
+@media (max-width: 1440px) {
+	.error-boundary {
+		width: 700px;
+	}
+
+	.error-boundary h1 {
+		font-size: 2.5rem;
+	}
+
+	.error-boundary p {
+		font-size: 1.2rem;
+	}
+}
+
+@media (max-width: 1366px) {
+	.error-boundary {
+		width: 	600px;
+	}
+
+	.error-boundary h1 {
+		font-size: 2.2rem;
+	}
+
+	.error-boundary p {
+		font-size: 1.1rem;
+	}
+}
+
+@media (max-width: 1024px) {
+	.error-boundary {
+		width: 500px;
+		padding: 1.8rem;
+	}
+
+	.error-boundary h1 {
+		font-size: 2rem;
+	}
+
+	.error-boundary p {
+		font-size: 1rem;
+	}
+
+	.error-boundary button {
+		padding: 0.7rem 1.3rem;
+		font-size: 1rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.error-boundary {
+		width: 400px;
+		padding: 1.5rem;
+	}
+
+	.error-boundary h1 {
+		font-size: 1.8rem;
+	}
+
+	.error-boundary p {
+		font-size: 0.95rem;
+	}
+
+	.error-boundary details {
+		padding: 1rem;
+		font-size: 0.85rem;
+	}
+}
+
+@media (max-width: 576px) {
+	.error-boundary {
+		width: 95%;
+		padding: 1.2rem;
+	}
+
+	.error-boundary h1 {
+		font-size: 1.5rem;
+	}
+
+	.error-boundary p {
+		font-size: 0.9rem;
+	}
+
+	.error-boundary button {
+		padding: 0.6rem 1.2rem;
+		font-size: 0.9rem;
+	}
+}
+
+@media (max-width: 375px) {
+	.error-boundary {
+		width: 95%;
+		padding: 1rem;
+	}
+
+	.error-boundary h1 {
+		font-size: 1.3rem;
+	}
+
+	.error-boundary p {
+		font-size: 0.85rem;
+		margin-bottom: 1rem;
+	}
+
+	.error-boundary button {
+		padding: 0.5rem 1rem;
+		font-size: 0.85rem;
+	}
+
+	.error-boundary details {
+		padding: 0.8rem;
+		font-size: 0.8rem;
+	}
+}
+
+@media (max-width: 320px) {
+	.error-boundary {
+		padding: 0.8rem;
+	}
+
+	.error-boundary h1 {
+		font-size: 1.2rem;
+	}
+
+	.error-boundary p {
+		font-size: 0.8rem;
+	}
+
+	.error-boundary button {
+		padding: 0.4rem 0.8rem;
+		font-size: 0.8rem;
+	}
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+	.error-boundary {
+		padding: 1rem;
+		max-height: 90vh;
+		overflow-y: auto;
+	}
+
+	.error-boundary h1 {
+		margin-bottom: 0.5rem;
+	}
+
+	.error-boundary p {
+		margin-bottom: 1rem;
+	}
 }
