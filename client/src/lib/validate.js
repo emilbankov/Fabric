@@ -69,16 +69,6 @@ export const editClothingValidationSchema = Yup.object({
     model: Yup.string()
         .matches(/^\d{4}$/, 'Моделът трябва да бъде точно 4 цифри')
         .required('Задължително поле'),
-    frontImage: Yup.mixed()
-        .test('frontImage', 'Задължително е да качите снимка отпред', function (value) {
-            return value instanceof File || this.parent.images?.some(img => img.side === 'front');
-        }),
-    backImage: Yup.mixed()
-        .test('backImage', 'Задължително е да качите снимка отзад', function (value) {
-            return this.parent.type === 'KIT' ||
-                value instanceof File ||
-                this.parent.images?.some(img => img.side === 'back');
-        }),
 });
 
 export const deliverySchema = Yup.object().shape({
