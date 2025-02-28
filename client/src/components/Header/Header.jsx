@@ -126,8 +126,6 @@ export default function Header() {
                                 <div className="box-category-top"><div className="box-heading">Пазарувай по категории</div></div>
                                 <div className="box-content-category">
                                     <ul id="nav-one" className="dropmenu box-category">
-                                        <li className="top_level"><Link to="/catalog?sort=new&size=20">Най-нови</Link></li>
-                                        <li className="top_level"><Link to="/catalog?sort=most-sold&size=20">Най-продавани</Link></li>
                                         <li className="top_level"><Link to="/catalog?type=t_shirt&sort=new&size=20">Тениски</Link></li>
                                         <li className="top_level"><Link to="/catalog?type=long_t_shirt&sort=new&size=20">Блузи</Link></li>
                                         <li className="top_level"><Link to="/catalog?type=sweatshirt&sort=new&size=20">Суитчъри</Link></li>
@@ -150,8 +148,6 @@ export default function Header() {
                                                     <li className="top_level"><Link to="/">Начало</Link></li>
                                                     <li className="top_level"><Link to="/contact">Контакти</Link></li>
                                                     <li className="top_level"><Link to="/blogs">Блог</Link></li>
-                                                    <li className="top_level"><Link to="/catalog?sort=new&size=20">Най-нови</Link></li>
-                                                    <li className="top_level"><Link to="/catalog?sort=most-sold&size=20">Най-продавани</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=t_shirt&sort=new&size=20">Тениски</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=long_t_shirt&sort=new&size=20">Блузи</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=sweatshirt&sort=new&size=20">Суитчъри</Link></li>
@@ -165,12 +161,6 @@ export default function Header() {
                                                 <ul id="static-menu">
                                                     <li>
                                                         <Link to="/">Начало</Link>
-                                                    </li>
-                                                    <li className="new menu-item">
-                                                        <Link to="/catalog?sort=new&size=20">Нова колекция</Link>
-                                                    </li>
-                                                    <li className="hot menu-item">
-                                                        <Link to="/catalog?sort=most-sold&size=20">Специални</Link>
                                                     </li>
                                                     <li>
                                                         <Link to="/contact">Контакти</Link>

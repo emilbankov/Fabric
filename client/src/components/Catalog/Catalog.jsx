@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
 import { categories, filters } from "../../lib/dictionary";
+import './Catalog.css';
 
 export default function Catalog() {
     const location = useLocation();
@@ -49,12 +50,7 @@ export default function Catalog() {
                 setIsLoading(false);
             });
     }, [location.search, type, sort, size, page, selectedCategories]);
-
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        const categoryParam = queryParams.get("category") || "";
-        setCheckedCategories(categoryParam ? categoryParam.split(",") : []);
-    }, [location.search]);
+console.log(catalog);
 
     const handleSortChange = (e) => {
         const newSort = e.target.value;
@@ -76,24 +72,22 @@ export default function Catalog() {
         navigate(`${location.pathname}?${params.toString()}`);
     };
 
-    const handleCategoryChange = (categoryId) => {
-        setCheckedCategories((prevCheckedCategories) => {
-            if (prevCheckedCategories.includes(categoryId)) {
-                return prevCheckedCategories.filter((id) => id !== categoryId);
-            } else {
-                return [...prevCheckedCategories, categoryId];
-            }
-        });
-    };
-
-    const applyFilter = () => {
+    const handleCategoryClick = (categoryId) => {
         const params = new URLSearchParams(location.search);
-        if (checkedCategories.length > 0) {
-            params.set("category", checkedCategories.join(","));
-            console.log("Selected categories:", checkedCategories);
+        const currentCategories = params.get("category") ? params.get("category").split(",") : [];
+        
+        // Toggle the category
+        const newCategories = currentCategories.includes(categoryId)
+            ? currentCategories.filter(id => id !== categoryId) // Remove if already selected
+            : [...currentCategories, categoryId]; // Add if not selected
+
+        // Update URL parameters
+        if (newCategories.length > 0) {
+            params.set("category", newCategories.join(","));
         } else {
             params.delete("category");
         }
+        params.set("page", "1"); // Reset to first page when changing filters
         navigate(`${location.pathname}?${params.toString()}`);
     };
 
@@ -186,53 +180,6 @@ export default function Catalog() {
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
-                            <div className="box">
-                                <div className="box-heading">Филтрирано търсене</div>
-                                <div className="list-group">
-                                    <a className="list-group-item heading">Категории</a>
-                                    <div className="list-group-item">
-                                        <div id="filter-group1">
-                                            {categories.map((category) => (
-                                                <div className="checkbox" key={category.id}>
-                                                    <label>
-                                                        <input
-                                                            type="checkbox"
-                                                            name="filter[]"
-                                                            value={category.id}
-                                                            checked={checkedCategories.includes(
-                                                                category.id.toString()
-                                                            )}
-                                                            onChange={() =>
-                                                                handleCategoryChange(category.id.toString())
-                                                            }
-                                                        />
-                                                        {category.name} ({productsCount[category.id] || 0})
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="panel-footer text-right">
-                                        {checkedCategories.length !== 0 && (
-                                            <button
-                                                type="button"
-                                                className="btn btn-danger btn-lg btn-block"
-                                                onClick={resetFilters}
-                                            >
-                                                Изчисти филтри
-                                            </button>
-                                        )}
-                                        <button
-                                            type="button"
-                                            id="button-filter"
-                                            className="btn btn-primary"
-                                            onClick={applyFilter}
-                                        >
-                                            Филтрирай
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                             <meta
                                 httpEquiv="Content-Type"
                                 content="text/html; charset=iso-8859-1"
@@ -272,7 +219,6 @@ export default function Catalog() {
                                                                             alt="tote bags for women"
                                                                             className="img-responsive reg-image"
                                                                         />
-
                                                                         {item.type !== "KIT" && (
                                                                             <img
                                                                                 src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'back')?.path}`}
@@ -281,7 +227,6 @@ export default function Catalog() {
                                                                                 className="img-responsive hover-image"
                                                                             />
                                                                         )}
-
                                                                         {item.type === "KIT" && (
                                                                             <img
                                                                                 src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
@@ -310,7 +255,7 @@ export default function Catalog() {
                                                                                 title="Add to Cart"
                                                                             >
                                                                                 <i
-                                                                                    className="fa fa-shopping-cart"
+                                                                                    className="极fa fa-shopping-cart"
                                                                                     area-hidden="true"
                                                                                 />
                                                                             </button>
@@ -342,6 +287,48 @@ export default function Catalog() {
                                     />
                                 </div>
                             </div>
+
+                            <div className="row category-icons-filter">
+                                {categories.map((category) => {
+                                    const isActive = new URLSearchParams(location.search)
+                                        .get("category")
+                                        ?.split(",")
+                                        .includes(category.id.toString());
+
+                                    return (
+                                        <div 
+                                            className="col-sm-2 col-xs-4 category-icon" 
+                                            key={category.id}
+                                            onClick={() => handleCategoryClick(category.id.toString())}
+                                        >
+                                            <div className={`icon-wrapper ${isActive ? 'active' : ''}`}>
+                                                <img 
+                                                    src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category.id}.jpg`} 
+                                                    alt={category.name}
+                                                    className="img-responsive"
+                                                />
+                                                <span>
+                                                    {window.innerWidth <= 767 && category.name.length > 7
+                                                        ? `${category.name.substring(0, 7)}..`
+                                                        : category.name}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                                {new URLSearchParams(location.search).get("category") && (
+                                    <div 
+                                        className="col-sm-2 col-xs-4 category-icon" 
+                                        onClick={resetFilters}
+                                    >
+                                        <div className="icon-wrapper reset-filter">
+                                            <div className="x-sign">×</div>
+                                            <span>Изчисти филтри</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
                             <div className="category_filter">
                                 <div className="col-md-4 btn-list-grid">
                                     <div className="btn-group">

@@ -43,7 +43,7 @@ export default function Error404() {
 
                             <div className="button-container">
                                 <Link to={-1} className="button button-secondary">Назад</Link>
-                                <Link to="/catalog?sort=new&size=20" className="button button-primary">Разгледайте колекцията</Link>
+                                <Link to="/" className="button button-primary">Разгледайте сайта</Link>
                             </div>
                         </div>
                     </div>

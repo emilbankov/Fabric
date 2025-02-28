@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
                 payload.backImage
             );
 
-            navigate("/catalog?sort=new&size=20");
+            navigate("/");
         } catch (error) {
             console.error(error);
         }
