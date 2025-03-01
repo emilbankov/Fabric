@@ -1318,6 +1318,25 @@ export default function Checkout() {
                                                                 {(item.price * item.quantity).toFixed(2)} лв.
                                                             </td>
                                                         </tr>
+                                                        <tr>
+                                                            <td className="text-center">Доставка</td>
+                                                            <td className="text-center">
+                                                                {cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
+                                                                    ? "Безплатна"
+                                                                    : (deliveryType === 'address' ? "9.00 лв." : "6.90 лв.")}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td className="text-center">Крайна сума</td>
+                                                            <td className="text-center">
+                                                                {(cart.reduce((total, item) => total + (item.price * item.quantity), 0) +
+                                                                    (cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
+                                                                        ? 0
+                                                                        : (deliveryType === 'address' ? 9.00 : 6.90)
+                                                                    )).toFixed(2)} лв.
+
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             ))}
