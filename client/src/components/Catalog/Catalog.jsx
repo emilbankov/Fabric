@@ -22,6 +22,7 @@ export default function Catalog() {
     const [mostSold, setMostSold] = useState([]);
     const [productsCount, setProductsCount] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [showFilters, setShowFilters] = useState(true);
 
     useEffect(() => {
         return () => {
@@ -50,7 +51,12 @@ export default function Catalog() {
                 setIsLoading(false);
             });
     }, [location.search, type, sort, size, page, selectedCategories]);
-console.log(catalog);
+
+    useEffect(() => {
+        // Check if there are any active categories in the URL
+        const hasActiveCategories = new URLSearchParams(location.search).get("category");
+        setShowFilters(!hasActiveCategories);
+    }, [location.search]);
 
     const handleSortChange = (e) => {
         const newSort = e.target.value;
@@ -277,57 +283,51 @@ console.log(catalog);
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h2 className="page-title">{type ? filters[type] : filters[sort]}</h2>
-                            <div className="row category_thumb">
-                                <div className="col-sm-2 category_img">
-                                    <img
-                                        src="/images/category-baner-1098x200.jpg"
-                                        alt="Men"
-                                        title="Men"
-                                        className="img-thumbnail"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="row category-icons-filter">
-                                {categories.map((category) => {
-                                    const isActive = new URLSearchParams(location.search)
-                                        .get("category")
-                                        ?.split(",")
-                                        .includes(category.id.toString());
-
-                                    return (
-                                        <div 
-                                            className="col-sm-2 col-xs-4 category-icon" 
-                                            key={category.id}
-                                            onClick={() => handleCategoryClick(category.id.toString())}
-                                        >
-                                            <div className={`icon-wrapper ${isActive ? 'active' : ''}`}>
-                                                <img 
-                                                    src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category.id}.jpg`} 
-                                                    alt={category.name}
-                                                    className="img-responsive"
-                                                />
-                                                <span>
-                                                    {window.innerWidth <= 767 && category.name.length > 7
-                                                        ? `${category.name.substring(0, 7)}..`
-                                                        : category.name}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                                {new URLSearchParams(location.search).get("category") && (
-                                    <div 
-                                        className="col-sm-2 col-xs-4 category-icon" 
-                                        onClick={resetFilters}
-                                    >
-                                        <div className="icon-wrapper reset-filter">
-                                            <div className="x-sign">×</div>
-                                            <span>Изчисти филтри</span>
+                            
+                            {showFilters && (
+                                <>
+                                    <div className="row category_thumb">
+                                        <div className="col-sm-2 category_img">
+                                            <img
+                                                src="/images/category-baner-1098x200.jpg"
+                                                alt="Men"
+                                                title="Men"
+                                                className="img-thumbnail"
+                                            />
                                         </div>
                                     </div>
-                                )}
-                            </div>
+
+                                    <div className="row category-icons-filter">
+                                        {categories.map((category) => {
+                                            const isActive = new URLSearchParams(location.search)
+                                                .get("category")
+                                                ?.split(",")
+                                                .includes(category.id.toString());
+
+                                            return (
+                                                <div 
+                                                    className="col-sm-2 col-xs-4 category-icon" 
+                                                    key={category.id}
+                                                    onClick={() => handleCategoryClick(category.id.toString())}
+                                                >
+                                                    <div className={`icon-wrapper ${isActive ? 'active' : ''}`}>
+                                                        <img 
+                                                            src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category.id}.jpg`} 
+                                                            alt={category.name}
+                                                            className="img-responsive"
+                                                        />
+                                                        <span>
+                                                            {window.innerWidth <= 767 && category.name.length > 7
+                                                                ? `${category.name.substring(0, 7)}..`
+                                                                : category.name}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </>
+                            )}
 
                             <div className="category_filter">
                                 <div className="col-md-4 btn-list-grid">
