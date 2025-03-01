@@ -43,7 +43,7 @@ export const addClothingValidationSchema = Yup.object({
         .notOneOf([''], 'Моля изберете категория')
         .required('Задължително поле'),
     model: Yup.string()
-        .matches(/^\d{4}$/, 'Моделът трябва да бъде точно 4 цифри')
+        .matches(/^\d{3}$/, 'Моделът трябва да бъде точно 3 цифри')
         .required('Задължително поле'),
     frontImage: Yup.mixed()
         .required('Задължително е да качите снимка отпред'),

@@ -53,10 +53,6 @@ export default function EditClothing() {
             });
     }, [clothingId]);
 
-    const asd = clothing.model.substring(0, 4);
-
-    console.log(asd);
-
     const editHandler = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -476,7 +472,7 @@ export default function EditClothing() {
                                                         placeholder="Модел"
                                                         onChange={handleChange}
                                                         value={clothing.model.slice(0, 4)}
-                                                        maxLength="4"
+                                                        maxLength="3"
                                                     />
                                                 </div>
                                                 {errors.model && (

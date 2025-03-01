@@ -332,7 +332,7 @@ export default function AddClothing() {
                                                                 placeholder="Модел"
                                                                 onChange={handleChange}
                                                                 value={values.model}
-                                                                maxLength="4"
+                                                                maxLength="3"
                                                             />
                                                         </div>
                                                         {errors.model && touched.model && (

@@ -21847,6 +21847,9 @@ h3 .fa {
 		float: left;
 		margin: 10px 0 10px 0;
 		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 
 	.category_thumb .category_img {
@@ -23486,7 +23489,6 @@ h3 .fa {
 
 	.sort-by-wrapper,
 	.show-wrapper {
-		width: 100%;
 		margin: 2px 0;
 	}
 
@@ -23516,10 +23518,6 @@ h3 .fa {
 	.nav-inner.container {
 		float: left;
 		margin: 0 auto 20px;
-	}
-
-	.category_filter .show {
-		margin: 8px 22px 0 0px
 	}
 
 	.col-sm-3.header-cart {
