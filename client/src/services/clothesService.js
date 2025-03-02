@@ -57,3 +57,7 @@ export const deleteProduct = (clothingId) => {
 
     return result;
 };
+
+export const getPrice = async () => await get(`${baseUrl}/prices`);
+export const getDiscountPrice = async () => await get(`${baseUrl}/prices-discount`);
+export const changePrice = async (type, price, discountPrice) => await put(`${baseUrl}/prices-discount?type=${type}`, { price, discountPrice });
