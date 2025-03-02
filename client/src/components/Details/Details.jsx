@@ -445,7 +445,10 @@ export default function Details() {
                                                     </table>
                                                 </div>
                                                 <ul className="list-unstyled">
-                                                    <li><h4>Цена: {calculatePrice()} лв.</h4></li>
+                                                    <li>
+                                                        <h4 className="special-price">Цена: {calculatePrice()} лв.</h4>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                                        <span className="price-old" style={{ textDecoration: 'line-through', fontSize: '18px' }}>{(parseFloat(calculatePrice()) + 5).toFixed(2)} лв.</span>
+                                                        </li>
                                                     <li className="phone"><i className="fas fa-phone"></i>{" "}&nbsp;За бърза поръчка: <a style={{ color: 'black', fontWeight: 'bold', textDecoration: 'underline' }} href="tel:+359898739178">+359 898 739 178</a> (08-17ч.)</li>
                                                     <li className="rewardpoint"><i className="fas fa-shipping-fast"></i> Безплатна доставка над 100 лв.</li>
                                                     <li className="phone" style={{ display: 'flex', alignItems: 'center' }}>

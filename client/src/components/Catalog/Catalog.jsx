@@ -81,7 +81,7 @@ export default function Catalog() {
     const handleCategoryClick = (categoryId) => {
         const params = new URLSearchParams(location.search);
         const currentCategories = params.get("category") ? params.get("category").split(",") : [];
-        
+
         // Toggle the category
         const newCategories = currentCategories.includes(categoryId)
             ? currentCategories.filter(id => id !== categoryId) // Remove if already selected
@@ -283,7 +283,7 @@ export default function Catalog() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h2 className="page-title">{type ? filters[type] : filters[sort]}</h2>
-                            
+
                             {showFilters && (
                                 <>
                                     <div className="row category_thumb">
@@ -305,14 +305,14 @@ export default function Catalog() {
                                                 .includes(category.id.toString());
 
                                             return (
-                                                <div 
-                                                    className="col-sm-2 col-xs-4 category-icon" 
+                                                <div
+                                                    className="col-sm-2 col-xs-4 category-icon"
                                                     key={category.id}
                                                     onClick={() => handleCategoryClick(category.id.toString())}
                                                 >
                                                     <div className={`icon-wrapper ${isActive ? 'active' : ''}`}>
-                                                        <img 
-                                                            src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category.id}.jpg`} 
+                                                        <img
+                                                            src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category.id}.jpg`}
                                                             alt={category.name}
                                                             className="img-responsive"
                                                         />
@@ -394,81 +394,85 @@ export default function Catalog() {
                             <div className="row">
                                 {isLoading && <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
                                 {!isLoading && catalog.clothes && catalog.clothes.map(item => (
-                                        <div className="product-layout product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6" key={item.id}>
-                                            <div className="product-block product-thumb">
-                                                <div className="product-block-inner">
-                                                    <div className="image">
-                                                        <Link to={`/clothing/details/${item.id}`}>
+                                    <div className="product-layout product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6" key={item.id}>
+                                        <div className="product-block product-thumb">
+                                            <div className="product-block-inner">
+                                                <div className="image">
+                                                    <Link to={`/clothing/details/${item.id}`}>
+                                                        <img
+                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_250,h_275${item.images.find(image => image.side === 'front')?.path}`}
+                                                            title={item.name}
+                                                            alt={item.name}
+                                                            className="img-responsive reg-image"
+                                                        />
+                                                        {item.type !== "KIT" && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_250,h_275${item.images.find(image => image.side === 'front')?.path}`}
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'back')?.path}`}
                                                                 title={item.name}
                                                                 alt={item.name}
-                                                                className="img-responsive reg-image"
+                                                                className="img-responsive hover-image"
                                                             />
-                                                            {item.type !== "KIT" && (
-                                                                <img
-                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'back')?.path}`}
-                                                                    title={item.name}
-                                                                    alt={item.name}
-                                                                    className="img-responsive hover-image"
-                                                                />
-                                                            )}
-                                                            {item.type === "KIT" && (
-                                                                <img
-                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
-                                                                    title={item.name}
-                                                                    alt={item.name}
-                                                                    className="img-responsive hover-image"
-                                                                />
-                                                            )}
-                                                        </Link>
-                                                        <div className="product_hover_block">
-                                                            <div className="action">
-                                                                <button
-                                                                    type="button"
-                                                                    className="cart_button"
-                                                                    onClick={() => navigate(`/clothing/details/${item.id}`)}
-                                                                    title="Add to Cart"
-                                                                >
-                                                                    <i className="fa fa-shopping-cart" aria-hidden="true" />{" "}
-                                                                </button>
-                                                                <button
-                                                                    className="wishlist"
-                                                                    type="button"
-                                                                    title="Add to Wish List "
-                                                                >
-                                                                    <i className="fa fa-heart" />
-                                                                </button>
-                                                            </div>
+                                                        )}
+                                                        {item.type === "KIT" && (
+                                                            <img
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
+                                                                title={item.name}
+                                                                alt={item.name}
+                                                                className="img-responsive hover-image"
+                                                            />
+                                                        )}
+                                                    </Link>
+                                                    <div class="saleback"><div class="saleicon sale">{(((item.price + 5) - item.price) / (item.price + 5) * 100).toFixed(1)}%</div></div>
+                                                    <div className="product_hover_block">
+                                                        <div className="action">
+                                                            <button
+                                                                type="button"
+                                                                className="cart_button"
+                                                                onClick={() => navigate(`/clothing/details/${item.id}`)}
+                                                                title="Add to Cart"
+                                                            >
+                                                                <i className="fa fa-shopping-cart" aria-hidden="true" />{" "}
+                                                            </button>
+                                                            <button
+                                                                className="wishlist"
+                                                                type="button"
+                                                                title="Add to Wish List "
+                                                            >
+                                                                <i className="fa fa-heart" />
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                    <div className="product-details grid">
-                                                        <div className="caption">
-                                                            <h4>
-                                                                <a href={`product/product&path=20&product_id=${item.id}`}>
-                                                                    {item.name}
-                                                                </a>
-                                                            </h4>
-                                                            <p className="price">{item.price.toFixed(2)} лв.</p>
-                                                        </div>
+                                                </div>
+                                                <div className="product-details grid">
+                                                    <div className="caption">
+                                                        <h4>
+                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                                {item.name}
+                                                            </a>
+                                                        </h4>
+                                                        <p className="price">
+                                                            <span class="price-new">{item.price.toFixed(2)} лв.</span>
+                                                            <span class="price-old">{(item.price + 5).toFixed(2)} лв.</span>
+                                                        </p>
                                                     </div>
-                                                    <div className="product-details list">
-                                                        <div className="caption">
-                                                            <h4>
-                                                                <a href={`product/product&path=20&product_id=${item.id}`}>
-                                                                    {item.name}
-                                                                </a>
-                                                            </h4>
-                                                            <p className="desc">
-                                                                {item.description}
-                                                            </p>
-                                                            <p className="price">{item.price.toFixed(2)} лв.</p>
-                                                        </div>
+                                                </div>
+                                                <div className="product-details list">
+                                                    <div className="caption">
+                                                        <h4>
+                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                                {item.name}
+                                                            </a>
+                                                        </h4>
+                                                        <p className="desc">
+                                                            {item.description}
+                                                        </p>
+                                                        <p className="price">{item.price.toFixed(2)} лв.</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    ))}
+                                    </div>
+                                ))}
                             </div>
                             <div className="pagination-wrapper">
                                 <div className="col-sm-6 text-left page-link">
