@@ -14,6 +14,7 @@ import Details from "./components/Details/Details";
 import ViewCart from "./components/View Cart/ViewCart";
 import Checkout from "./components/Checkout/Checkout";
 import AddClothing from "./components/Add Clothing/AddClothing";
+import Prices from "./components/Prices/Prices";
 import EditClothing from "./components/Edit Clothing/EditClothing";
 import SearchResults from "./components/Search Results/SearchResults";
 import OrdersHistory from "./components/Orders History/OrdersHistory";
@@ -28,7 +29,6 @@ import ResetPassword from "./components/Reset Password/ResetPassword";
 import Error404 from "./components/404/404";
 import Logout from "./components/Logout/Logout";
 import Footer from "./components/Footer/Footer";
-
 function App() {
     const location = useLocation();
 
@@ -48,6 +48,7 @@ function App() {
                         <Route path="/checkout" element={<Checkout />} />
                         <Route path="/search-results" element={<SearchResults />} />
                         <Route path="/orders-history" element={<OrdersHistory />} />
+                        <Route path="/prices" element={<Prices />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/blogs" element={<Blogs />} />
