@@ -51,9 +51,9 @@ export default function Catalog() {
                 setIsLoading(false);
             });
     }, [location.search, type, sort, size, page, selectedCategories]);
+console.log(catalog);
 
     useEffect(() => {
-        // Check if there are any active categories in the URL
         const hasActiveCategories = new URLSearchParams(location.search).get("category");
         setShowFilters(!hasActiveCategories);
     }, [location.search]);
@@ -298,7 +298,7 @@ export default function Catalog() {
                                     </div>
 
                                     <div className="row category-icons-filter">
-                                        {categories.map((category) => {
+                                        {catalog.clothes && categories.map((category) => {
                                             const isActive = new URLSearchParams(location.search)
                                                 .get("category")
                                                 ?.split(",")
@@ -422,7 +422,9 @@ export default function Catalog() {
                                                             />
                                                         )}
                                                     </Link>
-                                                    <div class="saleback"><div class="saleicon sale">{(((item.price + 5) - item.price) / (item.price + 5) * 100).toFixed(1)}%</div></div>
+                                                    {item?.discountPrice && (
+                                                        <div className="saleback"><div className="saleicon sale">{((item.price - item.discountPrice) / item.price * 100).toFixed(1)}%</div></div>
+                                                    )}
                                                     <div className="product_hover_block">
                                                         <div className="action">
                                                             <button
@@ -451,8 +453,16 @@ export default function Catalog() {
                                                             </a>
                                                         </h4>
                                                         <p className="price">
-                                                            <span class="price-new">{item.price.toFixed(2)} лв.</span>
-                                                            <span class="price-old">{(item.price + 5).toFixed(2)} лв.</span>
+                                                            {item?.discountPrice && (
+                                                                <>
+                                                                    <span className="price-new">{item?.discountPrice?.toFixed(2)} лв.</span>
+                                                                    <span className="price-old">{item?.price?.toFixed(2)} лв.</span>
+                                                                </>
+                                                            )}
+
+                                                            {!item?.discountPrice && (
+                                                                <span className="price-new">{item?.price?.toFixed(2)} лв.</span>
+                                                            )}
                                                         </p>
                                                     </div>
                                                 </div>
