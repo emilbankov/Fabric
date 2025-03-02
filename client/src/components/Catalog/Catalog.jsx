@@ -423,7 +423,7 @@ console.log(catalog);
                                                         )}
                                                     </Link>
                                                     {item?.discountPrice && (
-                                                        <div className="saleback"><div className="saleicon sale">{((item.price - item.discountPrice) / item.price * 100).toFixed(1)}%</div></div>
+                                                        <div className="saleback"><div className="saleicon sale">{(Math.ceil((item.price - item.discountPrice) / item.price * 100))}%</div></div>
                                                     )}
                                                     <div className="product_hover_block">
                                                         <div className="action">

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Formik } from 'formik';
-import { registerValidationSchema } from '../../lib/validate';
 import * as clothesService from "../../services/clothesService";
 
 export default function Prices() {
@@ -10,6 +9,7 @@ export default function Prices() {
     const [isLoading, setIsLoading] = useState(true);
     const [price, setPrice] = useState({});
     const [discountPrice, setDiscountPrice] = useState({});
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         Promise.all([
@@ -29,11 +29,23 @@ export default function Prices() {
             });
     }, [location.pathname]);
 
-    const handleCategoryUpdate = async (categoryId, price, discountPrice) => {
+    const handlePriceChange = async (type, price, discountPrice) => {
+        if (price === '' || price === 0) {
+            setError("Цената не може да бъде празна или 0.00!");
+            return;
+        }
+
+        if (discountPrice === 0) {
+            setError("Цената с отстъпка не може да бъде 0.00!");
+            return;
+        }
+
         setIsLoading(true);
+        setError(null);
+
         try {
             const payload = {
-                type: categoryId,
+                type: type,
                 price: parseFloat(price),
                 discountPrice: discountPrice === '' ? null : parseFloat(discountPrice)
             };
@@ -52,10 +64,12 @@ export default function Prices() {
             console.log("Prices updated successfully!");
         } catch (error) {
             console.error("Price update error:", error);
+            setError("Възникна грешка при обновяването на цените.");
         } finally {
             setIsLoading(false);
         }
     };
+    console.log(error);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -196,6 +210,11 @@ export default function Prices() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Промяна на цените</h1>
+                            {error && (
+                                <div className="invalid-feedback" style={{ color: 'red', display: 'block', fontSize: '16px', fontWeight: 'bold', marginBottom: '20px' }}>
+                                    {error}
+                                </div>
+                            )}
                             {isLoading ? (
                                 <div style={{ margin: '10% auto' }} className="text-center">
                                     <img src="/images/loading.gif" alt="Loading..." />
@@ -235,6 +254,7 @@ export default function Prices() {
                                                                 onChange={handleChange}
                                                                 value={values.price_T_SHIRT}
                                                                 step="0.01"
+                                                                required
                                                             />
                                                         </div>
                                                     </div>
@@ -258,7 +278,7 @@ export default function Prices() {
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-primary"
-                                                                onClick={() => handleCategoryUpdate('T_SHIRT', values.price_T_SHIRT, values.discountPrice_T_SHIRT)}
+                                                                onClick={() => handlePriceChange('T_SHIRT', values.price_T_SHIRT, values.discountPrice_T_SHIRT)}
                                                             >
                                                                 Промени
                                                             </button>
@@ -306,7 +326,7 @@ export default function Prices() {
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-primary"
-                                                                onClick={() => handleCategoryUpdate('LONG_T_SHIRT', values.price_LONG_T_SHIRT, values.discountPrice_LONG_T_SHIRT)}
+                                                                onClick={() => handlePriceChange('LONG_T_SHIRT', values.price_LONG_T_SHIRT, values.discountPrice_LONG_T_SHIRT)}
                                                             >
                                                                 Промени
                                                             </button>
@@ -354,7 +374,7 @@ export default function Prices() {
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-primary"
-                                                                onClick={() => handleCategoryUpdate('SWEATSHIRT', values.price_SWEATSHIRT, values.discountPrice_SWEATSHIRT)}
+                                                                onClick={() => handlePriceChange('SWEATSHIRT', values.price_SWEATSHIRT, values.discountPrice_SWEATSHIRT)}
                                                             >
                                                                 Промени
                                                             </button>
@@ -402,7 +422,7 @@ export default function Prices() {
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-primary"
-                                                                onClick={() => handleCategoryUpdate('SHORTS', values.price_SHORTS, values.discountPrice_SHORTS)}
+                                                                onClick={() => handlePriceChange('SHORTS', values.price_SHORTS, values.discountPrice_SHORTS)}
                                                             >
                                                                 Промени
                                                             </button>
@@ -450,7 +470,7 @@ export default function Prices() {
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-primary"
-                                                                onClick={() => handleCategoryUpdate('KIT', values.price_KIT, values.discountPrice_KIT)}
+                                                                onClick={() => handlePriceChange('KIT', values.price_KIT, values.discountPrice_KIT)}
                                                             >
                                                                 Промени
                                                             </button>
