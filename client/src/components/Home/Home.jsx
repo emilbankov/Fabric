@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
+import { homeCategories } from "../../lib/dictionary";
 
 export default function Home() {
     const location = useLocation();
@@ -78,88 +79,29 @@ export default function Home() {
             <div id="content" className="col-sm-12">
                 <div className="category_list_cms bottom-to-top hb-animate-element">
                     <div className="container">
-                        <div className="row">
+                        <div className="">
                             <div className="category_title_cms">
-                                <div className="category_title">Shop By Category</div>
-                                <div className="category_desc">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been the industry's have lorem available{" "}
-                                </div>
+                                <div className="category_title">Категории</div>
                             </div>
-                            <div className="category-list-carousel">
-                                <div className="category_list1 box">
-                                    <div className="list_inner">
-                                        <div className="category_img">
-                                            <a href="/category&path=69" title="banner1">
-                                                <img
-                                                    src="/images/Cat-2-pro-447x550.jpg"
-                                                    alt="Women Jacket"
-                                                    title="Women Jacket"
-                                                    className="cat_image1"
-                                                />
-                                            </a>
-                                            <div className="category_list_inner">
-                                                <div className="box-heading .tt-n">
-                                                    <a href="/category&path=69">Мъжки дрехи</a>
-                                                </div>
-                                                <div className="product-item">
-                                                    <p className="desc">
-                                                        {" "}
-                                                        (6)<span> items</span>
-                                                    </p>
+                            <div className="">
+                                <div className="">
+                                    <div className="categories-cards">
+                                        {homeCategories.map(category => (
+                                            <div
+                                                className="col-6 col-md-4 col-lg-3-1 category-icon categories-responsive"
+                                                key={category.id}
+                                                onClick={() => navigate(`/catalog?type=${category.id}`)}
+                                            >
+                                                <div className="icon-wrapper">
+                                                    <img
+                                                        src={category.image}
+                                                        alt={category.name}
+                                                        className="img-responsive"
+                                                    />
+                                                    <span  style={{ overflow: "visible" }}>{category.name}</span>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="category_list1 box">
-                                    <div className="list_inner">
-                                        <div className="category_img">
-                                            <a href="/category&path=70" title="banner1">
-                                                <img
-                                                    src="/images/Cat-1-pro-447x550.jpg"
-                                                    alt="Mens T-shirt"
-                                                    title="Mens T-shirt"
-                                                    className="cat_image1"
-                                                />
-                                            </a>
-                                            <div className="category_list_inner">
-                                                <div className="box-heading .tt-n">
-                                                    <a href="/category&path=70">Дамски дрехи</a>
-                                                </div>
-                                                <div className="product-item">
-                                                    <p className="desc">
-                                                        {" "}
-                                                        (5)<span> items</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="category_list1 box">
-                                    <div className="list_inner">
-                                        <div className="category_img">
-                                            <a href="/category&path=71" title="banner1">
-                                                <img
-                                                    src="/images/Cat-3-pro-447x550.jpg"
-                                                    alt="Kids Fashion"
-                                                    title="Kids Fashion"
-                                                    className="cat_image1"
-                                                />
-                                            </a>
-                                            <div className="category_list_inner">
-                                                <div className="box-heading .tt-n">
-                                                    <a href="/category&path=71">Детски дрехи</a>
-                                                </div>
-                                                <div className="product-item">
-                                                    <p className="desc">
-                                                        {" "}
-                                                        (5)<span> items</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>

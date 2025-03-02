@@ -68,10 +68,30 @@ export const size = {
     "CHILD": "Детски",
 }
 
-export const priceMap = {
-    T_SHIRT: "29.00",
-    SWEATSHIRT: "54.00",
-    KIT: "59.00",
-    SHORTS: "30.00",
-    LONG_T_SHIRT: "37.00"
-};
+export const homeCategories = [
+    {
+        id: 'T_SHIRT',
+        name: 'Тениски',
+        image: '/images/categories/t-shirts.jpg'
+    },
+    {
+        id: 'LONG_T_SHIRT',
+        name: 'Блузи',
+        image: '/images/categories/long-t-shirts.jpg'
+    },
+    {
+        id: 'SWEATSHIRT',
+        name: 'Суитшърти',
+        image: '/images/categories/sweatshirts.jpg'
+    },
+    {
+        id: 'SHORTS',
+        name: 'Къси панталони',
+        image: '/images/categories/shorts.jpg'
+    },
+    {
+        id: 'KIT',
+        name: 'Комплекти',
+        image: '/images/categories/kits.jpg'
+    }
+];

@@ -25011,3 +25011,27 @@ div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-de
 		margin-bottom: 1rem;
 	}
 }
+
+@media (max-width: 1024px) {
+	.categories-responsive {
+		display: inline-block;
+		width: 33%;
+	}
+}
+
+@media (max-width: 768px) {
+	.categories-responsive {
+		display: inline-block;
+		width: 50%;
+	}
+}
+
+@media (max-width: 768px) {
+	.button-div-responsive {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: 20px;
+	}
+}
+
