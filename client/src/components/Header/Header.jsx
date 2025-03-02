@@ -96,9 +96,10 @@ export default function Header() {
                                         <Link to="/">
                                             <img
                                                 src="/images/logo.png"
-                                                title="Vesture"
-                                                alt="Vesture"
+                                                title="Fabric"
+                                                alt="Fabric"
                                                 className="img-responsive"
+                                                style={{ width: '172px' }}
                                             />
                                         </Link>
                                     </div>

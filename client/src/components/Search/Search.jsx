@@ -66,7 +66,7 @@ export default function Search() {
                                 className="btn btn-default btn-lg"
                                 onClick={handleSearchClick}
                             >
-                                Search
+                                Търсене
                             </button>
                         </span>
                     </div>

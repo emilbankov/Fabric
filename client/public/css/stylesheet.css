@@ -2533,7 +2533,8 @@ a.banner_text::after {
 }
 
 .col-sm-4.header-logo #logo {
-	padding: 8px 0 18px;
+	padding: 0 !important;
+	margin-top: -1px !important;
 }
 
 .header_center {
@@ -19448,7 +19449,8 @@ h3 .fa {
 	}
 
 	.col-sm-4.header-logo #logo {
-		padding: 8px 0 8px;
+		padding: 0 !important;
+		margin-top: -1px !important;
 	}
 
 	.product-layout.product-grid {
@@ -22344,7 +22346,8 @@ h3 .fa {
 	}
 
 	.col-sm-4.header-logo #logo {
-		padding: 8px 0 8px;
+		padding: 0 !important;
+		margin-top: -1px !important;
 	}
 
 	.nav_right .account {
@@ -24879,7 +24882,7 @@ div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-de
 
 @media (max-width: 1366px) {
 	.error-boundary {
-		width: 	600px;
+		width: 600px;
 	}
 
 	.error-boundary h1 {
@@ -25034,4 +25037,3 @@ div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-de
 		margin-top: 20px;
 	}
 }
-
