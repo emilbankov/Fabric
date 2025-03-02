@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import AuthContext from "../../contexts/AuthProvider";
 import { Formik } from 'formik';
 import { addClothingValidationSchema } from '../../lib/validate';
-import { priceMap } from '../../lib/dictionary';
+import * as clothesService from "../../services/clothesService";
 
 export default function AddClothing() {
     const { addClothHandler } = useContext(AuthContext);
@@ -11,6 +11,11 @@ export default function AddClothing() {
     const [backImagePreview, setBackImagePreview] = useState(null);
     const location = useLocation();
     const [isLoading, setIsLoading] = useState(false);
+    const [price, setPrice] = useState([]);
+
+    useEffect(() => {
+        clothesService.getPrice().then(setPrice);
+    }, [location.pathname]);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -58,7 +63,7 @@ export default function AddClothing() {
     const handleTypeChange = (e, setFieldValue) => {
         const type = e.target.value;
         setFieldValue('type', type);
-        setFieldValue('price', priceMap[type] || '');
+        setFieldValue('price', price[type].toFixed(2) || '');
     };
 
     return (

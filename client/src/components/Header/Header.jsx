@@ -145,14 +145,13 @@ export default function Header() {
                                                     <div className="expandable" />
                                                 </div>
                                                 <ul className="main-navigation">
-                                                    <li className="top_level"><Link to="/">Начало</Link></li>
-                                                    <li className="top_level"><Link to="/contact">Контакти</Link></li>
-                                                    <li className="top_level"><Link to="/blogs">Блог</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=t_shirt&sort=new&size=20">Тениски</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=long_t_shirt&sort=new&size=20">Блузи</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=sweatshirt&sort=new&size=20">Суитчъри</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=shorts&sort=new&size=20">Къси панталони</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=kit&sort=new&size=20">Комплекти</Link></li>
+                                                    <li className="top_level"><Link to="/">Начало</Link></li>
+                                                    <li className="top_level"><Link to="/contact">Контакти</Link></li>
                                                     {(isAdmin || isModerator) && (<li className="top_level"><Link to="/orders-history">Поръчки</Link></li>)}
                                                     {isAuthenticated && !isAdmin && !isModerator && (<li className="top_level"><Link to="/orders-history">Мои поръчки</Link></li>)}
                                                 </ul>
@@ -171,6 +170,11 @@ export default function Header() {
                                                     {isAdmin && (
                                                         <li className="toplink">
                                                             <Link to="/add-clothing">Добавяне на продукт</Link>
+                                                        </li>
+                                                    )}
+                                                    {isAdmin && (
+                                                        <li className="toplink">
+                                                            <Link to="/prices">Цени</Link>
                                                         </li>
                                                     )}
                                                     {isModerator && (

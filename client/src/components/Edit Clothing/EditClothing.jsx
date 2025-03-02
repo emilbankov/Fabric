@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
-import { Formik } from 'formik';
 import { editClothingValidationSchema } from '../../lib/validate';
 
 export default function EditClothing() {
@@ -31,6 +30,8 @@ export default function EditClothing() {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
+    const [price, setPrice] = useState([]);
+
     useEffect(() => {
         clothesService.getOne(clothingId)
             .then(result => {
@@ -53,12 +54,15 @@ export default function EditClothing() {
             });
     }, [clothingId]);
 
+    useEffect(() => {
+        clothesService.getPrice().then(setPrice);
+    }, []);
+
     const editHandler = async (e) => {
         e.preventDefault();
         setIsLoading(true);
 
         try {
-            // Validate the form data
             await editClothingValidationSchema.validate(clothing, { abortEarly: false });
 
             const formData = new FormData();
@@ -117,31 +121,10 @@ export default function EditClothing() {
         const { name, value } = e.target;
 
         if (name === 'type') {
-            let newPrice = '';
-            switch (value) {
-                case 'T_SHIRT':
-                    newPrice = '29.00';
-                    break;
-                case 'LONG_T_SHIRT':
-                    newPrice = '37.00';
-                    break;
-                case 'SHORTS':
-                    newPrice = '30.00';
-                    break;
-                case 'SWEATSHIRT':
-                    newPrice = '54.00';
-                    break;
-                case 'KIT':
-                    newPrice = '59.00';
-                    break;
-                default:
-                    newPrice = '';
-            }
-
             setClothing(state => ({
                 ...state,
                 [name]: value,
-                price: newPrice
+                price: price[value]?.toFixed(2) || ''
             }));
         } else {
             setClothing(state => ({
