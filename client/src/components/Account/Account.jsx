@@ -1,6 +1,7 @@
 import { useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AuthContext from "../../contexts/AuthProvider";
+
 export default function Account() {
     let location = useLocation();
     const { isAuthenticated, userProfile } = useContext(AuthContext);
@@ -167,14 +168,15 @@ export default function Account() {
                                         <div className="row gutters">
                                             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                 <div className="text-right w-85m-30">
-                                                    <button
+                                                    <Link
+                                                        to="/edit-account"
                                                         type="button"
                                                         id="submit"
                                                         name="submit"
                                                         className="btn btn-primary"
                                                     >
                                                         Редактиране
-                                                    </button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>

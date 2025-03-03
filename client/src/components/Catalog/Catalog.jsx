@@ -51,7 +51,6 @@ export default function Catalog() {
                 setIsLoading(false);
             });
     }, [location.search, type, sort, size, page, selectedCategories]);
-console.log(catalog);
 
     useEffect(() => {
         const hasActiveCategories = new URLSearchParams(location.search).get("category");

@@ -22,6 +22,7 @@ import Contact from "./components/Contact/Contact";
 import About from "./components/About/About";
 import Blogs from "./components/Blogs/Blogs";
 import Account from "./components/Account/Account";
+import EditAccount from "./components/Edit Account/EditAccount";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import ForgottenPassword from "./components/Forgotten Password/ForgottenPassword";
@@ -29,6 +30,7 @@ import ResetPassword from "./components/Reset Password/ResetPassword";
 import Error404 from "./components/404/404";
 import Logout from "./components/Logout/Logout";
 import Footer from "./components/Footer/Footer";
+
 function App() {
     const location = useLocation();
 
@@ -64,6 +66,7 @@ function App() {
                             <Route path="/account" element={<Account />} />
                             <Route path="/add-clothing" element={<AddClothing />} />
                             <Route path="/clothing/edit/:clothingId" element={<EditClothing />} />
+                            <Route path="/edit-account" element={<EditAccount />} />
                             <Route path="/logout" element={<Logout />} />
                         </Route>
 
