@@ -10,6 +10,7 @@ export default function Prices() {
     const [price, setPrice] = useState({});
     const [discountPrice, setDiscountPrice] = useState({});
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     useEffect(() => {
         Promise.all([
@@ -20,8 +21,6 @@ export default function Prices() {
                 setPrice(price);
                 setDiscountPrice(discountPrice);
                 setIsLoading(false);
-                console.log("Fetched Prices:", price);
-                console.log("Fetched Discount Prices:", discountPrice);
             })
             .catch(err => {
                 console.error("Error fetching data:", err);
@@ -32,16 +31,19 @@ export default function Prices() {
     const handlePriceChange = async (type, price, discountPrice) => {
         if (price === '' || price === 0) {
             setError("Цената не може да бъде празна или 0.00!");
+            setSuccess(null);
             return;
         }
 
         if (discountPrice === 0) {
             setError("Цената с отстъпка не може да бъде 0.00!");
+            setSuccess(null);
             return;
         }
 
         setIsLoading(true);
         setError(null);
+        setSuccess(null);
 
         try {
             const payload = {
@@ -50,9 +52,8 @@ export default function Prices() {
                 discountPrice: discountPrice === '' ? null : parseFloat(discountPrice)
             };
 
-            console.log("Updating category prices:", payload);
-
-            await clothesService.changePrices(payload.type, payload.price, payload.discountPrice);
+            const response = await clothesService.changePrices(payload.type, payload.price, payload.discountPrice);
+            setSuccess(response.message);
 
             const [updatedPrice, updatedDiscountPrice] = await Promise.all([
                 clothesService.getPrice(),
@@ -60,16 +61,14 @@ export default function Prices() {
             ]);
             setPrice(updatedPrice);
             setDiscountPrice(updatedDiscountPrice);
-
-            console.log("Prices updated successfully!");
         } catch (error) {
             console.error("Price update error:", error);
             setError("Възникна грешка при обновяването на цените.");
+            setSuccess(null);
         } finally {
             setIsLoading(false);
         }
     };
-    console.log(error);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -213,6 +212,11 @@ export default function Prices() {
                             {error && (
                                 <div className="invalid-feedback" style={{ color: 'red', display: 'block', fontSize: '16px', fontWeight: 'bold', marginBottom: '20px' }}>
                                     {error}
+                                </div>
+                            )}
+                            {success && (
+                                <div className="valid-feedback" style={{ color: 'green', display: 'block', fontSize: '16px', fontWeight: 'bold', marginBottom: '20px' }}>
+                                    {success}
                                 </div>
                             )}
                             {isLoading ? (
