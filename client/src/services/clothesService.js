@@ -28,6 +28,20 @@ export const searchWithFilters = async (name, sort, size, page, type) => {
     }
 };
 
+export const similarProducts = async (name, sort, size, page) => {
+    try {
+        const response = await fetch(`${baseUrl}/search?name=${name}&sort=${sort}&size=${size}&page=${page}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error('Search error:', error);
+        throw error;
+    }
+};
+
 export const create = (name, description, price, type, category, model, frontImage, backImage) => {
     const formData = new FormData();
 
