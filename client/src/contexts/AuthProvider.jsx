@@ -30,15 +30,19 @@ export const AuthProvider = ({ children }) => {
     });
     const [authError, setAuthError] = useState(null);
 
+    const updateUserProfile = (profileData) => {
+        setAuth(state => ({
+            ...state,
+            userProfile: profileData
+        }));
+        localStorage.setItem('userProfile', JSON.stringify(profileData));
+    };
+
     useEffect(() => {
         if (auth.accessToken && !auth.userProfile) {
             profile()
                 .then(profileData => {
-                    setAuth(state => ({
-                        ...state,
-                        userProfile: profileData
-                    }));
-                    localStorage.setItem('userProfile', JSON.stringify(profileData));
+                    updateUserProfile(profileData);
                 })
                 .catch(error => console.error('Failed to fetch profile:', error));
         }
@@ -149,7 +153,8 @@ export const AuthProvider = ({ children }) => {
             isModerator: auth?.roles?.includes("MODERATOR") || false,
             userProfile: auth.userProfile,
             authError,
-            clearAuthError: () => setAuthError(null)
+            clearAuthError: () => setAuthError(null),
+            updateUserProfile
         }}>
             {children}
         </AuthContext.Provider>
