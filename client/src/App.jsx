@@ -30,6 +30,7 @@ import ResetPassword from "./components/Reset Password/ResetPassword";
 import Error404 from "./components/404/404";
 import Logout from "./components/Logout/Logout";
 import Footer from "./components/Footer/Footer";
+import PrivacyPolicy from "./components/Privacy Policy/PrivacyPolicy";
 
 function App() {
     const location = useLocation();
@@ -49,11 +50,11 @@ function App() {
                         <Route path="/view-cart" element={<ViewCart />} />
                         <Route path="/checkout" element={<Checkout />} />
                         <Route path="/search-results" element={<SearchResults />} />
-                        <Route path="/orders-history" element={<OrdersHistory />} />
                         <Route path="/prices" element={<Prices />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/blogs" element={<Blogs />} />
+                        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
                         <Route element={<GuestGuard />}>
                             <Route path="/login" element={<Login />} />
@@ -63,6 +64,7 @@ function App() {
                         </Route>
 
                         <Route element={<AuthGuard />}>
+                            <Route path="/orders-history" element={<OrdersHistory />} />
                             <Route path="/account" element={<Account />} />
                             <Route path="/add-clothing" element={<AddClothing />} />
                             <Route path="/clothing/edit/:clothingId" element={<EditClothing />} />

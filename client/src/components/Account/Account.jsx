@@ -1,33 +1,49 @@
 import { useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AuthContext from "../../contexts/AuthProvider";
+import { profile } from "../../services/authService";
 
 export default function Account() {
-    let location = useLocation();
-    const { isAuthenticated, userProfile } = useContext(AuthContext);
+    const location = useLocation();
+    const { isAuthenticated, userProfile, updateUserProfile } = useContext(AuthContext);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const profileData = await profile();
+                updateUserProfile(profileData);
+            } catch (error) {
+                console.error("Failed to fetch profile:", error);
+            }
+        };
+
+        if (isAuthenticated) {
+            fetchProfile();
+        }
+    }, [location.pathname, isAuthenticated, updateUserProfile]);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
-          existingScript.parentNode.removeChild(existingScript);
+            existingScript.parentNode.removeChild(existingScript);
         }
-      
+
         const script = document.createElement('script');
         script.src = '/js/custom.js';
         script.async = true;
-      
+
         document.body.appendChild(script);
-      
+
         return () => {
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
         };
-      }, [location.pathname]);
+    }, [location.pathname]);
 
     return (
         <>
-            <div className="account-login   layout-2 left-col">
+            <div className="account-login layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">
                     <div className="container">
@@ -64,7 +80,7 @@ export default function Account() {
                                 </div>
                             </div>
                             <div className="swiper-viewport">
-                                <div id="banner0" className="swiper-container  single-banner ">
+                                <div id="banner0" className="swiper-container single-banner">
                                     <div className="swiper-wrapper">
                                         <div className="swiper-slide">
                                             <a href="#">
@@ -82,32 +98,30 @@ export default function Account() {
                             <div className="box">
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
-                                    <Link className="list-group-item" to="/about">
-                                        About Us{" "}
-                                    </Link>
+                                    <Link className="list-group-item" to="/about">About Us</Link>
                                     <a
                                         className="list-group-item"
                                         href="information/information&information_id=6"
                                     >
-                                        Delivery Information{" "}
+                                        Delivery Information
                                     </a>
                                     <a
                                         className="list-group-item"
                                         href="information/information&information_id=3"
                                     >
-                                        Privacy Policy{" "}
+                                        Privacy Policy
                                     </a>
                                     <a
                                         className="list-group-item"
                                         href="information/information&information_id=5"
                                     >
-                                        Terms &amp; Conditions{" "}
+                                        Terms &amp; Conditions
                                     </a>
                                     <a className="list-group-item" href="contact.html">
-                                        Contact Us{" "}
+                                        Contact Us
                                     </a>
                                     <a className="list-group-item" href="information/sitemap">
-                                        Site Map{" "}
+                                        Site Map
                                     </a>
                                 </div>
                             </div>
@@ -189,4 +203,4 @@ export default function Account() {
             </div>
         </>
     );
-};
+}
