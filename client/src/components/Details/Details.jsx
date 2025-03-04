@@ -16,8 +16,8 @@ export default function Details() {
     const [currentImage, setCurrentImage] = useState("");
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
-    const [newest, setNewest] = useState({});
-    const [mostSold, setMostSold] = useState({});
+    const [collection, setCollection] = useState({});
+    const [similar, setSimilar] = useState({});
     const [gender, setGender] = useState("MALE");
     const [quantity, setQuantity] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,27 +46,34 @@ export default function Details() {
     };
 
     useEffect(() => {
-        Promise.all([
-            clothesService.getOne(clothingId),
-            clothesService.getNewest(),
-            clothesService.getMostSold(),
-        ])
-            .then(([clothing, newest, mostSold]) => {
-                setClothing(clothing);
-                setNewest(newest);
-                setMostSold(mostSold);
-                if (clothing?.clothing?.images?.length > 0) {
-                    const frontImage = clothing?.clothing.images.find(image => image.side == 'front');
+        const fetchData = async () => {
+            try {
+                const clothingResponse = await clothesService.getOne(clothingId);
+                setClothing(clothingResponse);
+
+                if (clothingResponse?.clothing?.images?.length > 0) {
+                    const frontImage = clothingResponse.clothing.images.find(image => image.side === 'front');
                     setCurrentImage(frontImage ? frontImage.path : null);
                 }
-            })
-            .catch(err => {
-                console.error("Error fetching data:", err);
-            });
+
+                const model = clothingResponse?.clothing?.model;
+                const type = clothingResponse?.clothing?.type;
+                const category = clothingResponse?.clothing?.category;
+                if (model) {
+                    const [collection, similar] = await Promise.all([
+                        clothesService.similarProducts(model, "price_asc", 5, 1),
+                        clothesService.getCatalog(type, "price_asc", 10, 1, category),
+                    ]);
+                    setCollection(collection);
+                    setSimilar(similar);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
     }, [clothingId]);
-
-    console.log(clothing);
-
 
     const handleImageClick = (imagePath) => {
         setCurrentImage(imagePath);
@@ -152,7 +159,7 @@ export default function Details() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [newest.clothes]);
+    }, [clothingId, collection.clothes, similar.clothes]);
 
     return (
         <>
@@ -222,7 +229,7 @@ export default function Details() {
                                 <div className="box-heading">Най-продавани</div>
                                 <div className="box-content">
                                     <div className="box-product  productbox-grid" id=" latest-grid">
-                                        {mostSold.clothes && mostSold.clothes.slice(0, 3).map((item) => (
+                                        {similar.clothes && similar.clothes.slice(0, 3).map((item) => (
                                             <div className="product-items" key={item.id}>
                                                 <div className="product-items">
                                                     <div className="product-block product-thumb transition">
@@ -610,11 +617,6 @@ export default function Details() {
                                         <li>
                                             <a href="#tab-specification" data-toggle="tab">
                                                 Размери
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#tab-review" data-toggle="tab">
-                                                Ревюта (1)
                                             </a>
                                         </li>
                                     </ul>
@@ -1046,94 +1048,6 @@ export default function Details() {
                                                 </div>
                                             )}
                                         </div>
-                                        <div className="tab-pane" id="tab-review">
-                                            <form className="form-horizontal" id="form-review">
-                                                <div id="review" />
-                                                <h4>Write a review</h4>
-                                                <div className="form-group required">
-                                                    <div className="col-sm-12">
-                                                        <label className="control-label" htmlFor="input-name">
-                                                            Your Name
-                                                        </label>
-                                                        <input
-                                                            type="text"
-                                                            name="name"
-                                                            defaultValue=""
-                                                            id="input-name"
-                                                            className="form-control"
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="form-group required">
-                                                    <div className="col-sm-12">
-                                                        <label className="control-label" htmlFor="input-review">
-                                                            Your Review
-                                                        </label>
-                                                        <textarea
-                                                            name="text"
-                                                            rows={5}
-                                                            id="input-review"
-                                                            className="form-control"
-                                                            defaultValue={""}
-                                                        />
-                                                        <div className="help-block">
-                                                            <span className="text-danger">Note:</span> HTML is not
-                                                            translated!
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="form-group required">
-                                                    <div className="col-sm-12">
-                                                        <label className="control-label">Rating</label>
-                                                        &nbsp;&nbsp;&nbsp; Bad&nbsp;
-                                                        <input type="radio" name="rating" defaultValue={1} />
-                                                        &nbsp;
-                                                        <input type="radio" name="rating" defaultValue={2} />
-                                                        &nbsp;
-                                                        <input type="radio" name="rating" defaultValue={3} />
-                                                        &nbsp;
-                                                        <input type="radio" name="rating" defaultValue={4} />
-                                                        &nbsp;
-                                                        <input type="radio" name="rating" defaultValue={5} />
-                                                        &nbsp;Good
-                                                    </div>
-                                                </div>
-                                                <fieldset>
-                                                    <legend>Captcha</legend>
-                                                    <div className="form-group required">
-                                                        <label
-                                                            className="col-sm-3 control-label"
-                                                            htmlFor="input-captcha"
-                                                        >
-                                                            Enter the code in the box below
-                                                        </label>
-                                                        <div className="col-sm-8">
-                                                            <input
-                                                                type="text"
-                                                                name="captcha"
-                                                                id="input-captcha"
-                                                                className="form-control"
-                                                            />
-                                                            <img
-                                                                alt=""
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-                                                <div className="buttons clearfix">
-                                                    <div className="pull-right">
-                                                        <button
-                                                            type="button"
-                                                            id="button-review"
-                                                            data-loading-text="Loading..."
-                                                            className="btn btn-primary"
-                                                        >
-                                                            Continue
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -1150,9 +1064,9 @@ export default function Details() {
                                         <div className="hometab-heading box-heading">Нови и популярни артикули</div>
                                         <div id="tabs" className="htabs">
                                             <ul className="etabs">
-                                                <li className="tab"><a href="#tab-latest">Най-нови</a></li>
+                                                <li className="tab"><a href="#tab-latest">Подобни</a></li>
                                                 <li className="tab"></li>
-                                                <li className="tab"><a href="#tab-special">Най-продавани</a></li>
+                                                <li className="tab"><a href="#tab-special">Колекция</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1164,7 +1078,7 @@ export default function Details() {
                                                     <a className="fa next fa-arrow-right">&nbsp;</a>
                                                 </div>
                                                 <div className="box-product product-carousel" id="tablatest-carousel">
-                                                    {newest.clothes && newest.clothes.map((clothing) => (
+                                                    {similar.clothes && similar.clothes.map((clothing) => (
                                                         <div className="slider-item" key={clothing.id}>
                                                             <div className="product-block product-thumb transition">
                                                                 <div className="product-block-inner">
@@ -1228,6 +1142,20 @@ export default function Details() {
                                                             </div>
                                                         </div>
                                                     ))}
+                                                    {/* Add invisible placeholders if there are fewer than 5 products */}
+                                                    {similar.clothes && similar.clothes.length < 5 && (
+                                                        Array.from({ length: 5 - similar.clothes.length }).map((_, index) => (
+                                                            <div className="slider-item placeholder" key={`placeholder-${index}`} style={{ visibility: 'hidden' }}>
+                                                                <div className="product-block product-thumb transition">
+                                                                    <div className="product-block-inner">
+                                                                        <div className="image">
+                                                                            <div style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }} />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -1237,7 +1165,7 @@ export default function Details() {
                                         <div className="box">
                                             <div className="box-content">
                                                 <div className="box-product  productbox-grid" id="tabspecial-grid">
-                                                    {mostSold.clothes && mostSold.clothes.map((product) => (
+                                                    {collection.clothes && collection.clothes.slice(0, 5).map((product) => (
                                                         <div className="product-items" key={product.id}>
                                                             <div className="product-block product-thumb transition">
                                                                 <div className="product-block-inner">
