@@ -224,8 +224,8 @@ export default function Prices() {
                                     <img src="/images/loading.gif" alt="Loading..." />
                                 </div>
                             ) : (
-                                <Formik
-                                    initialValues={{
+                            <Formik
+                                initialValues={{
                                         price_T_SHIRT: price.T_SHIRT || '',
                                         discountPrice_T_SHIRT: discountPrice.T_SHIRT || '',
                                         price_LONG_T_SHIRT: price.LONG_T_SHIRT || '',
@@ -260,7 +260,7 @@ export default function Prices() {
                                                                 step="0.01"
                                                                 required
                                                             />
-                                                        </div>
+                                                            </div>
                                                     </div>
                                                     <div className="form-group required">
                                                         <label className="col-sm-3 control-label" htmlFor="discountPrice_T_SHIRT">
@@ -286,9 +286,9 @@ export default function Prices() {
                                                             >
                                                                 Промени
                                                             </button>
-                                                        </div>
+                                                            </div>
                                                     </div>
-                                                </div>
+                                                    </div>
 
                                                 {/* Блузи */}
                                                 <div className="category-price-form">
@@ -308,7 +308,7 @@ export default function Prices() {
                                                                 value={values.price_LONG_T_SHIRT}
                                                                 step="0.01"
                                                             />
-                                                        </div>
+                                                            </div>
                                                     </div>
                                                     <div className="form-group required">
                                                         <label className="col-sm-3 control-label" htmlFor="discountPrice_LONG_T_SHIRT">
@@ -334,9 +334,9 @@ export default function Prices() {
                                                             >
                                                                 Промени
                                                             </button>
-                                                        </div>
+                                                            </div>
                                                     </div>
-                                                </div>
+                                            </div>
 
                                                 {/* Суитшърти */}
                                                 <div className="category-price-form">
@@ -345,7 +345,7 @@ export default function Prices() {
                                                         <label className="col-sm-3 control-label" htmlFor="price_SWEATSHIRT">
                                                             Цена без отстъпка
                                                         </label>
-                                                        <div className="col-sm-6">
+                                            <div className="col-sm-6">
                                                             <input
                                                                 className="form-control"
                                                                 type="number"
@@ -361,7 +361,7 @@ export default function Prices() {
                                                     <div className="form-group required">
                                                         <label className="col-sm-3 control-label" htmlFor="discountPrice_SWEATSHIRT">
                                                             Цена с отстъпка
-                                                        </label>
+                                                            </label>
                                                         <div className="col-sm-6">
                                                             <input
                                                                 className="form-control"
@@ -384,7 +384,7 @@ export default function Prices() {
                                                             </button>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                            </div>
 
                                                 {/* Къси панталони */}
                                                 <div className="category-price-form">
@@ -392,9 +392,9 @@ export default function Prices() {
                                                     <div className="form-group required">
                                                         <label className="col-sm-3 control-label" htmlFor="price_SHORTS">
                                                             Цена без отстъпка
-                                                        </label>
+                                                                        </label>
                                                         <div className="col-sm-6">
-                                                            <input
+                                                                        <input
                                                                 className="form-control"
                                                                 type="number"
                                                                 id="price_SHORTS"
@@ -404,8 +404,8 @@ export default function Prices() {
                                                                 value={values.price_SHORTS}
                                                                 step="0.01"
                                                             />
-                                                        </div>
-                                                    </div>
+                                                                    </div>
+                                                                </div>
                                                     <div className="form-group required">
                                                         <label className="col-sm-3 control-label" htmlFor="discountPrice_SHORTS">
                                                             Цена с отстъпка
@@ -430,9 +430,9 @@ export default function Prices() {
                                                             >
                                                                 Промени
                                                             </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                            </div>
+                                                                    </div>
+                                                            </div>
 
                                                 {/* Комплекти */}
                                                 <div className="category-price-form">
@@ -452,8 +452,8 @@ export default function Prices() {
                                                                 value={values.price_KIT}
                                                                 step="0.01"
                                                             />
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                        </div>
                                                     <div className="form-group required">
                                                         <label className="col-sm-3 control-label" htmlFor="discountPrice_KIT">
                                                             Цена с отстъпка
@@ -477,14 +477,14 @@ export default function Prices() {
                                                                 onClick={() => handlePriceChange('KIT', values.price_KIT, values.discountPrice_KIT)}
                                                             >
                                                                 Промени
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
                                                 </div>
                                             </fieldset>
                                         </form>
-                                    )}
-                                </Formik>
+                                )}
+                            </Formik>
                             )}
                         </div>
                     </div>
