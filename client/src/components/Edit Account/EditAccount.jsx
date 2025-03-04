@@ -1,17 +1,18 @@
 import { useEffect, useState, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Formik } from 'formik';
 import { editAccountValidationSchema } from '../../lib/validate';
 import AuthContext from "../../contexts/AuthProvider";
+import { editProfile, profile } from "../../services/authService";
 
 export default function EditAccount() {
     const location = useLocation();
+    const navigate = useNavigate();
 
-    const { userProfile } = useContext(AuthContext);
+    const { userProfile, updateUserProfile } = useContext(AuthContext);
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
 
     const formatPhoneNumber = (value) => {
         const digits = value.replace(/\D/g, '');
@@ -20,28 +21,61 @@ export default function EditAccount() {
         return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 9)}`;
     };
 
-    const handleSubmit = async (values, { setSubmitting }) => {
+    const handleSubmit = async (values, { setSubmitting, setErrors }) => {
         setIsLoading(true);
         setError(null);
-        setSuccess(null);
 
-        const formattedValues = {
-            ...values,
-            phoneNumber: '+359 ' + values.phoneNumber
+        const payload = {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            phoneNumber: '+359 ' + values.phoneNumber,
+            address: values.address,
+            region: values.region,
+            city: values.city
         };
 
         try {
-            setSuccess('Профилът е обновен успешно!');
+            const response = await editProfile(
+                payload.firstName,
+                payload.lastName,
+                payload.email,
+                payload.phoneNumber,
+                payload.address,
+                payload.region,
+                payload.city
+            );
+
+            if (response.status === "success") {
+                const updatedProfile = await profile();
+                console.log(updatedProfile);
+
+                updateUserProfile(updatedProfile);
+
+                navigate("/account");
+            } else {
+                if (response.errors && Array.isArray(response.errors)) {
+                    const fieldErrors = {};
+                    response.errors.forEach(error => {
+                        const field = error.toLowerCase()
+                            .replace(' cannot be empty', '')
+                            .replace(' ', '');
+                        fieldErrors[field] = error;
+                    });
+                    setErrors(fieldErrors);
+                } else {
+                    setError(response.message || 'Възникна грешка при обновяването на профила.');
+                }
+            }
         } catch (error) {
             console.error("Update error:", error);
-            setError('Възникна грешка при обновяването на профила.');
+            setError(error.message || 'Възникна грешка при обновяването на профила.');
         } finally {
             setIsLoading(false);
             setSubmitting(false);
         }
     };
 
-    // Add your custom.js script
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
@@ -138,11 +172,6 @@ export default function EditAccount() {
                             {error && (
                                 <div className="invalid-feedback" style={{ color: 'red', display: 'block', fontSize: '16px', fontWeight: 'bold', marginBottom: '20px' }}>
                                     {error}
-                                </div>
-                            )}
-                            {success && (
-                                <div className="valid-feedback" style={{ color: 'green', display: 'block', fontSize: '16px', fontWeight: 'bold', marginBottom: '20px' }}>
-                                    {success}
                                 </div>
                             )}
                             {isLoading ? (
@@ -318,11 +347,11 @@ export default function EditAccount() {
 
                                             <div className="buttons">
                                                 <div className="pull-right">
-                                                    <input 
-                                                        type="submit" 
-                                                        value="Запази промените" 
-                                                        className="btn btn-primary" 
-                                                        disabled={isLoading} 
+                                                    <input
+                                                        type="submit"
+                                                        value="Запази промените"
+                                                        className="btn btn-primary"
+                                                        disabled={isLoading}
                                                     />
                                                 </div>
                                             </div>
