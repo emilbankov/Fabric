@@ -237,27 +237,30 @@ export default function Details() {
                                                             <div className="image">
                                                                 <Link to={`/clothing/details/${item.id}`}>
                                                                     <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
                                                                         title="tote bags for women"
                                                                         alt="tote bags for women"
                                                                         className="img-responsive reg-image"
+                                                                        loading="lazy"
                                                                     />
 
                                                                     {item.type !== "KIT" && (
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'back')?.path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
                                                                             title="tote bags for women"
                                                                             alt="tote bags for women"
                                                                             className="img-responsive hover-image"
+                                                                            loading="lazy"
                                                                         />
                                                                     )}
 
                                                                     {item.type === "KIT" && (
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
                                                                             title="tote bags for women"
                                                                             alt="tote bags for women"
                                                                             className="img-responsive hover-image"
+                                                                            loading="lazy"
                                                                         />
                                                                     )}
                                                                 </Link>
@@ -330,10 +333,11 @@ export default function Details() {
                                                             >
                                                                 <img
                                                                     id="tmzoom"
-                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${currentImage}`}
-                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload${currentImage}`}
+                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${currentImage}`}
+                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${currentImage}`}
                                                                     title={clothing.clothing.name}
                                                                     alt={clothing.clothing.name}
+                                                                    loading="lazy"
                                                                     style={{
                                                                         transition: 'transform 0.1s ease',
                                                                         width: '100%',
@@ -366,11 +370,12 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${image.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${image.path}`}
                                                                                     width={74}
                                                                                     height={74}
                                                                                     title={image.side}
                                                                                     alt={image.side}
+                                                                                    loading="lazy"
                                                                                 />
                                                                             </a>
                                                                         </div>
@@ -405,7 +410,8 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${image.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${image.path}`}
+                                                                                    loading="lazy"
                                                                                     width={74}
                                                                                     height={74}
                                                                                     title={image.side}
@@ -1085,25 +1091,28 @@ export default function Details() {
                                                                     <div className="image">
                                                                         <Link to={`/clothing/details/${clothing.id}`}>
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                 title={clothing.name}
                                                                                 alt={clothing.name}
                                                                                 className="img-responsive reg-image"
+                                                                                loading="lazy"
                                                                             />
                                                                             {clothing.type !== "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images.find(image => image.side === 'back')?.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'back')?.path}`}
                                                                                     title={clothing.name}
                                                                                     alt={clothing.name}
                                                                                     className="img-responsive hover-image"
+                                                                                    loading="lazy"
                                                                                 />
                                                                             )}
                                                                             {clothing.type === "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                     title={clothing.name}
                                                                                     alt={clothing.name}
                                                                                     className="img-responsive hover-image"
+                                                                                    loading="lazy"
                                                                                 />
                                                                             )}
                                                                         </Link>
@@ -1172,27 +1181,30 @@ export default function Details() {
                                                                     <div className="image">
                                                                         <Link to={`/clothing/details/${product.id}`}>
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images.find(image => image.side === 'front')?.path}`}
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
                                                                                 title={product.name}
                                                                                 alt={product.name}
                                                                                 className="img-responsive reg-image"
+                                                                                loading="lazy"
                                                                             />
 
                                                                             {product.type !== "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images.find(image => image.side === 'back')?.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'back')?.path}`}
                                                                                     title={product.name}
                                                                                     alt={product.name}
                                                                                     className="img-responsive hover-image"
+                                                                                    loading="lazy"
                                                                                 />
                                                                             )}
 
                                                                             {product.type === "KIT" && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload${product.images.find(image => image.side === 'front')?.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
                                                                                     title={product.name}
                                                                                     alt={product.name}
                                                                                     className="img-responsive hover-image"
+                                                                                    loading="lazy"
                                                                                 />
                                                                             )}
                                                                         </Link>
@@ -1289,13 +1301,14 @@ export default function Details() {
                             &times;
                         </span>
                         <img
-                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${currentImage}`}
+                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${currentImage}`}
                             alt={clothing.clothing?.name}
                             style={{
                                 maxWidth: '100%',
                                 maxHeight: '90vh',
                                 objectFit: 'contain'
                             }}
+                            loading="lazy"
                         />
                     </div>
                 </div>,

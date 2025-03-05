@@ -219,25 +219,28 @@ export default function Catalog() {
                                                                 <div className="image">
                                                                     <Link to={`/clothing/details/${item.id}`}>
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
                                                                             title="tote bags for women"
                                                                             alt="tote bags for women"
                                                                             className="img-responsive reg-image"
+                                                                            loading="lazy"
                                                                         />
                                                                         {item.type !== "KIT" && (
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'back')?.path}`}
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
                                                                                 title="tote bags for women"
                                                                                 alt="tote bags for women"
                                                                                 className="img-responsive hover-image"
+                                                                                loading="lazy"
                                                                             />
                                                                         )}
                                                                         {item.type === "KIT" && (
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
                                                                                 title="tote bags for women"
                                                                                 alt="tote bags for women"
                                                                                 className="img-responsive hover-image"
+                                                                                loading="lazy"
                                                                             />
                                                                         )}
                                                                     </Link>
@@ -314,6 +317,7 @@ export default function Catalog() {
                                                             src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category.id}.jpg`}
                                                             alt={category.name}
                                                             className="img-responsive"
+                                                            loading="lazy"
                                                         />
                                                         <span>
                                                             {window.innerWidth <= 767 && category.name.length > 7
@@ -399,25 +403,28 @@ export default function Catalog() {
                                                 <div className="image">
                                                     <Link to={`/clothing/details/${item.id}`}>
                                                         <img
-                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_250,h_275${item.images.find(image => image.side === 'front')?.path}`}
+                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto/w_250,h_275${item.images.find(image => image.side === 'front')?.path}`}
                                                             title={item.name}
                                                             alt={item.name}
                                                             className="img-responsive reg-image"
+                                                            loading="lazy"
                                                         />
                                                         {item.type !== "KIT" && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'back')?.path}`}
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
                                                                 title={item.name}
                                                                 alt={item.name}
                                                                 className="img-responsive hover-image"
+                                                                loading="lazy"
                                                             />
                                                         )}
                                                         {item.type === "KIT" && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload${item.images.find(image => image.side === 'front')?.path}`}
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
                                                                 title={item.name}
                                                                 alt={item.name}
                                                                 className="img-responsive hover-image"
+                                                                loading="lazy"
                                                             />
                                                         )}
                                                     </Link>
