@@ -143,7 +143,7 @@ export default function Home() {
                                                                         className="img-responsive reg-image"
                                                                         loading="lazy"
                                                                     />
-                                                                    {clothing.type !== "KIT" && (
+                                                                    {(clothing.type !== "KIT" || clothing.type !== "TOWELS" || clothing.type !== "BANDANAS") && (
                                                                         <img
                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'back')?.path}`}
                                                                             title={clothing.name}
@@ -152,7 +152,7 @@ export default function Home() {
                                                                             loading="lazy"
                                                                         />
                                                                     )}
-                                                                    {clothing.type === "KIT" && (
+                                                                    {(clothing.type === "KIT" || clothing.type === "TOWELS" || clothing.type === "BANDANAS") && (
                                                                         <img
                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                             title={clothing.name}
@@ -223,7 +223,7 @@ export default function Home() {
                                                                         loading="lazy"
                                                                     />
 
-                                                                    {product.type !== "KIT" && (
+                                                                    {(product.type !== "KIT" || product.type !== "TOWELS" || product.type !== "BANDANAS") && (
                                                                         <img
                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'back')?.path}`}
                                                                             title={product.name}
@@ -233,7 +233,7 @@ export default function Home() {
                                                                         />
                                                                     )}
 
-                                                                    {product.type === "KIT" && (
+                                                                    {(product.type === "KIT" || product.type === "TOWELS" || product.type === "BANDANAS") && (
                                                                         <img
                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
                                                                             title={product.name}

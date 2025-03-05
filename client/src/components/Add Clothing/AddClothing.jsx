@@ -259,8 +259,10 @@ export default function AddClothing() {
                                                             <option value="T_SHIRT">Тениска</option>
                                                             <option value="LONG_T_SHIRT">Блуза с дълъг ръкав</option>
                                                             <option value="SHORTS">Къси панталони</option>
-                                                            <option value="SWEATSHIRT">Суитчъри</option>
-                                                            <option value="KIT">Комплекти</option>
+                                                            <option value="SWEATSHIRT">Суитчър</option>
+                                                            <option value="KIT">Комплект</option>
+                                                            <option value="TOWELS">Хавлия</option>
+                                                            <option value="BANDANAS">Бандана</option>
                                                         </select>
                                                         {errors.type && touched.type && (
                                                             <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
@@ -386,7 +388,7 @@ export default function AddClothing() {
                                                     </div>
                                                 </div>
 
-                                                {values.type !== "KIT" && (
+                                                {values.type !== "KIT" && values.type !== "TOWELS" && values.type !== "BANDANAS" && (
                                                     <div className="form-group required">
                                                         <label className="col-sm-2 control-label" htmlFor="backImage">Снимка отзад</label>
                                                         <div className="col-sm-10">

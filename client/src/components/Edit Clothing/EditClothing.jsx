@@ -382,6 +382,8 @@ export default function EditClothing() {
                                                     <option value="SHORTS">Къси панталони</option>
                                                     <option value="SWEATSHIRT">Суитчъри</option>
                                                     <option value="KIT">Комплекти</option>
+                                                    <option value="TOWELS">Хавлия</option>
+                                                    <option value="BANDANAS">Бандана</option>
                                                 </select>
                                                 {errors.type && (
                                                     <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
@@ -508,7 +510,7 @@ export default function EditClothing() {
                                                 )}
                                             </div>
                                         </div>
-                                        {clothing.type !== "KIT" && (
+                                        {clothing.type !== "KIT" && clothing.type !== "TOWELS" && clothing.type !== "BANDANAS" && (
                                             <div className="form-group required">
                                                 <label className="col-sm-2 control-label" htmlFor="backImage">
                                                     Снимка отзад

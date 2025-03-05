@@ -132,6 +132,7 @@ export default function Header() {
                                         <li className="top_level"><Link to="/catalog?type=sweatshirt&sort=new&size=20">Суитчъри</Link></li>
                                         <li className="top_level"><Link to="/catalog?type=shorts&sort=new&size=20">Къси панталони</Link></li>
                                         <li className="top_level"><Link to="/catalog?type=kit&sort=new&size=20">Комплекти</Link></li>
+                                        <li className="top_level"><Link to="/catalog?type=towels&sort=new&size=20">Плажни кърпи</Link></li>
                                     </ul>
                                 </div>
                                 <nav className="nav-container" role="navigation">
@@ -151,6 +152,7 @@ export default function Header() {
                                                     <li className="top_level"><Link to="/catalog?type=sweatshirt&sort=new&size=20">Суитчъри</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=shorts&sort=new&size=20">Къси панталони</Link></li>
                                                     <li className="top_level"><Link to="/catalog?type=kit&sort=new&size=20">Комплекти</Link></li>
+                                                    <li className="top_level"><Link to="/catalog?type=towels&sort=new&size=20">Плажни кърпи</Link></li>
                                                     <li className="top_level"><Link to="/">Начало</Link></li>
                                                     <li className="top_level"><Link to="/contact">Контакти</Link></li>
                                                     {(isAdmin || isModerator) && (<li className="top_level"><Link to="/orders-history">Поръчки</Link></li>)}

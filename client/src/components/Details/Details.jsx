@@ -244,7 +244,7 @@ export default function Details() {
                                                                         loading="lazy"
                                                                     />
 
-                                                                    {item.type !== "KIT" && (
+                                                                    {(item.type !== "KIT" || item.type !== "TOWELS" || item.type !== "BANDANAS") && (
                                                                         <img
                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
                                                                             title="tote bags for women"
@@ -254,7 +254,7 @@ export default function Details() {
                                                                         />
                                                                     )}
 
-                                                                    {item.type === "KIT" && (
+                                                                    {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
                                                                         <img
                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
                                                                             title="tote bags for women"
@@ -430,7 +430,7 @@ export default function Details() {
                                                 </div>
                                             </div>
                                             <div className="col-sm-6 product-right">
-                                                <h3 className="product-title">{typeTranslations[clothing.clothing.type]} {clothing.clothing.name} #{clothing.clothing.model}</h3>
+                                                <h3 className="product-title" style={{ textTransform: "none" }}>{typeTranslations[clothing.clothing.type]} {clothing.clothing.name} #{clothing.clothing.model}</h3>
                                                 <div className="description">
                                                     <table className="product-description">
                                                         <tbody>
@@ -1099,7 +1099,7 @@ export default function Details() {
                                                                                         className="img-responsive reg-image"
                                                                                         loading="lazy"
                                                                                     />
-                                                                                    {clothing.type !== "KIT" && (
+                                                                                    {(clothing.type !== "KIT" || clothing.type !== "TOWELS" || clothing.type !== "BANDANAS") && (
                                                                                         <img
                                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'back')?.path}`}
                                                                                             title={clothing.name}
@@ -1108,7 +1108,7 @@ export default function Details() {
                                                                                             loading="lazy"
                                                                                         />
                                                                                     )}
-                                                                                    {clothing.type === "KIT" && (
+                                                                                    {(clothing.type === "KIT" || clothing.type === "TOWELS" || clothing.type === "BANDANAS") && (
                                                                                         <img
                                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                             title={clothing.name}
@@ -1191,7 +1191,7 @@ export default function Details() {
                                                                                         loading="lazy"
                                                                                     />
 
-                                                                                    {product.type !== "KIT" && (
+                                                                                    {(product.type !== "KIT" || product.type !== "TOWELS" || product.type !== "BANDANAS") && (
                                                                                         <img
                                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'back')?.path}`}
                                                                                             title={product.name}
@@ -1201,7 +1201,7 @@ export default function Details() {
                                                                                         />
                                                                                     )}
 
-                                                                                    {product.type === "KIT" && (
+                                                                                    {(product.type === "KIT" || product.type === "TOWELS" || product.type === "BANDANAS") && (
                                                                                         <img
                                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
                                                                                             title={product.name}
