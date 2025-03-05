@@ -72,7 +72,7 @@ export const addClothingValidationSchema = Yup.object({
         .required('Задължително е да качите снимка отпред'),
     backImage: Yup.mixed()
         .test('isRequired', 'Задължително е да качите снимка отзад', function (value) {
-            return this.parent.type === 'KIT' ? true : !!value;
+            return (this.parent.type === 'KIT' || this.parent.type === 'TOWELS' || this.parent.type === 'BANDANAS') ? true : !!value;
         }),
 });
 

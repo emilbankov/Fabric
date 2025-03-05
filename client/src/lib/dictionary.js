@@ -4,6 +4,8 @@ export const typeTranslations = {
     "SWEATSHIRT": "Суитчър",
     "SHORTS": "Къси панталони",
     "KIT": "Комплект",
+    "TOWELS": "Плажна кърпа",
+    "BANDANAS": "Бандана",
 };
 
 export const categoryTranslations = {
@@ -26,25 +28,25 @@ export const categoryTranslations = {
     "OTHERS": "Други"
 };
 
-export const categories = [
-    { id: "MARTIAL_SPORTS", name: "Бойни спортове" },
-    { id: "GAME_OF_THRONES", name: "Гейм Аф Тронс" },
-    { id: "TRUCKS", name: "Камиони" },
-    { id: "CHRISTMAS", name: "Коледни" },
-    { id: "CARS", name: "Коли" },
-    { id: "DOGS", name: "Кучета" },
-    { id: "HUNTING", name: "Лов" },
-    { id: "MOTORCYCLES", name: "Мотори" },
-    { id: "MUSIC", name: "Музика" },
-    { id: "PATRIOTIC", name: "Патриотични" },
-    { id: "WORK", name: "Работни" },
-    { id: "FISHING", name: "Риболов" },
-    { id: "UEFA_EURO_2024", name: "УЕФА ЕВРО 2024" },
-    { id: "MOVIES", name: "Филми" },
-    { id: "FORMULA_1", name: "Формула 1" },
-    { id: "FOOTBALL", name: "Футбол" },
-    { id: "OTHERS", name: "Други" }
-];
+export const categoriesMap = {
+    "MARTIAL_SPORTS": "Бойни спортове",
+    "GAME_OF_THRONES": "Гейм Аф Тронс",
+    "TRUCKS": "Камиони",
+    "CHRISTMAS": "Коледни",
+    "CARS": "Коли",
+    "DOGS": "Кучета",
+    "HUNTING": "Лов",
+    "MOTORCYCLES": "Мотори",
+    "MUSIC": "Музика",
+    "PATRIOTIC": "Патриотични",
+    "WORK": "Работни",
+    "FISHING": "Риболов",
+    "UEFA_EURO_2024": "УЕФА ЕВРО 2024",
+    "MOVIES": "Филми",
+    "FORMULA_1": "Формула 1",
+    "FOOTBALL": "Футбол",
+    "OTHERS": "Други"
+};
 
 export const filters = {
     "new": "Най-нови",
