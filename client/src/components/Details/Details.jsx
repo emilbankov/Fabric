@@ -337,7 +337,6 @@ export default function Details() {
                                                                     data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${currentImage}`}
                                                                     title={clothing.clothing.name}
                                                                     alt={clothing.clothing.name}
-                                                                    loading="lazy"
                                                                     style={{
                                                                         transition: 'transform 0.1s ease',
                                                                         width: '100%',
@@ -1061,204 +1060,209 @@ export default function Details() {
                         </div>
                     </div>
                 </div>
-                <div className="container">
-                    <div id="content" className="col-sm-9 productpage">
-                        <div className="hometab box">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="tab-head">
-                                        <div className="hometab-heading box-heading">Нови и популярни артикули</div>
-                                        <div id="tabs" className="htabs">
-                                            <ul className="etabs">
-                                                <li className="tab"><a href="#tab-latest">Подобни</a></li>
-                                                <li className="tab"></li>
-                                                <li className="tab"><a href="#tab-special">Колекция</a></li>
-                                            </ul>
+                {similar?.clothes?.length > 1 && collection?.clothes && (
+                    <div className="container">
+                        <div id="content" className="col-sm-9 productpage">
+                            <div className="hometab box">
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="tab-head">
+                                            <div className="hometab-heading box-heading">Нови и популярни артикули</div>
+                                            <div id="tabs" className="htabs">
+                                                <ul className="etabs">
+                                                    {similar?.clothes?.length > 1 && (<li className="tab"><a href="#tab-latest">Подобни</a></li>)}
+                                                    <li className="tab"></li>
+                                                    {collection?.clothes?.length > 1 && (<li className="tab"><a href="#tab-special">Колекция</a></li>)}
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="tab-latest" className="tab-content">
-                                        <div className="box">
-                                            <div className="box-content">
-                                                <div className="customNavigation">
-                                                    <a className="fa prev fa-arrow-left">&nbsp;</a>
-                                                    <a className="fa next fa-arrow-right">&nbsp;</a>
-                                                </div>
-                                                <div className="box-product product-carousel" id="tablatest-carousel">
-                                                    {similar.clothes && similar.clothes.map((clothing) => (
-                                                        <div className="slider-item" key={clothing.id}>
-                                                            <div className="product-block product-thumb transition">
-                                                                <div className="product-block-inner">
-                                                                    <div className="image">
-                                                                        <Link to={`/clothing/details/${clothing.id}`}>
-                                                                            <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
-                                                                                title={clothing.name}
-                                                                                alt={clothing.name}
-                                                                                className="img-responsive reg-image"
-                                                                                loading="lazy"
-                                                                            />
-                                                                            {clothing.type !== "KIT" && (
-                                                                                <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'back')?.path}`}
-                                                                                    title={clothing.name}
-                                                                                    alt={clothing.name}
-                                                                                    className="img-responsive hover-image"
-                                                                                    loading="lazy"
-                                                                                />
-                                                                            )}
-                                                                            {clothing.type === "KIT" && (
-                                                                                <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
-                                                                                    title={clothing.name}
-                                                                                    alt={clothing.name}
-                                                                                    className="img-responsive hover-image"
-                                                                                    loading="lazy"
-                                                                                />
-                                                                            )}
-                                                                        </Link>
-                                                                        <div className="product_hover_block">
-                                                                            <div className="action">
-                                                                                <button
-                                                                                    type="button"
-                                                                                    className="cart_button"
-                                                                                    onClick={() => navigate(`/clothing/details/${clothing.id}`)}
-                                                                                    title="Add to Cart"
-                                                                                >
-                                                                                    <i className="fa fa-shopping-cart" area-hidden="true" />
-                                                                                </button>
-                                                                                <button
-                                                                                    className="wishlist"
-                                                                                    type="button"
-                                                                                    title="Add to Wish List"
-                                                                                    onClick={() => cart.add(clothing.id)}
-                                                                                >
-                                                                                    <i className="fa fa-heart" />
-                                                                                </button>
+                                        <div id="tab-latest" className="tab-content">
+                                            <div className="box">
+                                                <div className="box-content">
+                                                    <div className="customNavigation">
+                                                        <a className="fa prev fa-arrow-left">&nbsp;</a>
+                                                        <a className="fa next fa-arrow-right">&nbsp;</a>
+                                                    </div>
+                                                    <div className="box-product product-carousel" id="tablatest-carousel">
+                                                        {similar.clothes && similar.clothes
+                                                            .filter(current => { return !(clothing.clothing.model === current.model && clothing.clothing.type === current.type); })
+                                                            .map((clothing) => (
+                                                                <div className="slider-item" key={clothing.id}>
+                                                                    <div className="product-block product-thumb transition">
+                                                                        <div className="product-block-inner">
+                                                                            <div className="image">
+                                                                                <Link to={`/clothing/details/${clothing.id}`}>
+                                                                                    <img
+                                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                        title={clothing.name}
+                                                                                        alt={clothing.name}
+                                                                                        className="img-responsive reg-image"
+                                                                                        loading="lazy"
+                                                                                    />
+                                                                                    {clothing.type !== "KIT" && (
+                                                                                        <img
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'back')?.path}`}
+                                                                                            title={clothing.name}
+                                                                                            alt={clothing.name}
+                                                                                            className="img-responsive hover-image"
+                                                                                            loading="lazy"
+                                                                                        />
+                                                                                    )}
+                                                                                    {clothing.type === "KIT" && (
+                                                                                        <img
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                            title={clothing.name}
+                                                                                            alt={clothing.name}
+                                                                                            className="img-responsive hover-image"
+                                                                                            loading="lazy"
+                                                                                        />
+                                                                                    )}
+                                                                                </Link>
+                                                                                <div className="product_hover_block">
+                                                                                    <div className="action">
+                                                                                        <button
+                                                                                            type="button"
+                                                                                            className="cart_button"
+                                                                                            onClick={() => navigate(`/clothing/details/${clothing.id}`)}
+                                                                                            title="Add to Cart"
+                                                                                        >
+                                                                                            <i className="fa fa-shopping-cart" area-hidden="true" />
+                                                                                        </button>
+                                                                                        <button
+                                                                                            className="wishlist"
+                                                                                            type="button"
+                                                                                            title="Add to Wish List"
+                                                                                            onClick={() => cart.add(clothing.id)}
+                                                                                        >
+                                                                                            <i className="fa fa-heart" />
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="product-details">
+                                                                                <div className="caption">
+                                                                                    <h4>
+                                                                                        <Link to={`/clothing/details/${clothing.id}`}>{clothing.name}</Link>
+                                                                                    </h4>
+                                                                                    <p className="price">
+                                                                                        {clothing.price.toFixed(2)} лв.
+                                                                                    </p>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div className="product-details">
-                                                                        <div className="caption">
-                                                                            <h4>
-                                                                                <Link to={`/clothing/details/${clothing.id}`}>{clothing.name}</Link>
-                                                                            </h4>
-                                                                            <p className="price">
-                                                                                {clothing.price.toFixed(2)} лв.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                    {/* Add invisible placeholders if there are fewer than 5 products */}
-                                                    {similar.clothes && similar.clothes.length < 5 && (
-                                                        Array.from({ length: 5 - similar.clothes.length }).map((_, index) => (
-                                                            <div className="slider-item placeholder" key={`placeholder-${index}`} style={{ visibility: 'hidden' }}>
-                                                                <div className="product-block product-thumb transition">
-                                                                    <div className="product-block-inner">
-                                                                        <div className="image">
-                                                                            <div style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }} />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        ))
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <span className="tablatest_default_width" style={{ display: "none", visibility: "hidden" }} />
-                                    </div>
-                                    <div id="tab-special" className="tab-content">
-                                        <div className="box">
-                                            <div className="box-content">
-                                                <div className="box-product  productbox-grid" id="tabspecial-grid">
-                                                    {collection.clothes && collection.clothes.slice(0, 5).map((product) => (
-                                                        <div className="product-items" key={product.id}>
-                                                            <div className="product-block product-thumb transition">
-                                                                <div className="product-block-inner">
-                                                                    <div className="image">
-                                                                        <Link to={`/clothing/details/${product.id}`}>
-                                                                            <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
-                                                                                title={product.name}
-                                                                                alt={product.name}
-                                                                                className="img-responsive reg-image"
-                                                                                loading="lazy"
-                                                                            />
-
-                                                                            {product.type !== "KIT" && (
-                                                                                <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'back')?.path}`}
-                                                                                    title={product.name}
-                                                                                    alt={product.name}
-                                                                                    className="img-responsive hover-image"
-                                                                                    loading="lazy"
-                                                                                />
-                                                                            )}
-
-                                                                            {product.type === "KIT" && (
-                                                                                <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
-                                                                                    title={product.name}
-                                                                                    alt={product.name}
-                                                                                    className="img-responsive hover-image"
-                                                                                    loading="lazy"
-                                                                                />
-                                                                            )}
-                                                                        </Link>
-                                                                        <div className="product_hover_block">
-                                                                            <div className="action">
-                                                                                <button
-                                                                                    type="button"
-                                                                                    className="cart_button"
-                                                                                    onClick={() => navigate(`/clothing/details/${product.id}`)}
-                                                                                    title="Add to Cart"
-                                                                                >
-                                                                                    <i className="fa fa-shopping-cart" aria-hidden="true" />
-                                                                                </button>
-                                                                                <button
-                                                                                    className="wishlist"
-                                                                                    type="button"
-                                                                                    title="Add to Wish List"
-                                                                                    onClick={() => cart.add(product.id)}
-                                                                                >
-                                                                                    <i className="fa fa-heart" />
-                                                                                </button>
+                                                            ))}
+                                                        {similar.clothes && similar.clothes.length < 5 && (
+                                                            Array.from({ length: 5 - similar.clothes.length }).map((_, index) => (
+                                                                <div className="slider-item placeholder" key={`placeholder-${index}`} style={{ visibility: 'hidden' }}>
+                                                                    <div className="product-block product-thumb transition">
+                                                                        <div className="product-block-inner">
+                                                                            <div className="image">
+                                                                                <div style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }} />
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div className="product-details">
-                                                                        <div className="caption">
-                                                                            <h4>
-                                                                                <a href={`/product&product_id=${product.id}`}>
-                                                                                    {product.name}
-                                                                                </a>
-                                                                            </h4>
-                                                                            <p className="price">
-                                                                                <span className="price-new">{product.price.toFixed(2)} лв.</span>
-                                                                                {/* <span className="price-old">$122.00</span> */}
-                                                                            </p>
+                                                                </div>
+                                                            ))
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span className="tablatest_default_width" style={{ display: "none", visibility: "hidden" }} />
+                                        </div>
+                                        <div id="tab-special" className="tab-content">
+                                            <div className="box">
+                                                <div className="box-content">
+                                                    <div className="box-product  productbox-grid" id="tabspecial-grid">
+                                                        {collection.clothes && collection.clothes.slice(0, 5)
+                                                            .filter(current => { return !(clothing.clothing.model === current.model && clothing.clothing.type === current.type); })
+                                                            .map((product) => (
+                                                                <div className="product-items" key={product.id}>
+                                                                    <div className="product-block product-thumb transition">
+                                                                        <div className="product-block-inner">
+                                                                            <div className="image">
+                                                                                <Link to={`/clothing/details/${product.id}`}>
+                                                                                    <img
+                                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
+                                                                                        title={product.name}
+                                                                                        alt={product.name}
+                                                                                        className="img-responsive reg-image"
+                                                                                        loading="lazy"
+                                                                                    />
+
+                                                                                    {product.type !== "KIT" && (
+                                                                                        <img
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'back')?.path}`}
+                                                                                            title={product.name}
+                                                                                            alt={product.name}
+                                                                                            className="img-responsive hover-image"
+                                                                                            loading="lazy"
+                                                                                        />
+                                                                                    )}
+
+                                                                                    {product.type === "KIT" && (
+                                                                                        <img
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
+                                                                                            title={product.name}
+                                                                                            alt={product.name}
+                                                                                            className="img-responsive hover-image"
+                                                                                            loading="lazy"
+                                                                                        />
+                                                                                    )}
+                                                                                </Link>
+                                                                                <div className="product_hover_block">
+                                                                                    <div className="action">
+                                                                                        <button
+                                                                                            type="button"
+                                                                                            className="cart_button"
+                                                                                            onClick={() => navigate(`/clothing/details/${product.id}`)}
+                                                                                            title="Add to Cart"
+                                                                                        >
+                                                                                            <i className="fa fa-shopping-cart" aria-hidden="true" />
+                                                                                        </button>
+                                                                                        <button
+                                                                                            className="wishlist"
+                                                                                            type="button"
+                                                                                            title="Add to Wish List"
+                                                                                            onClick={() => cart.add(product.id)}
+                                                                                        >
+                                                                                            <i className="fa fa-heart" />
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="product-details">
+                                                                                <div className="caption">
+                                                                                    <h4>
+                                                                                        <a href={`/product&product_id=${product.id}`}>
+                                                                                            {product.name}
+                                                                                        </a>
+                                                                                    </h4>
+                                                                                    <p className="price">
+                                                                                        <span className="price-new">{product.price.toFixed(2)} лв.</span>
+                                                                                        {/* <span className="price-old">$122.00</span> */}
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    ))}
+                                                            ))}
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <span
+                                                className="tabspecial_default_width"
+                                                style={{ display: "none", visibility: "hidden" }}
+                                            />
                                         </div>
-                                        <span
-                                            className="tabspecial_default_width"
-                                            style={{ display: "none", visibility: "hidden" }}
-                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div >
 
             {isModalOpen && ReactDOM.createPortal(
