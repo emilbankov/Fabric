@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
-import { categories, filters } from "../../lib/dictionary";
+import { categoriesMap, filters } from "../../lib/dictionary";
 import './Catalog.css';
 
 export default function Catalog() {
@@ -20,7 +20,7 @@ export default function Catalog() {
     const [checkedCategories, setCheckedCategories] = useState(selectedCategories ? selectedCategories.split(",") : []);
     const [catalog, setCatalog] = useState([]);
     const [mostSold, setMostSold] = useState([]);
-    const [productsCount, setProductsCount] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showFilters, setShowFilters] = useState(true);
 
@@ -28,7 +28,7 @@ export default function Catalog() {
         return () => {
             setCatalog([]);
             setMostSold([]);
-            setProductsCount([]);
+            setCategories([]);
         };
     }, []);
 
@@ -37,12 +37,12 @@ export default function Catalog() {
         Promise.all([
             clothesService.getCatalog(type, sort, size, page, categoryArray),
             clothesService.getMostSold(),
-            clothesService.getProductsCount(type),
+            clothesService.getCategories(type),
         ])
-            .then(([catalog, mostSold, productsCount]) => {
+            .then(([catalog, mostSold, categories]) => {
                 setCatalog(catalog);
                 setMostSold(mostSold);
-                setProductsCount(productsCount);
+                setCategories(categories);
             })
             .catch((err) => {
                 console.error("Error fetching data:", err);
@@ -225,7 +225,7 @@ export default function Catalog() {
                                                                             className="img-responsive reg-image"
                                                                             loading="lazy"
                                                                         />
-                                                                        {item.type !== "KIT" && (
+                                                                        {(item.type !== "KIT" || item.type !== "TOWELS" || item.type !== "BANDANAS") && (
                                                                             <img
                                                                                 src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
                                                                                 title="tote bags for women"
@@ -234,7 +234,7 @@ export default function Catalog() {
                                                                                 loading="lazy"
                                                                             />
                                                                         )}
-                                                                        {item.type === "KIT" && (
+                                                                        {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
                                                                             <img
                                                                                 src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
                                                                                 title="tote bags for women"
@@ -304,25 +304,25 @@ export default function Catalog() {
                                             const isActive = new URLSearchParams(location.search)
                                                 .get("category")
                                                 ?.split(",")
-                                                .includes(category.id.toString());
+                                                .includes(category);
 
                                             return (
                                                 <div
                                                     className="col-sm-2 col-xs-4 category-icon"
-                                                    key={category.id}
-                                                    onClick={() => handleCategoryClick(category.id.toString())}
+                                                    key={category}
+                                                    onClick={() => handleCategoryClick(category)}
                                                 >
                                                     <div className={`icon-wrapper ${isActive ? 'active' : ''}`}>
                                                         <img
-                                                            src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category.id}.jpg`}
-                                                            alt={category.name}
+                                                            src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category}.jpg`}
+                                                            alt={categoriesMap[category]}
                                                             className="img-responsive"
                                                             loading="lazy"
                                                         />
                                                         <span>
-                                                            {window.innerWidth <= 767 && category.name.length > 7
-                                                                ? `${category.name.substring(0, 7)}..`
-                                                                : category.name}
+                                                            {window.innerWidth <= 767 && categoriesMap[category].length > 7
+                                                                ? `${categoriesMap[category].substring(0, 7)}..`
+                                                                : categoriesMap[category]}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -409,7 +409,7 @@ export default function Catalog() {
                                                             className="img-responsive reg-image"
                                                             loading="lazy"
                                                         />
-                                                        {item.type !== "KIT" && (
+                                                        {(item.type !== "KIT" || item.type !== "TOWELS" || item.type !== "BANDANAS") && (
                                                             <img
                                                                 src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
                                                                 title={item.name}
@@ -418,7 +418,7 @@ export default function Catalog() {
                                                                 loading="lazy"
                                                             />
                                                         )}
-                                                        {item.type === "KIT" && (
+                                                        {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
                                                             <img
                                                                 src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
                                                                 title={item.name}
