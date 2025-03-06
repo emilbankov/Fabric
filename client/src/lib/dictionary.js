@@ -49,13 +49,13 @@ export const categoriesMap = {
 };
 
 export const filters = {
-    "new": "Най-нови",
-    "most-sold": "Най-продавани",
-    "t_shirt": "Тениски",
-    "long_t_shirt": "Блузи",
-    "sweatshirt": "Суитчъри",
-    "shorts": "Къси панталони",
-    "kit": "Комплекти"
+    "T_SHIRT": "Тениски",
+    "LONG_T_SHIRT": "Блузи",
+    "SWEATSHIRT": "Суитчъри",
+    "SHORTS": "Къси панталони",
+    "KIT": "Комплекти",
+    "TOWELS": "Плажни кърпи",
+    "BANDANAS": "Бандани",
 };
 
 export const gender = {
@@ -74,26 +74,31 @@ export const homeCategories = [
     {
         id: 'T_SHIRT',
         name: 'Тениски',
-        image: '/images/categories/t-shirts.jpg'
+        image: '/images/categories/t-shirts.jpg',
+        link: '/catalog?type=T_SHIRT'
     },
     {
         id: 'LONG_T_SHIRT',
         name: 'Блузи',
-        image: '/images/categories/long-t-shirts.jpg'
+        image: '/images/categories/long-t-shirts.jpg',
+        link: '/catalog?type=LONG_T_SHIRT'
     },
     {
         id: 'SWEATSHIRT',
         name: 'Суитшърти',
-        image: '/images/categories/sweatshirts.jpg'
+        image: '/images/categories/sweatshirts.jpg',
+        link: '/catalog?type=SWEATSHIRT'
     },
     {
         id: 'SHORTS',
         name: 'Къси панталони',
-        image: '/images/categories/shorts.jpg'
+        image: '/images/categories/shorts.jpg',
+        link: '/catalog?type=SHORTS'
     },
     {
         id: 'KIT',
         name: 'Комплекти',
-        image: '/images/categories/kits.jpg'
+        image: '/images/categories/kits.jpg',
+        link: '/catalog?type=KIT'
     }
 ];

@@ -1060,7 +1060,7 @@ export default function Details() {
                         </div>
                     </div>
                 </div>
-                {similar?.clothes?.length > 1 && collection?.clothes && (
+                {(similar?.clothes?.length > 1 || collection?.clothes?.length > 1) && (
                     <div className="container">
                         <div id="content" className="col-sm-9 productpage">
                             <div className="hometab box">

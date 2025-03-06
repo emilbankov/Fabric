@@ -90,7 +90,7 @@ export default function Home() {
                                             <div
                                                 className="col-6 col-md-4 col-lg-3-1 category-icon categories-responsive"
                                                 key={category.id}
-                                                onClick={() => navigate(`/catalog?type=${category.id}`)}
+                                                onClick={() => navigate(category.link)}
                                             >
                                                 <div className="icon-wrapper">
                                                     <img

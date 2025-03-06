@@ -778,7 +778,6 @@ header .row {
 	-moz-transition: all 400ms;
 	-ms-transition: all 400ms;
 	-o-transition: all 400ms;
-
 }
 
 .related .owl-wrapper {
@@ -15064,8 +15063,7 @@ li.paymt a:hover:before {
 
 /* End Datetimepicker Css */
 .product-block .image .hover-image,
-#column-right .image .hover-image,
-#column-left .image .hover-image .button-group button:hover {
+#column-right .image .hover-image {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -15086,8 +15084,7 @@ li.paymt a:hover:before {
 
 
 .product-block:hover .hover-image,
-#column-right .image:hover .hover-image,
-#column-left .image:hover .hover-image {
+#column-right .image:hover .hover-image {
 	opacity: 1;
 	-webkit-opacity: 1;
 	-moz-opacity: 1;
@@ -15107,8 +15104,7 @@ li.paymt a:hover:before {
 }
 
 .product-block .image:hover .reg-image,
-#column-right .image:hover .reg-image,
-#column-left .image:hover .reg-image {
+#column-right .image:hover .reg-image {
 	opacity: 0;
 	-webkit-opacity: 0;
 	-moz-opacity: 0;
