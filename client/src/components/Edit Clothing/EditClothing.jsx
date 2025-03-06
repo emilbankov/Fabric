@@ -75,6 +75,16 @@ export default function EditClothing() {
 
             const removedImages = [];
 
+            const typesWithOneImage = ['KIT', 'TOWELS', 'BANDANAS'];
+            const isChangedToOneImageType = typesWithOneImage.includes(clothing.type);
+
+            if (isChangedToOneImageType) {
+                const oldBackImage = clothing.images?.find(img => img.side === 'back');
+                if (oldBackImage) {
+                    removedImages.push(oldBackImage.path);
+                }
+            }
+
             if (clothing.frontImage instanceof File) {
                 formData.append('frontImage', clothing.frontImage);
                 const oldFrontImage = clothing.images?.find(img => img.side === 'front');
@@ -83,7 +93,7 @@ export default function EditClothing() {
                 }
             }
 
-            if (clothing.backImage instanceof File) {
+            if (clothing.backImage instanceof File && !isChangedToOneImageType) {
                 formData.append('backImage', clothing.backImage);
                 const oldBackImage = clothing.images?.find(img => img.side === 'back');
                 if (oldBackImage) {
@@ -101,7 +111,6 @@ export default function EditClothing() {
             navigate(`/clothing/details/${clothingId}`);
         } catch (error) {
             if (error.name === 'ValidationError') {
-                // Handle Yup validation errors
                 const validationErrors = {};
                 error.inner.forEach((err) => {
                     validationErrors[err.path] = err.message;
@@ -109,7 +118,6 @@ export default function EditClothing() {
                 setErrors(validationErrors);
                 return;
             }
-            // Handle other errors
             console.error(error);
             setErrors({ submit: 'Възникна грешка при обновяването на продукта.' });
         } finally {
