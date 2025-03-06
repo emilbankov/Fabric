@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
-import { homeCategories } from "../../lib/dictionary";
+import { homeCategories, testimonials } from "../../lib/dictionary";
 
 export default function Home() {
     const location = useLocation();
@@ -137,7 +137,7 @@ export default function Home() {
                                                             <div className="image">
                                                                 <Link to={`/clothing/details/${clothing.id}`}>
                                                                     <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_264,h_290/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                         title={clothing.name}
                                                                         alt={clothing.name}
                                                                         className="img-responsive reg-image"
@@ -145,7 +145,7 @@ export default function Home() {
                                                                     />
                                                                     {(clothing.type !== "KIT" || clothing.type !== "TOWELS" || clothing.type !== "BANDANAS") && (
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'back')?.path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_264,h_290/f_webp,q_auto${clothing.images.find(image => image.side === 'back')?.path}`}
                                                                             title={clothing.name}
                                                                             alt={clothing.name}
                                                                             className="img-responsive hover-image"
@@ -154,7 +154,7 @@ export default function Home() {
                                                                     )}
                                                                     {(clothing.type === "KIT" || clothing.type === "TOWELS" || clothing.type === "BANDANAS") && (
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_264,h_290/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                             title={clothing.name}
                                                                             alt={clothing.name}
                                                                             className="img-responsive hover-image"
@@ -216,7 +216,7 @@ export default function Home() {
                                                             <div className="image">
                                                                 <Link to={`/clothing/details/${product.id}`}>
                                                                     <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
+                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_264,h_290/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
                                                                         title={product.name}
                                                                         alt={product.name}
                                                                         className="img-responsive reg-image"
@@ -225,7 +225,7 @@ export default function Home() {
 
                                                                     {(product.type !== "KIT" || product.type !== "TOWELS" || product.type !== "BANDANAS") && (
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'back')?.path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_264,h_290/f_webp,q_auto${product.images.find(image => image.side === 'back')?.path}`}
                                                                             title={product.name}
                                                                             alt={product.name}
                                                                             className="img-responsive hover-image"
@@ -235,7 +235,7 @@ export default function Home() {
 
                                                                     {(product.type === "KIT" || product.type === "TOWELS" || product.type === "BANDANAS") && (
                                                                         <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
+                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/w_264,h_290/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
                                                                             title={product.name}
                                                                             alt={product.name}
                                                                             className="img-responsive hover-image"
@@ -299,136 +299,27 @@ export default function Home() {
                             <div className="wdtestimonial-content">
                                 <div className="wdtestimonial-inner">
                                     <ul id="wdtestimonial-carousel" className="wd-carousel">
-                                        <li>
-                                            <div className="testimonial-image">
-                                                <img
-                                                    alt=""
-                                                    src="/images/user1.jpg"
-                                                    width={86}
-                                                    height={86}
-                                                />
-                                            </div>
-                                            <div className="testimonial-content">
-                                                <div className="testimonial-desc">
-                                                    <p>
-                                                        "Купих тениска и суитшърт и двата артикула са абсолютно невероятни.
-                                                        Тениската е дишаща, перфектна за по-топлите дни, а суитшъртът ме държи
-                                                        уютно през студените вечери. Дизайните са свежи и размерите са точни. Ще пазарувам отново!"
-                                                    </p>
+                                        {testimonials.map((testimonial, index) => (
+                                            <li key={index}>
+                                                <div className="testimonial-image">
+                                                    <img
+                                                        alt=""
+                                                        src={testimonial.image}
+                                                        width={86}
+                                                        height={86}
+                                                    />
                                                 </div>
-                                                <div className="quote_img" />
-                                                <div className="testimonial-user-title">
-                                                    <h4>Кирил Гешев, Бургас</h4>
+                                                <div className="testimonial-content">
+                                                    <div className="testimonial-desc">
+                                                        <p>{testimonial.comment}</p>
+                                                    </div>
+                                                    <div className="quote_img" />
+                                                    <div className="testimonial-user-title">
+                                                        <h4>{testimonial.name}</h4>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="testimonial-image">
-                                                <img
-                                                    alt=""
-                                                    src="/images/user2.jpg"
-                                                    width={86}
-                                                    height={86}
-                                                />
-                                            </div>
-                                            <div className="testimonial-content">
-                                                <div className="testimonial-desc">
-                                                    <p>
-                                                        "Наскоро купих суитшърт от този сайт и съм изключително доволен от качеството!
-                                                        Тъканта е мека, удобна и идеална за по-хладно време. Освен това, дизайнът е точно
-                                                        това, което търсех. Горещо препоръчвам този сайт на всеки, който иска стилни и качествени дрехи!"
-                                                    </p>
-                                                </div>
-                                                <div className="quote_img" />
-                                                <div className="testimonial-user-title">
-                                                    <h4>Иван Владимиров, София</h4>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="testimonial-image">
-                                                <img
-                                                    alt=""
-                                                    src="/images/user3.jpg"
-                                                    width={86}
-                                                    height={86}
-                                                />
-                                            </div>
-                                            <div className="testimonial-content">
-                                                <div className="testimonial-desc">
-                                                    <p>
-                                                        "Късите панталонки са страхотни! Лек и удобен материал, подходящи за горещото лято. Перфектни за плажа или ежедневието."
-                                                    </p>
-                                                </div>
-                                                <div className="quote_img" />
-                                                <div className="testimonial-user-title">
-                                                    <h4>Пенка Стоянова, Пловдив</h4>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="testimonial-image">
-                                                <img
-                                                    alt=""
-                                                    src="/images/user1.jpg"
-                                                    width={86}
-                                                    height={86}
-                                                />
-                                            </div>
-                                            <div className="testimonial-content">
-                                                <div className="testimonial-desc">
-                                                    <p>
-                                                        "Тениската е с невероятен дизайн и много удобна. Материалът е приятен на допир и е идеална за летните дни."
-                                                    </p>
-                                                </div>
-                                                <div className="quote_img" />
-                                                <div className="testimonial-user-title">
-                                                    <h4>Геро Пройчев, Сопот</h4>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="testimonial-image">
-                                                <img
-                                                    alt=""
-                                                    src="/images/user2.jpg"
-                                                    width={86}
-                                                    height={86}
-                                                />
-                                            </div>
-                                            <div className="testimonial-content">
-                                                <div className="testimonial-desc">
-                                                    <p>
-                                                        "Комплектът е много комфортен и стилен. Идеален както за тренировки, така и за ежедневни излизания. Страхотно съотношение качество-цена."
-                                                    </p>
-                                                </div>
-                                                <div className="quote_img" />
-                                                <div className="testimonial-user-title">
-                                                    <h4>Любомир Радков, Пазарджик</h4>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="testimonial-image">
-                                                <img
-                                                    alt=""
-                                                    src="/images/user1.jpg"
-                                                    width={86}
-                                                    height={86}
-                                                />
-                                            </div>
-                                            <div className="testimonial-content">
-                                                <div className="testimonial-desc">
-                                                    <p>
-                                                        "Купих комплект тениска и къси панталонки. Перфектен за топлите летни дни! Материалът е мек и удобен, а дизайните са модерни и стилни. Идеален за спорт или просто за разходка. Супер удобен и изглежда страхотно!"
-                                                    </p>
-                                                </div>
-                                                <div className="quote_img" />
-                                                <div className="testimonial-user-title">
-                                                    <h4>Николай Найденов, Садово</h4>
-                                                </div>
-                                            </div>
-                                        </li>
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
                             </div>
@@ -1364,7 +1255,7 @@ export default function Home() {
                                                 </h4>
                                                 <div className="blog-desc">
                                                     {" "}
-                                                    Link: St. Louis Blues Audio shortcode: “Lorem ipsum dolor
+                                                    Link: St. Louis Blues Audio shortcode: "Lorem ipsum dolor
                                                     sit amet, consectetur ...{" "}
                                                 </div>
                                                 <div className="view-blog">
