@@ -109,9 +109,8 @@ export default function Header() {
 
                                 <div className="header_center">
                                     <div className="header-cartright">
-                                        {/* {isAuthenticated && <div className="compare"><Link to="/account" id="compare-total" title="Product Compare" />{" "}</div>} */}
-                                        <div className="compare"><Link to="/account" id="compare-total" title="Product Compare" />{" "}</div>
-                                        <div className="whishlist"><span>0</span><a href="/wishlist" id="wishlist-total" title={0} />{" "}</div>
+                                        <div className="compare"><Link to="/account" id="compare-total" title="account" />{" "}</div>
+                                        <div className="whishlist"><span>0</span><Link to="/wishlist" id="wishlist-total" title={0} />{" "}</div>
 
                                         <Cart />
 

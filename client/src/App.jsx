@@ -23,6 +23,7 @@ import About from "./components/About/About";
 import Blogs from "./components/Blogs/Blogs";
 import Account from "./components/Account/Account";
 import EditAccount from "./components/Edit Account/EditAccount";
+import Wishlist from "./components/Wishlist/Wishlist";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import ForgottenPassword from "./components/Forgotten Password/ForgottenPassword";
@@ -69,6 +70,7 @@ function App() {
                             <Route path="/add-clothing" element={<AddClothing />} />
                             <Route path="/clothing/edit/:clothingId" element={<EditClothing />} />
                             <Route path="/edit-account" element={<EditAccount />} />
+                            <Route path="/wishlist" element={<Wishlist />} />
                             <Route path="/logout" element={<Logout />} />
                         </Route>
 
@@ -80,7 +82,6 @@ function App() {
                 </AuthProvider>
             </CartProvider>
         </ErrorBoundary>
-
     );
 }
 
