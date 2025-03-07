@@ -1,12 +1,14 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../contexts/AuthProvider";
 import Search from "../Search/Search";
 import $ from 'jquery';
 import Cart from "../Cart/Cart";
+import { getWishlist } from "../../services/authService";
 
 export default function Header() {
     const { isAuthenticated, isAdmin, isModerator } = useContext(AuthContext);
+    const [wishlistCount, setWishlistCount] = useState(0);
 
     useEffect(() => {
         $(".box-category-top").click(function () {
@@ -45,6 +47,22 @@ export default function Header() {
             }
         };
     }, [location]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            const fetchWishlist = async () => {
+                try {
+                    const wishlist = await getWishlist();
+                    setWishlistCount(wishlist.length);
+                } catch (error) {
+                    console.error("Failed to fetch wishlist:", error);
+                }
+            };
+            fetchWishlist();
+        } else {
+            setWishlistCount(0);
+        }
+    }, [isAuthenticated]);
 
     return (
         <>
@@ -110,7 +128,10 @@ export default function Header() {
                                 <div className="header_center">
                                     <div className="header-cartright">
                                         <div className="compare"><Link to="/account" id="compare-total" title="account" />{" "}</div>
-                                        <div className="whishlist"><span>0</span><Link to="/wishlist" id="wishlist-total" title={0} />{" "}</div>
+                                        <div className="whishlist">
+                                            <span>{wishlistCount}</span>
+                                            <Link to="/wishlist" id="wishlist-total" title={wishlistCount} />{" "}
+                                        </div>
 
                                         <Cart />
 

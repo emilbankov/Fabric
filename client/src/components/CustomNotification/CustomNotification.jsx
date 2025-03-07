@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 export default function CustomNotification({ message, type = 'success', onClose, timeout = 3000 }) {
     useEffect(() => {
         if (message) {
             const messageHtml = typeof message === 'string' ? message : messageToString(message);
             const tempDiv = document.createElement('div');
-            ReactDOM.render(message, tempDiv);
+            const root = createRoot(tempDiv);
+            root.render(message);
 
             $.notify({
                 message: messageHtml

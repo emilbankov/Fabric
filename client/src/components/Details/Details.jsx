@@ -1341,7 +1341,7 @@ export default function Details() {
 
             {showNotification && (
                 <CustomNotification
-                    message={<>You have added{" "}{clothing.clothing.name}{" "}to your{" "}cart!</>}
+                    message={<>Успешно добавихте {typeTranslations[clothing.clothing.type]} {clothing.clothing.name} във вашата количка!</>}
                     type="success"
                     timeout={3000}
                 />
