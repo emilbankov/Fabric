@@ -6,6 +6,7 @@ import AuthContext from "../../contexts/AuthProvider";
 import ReactDOM from 'react-dom';
 import { CartContext } from "../../contexts/CartProvider";
 import "./Details.css";
+import CustomNotification from "../CustomNotification/CustomNotification";
 
 export default function Details() {
     const navigate = useNavigate();
@@ -23,6 +24,7 @@ export default function Details() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [showNotification, setShowNotification] = useState(false);
 
     const increaseQuantity = () => setQuantity((prev) => prev + 1);
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -558,6 +560,7 @@ export default function Details() {
                                                                 );
                                                                 setSelectedSize(null);
                                                                 setSelectedType(null);
+                                                                setShowNotification(true);
                                                             }}
                                                             disabled={clothing.clothing.type === "T_SHIRT" ? (!gender || !selectedSize || !selectedType) : (!gender || !selectedSize)}
                                                         >
@@ -1334,6 +1337,14 @@ export default function Details() {
                         </div>
                     )}
                 </div>
+            )}
+
+            {showNotification && (
+                <CustomNotification
+                    message={<>You have added{" "}{clothing.clothing.name}{" "}to your{" "}cart!</>}
+                    type="success"
+                    timeout={3000}
+                />
             )}
         </>
     );

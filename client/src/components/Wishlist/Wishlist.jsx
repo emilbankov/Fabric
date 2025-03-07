@@ -26,54 +26,6 @@ export default function Wishlist() {
     return (
         <>
             <div className="account-wishlist   layout-2 left-col">
-                <div
-                    data-notify="container"
-                    className="col-xs-11 col-sm-3 alert alert-success animated fadeInDown"
-                    role="alert"
-                    data-notify-position="top-center"
-                    style={{
-                        display: "inline-block",
-                        margin: "0px auto",
-                        position: "fixed",
-                        transition: "0.5s ease-in-out",
-                        zIndex: 2031,
-                        top: 0,
-                        left: 0,
-                        right: 0
-                    }}
-                >
-                    <button
-                        type="button"
-                        aria-hidden="true"
-                        className="close"
-                        data-notify="dismiss"
-                    >
-                        &nbsp;×
-                    </button>
-                    <span data-notify="message">
-                        <i className="fa fa-check-circle" />
-                        &nbsp; Success: You have added{" "}
-                        <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=product/product&product_id=47">
-                            round toe Shoes
-                        </a>{" "}
-                        to your{" "}
-                        <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/wishlist">
-                            wish list
-                        </a>
-                        !
-                    </span>
-                    <div className="progress" data-notify="progressbar">
-                        <div
-                            className="progress-bar progress-bar-success"
-                            role="progressbar"
-                            aria-valuenow={100}
-                            aria-valuemin={0}
-                            aria-valuemax={100}
-                            style={{ width: "100%" }}
-                        />
-                    </div>
-                    <a href="#" target="_blank" data-notify="url" />
-                </div>
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">
                     <div className="container">
