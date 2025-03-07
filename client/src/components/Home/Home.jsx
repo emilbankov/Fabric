@@ -1,13 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
-import { homeCategories, testimonials } from "../../lib/dictionary";
+import { homeCategories, testimonials, typeTranslations } from "../../lib/dictionary";
+import { addToWishlist } from '../../services/authService';
+import AuthContext from "../../contexts/AuthProvider";
+import CustomNotification from "../CustomNotification/CustomNotification";
 
 export default function Home() {
     const location = useLocation();
     const navigate = useNavigate();
     const [newest, setNewest] = useState([]);
     const [mostSold, setMostSold] = useState([]);
+    const { isAuthenticated } = useContext(AuthContext);
+    const [notification, setNotification] = useState({ message: '', type: '' });
 
     useEffect(() => {
         Promise.all([
@@ -22,6 +27,29 @@ export default function Home() {
                 console.error("Error fetching data:", err);
             });
     }, [location.pathname]);
+
+    const handleAddToWishlist = async (id, productName, productType) => {
+        if (isAuthenticated) {
+            try {
+                await addToWishlist(id);
+                setNotification({
+                    message: `Успешно добавихте ${typeTranslations[productType]} ${productName} към любими!`,
+                    type: 'success'
+                });
+            } catch (error) {
+                console.error("Failed to add product to wishlist:", error);
+                setNotification({
+                    message: "Failed to add product to wishlist. Please try again.",
+                    type: 'success'
+                });
+            }
+        } else {
+            setNotification({
+                message: "You must log in to add products to your wishlist.",
+                type: 'success'
+            });
+        }
+    };
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -44,6 +72,14 @@ export default function Home() {
 
     return (
         <>
+            {notification.message && (
+                <CustomNotification
+                    message={notification.message}
+                    type={notification.type}
+                    timeout={3000}
+                    onClose={() => setNotification({ message: '', type: '' })}
+                />
+            )}
             <div className="content_headercms_bottom" />
             <div className="content-top-breadcum">
                 <div className="container">
@@ -176,7 +212,7 @@ export default function Home() {
                                                                             className="wishlist"
                                                                             type="button"
                                                                             title="Add to Wish List"
-                                                                            onClick={() => cart.add(clothing.id)}
+                                                                            onClick={() => handleAddToWishlist(clothing.id, clothing.name, clothing.type)}
                                                                         >
                                                                             <i className="fa fa-heart" />
                                                                         </button>
@@ -257,7 +293,7 @@ export default function Home() {
                                                                             className="wishlist"
                                                                             type="button"
                                                                             title="Add to Wish List"
-                                                                            onClick={() => cart.add(product.id)}
+                                                                            onClick={() => handleAddToWishlist(product.id, product.name, product.type)}
                                                                         >
                                                                             <i className="fa fa-heart" />
                                                                         </button>
@@ -383,7 +419,7 @@ export default function Home() {
                                                                 className="wishlist"
                                                                 type="button"
                                                                 title="Add to Wish List "
-                                                                onClick={() => cart.add('49')}
+                                                                onClick={() => handleAddToWishlist('49', 'Layered Crop Top')}
                                                             >
                                                                 <i className="fa fa-heart" />
                                                             </button>
@@ -480,7 +516,7 @@ export default function Home() {
                                                                 className="wishlist"
                                                                 type="button"
                                                                 title="Add to Wish List "
-                                                                onClick={() => cart.add('49')}
+                                                                onClick={() => handleAddToWishlist('49', 'Solid A-Line Top')}
                                                             >
                                                                 <i className="fa fa-heart" />
                                                             </button>
@@ -576,7 +612,7 @@ export default function Home() {
                                                                 className="wishlist"
                                                                 type="button"
                                                                 title="Add to Wish List "
-                                                                onClick={() => cart.add('49')}
+                                                                onClick={() => handleAddToWishlist('49', 'Hoodie for men')}
                                                             >
                                                                 <i className="fa fa-heart" />
                                                             </button>
@@ -672,7 +708,7 @@ export default function Home() {
                                                                 className="wishlist"
                                                                 type="button"
                                                                 title="Add to Wish List "
-                                                                onClick={() => cart.add('49')}
+                                                                onClick={() => handleAddToWishlist('30', 'long sleeve Shirts')}
                                                             >
                                                                 <i className="fa fa-heart" />
                                                             </button>
@@ -770,7 +806,7 @@ export default function Home() {
                                                                 className="wishlist"
                                                                 type="button"
                                                                 title="Add to Wish List "
-                                                                onClick={() => cart.add('49')}
+                                                                onClick={() => handleAddToWishlist('49', 'round toe Shoes')}
                                                             >
                                                                 <i className="fa fa-heart" />
                                                             </button>
@@ -865,7 +901,7 @@ export default function Home() {
                                                                 className="wishlist"
                                                                 type="button"
                                                                 title="Add to Wish List "
-                                                                onClick={() => cart.add('49')}
+                                                                onClick={() => handleAddToWishlist('45', 'tid watches nato')}
                                                             >
                                                                 <i className="fa fa-heart" />
                                                             </button>
