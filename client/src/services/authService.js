@@ -35,3 +35,6 @@ export const editProfile = async (firstName, lastName, email, phoneNumber, addre
 
 export const forgottenPassword = async (email) => await post(`${baseUrl}/forgot-password`, { email });
 export const resetPassword = async (password, token) => await post(`${baseUrl}/reset-password`, { password, token });
+
+export const getWishlist = async () => await get(`${baseUrl}/wishlist`);
+export const addToWishlist = async (id) => await put(`${baseUrl}/wishlist`, { id });

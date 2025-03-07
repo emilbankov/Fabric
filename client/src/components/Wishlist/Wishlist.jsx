@@ -1,8 +1,29 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { getWishlist } from "../../services/authService";
+import AuthContext from "../../contexts/AuthProvider";
 
 export default function Wishlist() {
     const location = useLocation();
+    const { isAuthenticated } = useContext(AuthContext);
+    const [wishlist, setWishlist] = useState([]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            const fetchWishlist = async () => {
+                try {
+                    const wishlist = await getWishlist();
+                    setWishlist(wishlist);
+                } catch (error) {
+                    console.error("Failed to fetch wishlist:", error);
+                }
+            };
+            fetchWishlist();
+        } else {
+            setWishlist([]);
+        }
+    }, [location.pathname, isAuthenticated]);
+    console.log(wishlist);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -36,21 +57,8 @@ export default function Wishlist() {
                 </div>
                 <div id="account-wishlist" className="container">
                     <ul className="breadcrumb">
-                        <li>
-                            <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=common/home">
-                                <i className="fa fa-home" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/account">
-                                Account
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/wishlist">
-                                My Wish List
-                            </a>
-                        </li>
+                        <li><Link to="/"><i className="fa fa-home" /></Link></li>
+                        <li><Link to="/wishlist">Любими</Link></li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
@@ -197,61 +205,56 @@ export default function Wishlist() {
                             </div>
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h2>My Wish List</h2>
+                            <h2>Любими</h2>
                             <div className="table-responsive">
                                 <table className="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <td className="text-center">Image</td>
-                                            <td className="text-left">Product Name</td>
-                                            <td className="text-left">Model</td>
-                                            <td className="text-right">Stock</td>
-                                            <td className="text-right">Unit Price</td>
-                                            <td className="text-right">Action</td>
+                                            <td className="text-center">Име</td>
+                                            <td className="text-center">Снимка</td>
+                                            <td className="text-center">Модел</td>
+                                            <td className="text-center">Наличност</td>
+                                            <td className="text-center">Цена</td>
+                                            <td className="text-center"></td>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td className="text-center">
-                                                <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=product/product&product_id=48">
-                                                    <img
-                                                        src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/11-47x68.jpg"
-                                                        alt="Men's lace up Shoes"
-                                                        title="Men's lace up Shoes"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td className="text-left">
-                                                <a href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=product/product&product_id=48">
-                                                    Men's lace up Shoes
-                                                </a>
-                                            </td>
-                                            <td className="text-left">product 20</td>
-                                            <td className="text-right">In Stock</td>
-                                            <td className="text-right">
-                                                {" "}
-                                                <div className="price"> $100.00</div>
-                                            </td>
-                                            <td className="text-right">
-                                                <button
-                                                    type="button"
-                                                    onclick="cart.add('48');"
-                                                    data-toggle="tooltip"
-                                                    title="Add to Cart"
-                                                    className="btn btn-primary"
-                                                >
-                                                    <i className="fa fa-shopping-cart" />
-                                                </button>
-                                                <a
-                                                    href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/wishlist&remove=48"
-                                                    data-toggle="tooltip"
-                                                    title="Remove"
-                                                    className="btn btn-danger"
-                                                >
-                                                    <i className="fa fa-times" />
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        {wishlist.map((item) => (
+                                            <tr key={item.id}>
+                                                <td className="text-center"><Link to={`/clothing/details/${item.id}`}>{item.name}</Link></td>
+                                                <td className="text-center">
+                                                    <Link to={`/clothing/details/${item.id}`}>
+                                                        <img
+                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto/w_55,h_68${item.image}`}
+                                                            alt={item.name}
+                                                            title={item.name}
+                                                        />
+                                                    </Link>
+                                                </td>
+                                                <td className="text-center">{item.model}</td>
+                                                <td className="text-center">В наличност</td>
+                                                <td className="text-center"><div className="price">{item.price} лв.</div></td>
+                                                <td className="text-center">
+                                                    <Link
+                                                        to={`/clothing/details/${item.id}`}
+                                                        data-toggle="tooltip"
+                                                        title="Add to Cart"
+                                                        className="btn btn-primary"
+                                                        style={{marginRight: "10px"}}
+                                                    >
+                                                        <i className="fa fa-shopping-cart" />
+                                                    </Link>
+                                                    <a
+                                                        href={`/wishlist/remove/${item.id}`}
+                                                        data-toggle="tooltip"
+                                                        title="Remove"
+                                                        className="btn btn-danger"
+                                                    >
+                                                        <i className="fa fa-times" />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>
