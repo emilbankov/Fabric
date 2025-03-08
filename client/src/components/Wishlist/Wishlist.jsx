@@ -1,29 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getWishlist, removeFromWishlist } from "../../services/authService";
-import AuthContext from "../../contexts/AuthProvider";
 import { useWishlist } from "../../contexts/WishlistProvider";
 
 export default function Wishlist() {
     const location = useLocation();
-    const { isAuthenticated } = useContext(AuthContext);
     const { wishlist, handleRemoveFromWishlist } = useWishlist();
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            const fetchWishlist = async () => {
-                try {
-                    const wishlist = await getWishlist();
-                    setWishlist(wishlist);
-                } catch (error) {
-                    console.error("Failed to fetch wishlist:", error);
-                }
-            };
-            fetchWishlist();
-        } else {
-            setWishlist([]);
-        }
-    }, [location.pathname, isAuthenticated]);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');

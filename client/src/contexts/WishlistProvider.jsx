@@ -19,13 +19,19 @@ export const WishlistProvider = ({ children }) => {
                 console.error("Failed to fetch wishlist:", error);
             }
         } else {
+            console.log("User not authenticated, clearing wishlist");
             setWishlist([]);
             setWishlistCount(0);
         }
     };
 
-    const handleAddToWishlist = async (id, onSuccess, onError) => {
+    const handleAddToWishlist = async (id, onSuccess, onError, onAlreadyInWishlist) => {
         if (isAuthenticated) {
+            if (wishlist.some(item => item.id === id)) {
+                onAlreadyInWishlist?.();
+                return;
+            }
+
             try {
                 await addToWishlist(id);
                 await fetchWishlist();
