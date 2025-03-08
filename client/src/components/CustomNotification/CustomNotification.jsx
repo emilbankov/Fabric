@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 
-export default function CustomNotification({ message, type = 'success', onClose, timeout = 3000 }) {
+export default function CustomNotification({ message, type = 'success', onClose }) {
     useEffect(() => {
         if (message) {
             const messageHtml = typeof message === 'string' ? message : messageToString(message);
@@ -13,7 +13,7 @@ export default function CustomNotification({ message, type = 'success', onClose,
                 message: messageHtml
             }, {
                 type: type,
-                delay: timeout,
+                delay: 5000,
                 placement: {
                     from: "top",
                     align: "center"
@@ -36,7 +36,7 @@ export default function CustomNotification({ message, type = 'success', onClose,
 
             tempDiv.remove();
         }
-    }, [message, type, timeout, onClose]);
+    }, [message, type, onClose]);
 
     return null;
 }

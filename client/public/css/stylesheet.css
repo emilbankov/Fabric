@@ -8098,10 +8098,6 @@ button.list-group-item:hover {
 	padding: 10px;
 }
 
-.account-wishlist table .text-center img {
-	border: 1px solid #e5e5e5;
-}
-
 @media (max-width: 1200px) {
 	#product-product #content .row {
 		margin: 0;

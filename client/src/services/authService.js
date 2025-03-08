@@ -38,3 +38,5 @@ export const resetPassword = async (password, token) => await post(`${baseUrl}/r
 
 export const getWishlist = async () => await get(`${baseUrl}/wishlist`);
 export const addToWishlist = async (id) => await put(`${baseUrl}/wishlist`, { id });
+export const removeFromWishlist = async (id) => await put(`${baseUrl}/wishlist/${id}`);
+
