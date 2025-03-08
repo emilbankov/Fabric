@@ -62,7 +62,7 @@ export default function Cart() {
                                                 <td className="text-left">
                                                     <Link to={`/clothing/details/${item.id}`}>{item.name}</Link>
                                                     <br />
-                                                    {item.model.length === 4 ? (
+                                                    {item.type !== null ? (
                                                         <><small>{item.size.slice(0, 3)}</small> | <small>{gender[item.gender]}</small> | <small>{item.type.slice(0, 28)}</small></>
                                                     ) : (
                                                         <><small>{item.size.slice(0, 3)}</small> | <small>{gender[item.gender]}</small></>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 
-export default function CustomNotification({ message, type = 'success', onClose }) {
+export default function CustomNotification({ message, onClose }) {
     useEffect(() => {
         if (message) {
             const messageHtml = typeof message === 'string' ? message : messageToString(message);
@@ -12,7 +12,7 @@ export default function CustomNotification({ message, type = 'success', onClose 
             $.notify({
                 message: messageHtml
             }, {
-                type: type,
+                type: 'success',
                 delay: 5000,
                 placement: {
                     from: "top",
@@ -26,17 +26,17 @@ export default function CustomNotification({ message, type = 'success', onClose 
                     exit: 'animated fadeOutUp'
                 },
                 onClose: onClose,
-                template: '<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert" style="display: inline-block; margin: 0px auto; position: fixed; transition: 0.5s ease-in-out; z-index: 2031; top: 0; left: 0; right: 0;">' +
+                template: '<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-success" role="alert" style="display: inline-block; margin: 0px auto; position: fixed; transition: 0.5s ease-in-out; z-index: 2031; top: 0; left: 0; right: 0;">' +
                           '<span data-notify="message">{2}</span>' +
                           '<div class="progress" data-notify="progressbar">' +
-                          '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                          '<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
                           '</div>' +
                           '</div>'
             });
 
             tempDiv.remove();
         }
-    }, [message, type, onClose]);
+    }, [message, onClose]);
 
     return null;
 }
