@@ -2,10 +2,10 @@ import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 
 import { CartProvider } from "./contexts/CartProvider";
 import { AuthProvider } from "./contexts/AuthProvider";
+import { WishlistProvider } from "./contexts/WishlistProvider";
 import AuthGuard from "./guards/AuthGuard";
 import GuestGuard from "./guards/GuestGuard";
 import ErrorBoundary from "./guards/ErrorBoundary";
-import { WishlistProvider } from "./contexts/WishlistProvider";
 
 import Header from "./components/Header/Header";
 import ScrollToTop from "./components/Scroll To Top/ScrollToTop";

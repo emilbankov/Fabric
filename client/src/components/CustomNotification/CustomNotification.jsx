@@ -4,6 +4,9 @@ import { createRoot } from 'react-dom/client';
 export default function CustomNotification({ message, onClose }) {
     useEffect(() => {
         if (message) {
+            // Clear all existing notifications
+            $('[data-notify="container"]').remove();
+
             const messageHtml = typeof message === 'string' ? message : messageToString(message);
             const tempDiv = document.createElement('div');
             const root = createRoot(tempDiv);
