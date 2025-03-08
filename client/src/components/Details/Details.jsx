@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import { CartContext } from "../../contexts/CartProvider";
 import "./Details.css";
 import CustomNotification from "../CustomNotification/CustomNotification";
+import { useWishlist } from "../../contexts/WishlistProvider";
 
 export default function Details() {
     const navigate = useNavigate();
@@ -25,6 +26,7 @@ export default function Details() {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
+    const { handleAddToWishlist } = useWishlist();
 
     const increaseQuantity = () => setQuantity((prev) => prev + 1);
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -162,6 +164,30 @@ export default function Details() {
             }
         };
     }, [clothingId, collection.clothes, similar.clothes]);
+
+    const handleAddToCart = () => {
+        addToCart(
+            {
+                id: clothing.clothing.id,
+                name: clothing.clothing.name,
+                model: clothing.clothing.model,
+                image: clothing.clothing.images.find(image => image.side === 'front')?.path,
+            },
+            selectedSize,
+            gender,
+            quantity,
+            selectedType,
+            calculatePrice()
+        );
+        setSelectedSize(null);
+        setSelectedType(null);
+        showCartNotification();
+    };
+
+    const showCartNotification = () => {
+        setShowNotification(true);
+        setTimeout(() => setShowNotification(false), 1);
+    };
 
     return (
         <>
@@ -432,7 +458,7 @@ export default function Details() {
                                                 </div>
                                             </div>
                                             <div className="col-sm-6 product-right">
-                                                <h3 className="product-title" style={{ textTransform: "none" }}>{typeTranslations[clothing.clothing.type]} {clothing.clothing.name} #{clothing.clothing.model}</h3>
+                                                <h3 className="product-title" style={{ textTransform: "none" }}>{typeTranslations[clothing.clothing.type]} {clothing.clothing.name}</h3>
                                                 <div className="description">
                                                     <table className="product-description">
                                                         <tbody>
@@ -442,7 +468,7 @@ export default function Details() {
                                                                 </td>
                                                                 <td className="description-right">
                                                                     <a href="?route=product/manufacturer/info&manufacturer_id=7">
-                                                                        #{clothing.clothing.model}
+                                                                        {clothing.clothing.model}
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -544,24 +570,7 @@ export default function Details() {
                                                             type="button"
                                                             id="button-cart"
                                                             className="btn btn-primary btn-lg btn-block card-disabled"
-                                                            onClick={() => {
-                                                                addToCart(
-                                                                    {
-                                                                        id: clothing.clothing.id,
-                                                                        name: clothing.clothing.name,
-                                                                        model: clothing.clothing.model,
-                                                                        image: clothing.clothing.images.find(image => image.side === 'front')?.path,
-                                                                    },
-                                                                    selectedSize,
-                                                                    gender,
-                                                                    quantity,
-                                                                    selectedType,
-                                                                    calculatePrice()
-                                                                );
-                                                                setSelectedSize(null);
-                                                                setSelectedType(null);
-                                                                setShowNotification(true);
-                                                            }}
+                                                            onClick={handleAddToCart}
                                                             disabled={clothing.clothing.type === "T_SHIRT" ? (!gender || !selectedSize || !selectedType) : (!gender || !selectedSize)}
                                                         >
                                                             Добави в количка
@@ -571,6 +580,7 @@ export default function Details() {
                                                                 type="button"
                                                                 className="btn btn-default wishlist"
                                                                 title="Add to Wish List"
+                                                                onClick={() => handleAddToWishlist(clothing.clothing.id)}
                                                             >
                                                                 Add to Wish List
                                                             </button>
@@ -1135,7 +1145,7 @@ export default function Details() {
                                                                                             className="wishlist"
                                                                                             type="button"
                                                                                             title="Add to Wish List"
-                                                                                            onClick={() => cart.add(clothing.id)}
+                                                                                            onClick={() => handleAddToWishlist(clothing.clothing.id)}
                                                                                         >
                                                                                             <i className="fa fa-heart" />
                                                                                         </button>
@@ -1228,7 +1238,7 @@ export default function Details() {
                                                                                             className="wishlist"
                                                                                             type="button"
                                                                                             title="Add to Wish List"
-                                                                                            onClick={() => cart.add(product.id)}
+                                                                                            onClick={() => handleAddToWishlist(product.clothing.id)}
                                                                                         >
                                                                                             <i className="fa fa-heart" />
                                                                                         </button>
@@ -1329,7 +1339,7 @@ export default function Details() {
                     {!isLoading && (
                         <div className="confirmation-modal">
                             <h3>Потвърждаване на изтриване</h3>
-                            <p>Сигурни ли сте че искате да изтриете {typeTranslations[clothing.clothing.type]} {clothing.clothing.name} #{clothing.clothing.model}?</p>
+                            <p>Сигурни ли сте че искате да изтриете {typeTranslations[clothing.clothing.type]} {clothing.clothing.name}?</p>
                             <div className="modal-buttons">
                                 <button onClick={() => setShowConfirmModal(false)} className="cancel-btn">Отказ</button>
                                 <button onClick={confirmDelete} className="delete-btn">Изтриване</button>
@@ -1342,8 +1352,6 @@ export default function Details() {
             {showNotification && (
                 <CustomNotification
                     message={<>Успешно добавихте {typeTranslations[clothing.clothing.type]} {clothing.clothing.name} във вашата количка!</>}
-                    type="success"
-                    timeout={3000}
                 />
             )}
         </>
