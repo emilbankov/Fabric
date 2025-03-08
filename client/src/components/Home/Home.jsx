@@ -51,25 +51,45 @@ export default function Home() {
 
     const handleWishlistClick = async (id, productName, productType) => {
         if (!isAuthenticated) {
-            setNotification({
-                message: "Трябва да влезете в профила си, за да добавяте продукти към любими!",
-            });
+            setNotification({ message: '' });
+            setTimeout(() => {
+                setNotification({
+                    message: "Трябва да влезете в профила си, за да добавяте продукти към любими!",
+                });
+            }, 0);
             return;
         }
 
-        handleAddToWishlist(
-            id,
-            () => {
-                setNotification({
-                    message: `Успешно добавихте ${typeTranslations[productType]} ${productName} към любими!`,
-                });
-            },
-            () => {
-                setNotification({
-                    message: "Неуспешно добавяне на продукт към любими. Моля, опитайте отново.",
-                });
-            }
-        );
+        setNotification({ message: '' });
+        setTimeout(() => {
+            handleAddToWishlist(
+                id,
+                () => {
+                    setNotification({ message: '' });
+                    setTimeout(() => {
+                        setNotification({
+                            message: `Успешно добавихте ${typeTranslations[productType]} ${productName} към любими!`,
+                        });
+                    }, 0);
+                },
+                () => {
+                    setNotification({ message: '' });
+                    setTimeout(() => {
+                        setNotification({
+                            message: "Неуспешно добавяне на продукт към любими. Моля, опитайте отново.",
+                        });
+                    }, 0);
+                },
+                () => {
+                    setNotification({ message: '' });
+                    setTimeout(() => {
+                        setNotification({
+                            message: `Този продукт вече е във вашия списък с любими!`,
+                        });
+                    }, 0);
+                }
+            );
+        }, 0);
     };
 
     return (
