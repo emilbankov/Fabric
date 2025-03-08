@@ -4,11 +4,11 @@ import AuthContext from "../../contexts/AuthProvider";
 import Search from "../Search/Search";
 import $ from 'jquery';
 import Cart from "../Cart/Cart";
-import { getWishlist } from "../../services/authService";
+import { useWishlist } from "../../contexts/WishlistProvider";
 
 export default function Header() {
     const { isAuthenticated, isAdmin, isModerator } = useContext(AuthContext);
-    const [wishlistCount, setWishlistCount] = useState(0);
+    const { wishlistCount } = useWishlist();
 
     useEffect(() => {
         $(".box-category-top").click(function () {
@@ -47,22 +47,6 @@ export default function Header() {
             }
         };
     }, [location]);
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            const fetchWishlist = async () => {
-                try {
-                    const wishlist = await getWishlist();
-                    setWishlistCount(wishlist.length);
-                } catch (error) {
-                    console.error("Failed to fetch wishlist:", error);
-                }
-            };
-            fetchWishlist();
-        } else {
-            setWishlistCount(0);
-        }
-    }, [isAuthenticated]);
 
     return (
         <>

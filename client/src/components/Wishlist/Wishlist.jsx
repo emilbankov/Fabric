@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getWishlist } from "../../services/authService";
+import { getWishlist, removeFromWishlist } from "../../services/authService";
 import AuthContext from "../../contexts/AuthProvider";
+import { useWishlist } from "../../contexts/WishlistProvider";
 
 export default function Wishlist() {
     const location = useLocation();
     const { isAuthenticated } = useContext(AuthContext);
-    const [wishlist, setWishlist] = useState([]);
+    const { wishlist, handleRemoveFromWishlist } = useWishlist();
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -23,7 +24,6 @@ export default function Wishlist() {
             setWishlist([]);
         }
     }, [location.pathname, isAuthenticated]);
-    console.log(wishlist);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -244,14 +244,15 @@ export default function Wishlist() {
                                                     >
                                                         <i className="fa fa-shopping-cart" />
                                                     </Link>
-                                                    <a
-                                                        href={`/wishlist/remove/${item.id}`}
+                                                    <button
+                                                        type="button"
                                                         data-toggle="tooltip"
                                                         title="Remove"
                                                         className="btn btn-danger"
+                                                        onClick={() => handleRemoveFromWishlist(item.id)}
                                                     >
                                                         <i className="fa fa-times" />
-                                                    </a>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         ))}
