@@ -42,7 +42,7 @@ export default function About() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/about">About Us</Link>
+                            <Link to="/about">За нас</Link>
                         </li>
                     </ul>
                     <div className="row">
@@ -51,7 +51,7 @@ export default function About() {
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
                                     <Link className="list-group-item" to="/about">
-                                        About Us{" "}
+                                        За нас{" "}
                                     </Link>
                                     <a
                                         className="list-group-item"
@@ -59,21 +59,21 @@ export default function About() {
                                     >
                                         Delivery Information{" "}
                                     </a>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="information/information&information_id=3"
+                                        to="/privacy-policy"
                                     >
-                                        Privacy Policy{" "}
-                                    </a>
+                                        Политика за поверителност{" "}
+                                    </Link>
                                     <a
                                         className="list-group-item"
                                         href="information/information&information_id=5"
                                     >
-                                        Terms &amp; Conditions{" "}
+                                        Общи условия{" "}
                                     </a>
-                                    <a className="list-group-item" href="contact.html">
-                                        Contact Us{" "}
-                                    </a>
+                                    <Link className="list-group-item" to="/contact">
+                                        Контакти{" "}
+                                    </Link>
                                     <a className="list-group-item" href="information/sitemap">
                                         Site Map{" "}
                                     </a>
@@ -85,7 +85,7 @@ export default function About() {
                                         <div className="swiper-slide">
                                             <a href="#">
                                                 <img
-                                                    src="assets/images/left-banner-272x340.jpg"
+                                                    src="images/left-banner-272x340.jpg"
                                                     alt="Left Banner1"
                                                     className="img-responsive"
                                                 />
@@ -142,52 +142,33 @@ export default function About() {
                             </div>
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h1 className="page-title">About Us</h1>
+                            <h1 className="page-title">За нас</h1>
                             <div className="aboutus">
-                                <h3>The standard Lorem Ipsum passage</h3>
+                                <h3>Кои сме ние?</h3>
                                 <div className="image1"> </div>
                                 <div className="about-content">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                                    accumsan turpis posuere cursus ultricies. Ut nunc justo, faucibus
-                                    eget elit quis, vehicula rhoncus nulla. Phasellus convallis sem nec
-                                    facilisis commodo. Fusce ut molestie turpis. Suspendisse aliquet sed
-                                    massa in vulputate. Quisque gravida suscipit tincidunt.
+                                    Ние сме екип от ентусиасти, които вярват, че модата трябва да бъде забавна, достъпна и уникална за всеки. Създадохме Fabric, за да предложим нещо различно – дрехи, които не само изглеждат страхотно, но и казват нещо за вас. Защото, нека си признаем, всеки има история, която заслужава да бъде разказана!
                                 </div>
                             </div>
                             <div className="aboutus">
-                                <h3>At vero eos et accusamus et iusto odio dignissimos</h3>
+                                <h3>Нашата мисия</h3>
                                 <div className="image2"> </div>
                                 <div className="about-content">
-                                    Mauris elementum scelerisque elit non egestas. Cras lacus nibh,
-                                    pretium quis bibendum nec, dapibus a metus. Morbi eros lectus,
-                                    aliquam eu aliquam id, fringilla nec eros. Praesent suscipit commodo
-                                    diam, non viverra turpis dapibus malesuada. Duis cursus metus eu sem
-                                    eleifend, id rhoncus odio porttitor.
+                                    Нашата мисия е проста: да ви накараме да се усмихнете, докато обличате любимите си дрехи. Искаме да ви предложим не просто дрехи, а начин на живот. Защо да носите нещо обикновено, когато можете да бъдете екстравагантни, смели и уникални? Ние сме тук, за да ви помогнем да изразите себе си!
                                 </div>
                             </div>
                             <div className="aboutus">
-                                <h3>
-                                    Certain circumstances and owing to the claims of duty or the
-                                    obligations
-                                </h3>
+                                <h3>Защо избрахме името Fabric?</h3>
                                 <div className="image3"> </div>
                                 <div className="about-content">
-                                    But I must explain to you how all this mistaken idea of denouncing
-                                    pleasure and praising pain was born and I will give you a complete
-                                    account of the system, and expound the actual teachings of the great
-                                    explorer of the truth, the master-builder of human happiness. No one
-                                    rejects, dislikes.
+                                    Защото всяка дреха е като плат – тя е основата на вашия стил. Ние сме като майсторите, които създават нещо красиво от този плат. И защо Fabric? Защото звучи модерно, стилно и лесно за запомняне. Освен това, кой не обича да се увива в мека и удобна дреха?
                                 </div>
                             </div>
                             <div className="aboutus">
-                                <h3>Integer ultrices laoreet nunc in gravida</h3>
+                                <h3>Нашите ценности</h3>
                                 <div className="image4"> </div>
                                 <div className="about-content">
-                                    Sed lobortis pulvinar viverra. Cum sociis natoque penatibus et
-                                    magnis dis parturient montes, nascetur ridiculus mus. Mauris
-                                    suscipit dolor scelerisque, bibendum tellus ac, pharetra sapien.
-                                    Praesent lacinia scelerisque odio et consequat. In a facilisis
-                                    lacus. Maecenas vel lobortis tellus.
+                                    Ние вярваме в качеството, устойчивостта и креативността. Всяка дреха, която предлагаме, е създадена с любов и внимание към детайла. Също така, ние се стремим да бъдем екологично отговорни, затова използваме устойчиви материали и практики. Защото модата може да бъде и етична!
                                 </div>
                             </div>
                         </div>
