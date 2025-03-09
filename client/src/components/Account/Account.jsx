@@ -98,28 +98,28 @@ export default function Account() {
                             <div className="box">
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
-                                    <Link className="list-group-item" to="/about">About Us</Link>
+                                    <Link className="list-group-item" to="/about">За нас</Link>
                                     <a
                                         className="list-group-item"
                                         href="information/information&information_id=6"
                                     >
                                         Delivery Information
                                     </a>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="information/information&information_id=3"
+                                        to="/privacy-policy"
                                     >
-                                        Privacy Policy
-                                    </a>
+                                        Политика за поверителност
+                                    </Link>
                                     <a
                                         className="list-group-item"
                                         href="information/information&information_id=5"
                                     >
-                                        Terms &amp; Conditions
+                                        Общи условия
                                     </a>
-                                    <a className="list-group-item" href="contact.html">
-                                        Contact Us
-                                    </a>
+                                    <Link className="list-group-item" to="/contact">
+                                        Контакти
+                                    </Link>
                                     <a className="list-group-item" href="information/sitemap">
                                         Site Map
                                     </a>

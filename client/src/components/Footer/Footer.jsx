@@ -62,7 +62,7 @@ export default function Footer() {
                                                 </li>
                                                 <li>
                                                     <a href="/information&information_id=5">
-                                                        Terms &amp; Conditions
+                                                        Общи условия
                                                     </a>
                                                 </li>
                                                 <li>
@@ -74,7 +74,7 @@ export default function Footer() {
                                             <h5>Help</h5>
                                             <ul className="list-unstyled">
                                                 <li>
-                                                    <a href="/contact">Контакти</a>
+                                                    <Link to="/contact">Контакти</Link>
                                                 </li>
                                                 <li>
                                                     <a href="/manufacturer">Brands</a>

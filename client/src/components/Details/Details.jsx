@@ -259,21 +259,21 @@ export default function Details() {
                             <div className="box">
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
-                                    <a className="list-group-item" href="information&information_id=4">
-                                        About Us{" "}
-                                    </a>
+                                    <Link className="list-group-item" to="/about">
+                                        За нас{" "}
+                                    </Link>
                                     <a className="list-group-item" href="information&information_id=6">
                                         Delivery Information{" "}
                                     </a>
                                     <a className="list-group-item" href="information&information_id=3">
-                                        Privacy Policy{" "}
+                                        Политика за поверителност{" "}
                                     </a>
                                     <a className="list-group-item" href="information&information_id=5">
-                                        Terms &amp; Conditions{" "}
+                                        Общи условия{" "}
                                     </a>
-                                    <a className="list-group-item" href="contact">
-                                        Contact Us{" "}
-                                    </a>
+                                    <Link className="list-group-item" to="/contact">
+                                        Контакти{" "}
+                                    </Link>
                                     <a className="list-group-item" href="sitemap">
                                         Site Map{" "}
                                     </a>

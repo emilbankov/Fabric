@@ -28,10 +28,10 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import ForgottenPassword from "./components/Forgotten Password/ForgottenPassword";
 import ResetPassword from "./components/Reset Password/ResetPassword";
+import PrivacyPolicy from "./components/Privacy Policy/PrivacyPolicy";
 import Error404 from "./components/404/404";
 import Logout from "./components/Logout/Logout";
 import Footer from "./components/Footer/Footer";
-import PrivacyPolicy from "./components/Privacy Policy/PrivacyPolicy";
 
 function App() {
     const location = useLocation();

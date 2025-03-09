@@ -152,17 +152,17 @@ export default function EditAccount() {
                             <div className="box">
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
-                                    <Link className="list-group-item" to="/about">About Us</Link>
+                                    <Link className="list-group-item" to="/about">За нас</Link>
                                     <a className="list-group-item" href="information/information&information_id=6">
                                         Delivery Information
                                     </a>
-                                    <a className="list-group-item" href="information/information&information_id=3">
-                                        Privacy Policy
-                                    </a>
+                                    <Link className="list-group-item" to="/privacy-policy">
+                                        Политика за поверителност
+                                    </Link>
                                     <a className="list-group-item" href="information/information&information_id=5">
-                                        Terms &amp; Conditions
+                                        Общи условия
                                     </a>
-                                    <Link className="list-group-item" to="/contact">Contact Us</Link>
+                                    <Link className="list-group-item" to="/contact">Контакти</Link>
                                     <a className="list-group-item" href="information/sitemap">Site Map</a>
                                 </div>
                             </div>
