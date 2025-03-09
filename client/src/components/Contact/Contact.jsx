@@ -7,21 +7,21 @@ export default function Contact() {
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
-          existingScript.parentNode.removeChild(existingScript);
+            existingScript.parentNode.removeChild(existingScript);
         }
-      
+
         const script = document.createElement('script');
         script.src = '/js/custom.js';
         script.async = true;
-      
+
         document.body.appendChild(script);
-      
+
         return () => {
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
         };
-      }, [location.pathname]);
+    }, [location.pathname]);
 
     return (
         <>
@@ -36,14 +36,8 @@ export default function Contact() {
                 </div>
                 <div id="information-contact" className="container">
                     <ul className="breadcrumb">
-                        <li>
-                            <Link to="/">
-                                <i className="fa fa-home" />
-                            </Link>
-                        </li>
-                        <li>
-                            <a href="information/contact">Contact Us</a>
-                        </li>
+                        <li><Link to="/"><i className="fa fa-home" /></Link></li>
+                        <li><Link to="/contact">Контакти</Link></li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
@@ -51,7 +45,7 @@ export default function Contact() {
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
                                     <Link className="list-group-item" to="/about">
-                                        About Us{" "}
+                                        За нас{" "}
                                     </Link>
                                     <a
                                         className="list-group-item"
@@ -59,20 +53,20 @@ export default function Contact() {
                                     >
                                         Delivery Information{" "}
                                     </a>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="information/information&information_id=3"
+                                        to="/privacy-policy"
                                     >
-                                        Privacy Policy
-                                    </a>
+                                        Политика за поверителност
+                                    </Link>
                                     <a
                                         className="list-group-item"
                                         href="information/information&information_id=5"
                                     >
-                                        Terms &amp; Conditions{" "}
+                                        Общи условия{" "}
                                     </a>
                                     <Link className="list-group-item" to="/contact">
-                                        Contact Us{" "}
+                                        Контакти{" "}
                                     </Link>
                                     <a className="list-group-item" href="information/sitemap">
                                         Site Map{" "}
@@ -142,43 +136,44 @@ export default function Contact() {
                             </div>
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h1>Contact Us</h1>
-                            <h3>Our Location</h3>
+                            <h1>Контакти</h1>
                             <div className="panel panel-default">
                                 <div className="panel-body">
                                     <div className="row contact-info">
-                                        <div className="left">
-                                            <div className="address-detail">
-                                                <strong>Vesture</strong>
-                                                <address>Address 1</address>
-                                                <a
-                                                    href="https://maps.google.com/maps?q=0123456789 &hl=en-gb &t=m&z=15"
-                                                    target="_blank"
-                                                    className="btn btn-info"
-                                                >
-                                                    <i className="fa fa-map-marker" /> View Google Map{" "}
-                                                </a>
-                                            </div>
-                                            <div className="telephone">
-                                                <strong>Telephone </strong>
-                                                <address>+359899836901</address>
-                                            </div>
-                                            <div className="fax">
-                                                <strong>Fax </strong>
-                                                <address>0879766 </address>
-                                            </div>
-                                            <div className="time">
-                                                <strong>Opening Times</strong>
-                                                <address>08:00 до 18:00ч.</address>
-                                            </div>
-                                            <div className="comment">
-                                                <strong>Comments</strong>
-                                                <address>
-                                                    Shop Laptop feature only the best laptop deals on the
-                                                    market. By comparing laptop deals from the likes of PC
-                                                    World, Comet, Dixons, The Link and Carphone Warehouse
-                                                </address>
-                                            </div>
+                                        <div className="address-detail">
+                                            <strong>Fabric</strong>
+                                            <address style={{ marginBottom: "10px" }}>ж.к. Христо Ботев - Юг, ул. "Славееви гори" №47А, 4004 Пловдив, България</address>
+                                            <iframe
+                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2966.123123123123!2d24.7287739!3d42.1249508!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14acd1aa8f4a1103%3A0xc3e37ff81727cb3b!2z0JzQsNCz0LDQstC40L0g0JLQsNC90L3QtdC7!5e0!3m2!1sbg!2sbg!4v1691234567890"
+                                                width="100%"
+                                                height="300"
+                                                style={{ border: 0 }}
+                                                allowFullScreen
+                                                loading="lazy"
+                                                referrerPolicy="no-referrer-when-downgrade"
+                                            />
+                                            <a
+                                                href="https://www.google.com/maps/place/Магазин+Ванел/@42.124951,24.728774,18z/data=!4m6!3m5!1s0x14acd1aa8f4a1103:0xc3e37ff81727cb3b!8m2!3d42.1249508!4d24.7287739!16s%2Fg%2F11fb2pw5v8?hl=en-US&entry=ttu&g_ep=EgoyMDI1MDMwNC4wIKXMDSoASAFQAw%3D%3D"
+                                                target="_blank"
+                                                className="btn btn-info"
+                                                style={{ color: "#fff", marginTop: "10px", float: "right" }}
+                                            >
+                                                <i className="fa fa-map-marker" /> Виж Google Maps{" "}
+                                            </a>
+                                        </div>
+                                        <div className="telephone">
+                                            <strong>Телефон</strong>
+                                            <address>+359 899 836 901</address>
+                                        </div>
+                                        <div className="time">
+                                            <strong>Работно време</strong>
+                                            <address>08:00 до 18:00ч.</address>
+                                        </div>
+                                        <div className="comment">
+                                            <strong>Описание</strong>
+                                            <address>
+                                                Fabric е вашият избор за модерни и стилни дрехи с уникални принтове и високо качество. Ние предлагаме разнообразие от модели за всеки вкус и повод, които ще подчертаят вашата индивидуалност. Посетете ни и открийте най-новите тенденции в света на модата!
+                                            </address>
                                         </div>
                                     </div>
                                 </div>
@@ -193,7 +188,7 @@ export default function Contact() {
                                     <legend>Contact Form</legend>
                                     <div className="form-group required">
                                         <label className="col-sm-2 control-label" htmlFor="input-name">
-                                            Your Name
+                                            Имена
                                         </label>
                                         <div className="col-sm-10">
                                             <input
@@ -207,7 +202,7 @@ export default function Contact() {
                                     </div>
                                     <div className="form-group required">
                                         <label className="col-sm-2 control-label" htmlFor="input-email">
-                                            E-Mail Address
+                                            E-mail
                                         </label>
                                         <div className="col-sm-10">
                                             <input
@@ -221,7 +216,7 @@ export default function Contact() {
                                     </div>
                                     <div className="form-group required">
                                         <label className="col-sm-2 control-label" htmlFor="input-enquiry">
-                                            Enquiry
+                                            Запитване
                                         </label>
                                         <div className="col-sm-10">
                                             <textarea
@@ -233,36 +228,13 @@ export default function Contact() {
                                             />
                                         </div>
                                     </div>
-                                    <fieldset>
-                                        <legend>Captcha</legend>
-                                        <div className="form-group required">
-                                            <label
-                                                className="col-sm-3 control-label"
-                                                htmlFor="input-captcha"
-                                            >
-                                                Enter the code in the box below
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <input
-                                                    type="text"
-                                                    name="captcha"
-                                                    id="input-captcha"
-                                                    className="form-control"
-                                                />
-                                                <img
-                                                    src="index.php?route=extension/captcha/basic/captcha"
-                                                    alt=""
-                                                />
-                                            </div>
-                                        </div>
-                                    </fieldset>
                                 </fieldset>
                                 <div className="buttons">
                                     <div className="pull-right">
                                         <input
                                             className="btn btn-primary"
                                             type="submit"
-                                            defaultValue="Submit"
+                                            value="Изпрати"
                                         />
                                     </div>
                                 </div>
