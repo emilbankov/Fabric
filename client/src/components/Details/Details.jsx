@@ -257,72 +257,74 @@ export default function Details() {
                                 <div className="box-heading">Най-продавани</div>
                                 <div className="box-content">
                                     <div className="box-product  productbox-grid" id=" latest-grid">
-                                        {similar.clothes && similar.clothes.slice(0, 3).map((item) => (
-                                            <div className="product-items" key={item.id}>
-                                                <div className="product-items">
-                                                    <div className="product-block product-thumb transition">
-                                                        <div className="product-block-inner">
-                                                            <div className="image">
-                                                                <Link to={`/clothing/details/${item.id}`}>
-                                                                    <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
-                                                                        title="tote bags for women"
-                                                                        alt="tote bags for women"
-                                                                        className="img-responsive reg-image"
-                                                                        loading="lazy"
-                                                                    />
-
-                                                                    {(item.type !== "KIT" || item.type !== "TOWELS" || item.type !== "BANDANAS") && (
-                                                                        <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
-                                                                            title="tote bags for women"
-                                                                            alt="tote bags for women"
-                                                                            className="img-responsive hover-image"
-                                                                            loading="lazy"
-                                                                        />
-                                                                    )}
-
-                                                                    {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
+                                        {similar?.clothes?.length > 1 && similar.clothes
+                                            .filter(current => { return !(clothing.clothing.model === current.model && clothing.clothing.type === current.type); })
+                                            .slice(0, 3).map((item) => (
+                                                <div className="product-items" key={item.id}>
+                                                    <div className="product-items">
+                                                        <div className="product-block product-thumb transition">
+                                                            <div className="product-block-inner">
+                                                                <div className="image">
+                                                                    <Link to={`/clothing/details/${item.id}`}>
                                                                         <img
                                                                             src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
                                                                             title="tote bags for women"
                                                                             alt="tote bags for women"
-                                                                            className="img-responsive hover-image"
+                                                                            className="img-responsive reg-image"
                                                                             loading="lazy"
                                                                         />
-                                                                    )}
-                                                                </Link>
-                                                            </div>
-                                                            <div className="product-details">
-                                                                <div className="caption">
-                                                                    <h4>
-                                                                        <Link to={`/clothing/details/${item.id}`}>{item.name}</Link>
-                                                                    </h4>
-                                                                    <p className="price">
-                                                                        {item.price.toFixed(2)} лв.
-                                                                    </p>
-                                                                </div>
-                                                                <div className="product_hover_block">
-                                                                    <div className="action">
-                                                                        <button
-                                                                            type="button"
-                                                                            className="cart_button"
-                                                                            title="Add to Cart"
-                                                                            onClick={() => navigate(`/clothing/details/${item.id}`)}
-                                                                        >
-                                                                            <i
-                                                                                className="fa fa-shopping-cart"
-                                                                                area-hidden="true"
+
+                                                                        {(item.type !== "KIT" || item.type !== "TOWELS" || item.type !== "BANDANAS") && (
+                                                                            <img
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
+                                                                                title="tote bags for women"
+                                                                                alt="tote bags for women"
+                                                                                className="img-responsive hover-image"
+                                                                                loading="lazy"
                                                                             />
-                                                                        </button>
+                                                                        )}
+
+                                                                        {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
+                                                                            <img
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
+                                                                                title="tote bags for women"
+                                                                                alt="tote bags for women"
+                                                                                className="img-responsive hover-image"
+                                                                                loading="lazy"
+                                                                            />
+                                                                        )}
+                                                                    </Link>
+                                                                </div>
+                                                                <div className="product-details">
+                                                                    <div className="caption">
+                                                                        <h4>
+                                                                            <Link to={`/clothing/details/${item.id}`}>{item.name}</Link>
+                                                                        </h4>
+                                                                        <p className="price">
+                                                                            {item.price.toFixed(2)} лв.
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className="product_hover_block">
+                                                                        <div className="action">
+                                                                            <button
+                                                                                type="button"
+                                                                                className="cart_button"
+                                                                                title="Add to Cart"
+                                                                                onClick={() => navigate(`/clothing/details/${item.id}`)}
+                                                                            >
+                                                                                <i
+                                                                                    className="fa fa-shopping-cart"
+                                                                                    area-hidden="true"
+                                                                                />
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))}
                                     </div>
                                 </div>
                             </div>

@@ -171,9 +171,6 @@ export default function Header() {
                                                     <li>
                                                         <Link to="/contact">Контакти</Link>
                                                     </li>
-                                                    <li>
-                                                        <Link to="/blogs">Блог</Link>
-                                                    </li>
                                                     {isAdmin && (
                                                         <li className="toplink">
                                                             <Link to="/add-clothing">Добавяне на продукт</Link>
