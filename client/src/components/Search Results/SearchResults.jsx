@@ -357,7 +357,7 @@ export default function SearchResults() {
                                                             className="img-responsive reg-image"
                                                             loading="lazy"
                                                         />
-                                                        {(item.type !== "KIT" || item.type !== "TOWELS" || item.type !== "BANDANAS") && (
+                                                        {(item.type !== "KIT" && item.type !== "TOWELS" && item.type !== "BANDANAS") && (
                                                             <img
                                                                 src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
                                                                 title={item.name}
