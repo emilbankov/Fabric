@@ -50,16 +50,6 @@ export default function Home() {
     }, [location.pathname, newest.clothes]);
 
     const handleWishlistClick = async (id, productName, productType) => {
-        if (!isAuthenticated) {
-            setNotification({ message: '' });
-            setTimeout(() => {
-                setNotification({
-                    message: "Трябва да влезете в профила си, за да добавяте продукти към любими!",
-                });
-            }, 0);
-            return;
-        }
-
         setNotification({ message: '' });
         setTimeout(() => {
             handleAddToWishlist(
@@ -85,6 +75,14 @@ export default function Home() {
                     setTimeout(() => {
                         setNotification({
                             message: `Този продукт вече е във вашия списък с любими!`,
+                        });
+                    }, 0);
+                },
+                () => {
+                    setNotification({ message: '' });
+                    setTimeout(() => {
+                        setNotification({
+                            message: "Трябва да влезете в профила си, за да добавяте продукти към любими!",
                         });
                     }, 0);
                 }

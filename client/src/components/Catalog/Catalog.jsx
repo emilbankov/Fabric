@@ -1,12 +1,15 @@
+import './Catalog.css';
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
-import { categoriesMap, filters, homeCategories } from "../../lib/dictionary";
-import './Catalog.css';
+import { categoriesMap, filters, homeCategories, typeTranslations } from "../../lib/dictionary";
+import { useWishlist } from "../../contexts/WishlistProvider";
+import CustomNotification from "../CustomNotification/CustomNotification";
 
 export default function Catalog() {
     const location = useLocation();
     const navigate = useNavigate();
+    const { handleAddToWishlist } = useWishlist();
 
     const queryParams = new URLSearchParams(location.search);
     const type = queryParams.get("type") || "";
@@ -17,11 +20,11 @@ export default function Catalog() {
     const categoryParam = queryParams.get("category") || "";
     const categoryArray = categoryParam ? categoryParam.split(",") : [];
 
-    const [checkedCategories, setCheckedCategories] = useState(selectedCategories ? selectedCategories.split(",") : []);
     const [catalog, setCatalog] = useState([]);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showFilters, setShowFilters] = useState(true);
+    const [notification, setNotification] = useState({ message: '', type: '' });
 
     useEffect(() => {
         return () => {
@@ -77,30 +80,17 @@ export default function Catalog() {
         const params = new URLSearchParams(location.search);
         const currentCategories = params.get("category") ? params.get("category").split(",") : [];
 
-        // Toggle the category
         const newCategories = currentCategories.includes(categoryId)
-            ? currentCategories.filter(id => id !== categoryId) // Remove if already selected
-            : [...currentCategories, categoryId]; // Add if not selected
+            ? currentCategories.filter(id => id !== categoryId)
+            : [...currentCategories, categoryId];
 
-        // Update URL parameters
         if (newCategories.length > 0) {
             params.set("category", newCategories.join(","));
         } else {
             params.delete("category");
         }
-        params.set("page", "1"); // Reset to first page when changing filters
+        params.set("page", "1"); 
         navigate(`${location.pathname}?${params.toString()}`);
-    };
-
-    const resetFilters = () => {
-        const params = new URLSearchParams(location.search);
-
-        params.delete("category");
-        params.set("page", "1");
-
-        navigate(`${location.pathname}?${params.toString()}`);
-
-        setCheckedCategories([]);
     };
 
     useEffect(() => {
@@ -159,6 +149,11 @@ export default function Catalog() {
 
     return (
         <>
+            {notification.message && (
+                <CustomNotification
+                    message={notification.message}
+                />
+            )}
             <div className="product-category-20 layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">
@@ -406,12 +401,49 @@ export default function Catalog() {
                                                                 onClick={() => navigate(`/clothing/details/${item.id}`)}
                                                                 title="Add to Cart"
                                                             >
-                                                                <i className="fa fa-shopping-cart" aria-hidden="true" />{" "}
+                                                                <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
                                                             </button>
                                                             <button
                                                                 className="wishlist"
                                                                 type="button"
-                                                                title="Add to Wish List "
+                                                                title="Add to Wish List"
+                                                                onClick={() => {
+                                                                    handleAddToWishlist(
+                                                                        item.id,
+                                                                        () => {
+                                                                            setNotification({ message: '' });
+                                                                            setTimeout(() => {
+                                                                                setNotification({
+                                                                                    message: `Успешно добавихте ${typeTranslations[item.type]} ${item.name} към любими!`,
+                                                                                });
+                                                                            }, 0);
+                                                                        },
+                                                                        () => {
+                                                                            setNotification({ message: '' });
+                                                                            setTimeout(() => {
+                                                                                setNotification({
+                                                                                    message: "Неуспешно добавяне на продукт към любими. Моля, опитайте отново.",
+                                                                                });
+                                                                            }, 0);
+                                                                        },
+                                                                        () => {
+                                                                            setNotification({ message: '' });
+                                                                            setTimeout(() => {
+                                                                                setNotification({
+                                                                                    message: `Този продукт вече е във вашия списък с любими!`,
+                                                                                });
+                                                                            }, 0);
+                                                                        },
+                                                                        () => {
+                                                                            setNotification({ message: '' });
+                                                                            setTimeout(() => {
+                                                                                setNotification({
+                                                                                    message: "Трябва да влезете в профила си, за да добавяте продукти към любими!",
+                                                                                });
+                                                                            }, 0);
+                                                                        }
+                                                                    );
+                                                                }}
                                                             >
                                                                 <i className="fa fa-heart" />
                                                             </button>
