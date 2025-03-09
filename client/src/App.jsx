@@ -21,7 +21,6 @@ import SearchResults from "./components/Search Results/SearchResults";
 import OrdersHistory from "./components/Orders History/OrdersHistory";
 import Contact from "./components/Contact/Contact";
 import About from "./components/About/About";
-import Blogs from "./components/Blogs/Blogs";
 import Account from "./components/Account/Account";
 import EditAccount from "./components/Edit Account/EditAccount";
 import Wishlist from "./components/Wishlist/Wishlist";
@@ -56,7 +55,6 @@ function App() {
                             <Route path="/prices" element={<Prices />} />
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/about" element={<About />} />
-                            <Route path="/blogs" element={<Blogs />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
                             <Route element={<GuestGuard />}>

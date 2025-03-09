@@ -19,7 +19,6 @@ export default function Catalog() {
 
     const [checkedCategories, setCheckedCategories] = useState(selectedCategories ? selectedCategories.split(",") : []);
     const [catalog, setCatalog] = useState([]);
-    const [mostSold, setMostSold] = useState([]);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showFilters, setShowFilters] = useState(true);
@@ -27,7 +26,6 @@ export default function Catalog() {
     useEffect(() => {
         return () => {
             setCatalog([]);
-            setMostSold([]);
             setCategories([]);
         };
     }, []);
@@ -36,12 +34,10 @@ export default function Catalog() {
         setIsLoading(true);
         Promise.all([
             clothesService.getCatalog(type, sort, size, page, categoryArray),
-            clothesService.getMostSold(),
             clothesService.getCategories(type),
         ])
-            .then(([catalog, mostSold, categories]) => {
+            .then(([catalog, categories]) => {
                 setCatalog(catalog);
-                setMostSold(mostSold);
                 setCategories(categories);
             })
             .catch((err) => {
@@ -159,7 +155,7 @@ export default function Catalog() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [location.pathname, catalog.clothes, mostSold.clothes]);
+    }, [location.pathname, catalog.clothes]);
 
     return (
         <>
@@ -180,12 +176,12 @@ export default function Catalog() {
                             </Link>
                         </li>
                         <li>
-                            <Link to={`/catalog?sort=${sort}&type=${type}`}>{type ? filters[type] : filters[sort]}</Link>
+                            <Link to={`/catalog?sort=${sort}&type=${type}`}>{type && filters[type.toUpperCase()]}</Link>
                         </li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
-                            <meta httpEquiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+                            <meta httpEquiv="Content-Type" content="text/html; charset=iso-8859-1" />
                             <div className="swiper-viewport">
                                 <div id="banner0" className="swiper-container single-banner">
                                     <div className="swiper-wrapper">
@@ -203,7 +199,7 @@ export default function Catalog() {
                                 </div>
                             </div>
                             <div className="box latest">
-                                <div className="box-heading" style={{textAlign: "center"}}>Категории</div>
+                                <div className="box-heading" style={{ textAlign: "center" }}>Категории</div>
                                 <div className="box-content">
                                     <div className="box-product productbox-grid" id=" latest-grid">
                                         {homeCategories.map((category) => (
@@ -224,7 +220,7 @@ export default function Catalog() {
                                                             </div>
                                                             <div className="product-details">
                                                                 <div className="caption">
-                                                                    <h4 style={{textTransform:"none"}}>
+                                                                    <h4 style={{ textTransform: "none" }}>
                                                                         <Link to={category.link}>{category.name}</Link>
                                                                     </h4>
                                                                 </div>
@@ -236,7 +232,7 @@ export default function Catalog() {
                                                                             onClick={() => navigate(`/clothing/details/${category.id}`)}
                                                                             title="Add to Cart"
                                                                         >
-                                                                            <i className="极fa fa-shopping-cart" area-hidden="true"/>
+                                                                            <i className="极fa fa-shopping-cart" area-hidden="true" />
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -249,85 +245,13 @@ export default function Catalog() {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="box latest">
-                                <div className="box-heading">Най-продавани</div>
-                                <div className="box-content">
-                                    <div className="box-product productbox-grid" id=" latest-grid">
-                                        {mostSold.clothes &&
-                                            mostSold.clothes.slice(0, 3).map((item) => (
-                                                <div className="product-items" key={item.id}>
-                                                    <div className="product-items">
-                                                        <div className="product-block product-thumb transition">
-                                                            <div className="product-block-inner">
-                                                                <div className="image">
-                                                                    <Link to={`/clothing/details/${item.id}`}>
-                                                                        <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
-                                                                            title="tote bags for women"
-                                                                            alt="tote bags for women"
-                                                                            className="img-responsive reg-image"
-                                                                            loading="lazy"
-                                                                        />
-                                                                        {(item.type !== "KIT" || item.type !== "TOWELS" || item.type !== "BANDANAS") && (
-                                                                            <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
-                                                                                title="tote bags for women"
-                                                                                alt="tote bags for women"
-                                                                                className="img-responsive hover-image"
-                                                                                loading="lazy"
-                                                                            />
-                                                                        )}
-                                                                        {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
-                                                                            <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
-                                                                                title="tote bags for women"
-                                                                                alt="tote bags for women"
-                                                                                className="img-responsive hover-image"
-                                                                                loading="lazy"
-                                                                            />
-                                                                        )}
-                                                                    </Link>
-                                                                </div>
-                                                                <div className="product-details">
-                                                                    <div className="caption">
-                                                                        <h4>
-                                                                            <a href="=49 ">{item.name}</a>
-                                                                        </h4>
-                                                                        <p className="price">
-                                                                            {item.price.toFixed(2)} лв.
-                                                                        </p>
-                                                                    </div>
-                                                                    <div className="product_hover_block">
-                                                                        <div className="action">
-                                                                            <button
-                                                                                type="button"
-                                                                                className="cart_button"
-                                                                                onClick={() => navigate(`/clothing/details/${item.id}`)}
-                                                                                title="Add to Cart"
-                                                                            >
-                                                                                <i
-                                                                                    className="极fa fa-shopping-cart"
-                                                                                    area-hidden="true"
-                                                                                />
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                    </div>
-                                </div>
-                            </div> */}
                             <span
                                 className="latest_default_width"
                                 style={{ display: "none", visibility: "hidden" }}
                             />
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h2 className="page-title">{type ? filters[type] : filters[sort]}</h2>
+                            <h2 className="page-title">{type && filters[type.toUpperCase()]}</h2>
 
                             {showFilters && (
                                 <>
