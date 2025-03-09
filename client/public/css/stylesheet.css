@@ -7770,7 +7770,7 @@ button.list-group-item:hover {
 
 .list-group a {
 	padding: 5px 0px;
-	text-transform: capitalize;
+	text-transform: none;
 	font-size: 13px;
 	border: none;
 	line-height: 30px !important;
@@ -24648,7 +24648,7 @@ h3 .fa {
 }
 
 .tt-n {
-	text-transform: none;
+	text-transform: none !important;
 }
 
 #content.productpage h3.ta-c {
@@ -25028,4 +25028,41 @@ div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-de
 		justify-content: center;
 		margin-top: 20px;
 	}
+}
+
+.phone-call-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: none;
+    width: 50px;
+    height: 50px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+    font-size: 21px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.phone-call-button i.fa-phone {
+	font-size: 18px;
+}
+
+.phone-call-button:hover {
+    background-color: #45a049;
+}
+
+@media only screen and (max-width: 768px) {
+    .phone-call-button {
+        display: block;
+    }
+
+	.top_button {
+        display: none !important;
+    }
 }

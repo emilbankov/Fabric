@@ -604,8 +604,8 @@ $(window).resize(function () { gridlistactive() });
 
 
 
-/*For Back to Top button*/
 $(document).ready(function () {
+	$('.top_button').remove();
 	$("body").append("<a class='top_button' title='Back To Top' href=''>TOP</a>");
 
 	$(function () {
@@ -616,7 +616,8 @@ $(document).ready(function () {
 				$('.top_button').fadeOut();
 			}
 		});
-		// scroll body to 0px on click
+
+		// Scroll body to 0px on click
 		$('.top_button').click(function () {
 			$('body,html').animate({
 				scrollTop: 0
