@@ -162,12 +162,12 @@ export default function ForgottenPassword() {
                             <div className="box">
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="/information&information_id=4"
+                                        to="/about"
                                     >
-                                        About Us{" "}
-                                    </a>
+                                        За нас{" "}
+                                    </Link>
                                     <a
                                         className="list-group-item"
                                         href="/information&information_id=6"
@@ -178,20 +178,20 @@ export default function ForgottenPassword() {
                                         className="list-group-item"
                                         href="/information&information_id=3"
                                     >
-                                        Privacy Policy{" "}
+                                        Политика за поверителност{" "}
                                     </a>
                                     <a
                                         className="list-group-item"
                                         href="/information&information_id=5"
                                     >
-                                        Terms &amp; Conditions{" "}
+                                        Общи условия{" "}
                                     </a>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="/contact"
+                                        to="/contact"
                                     >
-                                        Contact Us{" "}
-                                    </a>
+                                        Контакти{" "}
+                                    </Link>
                                     <a
                                         className="list-group-item"
                                         href="/sitemap"

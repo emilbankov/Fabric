@@ -71,7 +71,7 @@ export default function Prices() {
                 setError("Цената не може да бъде сменена, ако няма продукти.");
             } else {
                 setError("Възникна грешка при обновяването на цените.");
-            } 
+            }
 
             setSuccess(null);
         } finally {
@@ -187,7 +187,7 @@ export default function Prices() {
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
                                     <Link className="list-group-item" to="/about">
-                                        About Us{" "}
+                                        За нас{" "}
                                     </Link>
                                     <a
                                         className="list-group-item"
@@ -195,20 +195,20 @@ export default function Prices() {
                                     >
                                         Delivery Information{" "}
                                     </a>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="information/information&information_id=3"
+                                        to="/privacy-policy"
                                     >
-                                        Privacy Policy{" "}
-                                    </a>
+                                        Политика за поверителност{" "}
+                                    </Link>
                                     <a
                                         className="list-group-item"
                                         href="information/information&information_id=5"
                                     >
-                                        Terms &amp; Conditions{" "}
+                                        Общи условия{" "}
                                     </a>
                                     <Link className="list-group-item" to="/contact">
-                                        Contact Us{" "}
+                                        Контакти{" "}
                                     </Link>
                                     <a className="list-group-item" href="information/sitemap">
                                         Site Map{" "}

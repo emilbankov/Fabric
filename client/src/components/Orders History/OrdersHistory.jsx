@@ -104,79 +104,79 @@ export default function OrdersHistory() {
                                 <div className="box-heading">Account</div>
                                 <div className="list-group">
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/account"
+                                        href="account/account"
                                         className="list-group-item"
                                     >
                                         My Account
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/edit"
+                                        href="account/edit"
                                         className="list-group-item"
                                     >
                                         Edit Account
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/password"
+                                        href="account/password"
                                         className="list-group-item"
                                     >
                                         Password
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/address"
+                                        href="account/address"
                                         className="list-group-item"
                                     >
                                         Address Book
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/wishlist"
+                                        href="account/wishlist"
                                         className="list-group-item"
                                     >
                                         Wish List
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/order"
+                                        href="account/order"
                                         className="list-group-item"
                                     >
                                         Order History
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/download"
+                                        href="account/download"
                                         className="list-group-item"
                                     >
                                         Downloads
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/recurring"
+                                        href="account/recurring"
                                         className="list-group-item"
                                     >
                                         Recurring payments
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/reward"
+                                        href="account/reward"
                                         className="list-group-item"
                                     >
                                         Reward Points
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/return"
+                                        href="account/return"
                                         className="list-group-item"
                                     >
                                         Returns
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/transaction"
+                                        href="account/transaction"
                                         className="list-group-item"
                                     >
                                         Transactions
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/newsletter"
+                                        href="account/newsletter"
                                         className="list-group-item"
                                     >
                                         Newsletter
                                     </a>
                                     <a
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=account/logout"
+                                        href="account/logout"
                                         className="list-group-item"
                                     >
                                         Logout
@@ -202,39 +202,39 @@ export default function OrdersHistory() {
                             <div className="box">
                                 <div className="box-heading">Information</div>
                                 <div className="list-group">
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/information&information_id=4"
+                                        to="/about"
                                     >
-                                        About Us
-                                    </a>
+                                        За нас
+                                    </Link>
                                     <a
                                         className="list-group-item"
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/information&information_id=6"
+                                        href="information/information&information_id=6"
                                     >
                                         Delivery Information
                                     </a>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/information&information_id=3"
+                                        to="/privacy-policy"
                                     >
-                                        Privacy Policy
-                                    </a>
+                                        Политика за поверителност
+                                    </Link>
                                     <a
                                         className="list-group-item"
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/information&information_id=5"
+                                        href="information/information&information_id=5"
                                     >
-                                        Terms &amp; Conditions
+                                        Общи условия
                                     </a>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/contact"
+                                        to="/contact"
                                     >
-                                        Contact Us
-                                    </a>
+                                        Контакти
+                                    </Link>
                                     <a
                                         className="list-group-item"
-                                        href="https://opc.webdigify.com/OPC02/OPC037_vesture/index.php?route=information/sitemap"
+                                        href="information/sitemap"
                                     >
                                         Site Map
                                     </a>
