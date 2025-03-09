@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
-import { typeTranslations } from "../../lib/dictionary";
+import { homeCategories, typeTranslations } from "../../lib/dictionary";
 
 export default function SearchResults() {
     const location = useLocation();
@@ -18,16 +18,12 @@ export default function SearchResults() {
 
     const [checkedTypes, setCheckedTypes] = useState(selectedTypes ? selectedTypes.split(",") : []);
     const [results, setResults] = useState({ clothes: [] });
-    const [productsCount, setProductsCount] = useState([]);
-    const [mostSold, setMostSold] = useState([]);
 
     useEffect(() => {
         Promise.all([
             clothesService.searchWithFilters(name, sort, size, page, type),
-            clothesService.getMostSold(),
         ])
-            .then(([searchResults, mostSold,]) => {
-                setMostSold(mostSold);
+            .then(([searchResults]) => {
                 setResults(searchResults);
             })
             .catch(err => {
@@ -150,7 +146,7 @@ export default function SearchResults() {
                 <div id="product-special" className="container">
                     <ul className="breadcrumb">
                         <li><Link to="/"><i className="fa fa-home" /></Link></li>
-                        <li><Link to="/catalog">Men</Link></li>
+                        <li><Link to={`/search-results?name=${name}`}>Търсене</Link></li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
@@ -160,20 +156,22 @@ export default function SearchResults() {
                                     <a className="list-group-item heading">Тип</a>
                                     <div className="list-group-item">
                                         <div id="filter-group1">
-                                            {Object.entries(typeTranslations).map(([id, name]) => (
-                                                <div className="checkbox" key={id}>
-                                                    <label>
-                                                        <input
-                                                            type="checkbox"
-                                                            name="filter[]"
-                                                            value={id}
-                                                            checked={checkedTypes.includes(id)}
-                                                            onChange={() => handleTypeChange(id)}
-                                                        />
-                                                        {name}
-                                                    </label>
-                                                </div>
-                                            ))}
+                                            {Object.entries(typeTranslations)
+                                                .filter(([id]) => id !== "BANDANAS")
+                                                .map(([id, name]) => (
+                                                    <div className="checkbox" key={id}>
+                                                        <label>
+                                                            <input
+                                                                type="checkbox"
+                                                                name="filter[]"
+                                                                value={id}
+                                                                checked={checkedTypes.includes(id)}
+                                                                onChange={() => handleTypeChange(id)}
+                                                            />
+                                                            {name}
+                                                        </label>
+                                                    </div>
+                                                ))}
                                         </div>
                                     </div>
                                     <div className="panel-footer text-right">
@@ -220,75 +218,49 @@ export default function SearchResults() {
                                 </div>
                             </div>
                             <div className="box latest">
-                                <div className="box-heading">Най-продавани</div>
+                                <div className="box-heading" style={{ textAlign: "center" }}>Категории</div>
                                 <div className="box-content">
                                     <div className="box-product productbox-grid" id=" latest-grid">
-                                        {mostSold.clothes &&
-                                            mostSold.clothes.slice(0, 3).map((item) => (
-                                                <div className="product-items" key={item.id}>
-                                                    <div className="product-items">
-                                                        <div className="product-block product-thumb transition">
-                                                            <div className="product-block-inner">
-                                                                <div className="image">
-                                                                    <Link to={`/clothing/details/${item.id}`}>
-                                                                        <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
-                                                                            title="tote bags for women"
-                                                                            alt="tote bags for women"
-                                                                            className="img-responsive reg-image"
-                                                                            loading="lazy"
-                                                                        />
-
-                                                                        {(item.type !== "KIT" || item.type !== "TOWELS" || item.type !== "BANDANAS") && (
-                                                                            <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
-                                                                                title="tote bags for women"
-                                                                                alt="tote bags for women"
-                                                                                className="img-responsive hover-image"
-                                                                                loading="lazy"
-                                                                            />
-                                                                        )}
-
-                                                                        {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
-                                                                            <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
-                                                                                title="tote bags for women"
-                                                                                alt="tote bags for women"
-                                                                                className="img-responsive hover-image"
-                                                                                loading="lazy"
-                                                                            />
-                                                                        )}
-                                                                    </Link>
+                                        {homeCategories.map((category) => (
+                                            <div className="product-items" key={category.id}>
+                                                <div className="product-items">
+                                                    <div className="product-block product-thumb transition">
+                                                        <div className="product-block-inner">
+                                                            <div className="image">
+                                                                <Link to={category.link}>
+                                                                    <img
+                                                                        src={category.image}
+                                                                        title={category.name}
+                                                                        alt={category.name}
+                                                                        className="img-responsive reg-image"
+                                                                        loading="lazy"
+                                                                    />
+                                                                </Link>
+                                                            </div>
+                                                            <div className="product-details">
+                                                                <div className="caption">
+                                                                    <h4 style={{ textTransform: "none" }}>
+                                                                        <Link to={category.link}>{category.name}</Link>
+                                                                    </h4>
                                                                 </div>
-                                                                <div className="product-details">
-                                                                    <div className="caption">
-                                                                        <h4>
-                                                                            <a href="=49 ">{item.name}</a>
-                                                                        </h4>
-                                                                        <p className="price">
-                                                                            {item.price.toFixed(2)} лв.
-                                                                        </p>
-                                                                    </div>
-                                                                    <div className="product_hover_block">
-                                                                        <div className="action">
-                                                                            <button
-                                                                                type="button"
-                                                                                className="cart_button"
-                                                                                title="Add to Cart"
-                                                                            >
-                                                                                <i
-                                                                                    className="fa fa-shopping-cart"
-                                                                                    area-hidden="true"
-                                                                                />
-                                                                            </button>
-                                                                        </div>
+                                                                <div className="product_hover_block">
+                                                                    <div className="action">
+                                                                        <button
+                                                                            type="button"
+                                                                            className="cart_button"
+                                                                            onClick={() => navigate(`/clothing/details/${category.id}`)}
+                                                                            title="Add to Cart"
+                                                                        >
+                                                                            <i className="极fa fa-shopping-cart" area-hidden="true" />
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            ))}
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -298,7 +270,7 @@ export default function SearchResults() {
                             />
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h2 className="page-title">Men</h2>
+                            <h2 className="page-title">Търсене</h2>
                             <div className="row category_thumb">
                                 <div className="col-sm-2 category_img">
                                     <img
