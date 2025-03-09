@@ -27,6 +27,7 @@ export default function Details() {
     const [isLoading, setIsLoading] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const { handleAddToWishlist } = useWishlist();
+    const [notification, setNotification] = useState({ message: '', type: '' });
 
     const increaseQuantity = () => setQuantity((prev) => prev + 1);
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -171,6 +172,47 @@ export default function Details() {
         setTimeout(() => setShowNotification(false), 1);
     };
 
+    const addToWishlist = (id) => {
+        setNotification({ message: '' });
+        setTimeout(() => {
+            handleAddToWishlist(
+                id,
+                () => {
+                    setNotification({ message: '' });
+                    setTimeout(() => {
+                        setNotification({
+                            message: `Успешно добавихте ${typeTranslations[clothing.clothing.type]} ${clothing.clothing.name} към любими!`,
+                        });
+                    }, 0);
+                },
+                () => {
+                    setNotification({ message: '' });
+                    setTimeout(() => {
+                        setNotification({
+                            message: "Неуспешно добавяне на продукт към любими. Моля, опитайте отново.",
+                        });
+                    }, 0);
+                },
+                () => {
+                    setNotification({ message: '' });
+                    setTimeout(() => {
+                        setNotification({
+                            message: `Този продукт вече е във вашия списък с любими!`,
+                        });
+                    }, 0);
+                },
+                () => {
+                    setNotification({ message: '' });
+                    setTimeout(() => {
+                        setNotification({
+                            message: "Трябва да влезете в профила си, за да добавяте продукти към любими!",
+                        });
+                    }, 0);
+                }
+            );
+        }, 0);
+    };
+
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
@@ -254,81 +296,83 @@ export default function Details() {
                                     <div className="swiper-pagination" />
                                 </div>
                             </div>
-                            <div className="box latest">
-                                <div className="box-heading">Най-продавани</div>
-                                <div className="box-content">
-                                    <div className="box-product  productbox-grid" id=" latest-grid">
-                                        {similar?.clothes?.length > 1 && similar.clothes
-                                            .filter(current => { return !(clothing.clothing.model === current.model && clothing.clothing.type === current.type); })
-                                            .slice(0, 3).map((item) => (
-                                                <div className="product-items" key={item.id}>
-                                                    <div className="product-items">
-                                                        <div className="product-block product-thumb transition">
-                                                            <div className="product-block-inner">
-                                                                <div className="image">
-                                                                    <Link to={`/clothing/details/${item.id}`}>
-                                                                        <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
-                                                                            title="tote bags for women"
-                                                                            alt="tote bags for women"
-                                                                            className="img-responsive reg-image"
-                                                                            loading="lazy"
-                                                                        />
-
-                                                                        {(item.type !== "KIT" || item.type !== "TOWELS" || item.type !== "BANDANAS") && (
-                                                                            <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
-                                                                                title="tote bags for women"
-                                                                                alt="tote bags for women"
-                                                                                className="img-responsive hover-image"
-                                                                                loading="lazy"
-                                                                            />
-                                                                        )}
-
-                                                                        {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
+                            {similar?.clothes?.length > 1 && (
+                                <div className="box latest">
+                                    <div className="box-heading">Подобни</div>
+                                    <div className="box-content">
+                                        <div className="box-product  productbox-grid" id=" latest-grid">
+                                            {similar.clothes
+                                                .filter(current => { return !(clothing.clothing.model === current.model && clothing.clothing.type === current.type); })
+                                                .slice(0, 3).map((item) => (
+                                                    <div className="product-items" key={item.id}>
+                                                        <div className="product-items">
+                                                            <div className="product-block product-thumb transition">
+                                                                <div className="product-block-inner">
+                                                                    <div className="image">
+                                                                        <Link to={`/clothing/details/${item.id}`}>
                                                                             <img
                                                                                 src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
                                                                                 title="tote bags for women"
                                                                                 alt="tote bags for women"
-                                                                                className="img-responsive hover-image"
+                                                                                className="img-responsive reg-image"
                                                                                 loading="lazy"
                                                                             />
-                                                                        )}
-                                                                    </Link>
-                                                                </div>
-                                                                <div className="product-details">
-                                                                    <div className="caption">
-                                                                        <h4>
-                                                                            <Link to={`/clothing/details/${item.id}`}>{item.name}</Link>
-                                                                        </h4>
-                                                                        <p className="price">
-                                                                            {item.price.toFixed(2)} лв.
-                                                                        </p>
-                                                                    </div>
-                                                                    <div className="product_hover_block">
-                                                                        <div className="action">
-                                                                            <button
-                                                                                type="button"
-                                                                                className="cart_button"
-                                                                                title="Add to Cart"
-                                                                                onClick={() => navigate(`/clothing/details/${item.id}`)}
-                                                                            >
-                                                                                <i
-                                                                                    className="fa fa-shopping-cart"
-                                                                                    area-hidden="true"
+
+                                                                            {(item.type !== "KIT" && item.type !== "TOWELS" && item.type !== "BANDANAS") && (
+                                                                                <img
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
+                                                                                    title="tote bags for women"
+                                                                                    alt="tote bags for women"
+                                                                                    className="img-responsive hover-image"
+                                                                                    loading="lazy"
                                                                                 />
-                                                                            </button>
+                                                                            )}
+
+                                                                            {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
+                                                                                <img
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
+                                                                                    title="tote bags for women"
+                                                                                    alt="tote bags for women"
+                                                                                    className="img-responsive hover-image"
+                                                                                    loading="lazy"
+                                                                                />
+                                                                            )}
+                                                                        </Link>
+                                                                    </div>
+                                                                    <div className="product-details">
+                                                                        <div className="caption">
+                                                                            <h4>
+                                                                                <Link to={`/clothing/details/${item.id}`}>{item.name}</Link>
+                                                                            </h4>
+                                                                            <p className="price">
+                                                                                {item.price.toFixed(2)} лв.
+                                                                            </p>
+                                                                        </div>
+                                                                        <div className="product_hover_block">
+                                                                            <div className="action">
+                                                                                <button
+                                                                                    type="button"
+                                                                                    className="cart_button"
+                                                                                    title="Add to Cart"
+                                                                                    onClick={() => navigate(`/clothing/details/${item.id}`)}
+                                                                                >
+                                                                                    <i
+                                                                                        className="fa fa-shopping-cart"
+                                                                                        area-hidden="true"
+                                                                                    />
+                                                                                </button>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            ))}
+                                                ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
                             <span
                                 className="latest_default_width"
                                 style={{ display: "none", visibility: "hidden" }}
@@ -582,10 +626,10 @@ export default function Details() {
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-default wishlist"
-                                                                title="Add to Wish List"
-                                                                onClick={() => handleAddToWishlist(clothing.clothing.id)}
+                                                                title="Добави в любими"
+                                                                onClick={() => addToWishlist(clothing.clothing.id)}
                                                             >
-                                                                Add to Wish List
+                                                                Добави в любими
                                                             </button>
                                                             {isAdmin && (
                                                                 <div>
@@ -1116,7 +1160,7 @@ export default function Details() {
                                                                                             className="img-responsive reg-image"
                                                                                             loading="lazy"
                                                                                         />
-                                                                                        {(clothing.type !== "KIT" || clothing.type !== "TOWELS" || clothing.type !== "BANDANAS") && (
+                                                                                        {(clothing.type !== "KIT" && clothing.type !== "TOWELS" && clothing.type !== "BANDANAS") && (
                                                                                             <img
                                                                                                 src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'back')?.path}`}
                                                                                                 title={clothing.name}
@@ -1149,7 +1193,7 @@ export default function Details() {
                                                                                                 className="wishlist"
                                                                                                 type="button"
                                                                                                 title="Add to Wish List"
-                                                                                                onClick={() => handleAddToWishlist(clothing.clothing.id)}
+                                                                                                onClick={() => addToWishlist(clothing.id)}
                                                                                             >
                                                                                                 <i className="fa fa-heart" />
                                                                                             </button>
@@ -1210,7 +1254,7 @@ export default function Details() {
                                                                                             loading="lazy"
                                                                                         />
 
-                                                                                        {(product.type !== "KIT" || product.type !== "TOWELS" || product.type !== "BANDANAS") && (
+                                                                                        {(product.type !== "KIT" && product.type !== "TOWELS" && product.type !== "BANDANAS") && (
                                                                                             <img
                                                                                                 src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'back')?.path}`}
                                                                                                 title={product.name}
@@ -1244,7 +1288,7 @@ export default function Details() {
                                                                                                 className="wishlist"
                                                                                                 type="button"
                                                                                                 title="Add to Wish List"
-                                                                                                onClick={() => handleAddToWishlist(product.clothing.id)}
+                                                                                                onClick={() => addToWishlist(product.id)}
                                                                                             >
                                                                                                 <i className="fa fa-heart" />
                                                                                             </button>
@@ -1359,6 +1403,12 @@ export default function Details() {
             {showNotification && (
                 <CustomNotification
                     message={<>Успешно добавихте {typeTranslations[clothing.clothing.type]} {clothing.clothing.name} във вашата количка!</>}
+                />
+            )}
+
+            {notification.message && (
+                <CustomNotification
+                    message={notification.message}
                 />
             )}
         </>
