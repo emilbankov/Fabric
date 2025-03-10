@@ -550,7 +550,7 @@ export default function Details() {
                                                     {!clothing.clothing.discountPrice && (
                                                         <li><h4 className="special-price">Цена: {calculatePrice()} лв.</h4></li>
                                                     )}
-                                                    <li className="phone"><i className="fas fa-phone"></i>{" "}&nbsp;За бърза поръчка: <a style={{ color: 'black', fontWeight: 'bold', textDecoration: 'underline' }} href="tel:+359898739178">+359 898 739 178</a> (08-17ч.)</li>
+                                                    <li className="phone"><i className="fas fa-phone"></i>{" "}&nbsp;За бърза поръчка: <a style={{ color: 'black', fontWeight: 'bold', textDecoration: 'underline' }} href="tel:+359892046660">+359 892 046 660</a> (08-18ч.)</li>
                                                     <li className="rewardpoint"><i className="fas fa-shipping-fast"></i> Безплатна доставка над 100 лв.</li>
                                                     <li className="phone" style={{ display: 'flex', alignItems: 'center' }}>
                                                         <i className="fa-solid fa-shirt"></i> &nbsp;

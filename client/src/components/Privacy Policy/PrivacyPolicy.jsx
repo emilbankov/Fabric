@@ -306,8 +306,8 @@ export default function PrivacyPolicy() {
                                         свържете се с нас на:
                                     </p>
                                     <ul>
-                                        <li style={{ listStyle: "disc" }}>fabric@gmail.com</li>
-                                        <li style={{ listStyle: "disc" }}><a style={{ textDecoration: "underline" }} href="tel:+359898739178">+359 898 739 178</a></li>
+                                        <li style={{ listStyle: "disc" }}>fabricbgclothes@gmail.com</li>
+                                        <li style={{ listStyle: "disc" }}><a style={{ textDecoration: "underline" }} href="tel:+359892046660">+359 892 046 660</a></li>
                                     </ul>
                                 </div>
                             </div>

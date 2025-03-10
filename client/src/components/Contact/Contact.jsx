@@ -142,7 +142,7 @@ export default function Contact() {
                                     <div className="row contact-info">
                                         <div className="address-detail">
                                             <strong>Fabric</strong>
-                                            <address style={{ marginBottom: "10px" }}>ж.к. Христо Ботев - Юг, ул. "Славееви гори" №47А, 4004 Пловдив, България</address>
+                                            {/* <address style={{ marginBottom: "10px" }}>ж.к. Христо Ботев - Юг, ул. "Славееви гори" №47А, 4004 Пловдив, България</address>
                                             <iframe
                                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2966.123123123123!2d24.7287739!3d42.1249508!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14acd1aa8f4a1103%3A0xc3e37ff81727cb3b!2z0JzQsNCz0LDQstC40L0g0JLQsNC90L3QtdC7!5e0!3m2!1sbg!2sbg!4v1691234567890"
                                                 width="100%"
@@ -159,11 +159,11 @@ export default function Contact() {
                                                 style={{ color: "#fff", marginTop: "10px", float: "right" }}
                                             >
                                                 <i className="fa fa-map-marker" /> Виж Google Maps{" "}
-                                            </a>
+                                            </a> */}
                                         </div>
                                         <div className="telephone">
                                             <strong>Телефон</strong>
-                                            <address>+359 899 836 901</address>
+                                            <address>+359 892 046 660</address>
                                         </div>
                                         <div className="time">
                                             <strong>Работно време</strong>
@@ -178,7 +178,7 @@ export default function Contact() {
                                     </div>
                                 </div>
                             </div>
-                            <form
+                            {/* <form
                                 action="information/contact"
                                 method="post"
                                 encType="multipart/form-data"
@@ -238,7 +238,7 @@ export default function Contact() {
                                         />
                                     </div>
                                 </div>
-                            </form>
+                            </form> */}
                         </div>
                     </div>
                 </div>
