@@ -21,7 +21,7 @@ export default function Footer() {
                                                         <div className="address">
                                                             <div className="address-text">Address</div>
                                                             <div className="contact_address">
-                                                                My Company, 42 Puffin street Puffinville France
+                                                                Fabric
                                                             </div>
                                                         </div>
                                                     </li>
@@ -29,7 +29,7 @@ export default function Footer() {
                                                         <div className="contact">
                                                             <div className="contact-text">Phone</div>
                                                             <div className="contact_phone">
-                                                                +01 2222 365 /(+91) 01 2345 6789
+                                                                +359 892 046 660
                                                             </div>
                                                         </div>
                                                     </li>
@@ -37,9 +37,19 @@ export default function Footer() {
                                                         <div className="email">
                                                             <div className="email-text">Mail</div>
                                                             <a href="#" className="email_link">
-                                                                someone@example.com
+                                                                fabricbgclothes@gmail.com
                                                             </a>
                                                         </div>
+                                                    </li>
+                                                    <li>
+                                                        <a target="_blanc" href="https://www.facebook.com/profile.php?id=61572836782465&mibextid=wwXIfr&rdid=E9FAPL9UceYYdXk1&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HnqLb5ty4%2F%3Fmibextid%3DwwXIfr">
+                                                            <div className="contact" style={{ padding: "0" }}>
+                                                                <div className="facebook_text">Facebook</div>
+                                                                <div className="contact_phone">
+                                                                    Fabric.net
+                                                                </div>
+                                                            </div>
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -53,9 +63,7 @@ export default function Footer() {
                                                     <Link to="/about">За нас</Link>
                                                 </li>
                                                 <li>
-                                                    <a href="/information&information_id=6">
-                                                        Delivery Information
-                                                    </a>
+                                                    <Link to="/orders-history">Мои поръчки</Link>
                                                 </li>
                                                 <li>
                                                     <Link to="/privacy-policy">Политика за поверителност</Link>
@@ -74,10 +82,10 @@ export default function Footer() {
                                             <h5>Помощ</h5>
                                             <ul className="list-unstyled">
                                                 <li>
-                                                    <Link to="/contact">Контакти</Link>
+                                                    <Link to="/contact">Карта на сайта</Link>
                                                 </li>
                                                 <li>
-                                                    <a href="/manufacturer">Brands</a>
+                                                    <Link to="/account">Акаунт</Link>
                                                 </li>
                                                 <li>
                                                     <a href="/voucher">Special Discount</a>
@@ -94,19 +102,19 @@ export default function Footer() {
                                             <h5>Категории</h5>
                                             <ul className="list-unstyled">
                                                 <li>
-                                                    <a href="/account">Policy</a>
+                                                    <Link to="/catalog?type=t_shirt&sort=new&size=20">Тениски</Link>
                                                 </li>
                                                 <li>
-                                                    <Link to="/orders-history">Мои поръчки</Link>
+                                                    <Link to="/catalog?type=long_t_shirt&sort=new&size=20">Блузи</Link>
                                                 </li>
                                                 <li>
-                                                    <a href="/manufacturer">Brands</a>
+                                                    <Link to="/catalog?type=sweatshirtt&sort=new&size=20">Суитчъри</Link>
                                                 </li>
                                                 <li>
-                                                    <a href="/sitemap">Site Map</a>
+                                                    <Link to="/catalog?type=shorts&sort=new&size=20">Къси панталони</Link>
                                                 </li>
                                                 <li>
-                                                    <a href="/newsletter">Newsletter</a>
+                                                    <Link to="/catalog?type=kits&sort=new&size=20">Комплекти</Link>
                                                 </li>
                                             </ul>
                                         </div>
