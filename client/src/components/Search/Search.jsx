@@ -89,10 +89,18 @@ export default function Search() {
                                                     {product.name}
                                                     <p>{product.description}</p>
                                                 </div>
-                                                <div className="product-price">
-                                                    <span className="price">{product.price.toFixed(2)} лв.</span>
-                                                    {product.special && <span className="special">${product.special}</span>}
-                                                </div>
+                                                {product.discountPrice ? (
+                                                    <div className="product-price">
+                                                        <span className="price">{product?.discountPrice?.toFixed(2)} лв.</span>
+                                                        <span className="special">{product.price.toFixed(2)} лв.</span>
+                                                    </div>
+                                                ) : (
+                                                    <div className="product-price">
+                                                        <span className="price">{product.price.toFixed(2)} лв.</span>
+                                                    </div>
+                                                )}
+
+
                                             </div>
                                             <span style={{ clear: "both" }} />
                                         </Link>
