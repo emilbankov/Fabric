@@ -377,27 +377,48 @@ export default function SearchResults() {
                                                         )}
                                                     </Link>
                                                 </div>
+                                                {item?.discountPrice && (
+                                                    <div className="saleback"><div className="saleicon sale">{(Math.ceil((item.price - item.discountPrice) / item.price * 100))}%</div></div>
+                                                )}
                                                 <div className="product-details grid">
                                                     <div className="caption">
                                                         <h4>
-                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                            <Link to={`/clothing/details/${item.id}`}>
                                                                 {item.name}
-                                                            </a>
+                                                            </Link>
                                                         </h4>
-                                                        <p className="price">{item.price.toFixed(2)} лв.</p>
+                                                        <p className="price">
+                                                            {item?.discountPrice ? (
+                                                                <>
+                                                                    <span className="price-new">{item?.discountPrice?.toFixed(2)} лв.</span>
+                                                                    <span className="price-old">{item?.price?.toFixed(2)} лв.</span>
+                                                                </>
+                                                            ) : (
+                                                                <span className="price-new">{item?.price?.toFixed(2)} лв.</span>
+                                                            )}
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div className="product-details list">
                                                     <div className="caption">
                                                         <h4>
-                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                            <Link to={`/clothing/details/${item.id}`}>
                                                                 {item.name}
-                                                            </a>
+                                                            </Link>
                                                         </h4>
                                                         <p className="desc">
                                                             {item.description}
                                                         </p>
-                                                        <p className="price">{item.price.toFixed(2)} лв.</p>
+                                                        <p className="price">
+                                                            {item?.discountPrice ? (
+                                                                <>
+                                                                    <span className="price-new">{item?.discountPrice?.toFixed(2)} лв.</span>
+                                                                    <span className="price-old">{item?.price?.toFixed(2)} лв.</span>
+                                                                </>
+                                                            ) : (
+                                                                <span className="price-new">{item?.price?.toFixed(2)} лв.</span>
+                                                            )}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
