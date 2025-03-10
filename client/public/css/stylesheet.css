@@ -6340,7 +6340,7 @@ footer .payment {
 }
 
 #footer #block_1 .address-text::after {
-	content: "\f041";
+	content: "\f0b1";
 	font-family: "fontawesome";
 	font-size: 16px;
 	color: #fff;
@@ -6375,6 +6375,21 @@ footer .payment {
 
 #footer #block_1 .contact-text::after {
 	content: "\f095";
+	font-family: "fontawesome";
+	font-size: 16px;
+	color: #fff;
+}
+
+#footer #block_1 .facebook_text {
+	font-size: 0;
+	font-weight: 400;
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
+}
+
+#footer #block_1 .facebook_text::after {
+	content: "\f082";
 	font-family: "fontawesome";
 	font-size: 16px;
 	color: #fff;
