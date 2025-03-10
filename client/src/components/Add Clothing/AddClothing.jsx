@@ -301,20 +301,23 @@ export default function AddClothing() {
                                                             value={values.category}
                                                         >
                                                             <option value="" hidden>Изберете категория</option>
+                                                            <option value="ABSTRACT">Абстрактни</option>
                                                             <option value="MARTIAL_SPORTS">Бойни спортове</option>
                                                             <option value="GAME_OF_THRONES">Гейм Аф Тронс</option>
-                                                            <option value="TRUCKS">Камиони</option>
-                                                            <option value="CHRISTMAS">Коледни</option>
-                                                            <option value="CARS">Коли</option>
                                                             <option value="DOGS">Кучета</option>
+                                                            <option value="CARS">Коли</option>
+                                                            <option value="CHRISTMAS">Коледни</option>
+                                                            <option value="TRUCKS">Камиони</option>
                                                             <option value="HUNTING">Лов</option>
                                                             <option value="MOTORCYCLES">Мотори</option>
                                                             <option value="MUSIC">Музика</option>
+                                                            <option value="NBA">NBA</option>
                                                             <option value="PATRIOTIC">Патриотични</option>
                                                             <option value="WORK">Работни</option>
                                                             <option value="FISHING">Риболов</option>
                                                             <option value="UEFA_EURO_2024">УЕФА ЕВРО 2024</option>
                                                             <option value="MOVIES">Филми</option>
+                                                            <option value="GYM">Фитнес</option>
                                                             <option value="FORMULA_1">Формула 1</option>
                                                             <option value="FOOTBALL">Футбол</option>
                                                             <option value="OTHERS">Други</option>
