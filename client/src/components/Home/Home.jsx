@@ -6,7 +6,7 @@ import { addToWishlist } from '../../services/authService';
 import AuthContext from "../../contexts/AuthProvider";
 import CustomNotification from "../CustomNotification/CustomNotification";
 import { useWishlist } from "../../contexts/WishlistProvider";
-import { Helmet } from 'react-helmet-async';
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Home() {
     const location = useLocation();
@@ -93,23 +93,17 @@ export default function Home() {
 
     return (
         <>
-            <Helmet>
-                <title>Начало - Fabric</title>
-                <meta 
-                    name="description" 
-                    content="Fabric - Вашият онлайн магазин за модерни дрехи и аксесоари. Разгледайте нашите най-нови и най-продавани продукти." 
-                />
-                <meta 
-                    name="keywords" 
-                    content="дрехи, дреха, мода, онлайн магазин, тениски, тениска, суичъри, суичър, блузи, блуза, 
-                            къси панталони, къси панталон, комплекти, комплект, кърпи, кърпа, бандани, бандана, 
-                            плажни кърпи, плажна кърпа, аксесоари, аксесоар, Fabric, fabric,
-                            clothes, clothing, fashion, online store, t-shirts, t-shirt, sweatshirts, sweatshirt, 
-                            blouses, blouse, shorts, short, sets, set, towels, towel, bandanas, bandana, 
-                            beach towels, beach towel, accessories, accessory"
-                />
-            </Helmet>
-
+            <MetaTags 
+                title="Начало - Fabric"
+                description="Fabric - Вашият онлайн магазин за модерни дрехи и аксесоари. Разгледайте нашите най-нови и най-продавани продукти."
+                keywords="дрехи, дреха, мода, онлайн магазин, тениски, тениска, суичъри, суичър, блузи, блуза, 
+                        къси панталони, къси панталон, комплекти, комплект, кърпи, кърпа, бандани, бандана, 
+                        плажни кърпи, плажна кърпа, аксесоари, аксесоар, Fabric, fabric,
+                        clothes, clothing, fashion, online store, t-shirts, t-shirt, sweatshirts, sweatshirt, 
+                        blouses, blouse, shorts, short, sets, set, towels, towel, bandanas, bandana, 
+                        beach towels, beach towel, accessories, accessory"
+            />
+            
             {notification.message && (
                 <CustomNotification
                     message={notification.message}
