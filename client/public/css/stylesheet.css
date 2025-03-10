@@ -25049,6 +25049,10 @@ div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-de
 	transition: background-color 0.3s ease;
 }
 
+.phone-call-button:hover {
+	color: #fff;
+}
+
 .phone-call-button i.fa-phone {
 	font-size: 18px;
 }

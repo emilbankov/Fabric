@@ -89,7 +89,7 @@ export default function Catalog() {
         } else {
             params.delete("category");
         }
-        params.set("page", "1"); 
+        params.set("page", "1");
         navigate(`${location.pathname}?${params.toString()}`);
     };
 
@@ -276,10 +276,11 @@ export default function Catalog() {
                                                 >
                                                     <div className={`icon-wrapper ${isActive ? 'active' : ''}`}>
                                                         <img
-                                                            src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category}.jpg`}
+                                                            src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category}.webp`}
                                                             alt={categoriesMap[category]}
                                                             className="img-responsive"
                                                             loading="lazy"
+                                                            style={{ minHeight: "159px" }}
                                                         />
                                                         <span>
                                                             {window.innerWidth <= 767 && categoriesMap[category].length > 7
@@ -453,19 +454,17 @@ export default function Catalog() {
                                                 <div className="product-details grid">
                                                     <div className="caption">
                                                         <h4>
-                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                            <Link to={`/clothing/details/${item.id}`}>
                                                                 {item.name}
-                                                            </a>
+                                                            </Link>
                                                         </h4>
                                                         <p className="price">
-                                                            {item?.discountPrice && (
+                                                            {item?.discountPrice ? (
                                                                 <>
                                                                     <span className="price-new">{item?.discountPrice?.toFixed(2)} лв.</span>
                                                                     <span className="price-old">{item?.price?.toFixed(2)} лв.</span>
                                                                 </>
-                                                            )}
-
-                                                            {!item?.discountPrice && (
+                                                            ) : (
                                                                 <span className="price-new">{item?.price?.toFixed(2)} лв.</span>
                                                             )}
                                                         </p>
@@ -474,14 +473,23 @@ export default function Catalog() {
                                                 <div className="product-details list">
                                                     <div className="caption">
                                                         <h4>
-                                                            <a href={`product/product&path=20&product_id=${item.id}`}>
+                                                            <Link to={`/clothing/details/${item.id}`}>
                                                                 {item.name}
-                                                            </a>
+                                                            </Link>
                                                         </h4>
                                                         <p className="desc">
                                                             {item.description}
                                                         </p>
-                                                        <p className="price">{item.price.toFixed(2)} лв.</p>
+                                                        <p className="price">
+                                                            {item?.discountPrice ? (
+                                                                <>
+                                                                    <span className="price-new">{item?.discountPrice?.toFixed(2)} лв.</span>
+                                                                    <span className="price-old">{item?.price?.toFixed(2)} лв.</span>
+                                                                </>
+                                                            ) : (
+                                                                <span className="price-new">{item?.price?.toFixed(2)} лв.</span>
+                                                            )}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>

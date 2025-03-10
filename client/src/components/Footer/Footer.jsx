@@ -15,7 +15,7 @@ export default function Footer() {
                                     <div id="block_4" className="footer-area">
                                         <div className="content_footer_right">
                                             <div id="block_1" className="footer-area col-sm-3 column">
-                                                <h5 className="toggle">Quick Imformation</h5>
+                                                <h5 className="toggle">Информация</h5>
                                                 <ul className="list-unstyled">
                                                     <li>
                                                         <div className="address">
@@ -47,7 +47,7 @@ export default function Footer() {
                                     </div>
                                     <div id="block_3" className="footer-area">
                                         <div id="info" className="col-sm-3 column" style={{ textAlign: "center" }}>
-                                            <h5>About</h5>
+                                            <h5 style={{ textTransform: "none" }}>За нас</h5>
                                             <ul className="list-unstyled">
                                                 <li>
                                                     <Link to="/about">За нас</Link>
@@ -71,7 +71,7 @@ export default function Footer() {
                                             </ul>
                                         </div>
                                         <div id="extra-link" className="col-sm-3 column" style={{ textAlign: "center" }}>
-                                            <h5>Help</h5>
+                                            <h5>Помощ</h5>
                                             <ul className="list-unstyled">
                                                 <li>
                                                     <Link to="/contact">Контакти</Link>
@@ -91,7 +91,7 @@ export default function Footer() {
                                             </ul>
                                         </div>
                                         <div id="account_link" className="col-sm-3 column" style={{ textAlign: "center" }}>
-                                            <h5>Policy</h5>
+                                            <h5>Категории</h5>
                                             <ul className="list-unstyled">
                                                 <li>
                                                     <a href="/account">Policy</a>
