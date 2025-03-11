@@ -123,7 +123,7 @@ export default function Home() {
                         <div id="slideshow0" className="swiper-container" style={{ opacity: 1 }}>
                             <div className="swiper-wrapper">
                                 <div className="swiper-slide text-center">
-                                    <Link to="/catalog?type=t_shirt&sort=new&size=20"><img src="/images/banner 1.jpg" alt="банер тениски" className="img-responsive banner-img-100" /></Link>
+                                    <Link to="/catalog?type=t_shirt&sort=new&size=20"><img src="/images/banners/t_shirt.png" alt="банер тениски" className="img-responsive banner-img-100" /></Link>
                                 </div>
                                 <div className="swiper-slide text-center">
                                     <Link to="/catalog?type=long_t_shirt&sort=new&size=20"><img src="/images/banner 2.jpg" alt="банер блузи" className="img-responsive banner-img-100" /></Link>

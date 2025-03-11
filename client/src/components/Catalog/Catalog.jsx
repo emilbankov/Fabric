@@ -248,19 +248,19 @@ export default function Catalog() {
                         <div id="content" className="col-sm-9">
                             <h2 className="page-title">{type && filters[type.toUpperCase()]}</h2>
 
+                            <div className="row category_thumb">
+                                <div className="col-sm-2 category_img">
+                                    <img
+                                        src={`/images/category-baner-1098x200.jpg`}
+                                        alt="Men"
+                                        title="Men"
+                                        className="img-thumbnail"
+                                    />
+                                </div>
+                            </div>
+
                             {showFilters && (
                                 <>
-                                    <div className="row category_thumb">
-                                        <div className="col-sm-2 category_img">
-                                            <img
-                                                src="/images/category-baner-1098x200.jpg"
-                                                alt="Men"
-                                                title="Men"
-                                                className="img-thumbnail"
-                                            />
-                                        </div>
-                                    </div>
-
                                     <div className="row category-icons-filter">
                                         {catalog.clothes && categories.map((category) => {
                                             const isActive = new URLSearchParams(location.search)
@@ -280,7 +280,7 @@ export default function Catalog() {
                                                             alt={categoriesMap[category]}
                                                             className="img-responsive"
                                                             loading="lazy"
-                                                            style={{ minHeight: "159px" }}
+                                                        // style={{ minHeight: "159px" }}
                                                         />
                                                         <span>
                                                             {window.innerWidth <= 767 && categoriesMap[category].length > 7

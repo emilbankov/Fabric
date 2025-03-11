@@ -1127,7 +1127,7 @@ export default function Details() {
                                 <div className="container">
                                     <div className="row">
                                         <div className="tab-head">
-                                            <div className="hometab-heading box-heading">Нови и популярни артикули</div>
+                                            <div className="hometab-heading box-heading">Подобни артикули и колекция</div>
                                             <div id="tabs" className="htabs">
                                                 <ul className="etabs">
                                                     {similar?.clothes?.length > 1 && (<li className="tab"><a href="#tab-latest">Подобни</a></li>)}

@@ -101,7 +101,7 @@ export default function Header() {
                                                 title="Fabric"
                                                 alt="Fabric"
                                                 className="img-responsive"
-                                                style={{ width: '172px' }}
+                                                style={{ width: '200px', marginTop: "2.5px" }}
                                             />
                                         </Link>
                                     </div>
