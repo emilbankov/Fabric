@@ -59,12 +59,12 @@ export default function Contact() {
                                     >
                                         Политика за поверителност
                                     </Link>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="information/information&information_id=5"
+                                        to="/terms-and-conditions"
                                     >
                                         Общи условия{" "}
-                                    </a>
+                                    </Link>
                                     <Link className="list-group-item" to="/contact">
                                         Контакти{" "}
                                     </Link>

@@ -184,12 +184,12 @@ export default function ResetPassword() {
                                     >
                                         Политика за поверителност{" "}
                                     </a>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="/information&information_id=5"
+                                        to="/terms-and-conditions"
                                     >
                                         Общи условия{" "}
-                                    </a>
+                                    </Link>
                                     <Link
                                         className="list-group-item"
                                         to="/contact"

@@ -69,9 +69,9 @@ export default function Footer() {
                                                     <Link to="/privacy-policy">Политика за поверителност</Link>
                                                 </li>
                                                 <li>
-                                                    <a href="/information&information_id=5">
+                                                    <Link to="/terms-and-conditions">
                                                         Общи условия
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                                 <li>
                                                     <Link to="/contact">Контакти</Link>

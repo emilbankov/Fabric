@@ -37,9 +37,9 @@ export default function PrivacyPolicy() {
                 <div id="information-information" className="container">
                     <ul className="breadcrumb">
                         <li style={{ listStyle: "disc" }}>
-                            <a href="common/home">
+                            <Link to="/">
                                 <i className="fa fa-home" />
-                            </a>
+                            </Link>
                         </li>
                         <li style={{ listStyle: "disc" }}>
                             <Link to="/privacy-policy">
@@ -70,12 +70,12 @@ export default function PrivacyPolicy() {
                                     >
                                         Политика за поверителност{" "}
                                     </Link>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="information/information&information_id=5"
+                                        to="/terms-and-conditions"
                                     >
                                         Общи условия{" "}
-                                    </a>
+                                    </Link>
                                     <Link
                                         className="list-group-item"
                                         to="/contact"

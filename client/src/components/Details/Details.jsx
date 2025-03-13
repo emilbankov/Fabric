@@ -268,9 +268,9 @@ export default function Details() {
                                     <a className="list-group-item" href="information&information_id=3">
                                         Политика за поверителност{" "}
                                     </a>
-                                    <a className="list-group-item" href="information&information_id=5">
+                                    <Link className="list-group-item" to="/terms-and-conditions">
                                         Общи условия{" "}
-                                    </a>
+                                    </Link>
                                     <Link className="list-group-item" to="/contact">
                                         Контакти{" "}
                                     </Link>

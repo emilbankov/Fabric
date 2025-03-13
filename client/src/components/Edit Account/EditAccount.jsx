@@ -159,9 +159,9 @@ export default function EditAccount() {
                                     <Link className="list-group-item" to="/privacy-policy">
                                         Политика за поверителност
                                     </Link>
-                                    <a className="list-group-item" href="information/information&information_id=5">
+                                    <Link className="list-group-item" to="/terms-and-conditions">
                                         Общи условия
-                                    </a>
+                                    </Link>
                                     <Link className="list-group-item" to="/contact">Контакти</Link>
                                     <a className="list-group-item" href="information/sitemap">Site Map</a>
                                 </div>
