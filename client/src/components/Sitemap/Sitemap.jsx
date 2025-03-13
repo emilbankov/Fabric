@@ -83,10 +83,10 @@ export default function Sitemap() {
                                 <div className="list-group">
                                     <Link to="/login" className="list-group-item">Вход</Link>
                                     <Link to="/register" className="list-group-item">Регистрация</Link>
-                                    <Link to="/forgotten" className="list-group-item">Забравена парола</Link>
+                                    <Link to="/forgotten-password" className="list-group-item">Забравена парола</Link>
                                     <Link to="/account" className="list-group-item">Акаунт</Link>
-                                    <Link to="/wishlist " className="list-group-item">Любими</Link>
-                                    <Link to="/order " className="list-group-item">Мои поръчки</Link>
+                                    <Link to="/wishlist" className="list-group-item">Любими</Link>
+                                    <Link to="/orders-history" className="list-group-item">Мои поръчки</Link>
                                 </div>
                             </div>
                         </aside>
