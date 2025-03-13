@@ -96,33 +96,13 @@ export default function Account() {
                                 </div>
                             </div>
                             <div className="box">
-                                <div className="box-heading">Information</div>
+                                <div className="box-heading">Информация</div>
                                 <div className="list-group">
                                     <Link className="list-group-item" to="/about">За нас</Link>
-                                    <a
-                                        className="list-group-item"
-                                        href="information/information&information_id=6"
-                                    >
-                                        Delivery Information
-                                    </a>
-                                    <Link
-                                        className="list-group-item"
-                                        to="/privacy-policy"
-                                    >
-                                        Политика за поверителност
-                                    </Link>
-                                    <Link
-                                        className="list-group-item"
-                                        to="/terms-and-conditions"
-                                    >
-                                        Общи условия
-                                    </Link>
-                                    <Link className="list-group-item" to="/contact">
-                                        Контакти
-                                    </Link>
-                                    <Link className="list-group-item" to="/sitemap">
-                                        Карта на сайта
-                                    </Link>
+                                    <Link className="list-group-item" to="/contact">Контакти</Link>
+                                    <Link className="list-group-item" to="/sitemap">Карта на сайта</Link>
+                                    <Link className="list-group-item" to="/privacy-policy">Политика за поверителност</Link>
+                                    <Link className="list-group-item" to="/terms-and-conditions">Общи условия</Link>
                                 </div>
                             </div>
                         </aside>

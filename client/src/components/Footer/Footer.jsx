@@ -59,63 +59,31 @@ export default function Footer() {
                                         <div id="info" className="col-sm-3 column" style={{ textAlign: "center" }}>
                                             <h5 style={{ textTransform: "none" }}>За нас</h5>
                                             <ul className="list-unstyled">
-                                                <li>
-                                                    <Link to="/about">За нас</Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/orders-history">Мои поръчки</Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/privacy-policy">Политика за поверителност</Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/terms-and-conditions">
-                                                        Общи условия
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/contact">Контакти</Link>
-                                                </li>
+                                                <li><Link to="/about">За нас</Link></li>
+                                                <li><Link to="/contact">Контакти</Link></li>
+                                                <li><Link to="/sitemap">Карта на сайта</Link></li>
+                                                <li><Link to="/privacy-policy">Политика за поверителност</Link></li>
+                                                <li><Link to="/terms-and-conditions">Общи условия</Link></li>
                                             </ul>
                                         </div>
                                         <div id="extra-link" className="col-sm-3 column" style={{ textAlign: "center" }}>
-                                            <h5>Помощ</h5>
+                                            <h5>Акаунт</h5>
                                             <ul className="list-unstyled">
-                                                <li>
-                                                    <Link to="/sitemap">Карта на сайта</Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/account">Акаунт</Link>
-                                                </li>
-                                                <li>
-                                                    <a href="/voucher">Special Discount</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/special">Specials</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/wishlist">Wish List</a>
-                                                </li>
+                                                <li><Link to="/login">Вход</Link></li>
+                                                <li><Link to="/register">Регистрация</Link></li>
+                                                <li><Link to="/account">Акаунт</Link></li>
+                                                <li><Link to="/orders-history">Мои поръчки</Link></li>
+                                                <li><Link to="/wishlist">Любими</Link></li>
                                             </ul>
                                         </div>
                                         <div id="account_link" className="col-sm-3 column" style={{ textAlign: "center" }}>
                                             <h5>Категории</h5>
                                             <ul className="list-unstyled">
-                                                <li>
-                                                    <Link to="/catalog?type=t_shirt&sort=new&size=20">Тениски</Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/catalog?type=long_t_shirt&sort=new&size=20">Блузи</Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/catalog?type=sweatshirtt&sort=new&size=20">Суитчъри</Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/catalog?type=shorts&sort=new&size=20">Къси панталони</Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/catalog?type=kits&sort=new&size=20">Комплекти</Link>
-                                                </li>
+                                                <li><Link to="/catalog?type=t_shirt&sort=new&size=20">Тениски</Link></li>
+                                                <li><Link to="/catalog?type=long_t_shirt&sort=new&size=20">Блузи</Link></li>
+                                                <li><Link to="/catalog?type=sweatshirtt&sort=new&size=20">Суитчъри</Link></li>
+                                                <li><Link to="/catalog?type=shorts&sort=new&size=20">Къси панталони</Link></li>
+                                                <li><Link to="/catalog?type=kits&sort=new&size=20">Комплекти</Link></li>
                                             </ul>
                                         </div>
                                     </div>
