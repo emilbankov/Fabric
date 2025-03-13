@@ -65,7 +65,7 @@ export default function PrivacyPolicy() {
                                         <div className="swiper-slide">
                                             <a href="#">
                                                 <img
-                                                    src="https://opc.webdigify.com/OPC02/OPC037_vesture/image/cache/catalog/left-banner-272x340.jpg"
+                                                    src="/images/left-banner-272x340.jpg"
                                                     alt="Left Banner1"
                                                     className="img-responsive"
                                                 />
