@@ -64,86 +64,14 @@ export default function ResetPassword() {
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
                             <div className="box">
-                                <div className="box-heading">Account</div>
+                                <div className="box-heading">Акаунт</div>
                                 <div className="list-group">
-                                    <a
-                                        href="/login"
-                                        className="list-group-item"
-                                    >
-                                        Login{" "}
-                                    </a>{" "}
-                                    <a
-                                        href="/register"
-                                        className="list-group-item"
-                                    >
-                                        Register
-                                    </a>{" "}
-                                    <a
-                                        href="/forgotten"
-                                        className="list-group-item"
-                                    >
-                                        Forgotten Password{" "}
-                                    </a>
-                                    <a
-                                        href="/account "
-                                        className="list-group-item"
-                                    >
-                                        My Account{" "}
-                                    </a>
-                                    <a
-                                        href="/address"
-                                        className="list-group-item"
-                                    >
-                                        Address Book
-                                    </a>{" "}
-                                    <a
-                                        href="/wishlist "
-                                        className="list-group-item"
-                                    >
-                                        Wish List{" "}
-                                    </a>{" "}
-                                    <a
-                                        href="/order "
-                                        className="list-group-item"
-                                    >
-                                        Order History{" "}
-                                    </a>{" "}
-                                    <a
-                                        href="/download"
-                                        className="list-group-item"
-                                    >
-                                        Downloads{" "}
-                                    </a>
-                                    <a
-                                        href="/recurring"
-                                        className="list-group-item"
-                                    >
-                                        Recurring payments{" "}
-                                    </a>{" "}
-                                    <a
-                                        href="/reward "
-                                        className="list-group-item"
-                                    >
-                                        Reward Points{" "}
-                                    </a>{" "}
-                                    <a
-                                        href="/return"
-                                        className="list-group-item"
-                                    >
-                                        Returns{" "}
-                                    </a>{" "}
-                                    <a
-                                        href="/transaction"
-                                        className="list-group-item"
-                                    >
-                                        Transactions{" "}
-                                    </a>{" "}
-                                    <a
-                                        href="/newsletter"
-                                        className="list-group-item"
-                                    >
-                                        Newsletter{" "}
-                                    </a>
+                                    <Link to="/login" className="list-group-item">Вход</Link>
+                                    <Link to="/register" className="list-group-item">Регистрация</Link>
+                                    <Link to="/forgotten" className="list-group-item">Забравена парола</Link>
+                                    <Link to="/account" className="list-group-item">Акаунт</Link>
+                                    <Link to="/wishlist " className="list-group-item">Любими</Link>
+                                    <Link to="/order " className="list-group-item">Мои поръчки</Link>
                                 </div>
                             </div>
                             <div className="swiper-viewport">
@@ -164,44 +92,13 @@ export default function ResetPassword() {
                                 </div>
                             </div>
                             <div className="box">
-                                <div className="box-heading">Information</div>
+                                <div className="box-heading">Информация</div>
                                 <div className="list-group">
-                                    <Link
-                                        className="list-group-item"
-                                        to="/about"
-                                    >
-                                        За нас{" "}
-                                    </Link>
-                                    <a
-                                        className="list-group-item"
-                                        href="/information&information_id=6"
-                                    >
-                                        Delivery Information{" "}
-                                    </a>
-                                    <a
-                                        className="list-group-item"
-                                        href="/information&information_id=3"
-                                    >
-                                        Политика за поверителност{" "}
-                                    </a>
-                                    <Link
-                                        className="list-group-item"
-                                        to="/terms-and-conditions"
-                                    >
-                                        Общи условия{" "}
-                                    </Link>
-                                    <Link
-                                        className="list-group-item"
-                                        to="/contact"
-                                    >
-                                        Контакти{" "}
-                                    </Link>
-                                    <Link
-                                        className="list-group-item"
-                                        to="/sitemap"
-                                    >
-                                        Карта на сайта{" "}
-                                    </Link>
+                                    <Link className="list-group-item" to="/about">За нас</Link>
+                                    <Link className="list-group-item" to="/contact">Контакти</Link>
+                                    <Link className="list-group-item" to="/sitemap">Карта на сайта</Link>
+                                    <Link className="list-group-item" to="/privacy-policy">Политика за поверителност</Link>
+                                    <Link className="list-group-item" to="/terms-and-conditions">Общи условия</Link>
                                 </div>
                             </div>
                         </aside>
