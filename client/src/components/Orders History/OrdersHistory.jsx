@@ -399,6 +399,7 @@ export default function OrdersHistory() {
                 show={showModal}
                 onClose={() => setShowModal(false)}
                 orderId={selectedOrder}
+                refreshOrders={handleReload}
             />
         </>
     );

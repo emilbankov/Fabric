@@ -146,7 +146,11 @@ export default function OrderDetailsModal({ show, onClose, orderId, refreshOrder
                                                         {order.email}
                                                     </td>
                                                     <td className="text-center" style={{ verticalAlign: 'middle' }}>{order.address}</td>
-                                                    <td className="text-center" style={{ verticalAlign: 'middle' }}>{order.phoneNumber}</td>
+                                                    {(isAdmin || isModerator) ? (
+                                                        <td className="text-center" style={{ verticalAlign: 'middle', textDecoration: "underline" }}><a href={`tel:${order.phoneNumber.split(" ").join("")}`}>{order.phoneNumber}</a></td>
+                                                    ) : (
+                                                        <td className="text-center" style={{ verticalAlign: 'middle' }}>{order.phoneNumber}</td>
+                                                    )}
                                                     <td className="text-center" style={{ verticalAlign: 'middle' }}>{order.selectedOffice ? "До офис" : "До адрес"}</td>
                                                 </tr>
                                             </tbody>
