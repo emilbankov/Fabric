@@ -47,6 +47,9 @@ export default function Checkout() {
         region: '',
     });
 
+    // Add a state for button disabled status
+    const [isConfirmingOrder, setIsConfirmingOrder] = useState(false);
+
     useEffect(() => {
         if (isAuthenticated && userProfile) {
             setFormValues({
@@ -277,44 +280,44 @@ export default function Checkout() {
     };
 
     const handleOrderSubmit = async () => {
-        // Calculate total price
-        const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-        const deliveryCost = totalPrice >= 100 ? 0 : (deliveryType === 'address' ? 9.00 : 6.90);
-        const finalPrice = totalPrice + deliveryCost;
-
-        // Base order data
-        const orderData = {
-            firstName: formValues.firstName,
-            lastName: formValues.lastName,
-            email: formValues.email,
-            phoneNumber: '+359 ' + formValues.phoneNumber,
-            deliveryType,
-            cart: cart.map(item => ({
-                id: item.id,
-                price: item.price,
-                quantity: item.quantity,
-                size: item.size,
-                type: item.type,
-                gender: item.gender
-            })),
-            totalPrice: Number(totalPrice.toFixed(2)),
-            deliveryCost: Number(deliveryCost.toFixed(2)),
-            finalPrice: Number(finalPrice.toFixed(2)),
-        };
-
-        // Add delivery-specific data
-        if (deliveryType === 'office') {
-            orderData.selectedOffice = selectedOffice ? selectedOffice.address.fullAddress : searchTerm;
-        } else {
-            orderData.city = formValues.city;
-            orderData.address = formValues.address;
-            orderData.region = formValues.region;
-        }
-
-        // Log what's being sent to backend
-        console.log('Sending to backend:', orderData);
-
+        setIsConfirmingOrder(true); // Disable the button
+        
         try {
+            // Calculate total price
+            const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const deliveryCost = totalPrice >= 100 ? 0 : (deliveryType === 'address' ? 9.00 : 6.90);
+            const finalPrice = totalPrice + deliveryCost;
+
+            // Base order data
+            const orderData = {
+                firstName: formValues.firstName,
+                lastName: formValues.lastName,
+                email: formValues.email,
+                phoneNumber: '+359 ' + formValues.phoneNumber,
+                deliveryType,
+                cart: cart.map(item => ({
+                    id: item.id,
+                    price: item.price,
+                    quantity: item.quantity,
+                    size: item.size,
+                    type: item.type,
+                    gender: item.gender
+                })),
+                totalPrice: Number(totalPrice.toFixed(2)),
+                deliveryCost: Number(deliveryCost.toFixed(2)),
+                finalPrice: Number(finalPrice.toFixed(2)),
+            };
+
+            // Add delivery-specific data
+            if (deliveryType === 'office') {
+                orderData.selectedOffice = selectedOffice ? selectedOffice.address.fullAddress : searchTerm;
+            } else {
+                orderData.city = formValues.city;
+                orderData.address = formValues.address;
+                orderData.region = formValues.region;
+            }
+
+            // Create the order
             await orderService.createOrder(orderData);
             clearCart();
 
@@ -325,6 +328,7 @@ export default function Checkout() {
             }
         } catch (error) {
             console.error('Failed to create order:', error);
+            setIsConfirmingOrder(false); // Re-enable the button if there's an error
         }
     };
 
@@ -553,7 +557,24 @@ export default function Checkout() {
                                                             {authError}
                                                         </div>
                                                     )}
-                                                    <form onSubmit={onSubmit}>
+                                                    <form onSubmit={(e) => {
+                                                        e.preventDefault();
+                                                        loginSubmitHandler(values, () => {
+                                                            // This will run after successful login
+                                                            setStep1Complete(true);
+                                                            
+                                                            // Force update the form values
+                                                            setFormValues({
+                                                                firstName: userProfile.firstName || '',
+                                                                lastName: userProfile.lastName || '',
+                                                                email: userProfile.email || '',
+                                                                phoneNumber: userProfile.phoneNumber?.replace('+359 ', '') || '',
+                                                                city: userProfile.city || '',
+                                                                address: userProfile.address || '',
+                                                                region: userProfile.region || '',
+                                                            });
+                                                        });
+                                                    }}>
                                                         <div className="form-group">
                                                             <label className="control-label" htmlFor="email">E-mail</label>
                                                             <input
@@ -617,19 +638,20 @@ export default function Checkout() {
                                     >
                                         <div className="panel-body">
                                             <Formik
+                                                key={isAuthenticated ? 'authenticated' : 'guest'}
                                                 initialValues={{
-                                                    firstName: isAuthenticated && userProfile ? userProfile.firstName : formValues.firstName,
-                                                    lastName: isAuthenticated && userProfile ? userProfile.lastName : formValues.lastName,
-                                                    email: isAuthenticated && userProfile ? userProfile.email : formValues.email,
-                                                    phoneNumber: isAuthenticated && userProfile ? userProfile.phoneNumber?.replace('+359 ', '') : formValues.phoneNumber,
+                                                    firstName: formValues.firstName,
+                                                    lastName: formValues.lastName,
+                                                    email: formValues.email,
+                                                    phoneNumber: formValues.phoneNumber,
                                                     deliveryType: deliveryType,
-                                                    region: isAuthenticated && userProfile ? userProfile.region : formValues.region,
-                                                    city: isAuthenticated && userProfile ? userProfile.city : formValues.city,
-                                                    address: isAuthenticated && userProfile ? userProfile.address : formValues.address,
+                                                    region: formValues.region,
+                                                    city: formValues.city,
+                                                    address: formValues.address,
                                                     officeAddress: searchTerm,
                                                     selectedOffice: selectedOffice,
                                                 }}
-                                                enableReinitialize={false}
+                                                enableReinitialize={true}
                                                 validationSchema={deliverySchema}
                                                 onSubmit={(values) => {
                                                     setFormValues({
@@ -659,279 +681,295 @@ export default function Checkout() {
                                                     }
                                                 }}
                                             >
-                                                {({ errors, touched, values, setFieldValue }) => (
-                                                    <Form>
-                                                        <div className="row">
-                                                            <div className="col-sm-6">
-                                                                <fieldset id="account">
-                                                                    <legend>Лични данни</legend>
+                                                {({ errors, touched, values, setFieldValue }) => {
+                                                    // Update formValues when any field changes
+                                                    const handleFieldChange = (e) => {
+                                                        const { name, value } = e.target;
+                                                        setFormValues(prev => ({ ...prev, [name]: value }));
+                                                        setFieldValue(name, value);
+                                                    };
 
-                                                                    <div className="form-group required">
-                                                                        <label className="control-label" htmlFor="firstName">Име</label>
-                                                                        <Field
-                                                                            type="text"
-                                                                            name="firstName"
-                                                                            className={`form-control ${errors.firstName && touched.firstName ? 'is-invalid' : ''}`}
-                                                                            placeholder="Име"
-                                                                        />
-                                                                        {errors.firstName && touched.firstName && (
-                                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                                {errors.firstName}
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
+                                                    return (
+                                                        <Form>
+                                                            <div className="row">
+                                                                <div className="col-sm-6">
+                                                                    <fieldset id="account">
+                                                                        <legend>Лични данни</legend>
 
-                                                                    <div className="form-group required">
-                                                                        <label className="control-label" htmlFor="lastName">Фамилия</label>
-                                                                        <Field
-                                                                            type="text"
-                                                                            name="lastName"
-                                                                            className={`form-control ${errors.lastName && touched.lastName ? 'is-invalid' : ''}`}
-                                                                            placeholder="Фамилия"
-                                                                        />
-                                                                        {errors.lastName && touched.lastName && (
-                                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                                {errors.lastName}
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-
-                                                                    <div className="form-group required">
-                                                                        <label className="control-label" htmlFor="email">E-Mail</label>
-                                                                        <Field
-                                                                            type="email"
-                                                                            name="email"
-                                                                            className={`form-control ${errors.email && touched.email ? 'is-invalid' : ''}`}
-                                                                            placeholder="E-Mail"
-                                                                        />
-                                                                        {errors.email && touched.email && (
-                                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                                {errors.email}
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-
-                                                                    <div className="form-group required">
-                                                                        <label className="control-label" htmlFor="phoneNumber">Телефонен номер</label>
-                                                                        <div className="input-with-prefix">
+                                                                        <div className="form-group required">
+                                                                            <label className="control-label" htmlFor="firstName">Име</label>
                                                                             <Field
-                                                                                className={`form-control phone-field ${errors.phoneNumber && touched.phoneNumber ? 'is-invalid' : ''}`}
-                                                                                type="tel"
-                                                                                id="phoneNumber"
-                                                                                name="phoneNumber"
-                                                                                placeholder="8** *** ***"
-                                                                                onChange={(e) => {
-                                                                                    const cleanValue = e.target.value.replace(/\s/g, '');
-                                                                                    if (cleanValue.length <= 9) {
-                                                                                        const formatted = formatPhoneNumber(cleanValue);
-                                                                                        setFieldValue('phoneNumber', formatted);
-                                                                                    }
-                                                                                }}
-                                                                                value={values.phoneNumber}
-                                                                                maxLength="11"
+                                                                                type="text"
+                                                                                name="firstName"
+                                                                                className={`form-control ${errors.firstName && touched.firstName ? 'is-invalid' : ''}`}
+                                                                                placeholder="Име"
+                                                                                onChange={handleFieldChange}
                                                                             />
-                                                                        </div>
-                                                                        {errors.phoneNumber && touched.phoneNumber && (
-                                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                                {errors.phoneNumber}
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                </fieldset>
-                                                            </div>
-
-                                                            <div className="col-sm-6">
-                                                                <fieldset id="address">
-                                                                    <legend>Адрес</legend>
-
-                                                                    <div className="form-group">
-                                                                        <div className="radio">
-                                                                            <label>
-                                                                                <Field
-                                                                                    type="radio"
-                                                                                    name="deliveryType"
-                                                                                    value="office"
-                                                                                    onChange={(e) => {
-                                                                                        setFieldValue('deliveryType', e.target.value);
-                                                                                        handleDeliveryTypeChange(e);
-                                                                                    }}
-                                                                                />
-                                                                                Офис на Еконт
-                                                                            </label>
-                                                                        </div>
-                                                                        <div className="radio">
-                                                                            <label>
-                                                                                <Field
-                                                                                    type="radio"
-                                                                                    name="deliveryType"
-                                                                                    value="address"
-                                                                                    onChange={(e) => {
-                                                                                        setFieldValue('deliveryType', e.target.value);
-                                                                                        handleDeliveryTypeChange(e);
-                                                                                    }}
-                                                                                />
-                                                                                До адрес
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    {values.deliveryType === 'office' ? (
-                                                                        <div className="form-group">
-                                                                            <label className="control-label" htmlFor="officeAddress">Търсене на офис</label>
-                                                                            <div className="position-relative">
-                                                                                <Field
-                                                                                    type="text"
-                                                                                    name="officeAddress"
-                                                                                    className={`form-control ${errors.officeAddress && touched.officeAddress ? 'is-invalid' : ''}`}
-                                                                                    placeholder="Въведете населено място"
-                                                                                    value={searchTerm}
-                                                                                    onChange={(e) => {
-                                                                                        setFieldValue('officeAddress', e.target.value);
-                                                                                        handleCitySearch(e.target.value);
-                                                                                    }}
-                                                                                    disabled={manualAddress}
-                                                                                />
-                                                                                {isSearching && !manualAddress && <div className="searching">Търсене...</div>}
-                                                                                {offices.length > 0 && searchTerm && !manualAddress && (
-                                                                                    <div className="offices-dropdown">
-                                                                                        {offices.map((office) => (
-                                                                                            <div
-                                                                                                key={`${office.id}-${office.address.fullAddress}`}
-                                                                                                className="office-item"
-                                                                                                onClick={() => {
-                                                                                                    setSelectedOffice(office);
-                                                                                                    setSearchTerm(office.address.fullAddress);
-                                                                                                    setFieldValue('officeAddress', office.address.fullAddress);
-                                                                                                    setOffices([]);
-                                                                                                }}
-                                                                                            >
-                                                                                                {office.address.fullAddress}
-                                                                                            </div>
-                                                                                        ))}
-                                                                                    </div>
-                                                                                )}
-                                                                            </div>
-                                                                            {!manualAddress && errors.officeAddress && touched.officeAddress && (
+                                                                            {errors.firstName && touched.firstName && (
                                                                                 <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                                    {errors.officeAddress}
+                                                                                    {errors.firstName}
                                                                                 </div>
                                                                             )}
+                                                                        </div>
 
-                                                                            {selectedOffice && !manualAddress && (
-                                                                                <div className="selected-office-info">
-                                                                                    <p>Град: {selectedOffice.address.fullAddress.trim().split(" ")[0] || 'N/A'}</p>
-                                                                                    <p>Име на офис: {selectedOffice.name || 'N/A'}</p>
-                                                                                    <p>Адрес: {selectedOffice.address.fullAddress.split(" ").slice(2).join(" ") || 'N/A'}</p>
+                                                                        <div className="form-group required">
+                                                                            <label className="control-label" htmlFor="lastName">Фамилия</label>
+                                                                            <Field
+                                                                                type="text"
+                                                                                name="lastName"
+                                                                                className={`form-control ${errors.lastName && touched.lastName ? 'is-invalid' : ''}`}
+                                                                                placeholder="Фамилия"
+                                                                                onChange={handleFieldChange}
+                                                                            />
+                                                                            {errors.lastName && touched.lastName && (
+                                                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                    {errors.lastName}
                                                                                 </div>
                                                                             )}
+                                                                        </div>
 
-                                                                            <div className="manual-address-option">
-                                                                                <label className="checkbox-container">
-                                                                                    <input
-                                                                                        type="checkbox"
-                                                                                        checked={manualAddress}
+                                                                        <div className="form-group required">
+                                                                            <label className="control-label" htmlFor="email">E-Mail</label>
+                                                                            <Field
+                                                                                type="email"
+                                                                                name="email"
+                                                                                className={`form-control ${errors.email && touched.email ? 'is-invalid' : ''}`}
+                                                                                placeholder="E-Mail"
+                                                                                onChange={handleFieldChange}
+                                                                            />
+                                                                            {errors.email && touched.email && (
+                                                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                    {errors.email}
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+
+                                                                        <div className="form-group required">
+                                                                            <label className="control-label" htmlFor="phoneNumber">Телефонен номер</label>
+                                                                            <div className="input-with-prefix">
+                                                                                <Field
+                                                                                    className={`form-control phone-field ${errors.phoneNumber && touched.phoneNumber ? 'is-invalid' : ''}`}
+                                                                                    type="tel"
+                                                                                    id="phoneNumber"
+                                                                                    name="phoneNumber"
+                                                                                    placeholder="8** *** ***"
+                                                                                    onChange={(e) => {
+                                                                                        const cleanValue = e.target.value.replace(/\s/g, '');
+                                                                                        if (cleanValue.length <= 9) {
+                                                                                            const formatted = formatPhoneNumber(cleanValue);
+                                                                                            setFieldValue('phoneNumber', formatted);
+                                                                                            setFormValues(prev => ({ ...prev, phoneNumber: formatted }));
+                                                                                        }
+                                                                                    }}
+                                                                                    value={values.phoneNumber}
+                                                                                    maxLength="11"
+                                                                                />
+                                                                            </div>
+                                                                            {errors.phoneNumber && touched.phoneNumber && (
+                                                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                    {errors.phoneNumber}
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </div>
+
+                                                                <div className="col-sm-6">
+                                                                    <fieldset id="address">
+                                                                        <legend>Адрес</legend>
+
+                                                                        <div className="form-group">
+                                                                            <div className="radio">
+                                                                                <label>
+                                                                                    <Field
+                                                                                        type="radio"
+                                                                                        name="deliveryType"
+                                                                                        value="office"
                                                                                         onChange={(e) => {
-                                                                                            const isChecked = e.target.checked;
-                                                                                            setManualAddress(isChecked);
-                                                                                            if (isChecked) {
-                                                                                                setSearchTerm('');
-                                                                                                setSelectedOffice(null);
-                                                                                                setOffices([]);
-                                                                                                setFieldValue('officeAddress', '');
-                                                                                            }
+                                                                                            setFieldValue('deliveryType', e.target.value);
+                                                                                            handleDeliveryTypeChange(e);
                                                                                         }}
                                                                                     />
-                                                                                    Не намирам офиса, който търся
+                                                                                    Офис на Еконт
                                                                                 </label>
                                                                             </div>
+                                                                            <div className="radio">
+                                                                                <label>
+                                                                                    <Field
+                                                                                        type="radio"
+                                                                                        name="deliveryType"
+                                                                                        value="address"
+                                                                                        onChange={(e) => {
+                                                                                            setFieldValue('deliveryType', e.target.value);
+                                                                                            handleDeliveryTypeChange(e);
+                                                                                        }}
+                                                                                    />
+                                                                                    До адрес
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
 
-                                                                            {manualAddress && (
-                                                                                <div className="manual-address-input">
-                                                                                    <div className="form-group">
-                                                                                        <label className="control-label" htmlFor="input-manual-office">
-                                                                                            Въведете адрес на офис ръчно
-                                                                                        </label>
+                                                                        {values.deliveryType === 'office' ? (
+                                                                            <div className="form-group">
+                                                                                <label className="control-label" htmlFor="officeAddress">Търсене на офис</label>
+                                                                                <div className="position-relative">
+                                                                                    <Field
+                                                                                        type="text"
+                                                                                        name="officeAddress"
+                                                                                        className={`form-control ${errors.officeAddress && touched.officeAddress ? 'is-invalid' : ''}`}
+                                                                                        placeholder="Въведете населено място"
+                                                                                        value={searchTerm}
+                                                                                        onChange={(e) => {
+                                                                                            setFieldValue('officeAddress', e.target.value);
+                                                                                            handleCitySearch(e.target.value);
+                                                                                        }}
+                                                                                        disabled={manualAddress}
+                                                                                    />
+                                                                                    {isSearching && !manualAddress && <div className="searching">Търсене...</div>}
+                                                                                    {offices.length > 0 && searchTerm && !manualAddress && (
+                                                                                        <div className="offices-dropdown">
+                                                                                            {offices.map((office) => (
+                                                                                                <div
+                                                                                                    key={`${office.id}-${office.address.fullAddress}`}
+                                                                                                    className="office-item"
+                                                                                                    onClick={() => {
+                                                                                                        setSelectedOffice(office);
+                                                                                                        setSearchTerm(office.address.fullAddress);
+                                                                                                        setFieldValue('officeAddress', office.address.fullAddress);
+                                                                                                        setOffices([]);
+                                                                                                    }}
+                                                                                                >
+                                                                                                    {office.address.fullAddress}
+                                                                                                </div>
+                                                                                            ))}
+                                                                                        </div>
+                                                                                    )}
+                                                                                </div>
+                                                                                {!manualAddress && errors.officeAddress && touched.officeAddress && (
+                                                                                    <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                        {errors.officeAddress}
+                                                                                    </div>
+                                                                                )}
+
+                                                                                {selectedOffice && !manualAddress && (
+                                                                                    <div className="selected-office-info">
+                                                                                        <p>Град: {selectedOffice.address.fullAddress.trim().split(" ")[0] || 'N/A'}</p>
+                                                                                        <p>Име на офис: {selectedOffice.name || 'N/A'}</p>
+                                                                                        <p>Адрес: {selectedOffice.address.fullAddress.split(" ").slice(2).join(" ") || 'N/A'}</p>
+                                                                                    </div>
+                                                                                )}
+
+                                                                                <div className="manual-address-option">
+                                                                                    <label className="checkbox-container">
                                                                                         <input
-                                                                                            type="text"
-                                                                                            id="input-manual-office"
-                                                                                            className={`form-control ${errors.officeAddress && touched.officeAddress ? 'is-invalid' : ''}`}
-                                                                                            placeholder="Град (Област) ул. Улица"
-                                                                                            value={searchTerm}
+                                                                                            type="checkbox"
+                                                                                            checked={manualAddress}
                                                                                             onChange={(e) => {
-                                                                                                setSearchTerm(e.target.value);
-                                                                                                setFieldValue('officeAddress', e.target.value);
+                                                                                                const isChecked = e.target.checked;
+                                                                                                setManualAddress(isChecked);
+                                                                                                if (isChecked) {
+                                                                                                    setSearchTerm('');
+                                                                                                    setSelectedOffice(null);
+                                                                                                    setOffices([]);
+                                                                                                    setFieldValue('officeAddress', '');
+                                                                                                }
                                                                                             }}
                                                                                         />
-                                                                                        {manualAddress && errors.officeAddress && touched.officeAddress && (
-                                                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                                                {errors.officeAddress}
-                                                                                            </div>
-                                                                                        )}
+                                                                                        Не намирам офиса, който търся
+                                                                                    </label>
+                                                                                </div>
+
+                                                                                {manualAddress && (
+                                                                                    <div className="manual-address-input">
+                                                                                        <div className="form-group">
+                                                                                            <label className="control-label" htmlFor="input-manual-office">
+                                                                                                Въведете адрес на офис ръчно
+                                                                                            </label>
+                                                                                            <input
+                                                                                                type="text"
+                                                                                                id="input-manual-office"
+                                                                                                className={`form-control ${errors.officeAddress && touched.officeAddress ? 'is-invalid' : ''}`}
+                                                                                                placeholder="Град (Област) ул. Улица"
+                                                                                                value={searchTerm}
+                                                                                                onChange={(e) => {
+                                                                                                    setSearchTerm(e.target.value);
+                                                                                                    setFieldValue('officeAddress', e.target.value);
+                                                                                                }}
+                                                                                            />
+                                                                                            {manualAddress && errors.officeAddress && touched.officeAddress && (
+                                                                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                                    {errors.officeAddress}
+                                                                                                </div>
+                                                                                            )}
+                                                                                        </div>
                                                                                     </div>
+                                                                                )}
+                                                                    </div>
+                                                                ) : (
+                                                                    <>
+                                                                        <div className="form-group">
+                                                                            <label className="control-label" htmlFor="region">Област</label>
+                                                                            <Field
+                                                                                type="text"
+                                                                                name="region"
+                                                                                className={`form-control ${errors.region && touched.region ? 'is-invalid' : ''}`}
+                                                                                placeholder="Област"
+                                                                                onChange={handleFieldChange}
+                                                                            />
+                                                                            {errors.region && touched.region && (
+                                                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                    {errors.region}
                                                                                 </div>
                                                                             )}
                                                                         </div>
-                                                                    ) : (
-                                                                        <>
-                                                                            <div className="form-group">
-                                                                                <label className="control-label" htmlFor="region">Област</label>
-                                                                                <Field
-                                                                                    type="text"
-                                                                                    name="region"
-                                                                                    className={`form-control ${errors.region && touched.region ? 'is-invalid' : ''}`}
-                                                                                    placeholder="Област"
-                                                                                />
-                                                                                {errors.region && touched.region && (
-                                                                                    <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                                        {errors.region}
-                                                                                    </div>
-                                                                                )}
-                                                                            </div>
 
-                                                                            <div className="form-group">
-                                                                                <label className="control-label" htmlFor="city">Град или село</label>
-                                                                                <Field
-                                                                                    type="text"
-                                                                                    name="city"
-                                                                                    className={`form-control ${errors.city && touched.city ? 'is-invalid' : ''}`}
-                                                                                    placeholder="Град"
-                                                                                />
-                                                                                {errors.city && touched.city && (
-                                                                                    <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                                        {errors.city}
-                                                                                    </div>
-                                                                                )}
-                                                                            </div>
+                                                                        <div className="form-group">
+                                                                            <label className="control-label" htmlFor="city">Град или село</label>
+                                                                            <Field
+                                                                                type="text"
+                                                                                name="city"
+                                                                                className={`form-control ${errors.city && touched.city ? 'is-invalid' : ''}`}
+                                                                                placeholder="Град"
+                                                                                onChange={handleFieldChange}
+                                                                            />
+                                                                            {errors.city && touched.city && (
+                                                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                    {errors.city}
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
 
-                                                                            <div className="form-group">
-                                                                                <label className="control-label" htmlFor="address">Адрес</label>
-                                                                                <Field
-                                                                                    type="text"
-                                                                                    name="address"
-                                                                                    className={`form-control ${errors.address && touched.address ? 'is-invalid' : ''}`}
-                                                                                    placeholder="Адрес"
-                                                                                />
-                                                                                {errors.address && touched.address && (
-                                                                                    <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                                        {errors.address}
-                                                                                    </div>
-                                                                                )}
-                                                                            </div>
-                                                                        </>
-                                                                    )}
-                                                                </fieldset>
+                                                                        <div className="form-group">
+                                                                            <label className="control-label" htmlFor="address">Адрес</label>
+                                                                            <Field
+                                                                                type="text"
+                                                                                name="address"
+                                                                                className={`form-control ${errors.address && touched.address ? 'is-invalid' : ''}`}
+                                                                                placeholder="Адрес"
+                                                                                onChange={handleFieldChange}
+                                                                            />
+                                                                            {errors.address && touched.address && (
+                                                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                                    {errors.address}
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    </>
+                                                                )}
+                                                            </fieldset>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                        <div className="buttons">
-                                                            <div className="pull-right">
-                                                                <button type="submit" className="btn btn-primary">
-                                                                    Продължи
-                                                                </button>
+                                                            <div className="buttons">
+                                                                <div className="pull-right">
+                                                                    <button type="submit" className="btn btn-primary">
+                                                                        Продължи
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </Form>
-                                                )}
+                                                        </Form>
+                                                    );
+                                                }}
                                             </Formik>
                                         </div>
                                     </div>
@@ -1132,6 +1170,7 @@ export default function Checkout() {
                                                         id="button-confirm"
                                                         className="btn btn-primary"
                                                         onClick={handleOrderSubmit}
+                                                        disabled={isConfirmingOrder}
                                                     />
                                                 </div>
                                             </div>
