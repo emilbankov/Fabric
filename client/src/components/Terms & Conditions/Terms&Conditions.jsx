@@ -82,12 +82,12 @@ export default function TermsAndConditions() {
                                     >
                                         Контакти{" "}
                                     </Link>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="information/sitemap"
+                                        to="/sitemap"
                                     >
-                                        Site Map{" "}
-                                    </a>
+                                        Карта на сайта{" "}
+                                    </Link>
                                 </div>
                             </div>
                             <div className="swiper-viewport">

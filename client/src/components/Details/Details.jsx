@@ -274,9 +274,9 @@ export default function Details() {
                                     <Link className="list-group-item" to="/contact">
                                         Контакти{" "}
                                     </Link>
-                                    <a className="list-group-item" href="sitemap">
-                                        Site Map{" "}
-                                    </a>
+                                    <Link className="list-group-item" to="/sitemap">
+                                        Карта на сайта{" "}
+                                    </Link>
                                 </div>
                             </div>
                             <div className="swiper-viewport">

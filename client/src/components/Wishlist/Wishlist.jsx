@@ -176,12 +176,12 @@ export default function Wishlist() {
                                     >
                                         Контакти{" "}
                                     </Link>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="information/sitemap"
+                                        to="/sitemap"
                                     >
-                                        Site Map{" "}
-                                    </a>
+                                        Карта на сайта{" "}
+                                    </Link>
                                 </div>
                             </div>
                         </aside>

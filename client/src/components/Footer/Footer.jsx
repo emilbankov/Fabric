@@ -82,7 +82,7 @@ export default function Footer() {
                                             <h5>Помощ</h5>
                                             <ul className="list-unstyled">
                                                 <li>
-                                                    <Link to="/contact">Карта на сайта</Link>
+                                                    <Link to="/sitemap">Карта на сайта</Link>
                                                 </li>
                                                 <li>
                                                     <Link to="/account">Акаунт</Link>

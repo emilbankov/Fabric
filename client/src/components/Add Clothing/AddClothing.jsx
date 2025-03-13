@@ -179,7 +179,7 @@ export default function AddClothing() {
                                         Контакти
                                     </Link>
                                     <a className="list-group-item" href="information/sitemap">
-                                        Site Map
+                                        Карта на сайта
                                     </a>
                                 </div>
                             </div>

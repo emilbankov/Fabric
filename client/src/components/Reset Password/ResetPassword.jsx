@@ -196,12 +196,12 @@ export default function ResetPassword() {
                                     >
                                         Контакти{" "}
                                     </Link>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="/sitemap"
+                                        to="/sitemap"
                                     >
-                                        Site Map{" "}
-                                    </a>
+                                        Карта на сайта{" "}
+                                    </Link>
                                 </div>
                             </div>
                         </aside>

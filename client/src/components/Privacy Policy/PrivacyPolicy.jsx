@@ -82,12 +82,12 @@ export default function PrivacyPolicy() {
                                     >
                                         Контакти{" "}
                                     </Link>
-                                    <a
+                                    <Link
                                         className="list-group-item"
-                                        href="information/sitemap"
+                                        to="/sitemap"
                                     >
-                                        Site Map{" "}
-                                    </a>
+                                        Карта на сайта{" "}
+                                    </Link>
                                 </div>
                             </div>
                             <div className="swiper-viewport">
@@ -192,7 +192,7 @@ export default function PrivacyPolicy() {
                             </div>
                         </aside>
                         <div id="content" className="col-sm-9">
-                            <h1 className="page-title">Политика за Поверителност</h1>
+                            <h1 className="page-title">Политика за поверителност</h1>
 
                             <div className="aboutus">
                                 <h3>Въведение</h3>

@@ -163,7 +163,7 @@ export default function EditAccount() {
                                         Общи условия
                                     </Link>
                                     <Link className="list-group-item" to="/contact">Контакти</Link>
-                                    <a className="list-group-item" href="information/sitemap">Site Map</a>
+                                    <Link className="list-group-item" to="/sitemap">Карта на сайта</Link>
                                 </div>
                             </div>
                         </aside>

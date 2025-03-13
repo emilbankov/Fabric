@@ -6,6 +6,7 @@ import { WishlistProvider } from "./contexts/WishlistProvider";
 import AuthGuard from "./guards/AuthGuard";
 import GuestGuard from "./guards/GuestGuard";
 import ErrorBoundary from "./guards/ErrorBoundary";
+import CheckoutGuard from "./guards/CheckoutGuard";
 
 import Header from "./components/Header/Header";
 import ScrollToTop from "./components/Scroll To Top/ScrollToTop";
@@ -30,6 +31,7 @@ import ForgottenPassword from "./components/Forgotten Password/ForgottenPassword
 import ResetPassword from "./components/Reset Password/ResetPassword";
 import PrivacyPolicy from "./components/Privacy Policy/PrivacyPolicy";
 import TermsAndConditions from "./components/Terms & Conditions/Terms&Conditions";
+import Sitemap from "./components/Sitemap/Sitemap";
 import Error404 from "./components/404/404";
 import Logout from "./components/Logout/Logout";
 import Footer from "./components/Footer/Footer";
@@ -51,13 +53,17 @@ function App() {
                             <Route path="/catalog" element={<Catalog />} />
                             <Route path="/clothing/details/:clothingId" element={<Details />} />
                             <Route path="/view-cart" element={<ViewCart />} />
-                            <Route path="/checkout" element={<Checkout />} />
                             <Route path="/search-results" element={<SearchResults />} />
                             <Route path="/prices" element={<Prices />} />
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/about" element={<About />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+                            <Route path="/sitemap" element={<Sitemap />} />
+
+                            <Route element={<CheckoutGuard />}>
+                                <Route path="/checkout" element={<Checkout />} />
+                            </Route>
 
                             <Route element={<GuestGuard />}>
                                 <Route path="/login" element={<Login />} />
