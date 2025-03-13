@@ -7,7 +7,7 @@ export default function CheckoutGuard({ children }) {
 
     // Redirect to the cart page if the cart is empty
     if (cart.length === 0) {
-        return <Navigate to="/view-cart" replace />;
+        return <Navigate to="/view-cart" />;
     }
 
     // Allow access to the Checkout page if the cart is not empty

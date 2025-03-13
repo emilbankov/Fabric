@@ -61,9 +61,14 @@ function App() {
                             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                             <Route path="/sitemap" element={<Sitemap />} />
 
-                            <Route element={<CheckoutGuard />}>
-                                <Route path="/checkout" element={<Checkout />} />
-                            </Route>
+                            <Route 
+                                path="/checkout" 
+                                element={
+                                    <CheckoutGuard>
+                                        <Checkout />
+                                    </CheckoutGuard>
+                                } 
+                            />
 
                             <Route element={<GuestGuard />}>
                                 <Route path="/login" element={<Login />} />
