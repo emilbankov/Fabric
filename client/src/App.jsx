@@ -29,6 +29,7 @@ import Register from "./components/Register/Register";
 import ForgottenPassword from "./components/Forgotten Password/ForgottenPassword";
 import ResetPassword from "./components/Reset Password/ResetPassword";
 import PrivacyPolicy from "./components/Privacy Policy/PrivacyPolicy";
+import TermsAndConditions from "./components/Terms & Conditions/Terms&Conditions";
 import Error404 from "./components/404/404";
 import Logout from "./components/Logout/Logout";
 import Footer from "./components/Footer/Footer";
@@ -56,6 +57,7 @@ function App() {
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/about" element={<About />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
 
                             <Route element={<GuestGuard />}>
                                 <Route path="/login" element={<Login />} />
