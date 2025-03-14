@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AuthContext from "../../contexts/AuthProvider";
 import { profile } from "../../services/authService";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Account() {
     const location = useLocation();
@@ -43,6 +44,11 @@ export default function Account() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Акаунт"
+                description="Управлявайте вашия акаунт във Fabric. Прегледайте и редактирайте вашата лична информация, поръчки и предпочитания."
+                keywords="Fabric, акаунт, лична информация, поръчки, предпочитания, онлайн магазин, профил, account, profile, personal information, orders, e-shop, clothing website"
+            />
             <div className="account-login layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function About() {
     let location = useLocation();
@@ -25,6 +26,11 @@ export default function About() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | За нас"
+                description="Разберете повече за Fabric - нашата мисия, ценности и история. Ние сме тук, за да ви предложим уникални и качествени дрехи."
+                keywords="Fabric, за нас, мисия, ценности, история, дрехи, мода, онлайн магазин, about, about page, about us, learn more about us, mission, history, clothes, clothing website, clothing"
+            />
             <div className="information-information-4   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

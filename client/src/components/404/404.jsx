@@ -1,10 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Shirt, Scissors } from 'lucide-react';
+import MetaTags from '../Meta Tags/MetaTags';
 import './404.css';
+
 export default function Error404() {
     return (
         <>
+            <MetaTags
+                title="Fabric | Страницата не е намерена"
+                description="Страницата, която търсите, не съществува. Върнете се към началната страница или разгледайте нашите каталози."
+                keywords="грешка 404, страница не е намерена, Fabric, дрехи, мода, онлайн магазин, error, error page, ерор, грешка"
+            />
             <div className="error-page">
                 <div className="content-wrapper">
                     <div

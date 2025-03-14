@@ -4,6 +4,7 @@ import AuthContext from "../../contexts/AuthProvider";
 import { Formik } from 'formik';
 import { addClothingValidationSchema } from '../../lib/validate';
 import * as clothesService from "../../services/clothesService";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function AddClothing() {
     const { addClothHandler } = useContext(AuthContext);
@@ -68,6 +69,11 @@ export default function AddClothing() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Добавяне на продукт"
+                description="Добавете нов продукт към каталога на Fabric. Попълнете необходимата информация и качете снимки на продукта."
+                keywords="Fabric, добавяне на продукт, нов продукт, каталог, дрехи, мода, онлайн магазин, add, add clothing, catalog, clothes, style, clothing, clothing website, new product"
+            />
             <div className="account-register layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">
