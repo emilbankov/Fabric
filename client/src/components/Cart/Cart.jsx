@@ -3,7 +3,6 @@ import $ from "jquery";
 import { CartContext } from "../../contexts/CartProvider";
 import { Link, useLocation } from "react-router-dom";
 import { gender } from "../../lib/dictionary";
-import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Cart() {
     const location = useLocation();
@@ -30,11 +29,6 @@ export default function Cart() {
 
     return (
         <>
-            <MetaTags
-                title="Fabric | Количка"
-                description="Прегледайте вашата количка във Fabric. Управлявайте продуктите, които сте добавили, и продължете към плащане."
-                keywords="Fabric, количка, продукти, плащане, онлайн магазин, дрехи, мода, cart, bag, shop, shopping cart, shopping, clothes, clothing, products, oline"
-            />
             <div className="col-sm-3 header_cart">
                 <div id="cart" className="btn-group btn-block">
                     <button type="button" className="btn btn-inverse btn-block btn-lg dropdown-toggle">

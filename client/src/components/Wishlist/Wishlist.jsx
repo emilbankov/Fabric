@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useWishlist } from "../../contexts/WishlistProvider";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Wishlist() {
     const location = useLocation();
@@ -27,6 +28,11 @@ export default function Wishlist() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Любими продукти"
+                description="Разгледайте вашите любими продукти във Fabric. Запазвайте и управлявайте списъка с продукти, които харесвате, за да ги поръчате по-късно."
+                keywords="Fabric, любими продукти, списък с желания, запазени продукти, wishlist, favorite products, saved items, shopping list"
+            />
             <div className="account-wishlist   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

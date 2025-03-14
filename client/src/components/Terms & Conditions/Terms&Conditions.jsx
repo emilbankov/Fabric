@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function TermsAndConditions() {
     const location = useLocation();
@@ -25,6 +26,11 @@ export default function TermsAndConditions() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Общи условия"
+                description="Разгледайте Общите условия на Fabric. Нашите правила и условия уреждат използването на сайта, поръчките, доставките и връщането на продукти."
+                keywords="Fabric, общи условия, правила, поръчки, доставки, връщане на продукти, terms and conditions, rules, orders, delivery, returns"
+            />
             <div className="information-information-3 layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

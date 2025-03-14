@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { CartContext } from "../../contexts/CartProvider";
 import { Link, useLocation } from "react-router-dom";
 import { gender } from "../../lib/dictionary";
+import MetaTags from "../Meta Tags/MetaTags";
 
 export default function ViewCart() {
     const location = useLocation();
@@ -28,6 +29,11 @@ export default function ViewCart() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Количка"
+                description="Прегледайте вашата количка във Fabric. Управлявайте продуктите, които сте добавили, и продължете към плащане."
+                keywords="Fabric, количка, продукти, плащане, онлайн магазин, дрехи, мода, cart, bag, shop, shopping cart, shopping, clothes, clothing, products, oline"
+            />
             <div className="checkout-cart   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">
