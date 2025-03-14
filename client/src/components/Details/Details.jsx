@@ -8,6 +8,7 @@ import { CartContext } from "../../contexts/CartProvider";
 import "./Details.css";
 import CustomNotification from "../CustomNotification/CustomNotification";
 import { useWishlist } from "../../contexts/WishlistProvider";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Details() {
     const navigate = useNavigate();
@@ -234,6 +235,11 @@ export default function Details() {
 
     return (
         <>
+            <MetaTags
+                title={`Fabric | ${typeTranslations[clothing?.clothing?.type]} ${clothing.clothing?.name}`}
+                description={`Разгледайте ${typeTranslations[clothing?.clothing?.type]} ${clothing.clothing?.name} във Fabric. ${clothing.clothing?.description}. Намерете идеалната дреха за вас с нашите уникални дизайни и високо качество.`}
+                keywords={`Fabric, ${clothing.clothing?.name}, дрехи, мода, онлайн магазин, ${clothing.clothing?.type}, ${clothing.clothing?.category}, мъже, жени, деца, clothes, fashion, online store, ${clothing.clothing?.type?.toLowerCase()}, ${clothing.clothing?.category?.toLowerCase()}, male, female, kids`}
+            />
             <div className="product-product-47   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

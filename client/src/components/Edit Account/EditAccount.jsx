@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { editAccountValidationSchema } from '../../lib/validate';
 import AuthContext from "../../contexts/AuthProvider";
 import { editProfile, profile } from "../../services/authService";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function EditAccount() {
     const location = useLocation();
@@ -97,6 +98,11 @@ export default function EditAccount() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Редактиране на профил"
+                description="Редактирайте вашия профил във Fabric. Актуализирайте личната си информация, адреса и предпочитанията за по-лесно пазаруване."
+                keywords="Fabric, редактиране на профил, лична информация, адрес, предпочитания, онлайн магазин, дрехи, мода, edit profile, personal information, address, preferences, online store, clothes, fashion"
+            />
             <div className="account-register layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

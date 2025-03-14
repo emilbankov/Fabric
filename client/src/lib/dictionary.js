@@ -85,7 +85,7 @@ export const homeCategories = [
     },
     {
         id: 'SWEATSHIRT',
-        name: 'Суитшърти',
+        name: 'Суитчъри',
         image: '/images/categories/sweatshirts.jpg',
         link: '/catalog?type=SWEATSHIRT'
     },

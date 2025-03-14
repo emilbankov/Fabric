@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Contact() {
     let location = useLocation();
@@ -25,6 +26,11 @@ export default function Contact() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Контакти"
+                description="Свържете се с нас във Fabric. Имате въпроси или нужда от помощ? Нашият екип е на ваше разположение за всякакви запитвания."
+                keywords="Fabric, контакти, връзка, запитване, помощ, онлайн магазин, дрехи, мода, contact, inquiry, support, online store, clothes, fashion"
+            />
             <div className="information-contact   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

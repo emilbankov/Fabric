@@ -5,6 +5,7 @@ import * as clothesService from "../../services/clothesService";
 import { categoriesMap, filters, homeCategories, typeTranslations } from "../../lib/dictionary";
 import { useWishlist } from "../../contexts/WishlistProvider";
 import CustomNotification from "../CustomNotification/CustomNotification";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Catalog() {
     const location = useLocation();
@@ -19,6 +20,7 @@ export default function Catalog() {
     const selectedCategories = queryParams.get("category") || "";
     const categoryParam = queryParams.get("category") || "";
     const categoryArray = categoryParam ? categoryParam.split(",") : [];
+    const typeName = type ? filters[type.toUpperCase()] : "Каталог";
 
     const [catalog, setCatalog] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -149,6 +151,11 @@ export default function Catalog() {
 
     return (
         <>
+            <MetaTags
+                title={`Fabric | ${typeName}`}
+                description={`Разгледайте нашите ${typeName} във Fabric. Намерете уникални и модерни дрехи за всеки вкус и повод. Бърза доставка и качествени материали.`}
+                keywords={`Fabric, ${typeName}, дрехи, мода, онлайн магазин, тениски, блузи, суичъри, къси панталони, комплекти, плажни кърпи, плаж, кърпи, бандани, ${typeName.toLowerCase()}, clothes, fashion, online store, t-shirts, blouses, sweatshirts, shorts, sets, beach towels, beach, towels, bandanas`}
+            />
             {notification.message && (
                 <CustomNotification
                     message={notification.message}
