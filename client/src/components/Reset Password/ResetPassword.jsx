@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from 'formik';
 import { resetPasswordSchema } from '../../lib/validate';
 import { resetPassword } from '../../services/authService';
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function ResetPassword() {
     const location = useLocation();
@@ -47,6 +48,11 @@ export default function ResetPassword() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Промяна на парола"
+                description="Променете вашата парола във Fabric. Въведете нова парола, за да актуализирате вашия акаунт и да продължите да пазарувате."
+                keywords="Fabric, промяна на парола, нова парола, актуализация на акаунт, reset password, new password, account update"
+            />
             <div className="account-forgotten   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

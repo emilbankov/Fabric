@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AuthContext from "../../contexts/AuthProvider";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Sitemap() {
     const location = useLocation();
@@ -27,6 +28,11 @@ export default function Sitemap() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Карта на сайта"
+                description="Разгледайте картата на сайта на Fabric. Намерете всички основни страници и връзки за по-лесно навигация."
+                keywords="Fabric, карта на сайта, навигация, страници, връзки, sitemap, navigation, pages, links"
+            />
             <div className="information-information-3 layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

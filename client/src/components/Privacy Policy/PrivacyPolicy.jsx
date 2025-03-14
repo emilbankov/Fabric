@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function PrivacyPolicy() {
     const location = useLocation();
@@ -25,6 +26,11 @@ export default function PrivacyPolicy() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Политика за поверителност"
+                description="Разберете как Fabric защитава вашите лични данни. Нашата Политика за поверителност обяснява как събираме, използваме и защитаваме вашата информация."
+                keywords="Fabric, политика за поверителност, лични данни, GDPR, защита на данни, поверителност, privacy policy, personal data, data protection, confidentiality"
+            />
             <div className="information-information-3 layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

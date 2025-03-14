@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Formik } from 'formik';
 import { registerValidationSchema } from '../../lib/validate';
 import AuthContext from "../../contexts/AuthProvider";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Register() {
     const location = useLocation();
@@ -59,6 +60,11 @@ export default function Register() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Регистрация"
+                description="Регистрирайте се във Fabric, за да пазарувате по-бързо, да следите поръчките си и да управлявате предпочитанията си. Създайте акаунт за по-добро пазаруване."
+                keywords="Fabric, регистрация, акаунт, пазаруване, поръчки, предпочитания, registration, account, shopping, orders, preferences"
+            />
             <div className="account-register   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

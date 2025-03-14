@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as clothesService from "../../services/clothesService";
 import { homeCategories, typeTranslations } from "../../lib/dictionary";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function SearchResults() {
     const location = useLocation();
@@ -134,6 +135,11 @@ export default function SearchResults() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Резултати от търсене"
+                description="Намерете това, което търсите във Fabric. Разгледайте резултатите от вашето търсене и открийте най-добрите продукти за вас."
+                keywords="Fabric, резултати от търсенето, търсене, продукти, филтри, сортиране, search results, search, products, filters, sorting"
+            />
             <div className="product-category-20   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">
