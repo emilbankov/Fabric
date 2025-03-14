@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import AuthContext from "../../contexts/AuthProvider";
 import { Formik } from "formik";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Login() {
     const location = useLocation();
@@ -49,6 +50,11 @@ export default function Login() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Вход"
+                description="Влезте във вашия акаунт във Fabric. Пазарувайте по-бързо, следете поръчките си и управлявайте предпочитанията си."
+                keywords="Fabric, вход, акаунт, пазаруване, поръчки, предпочитания, login, account, shopping, orders, preferences"
+            />
             <div className="account-login   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

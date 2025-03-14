@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Formik } from 'formik';
 import * as clothesService from "../../services/clothesService";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function Prices() {
     const location = useLocation();
@@ -100,6 +101,11 @@ export default function Prices() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Промяна на цените"
+                description="Променете цените на продуктите във Fabric. Актуализирайте цените без отстъпка и с отстъпка за по-добро управление на каталога."
+                keywords="Fabric, промяна на цените, цени, отстъпки, актуализация, каталог, change prices, prices, discounts, update, catalog"
+            />
             <div className="account-register   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
 import { editClothingValidationSchema } from '../../lib/validate';
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function EditClothing() {
     const navigate = useNavigate();
@@ -209,6 +210,11 @@ export default function EditClothing() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Редактиране на продукт"
+                description="Редактирайте продукт във Fabric. Актуализирайте информацията, снимките и цените на вашите дрехи за по-добро представяне в каталога."
+                keywords="Fabric, редактиране на продукт, дрехи, мода, онлайн магазин, снимки, цени, актуализация, edit product, clothes, fashion, online store, update, images, prices"
+            />
             <div className="account-register   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

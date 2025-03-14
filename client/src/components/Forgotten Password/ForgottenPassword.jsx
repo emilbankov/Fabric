@@ -1,4 +1,5 @@
 import './ForgottenPassword.css';
+import MetaTags from '../Meta Tags/MetaTags';
 
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -40,6 +41,11 @@ export default function ForgottenPassword() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | Забравена парола"
+                description="Забравена парола? Въведете вашия имейл, за да получите линк за подновяване на паролата във Fabric."
+                keywords="Fabric, забравена парола, подновяване на парола, имейл, вход, акаунт, forgotten password, reset password, email, login, account"
+            />
             <div className="account-forgotten   layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import OrderDetailsModal from "./Order Details/OrderDetails";
 import * as ordersService from "../../services/ordersService";
+import MetaTags from '../Meta Tags/MetaTags';
 
 export default function OrdersHistory() {
     const location = useLocation();
@@ -78,6 +79,11 @@ export default function OrdersHistory() {
 
     return (
         <>
+            <MetaTags
+                title="Fabric | История на поръчките"
+                description="Прегледайте историята на вашите поръчки във Fabric. Следете статуса на поръчките и преглеждайте детайлите им."
+                keywords="Fabric, история на поръчките, поръчки, статус, детайли, orders history, orders, status, details"
+            />
             <div className="account-order layout-2 left-col">
                 <div className="content_headercms_bottom" />
                 <div className="content-top-breadcum">
