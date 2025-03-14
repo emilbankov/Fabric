@@ -1,6 +1,6 @@
 import { get, post, put, del } from '../lib/request.js';
 
-const baseUrl = 'https://tshirt-latest.onrender.com/orders';
+const baseUrl = 'https://hidden-reef-10886-655e0b2ab112.herokuapp.com/orders';
 
 export const createOrder = async (orderData) => await post(`${baseUrl}/create`, orderData);
 export const ordersHistory = async (page = 1, status = "") => await get(`${baseUrl}/list?page=${page}${status ? `&status=${status}` : ""}`);

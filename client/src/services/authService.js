@@ -1,6 +1,6 @@
 import { get, post, put } from '../lib/request.js';
 
-const baseUrl = 'https://tshirt-latest.onrender.com/users';
+const baseUrl = 'https://hidden-reef-10886-655e0b2ab112.herokuapp.com/users';
 
 export const login = (email, password) => {
     return post(`${baseUrl}/login`, {

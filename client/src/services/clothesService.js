@@ -1,6 +1,6 @@
 import { get, post, put, del } from '../lib/request.js';
 
-const baseUrl = 'https://tshirt-latest.onrender.com/clothes';
+const baseUrl = 'https://hidden-reef-10886-655e0b2ab112.herokuapp.com/clothes';
 
 export const getNewest = async () => await get(`${baseUrl}/catalog?sort=new`);
 export const getMostSold = async () => await get(`${baseUrl}/catalog?sort=most-sold`);
