@@ -8,26 +8,6 @@ export const typeTranslations = {
     "BANDANAS": "Бандана",
 };
 
-export const categoryTranslations = {
-    "UEFA_EURO_2024": "УЕФА ЕВРО 2024",
-    "PATRIOTIC": "Патриотични",
-    "TRUCKS": "Камиони",
-    "MOVIES": "Филми",
-    "CHRISTMAS": "Коледни",
-    "FOOTBALL": "Футбол",
-    "MOTORCYCLES": "Мотори",
-    "GAME_OF_THRONES": "Гейм Аф Тронс",
-    "DOGS": "Кучета",
-    "MARTIAL_SPORTS": "Бойни спортове",
-    "MUSIC": "Музика",
-    "CARS": "Коли",
-    "HUNTING": "Лов",
-    "FISHING": "Риболов",
-    "FORMULA_1": "Формула 1",
-    "WORK": "Работни",
-    "OTHERS": "Други"
-};
-
 export const categoriesMap = {
     "MARTIAL_SPORTS": "Бойни спортове",
     "GAME_OF_THRONES": "Гейм Аф Тронс",
@@ -44,6 +24,9 @@ export const categoriesMap = {
     "UEFA_EURO_2024": "УЕФА ЕВРО 2024",
     "MOVIES": "Филми",
     "FORMULA_1": "Формула 1",
+    "GYM": "Фитнес и свободно време",
+    "NBA": "NBA",
+    "ABSTRACT": "АБСТРАКТНИ",
     "FOOTBALL": "Футбол",
     "OTHERS": "Други"
 };

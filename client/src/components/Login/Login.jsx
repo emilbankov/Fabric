@@ -132,7 +132,7 @@ export default function Login() {
                                         <div className="well">
                                             <h2>Завръщащ се потребител</h2>
                                             {authError && (
-                                                <div className="alert alert-danger" role="alert" style={{ textAlign: 'center' }}>
+                                                <div style={{ marginBottom: '10px', color: "red", fontSize: "16px" }}>
                                                     {authError}
                                                 </div>
                                             )}

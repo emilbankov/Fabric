@@ -394,7 +394,7 @@ export default function EditClothing() {
                                                     <option value="FISHING">Риболов</option>
                                                     <option value="UEFA_EURO_2024">УЕФА ЕВРО 2024</option>
                                                     <option value="MOVIES">Филми</option>
-                                                    <option value="GYM">Фитнес</option>
+                                                    <option value="GYM">Фитнес и свобдно време</option>
                                                     <option value="FORMULA_1">Формула 1</option>
                                                     <option value="FOOTBALL">Футбол</option>
                                                     <option value="OTHERS">Други</option>

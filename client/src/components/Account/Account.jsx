@@ -72,7 +72,7 @@ export default function Account() {
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
                             <div className="box">
-                                <div className="box-heading">Профил</div>
+                                <div className="box-heading" style={{ textAlign: "center" }}>Профил</div>
                                 <div className="user-profile">
                                     <div className="user-avatar">
                                         <img src="/images/no-image.jpg" alt="User Avatar" />

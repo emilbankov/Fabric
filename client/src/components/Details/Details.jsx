@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as clothesService from "../../services/clothesService"
-import { categoryTranslations, typeTranslations } from "../../lib/dictionary";
+import { categoriesMap, typeTranslations } from "../../lib/dictionary";
 import AuthContext from "../../contexts/AuthProvider";
 import ReactDOM from 'react-dom';
 import { CartContext } from "../../contexts/CartProvider";
@@ -521,7 +521,7 @@ export default function Details() {
                                                                 <td>
                                                                     <span className="desc">Категория</span>{" "}
                                                                 </td>
-                                                                <td className="description-right">{categoryTranslations[clothing.clothing.category]}</td>
+                                                                <td className="description-right">{categoriesMap[clothing.clothing.category]}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
