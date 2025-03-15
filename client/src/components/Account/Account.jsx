@@ -75,7 +75,7 @@ export default function Account() {
                                 <div className="box-heading">Профил</div>
                                 <div className="user-profile">
                                     <div className="user-avatar">
-                                        <img src="/images/avatar7.png" alt="User Avatar" />
+                                        <img src="/images/no-image.jpg" alt="User Avatar" />
                                     </div>
                                     {isAuthenticated && userProfile && (
                                         <>

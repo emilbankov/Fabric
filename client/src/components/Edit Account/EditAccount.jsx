@@ -49,10 +49,8 @@ export default function EditAccount() {
 
             if (response.status === "success") {
                 const updatedProfile = await profile();
-                console.log(updatedProfile);
 
                 updateUserProfile(updatedProfile);
-
                 navigate("/account");
             } else {
                 if (response.errors && Array.isArray(response.errors)) {

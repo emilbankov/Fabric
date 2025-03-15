@@ -116,8 +116,8 @@ export default function Details() {
             }
         }
 
-        if (selectedType === "Ватирана блуза с дълъг ръкав (+8.00лв.)") {
-            price += 8;
+        if (selectedType === "Ватирана блуза с дълъг ръкав (+7.00лв.)") {
+            price += 7;
         }
 
         return price.toFixed(2);
@@ -579,7 +579,7 @@ export default function Details() {
                                                         <div className="options-container last">
                                                             <span className="desc">Избери вид: </span>
                                                             <div className="options">
-                                                                {["Тениска с къс ръкав", "Ватирана блуза с дълъг ръкав (+8.00лв.)"].map(type => (
+                                                                {["Тениска с къс ръкав", "Ватирана блуза с дълъг ръкав (+7.00лв.)"].map(type => (
                                                                     <div key={type}
                                                                         className={`option ${selectedType === type ? "selected" : ""}`}
                                                                         onClick={() => handleSelect(type, "type")}
@@ -620,6 +620,7 @@ export default function Details() {
                                                                 className="btn btn-default wishlist"
                                                                 title="Добави в любими"
                                                                 onClick={() => addToWishlist(clothing.clothing.id)}
+                                                                style={{ textTransform: "none" }}
                                                             >
                                                                 Добави в любими
                                                             </button>
