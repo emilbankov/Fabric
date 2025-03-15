@@ -206,7 +206,7 @@ export default function SearchResults() {
                                 content="text/html; charset=iso-8859-1"
                             />
                             <title>Untitled Document</title>
-                            <div className="swiper-viewport">
+                            {/* <div className="swiper-viewport">
                                 <div id="banner0" className="swiper-container  single-banner ">
                                     <div className="swiper-wrapper">
                                         <div className="swiper-slide">
@@ -219,10 +219,9 @@ export default function SearchResults() {
                                             </a>
                                         </div>
                                     </div>
-                                    {/* If we need pagination */}
                                     <div className="swiper-pagination" />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="box latest">
                                 <div className="box-heading" style={{ textAlign: "center" }}>Категории</div>
                                 <div className="box-content">

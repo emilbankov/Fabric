@@ -80,7 +80,7 @@ export default function ResetPassword() {
                                     <Link to="/orders-history" className="list-group-item">Мои поръчки</Link>
                                 </div>
                             </div>
-                            <div className="swiper-viewport">
+                            {/* <div className="swiper-viewport">
                                 <div id="banner0" className="swiper-container  single-banner ">
                                     <div className="swiper-wrapper">
                                         <div className="swiper-slide">
@@ -93,10 +93,9 @@ export default function ResetPassword() {
                                             </a>
                                         </div>
                                     </div>
-                                    {/* If we need pagination */}
                                     <div className="swiper-pagination" />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="box">
                                 <div className="box-heading">Информация</div>
                                 <div className="list-group">

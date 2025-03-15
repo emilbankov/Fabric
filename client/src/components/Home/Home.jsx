@@ -54,12 +54,12 @@ export default function Home() {
                                 <div className="swiper-slide text-center">
                                     <Link to="/catalog?type=t_shirt&sort=new&size=20"><img src="/images/banners/t_shirt.png" alt="банер тениски" className="img-responsive banner-img-100" /></Link>
                                 </div>
-                                <div className="swiper-slide text-center">
+                                {/* <div className="swiper-slide text-center">
                                     <Link to="/catalog?type=long_t_shirt&sort=new&size=20"><img src="/images/banner 2.jpg" alt="банер блузи" className="img-responsive banner-img-100" /></Link>
                                 </div>
                                 <div className="swiper-slide text-center">
                                     <Link to="/catalog?type=sweatshirt&sort=new&size=20"><img src="/images/banner 3.jpg" alt="банер сутчъри" className="img-responsive banner-img-100" /></Link>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div className="swiper-pagination slideshow0" />

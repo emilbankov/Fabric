@@ -67,7 +67,7 @@ export default function Sitemap() {
                                     <Link className="list-group-item" to="/terms-and-conditions">Общи условия</Link>
                                 </div>
                             </div>
-                            <div className="swiper-viewport">
+                            {/* <div className="swiper-viewport">
                                 <div id="banner0" className="swiper-container  single-banner ">
                                     <div className="swiper-wrapper">
                                         <div className="swiper-slide">
@@ -80,10 +80,9 @@ export default function Sitemap() {
                                             </a>
                                         </div>
                                     </div>
-                                    {/* If we need pagination */}
                                     <div className="swiper-pagination" />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="box">
                                 <div className="box-heading">Акаунт</div>
                                 <div className="list-group">

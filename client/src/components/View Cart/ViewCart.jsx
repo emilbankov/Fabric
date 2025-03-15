@@ -61,7 +61,7 @@ export default function ViewCart() {
                                     <Link to="/orders-history" className="list-group-item">Мои поръчки</Link>
                                 </div>
                             </div>
-                            <div className="swiper-viewport">
+                            {/* <div className="swiper-viewport">
                                 <div id="banner0" className="swiper-container  single-banner ">
                                     <div className="swiper-wrapper">
                                         <div className="swiper-slide">
@@ -74,10 +74,9 @@ export default function ViewCart() {
                                             </a>
                                         </div>
                                     </div>
-                                    {/* If we need pagination */}
                                     <div className="swiper-pagination" />
                                 </div>
-                            </div>
+                            </div> */}
                             <span
                                 className="latest_default_width"
                                 style={{ display: "none", visibility: "hidden" }}
