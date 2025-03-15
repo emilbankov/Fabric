@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { login, register, profile } from '../services/authService';
-import * as clothesService from "../services/clothesService"
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "./CartProvider";
 
@@ -47,31 +46,6 @@ export const AuthProvider = ({ children }) => {
                 .catch(error => console.error('Failed to fetch profile:', error));
         }
     }, [auth.accessToken]);
-
-    const addClothHandler = async (values) => {
-        try {
-            const payload = { ...values };
-
-            if (payload.type === "KIT") {
-                delete payload.backImage;
-            }
-
-            await clothesService.create(
-                payload.name,
-                payload.description,
-                payload.price,
-                payload.type,
-                payload.category,
-                payload.model,
-                payload.frontImage,
-                payload.backImage
-            );
-
-            navigate("/");
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     const loginSubmitHandler = async (values) => {
         setAuthError(null);
@@ -143,7 +117,6 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{
-            addClothHandler,
             loginSubmitHandler,
             registerSubmitHandler,
             logoutHandler,
