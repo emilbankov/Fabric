@@ -85,7 +85,7 @@ export default function Account() {
                                     )}
                                 </div>
                             </div>
-                            <div className="swiper-viewport">
+                            {/* <div className="swiper-viewport">
                                 <div id="banner0" className="swiper-container single-banner">
                                     <div className="swiper-wrapper">
                                         <div className="swiper-slide">
@@ -100,7 +100,7 @@ export default function Account() {
                                     </div>
                                     <div className="swiper-pagination" />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="box">
                                 <div className="box-heading">Информация</div>
                                 <div className="list-group">

@@ -383,31 +383,18 @@ export default function Checkout() {
                                     <Link to="/orders-history" className="list-group-item">Мои поръчки</Link>
                                 </div>
                             </div>
-                            <div className="swiper-viewport">
-                                <div
-                                    id="banner0"
-                                    className="swiper-container  single-banner  swiper-container-horizontal"
-                                >
+                            {/* <div className="swiper-viewport">
+                                <div id="banner0" className="swiper-container  single-banner  swiper-container-horizontal">
                                     <div className="swiper-wrapper">
-                                        <div
-                                            className="swiper-slide swiper-slide-active"
-                                            style={{ width: 272 }}
-                                        >
-                                            <a href="#">
-                                                <img
-                                                    src="/images/left-banner-272x340.jpg"
-                                                    alt="Left Banner1"
-                                                    className="img-responsive"
-                                                />
-                                            </a>
+                                        <div className="swiper-slide swiper-slide-active" style={{ width: 272 }}>
+                                            <a href="#"><img src="/images/left-banner-272x340.jpg" alt="Left Banner1" className="img-responsive"/></a>
                                         </div>
                                     </div>
-                                    {/* If we need pagination */}
                                     <div className="swiper-pagination swiper-pagination-bullets">
                                         <span className="swiper-pagination-bullet swiper-pagination-bullet-active" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <span
                                 className="latest_default_width"
                                 style={{ display: "none", visibility: "hidden" }}

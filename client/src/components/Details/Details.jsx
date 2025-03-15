@@ -272,7 +272,7 @@ export default function Details() {
                                     <Link className="list-group-item" to="/terms-and-conditions">Общи условия</Link>
                                 </div>
                             </div>
-                            <div className="swiper-viewport">
+                            {/* <div className="swiper-viewport">
                                 <div id="banner0" className="swiper-container  single-banner ">
                                     <div className="swiper-wrapper">
                                         <div className="swiper-slide">
@@ -285,10 +285,9 @@ export default function Details() {
                                             </a>
                                         </div>
                                     </div>
-                                    {/* If we need pagination */}
                                     <div className="swiper-pagination" />
                                 </div>
-                            </div>
+                            </div> */}
                             {similar?.clothes?.length > 1 && (
                                 <div className="box latest">
                                     <div className="box-heading">Подобни</div>
