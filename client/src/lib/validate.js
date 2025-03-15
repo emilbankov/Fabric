@@ -27,6 +27,11 @@ export const registerValidationSchema = Yup.object({
     confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Паролите не съвпадат')
         .required('Задължително поле'),
+    agree: Yup.boolean()
+        .oneOf([true], 'Трябва да се съгласите с политиката за поверителност')
+        .required('Трябва да се съгласите с политиката за поверителност'),
+    recaptcha: Yup.string()
+        .required('Моля, потвърдете, че не сте робот')
 });
 
 export const editAccountValidationSchema = Yup.object({

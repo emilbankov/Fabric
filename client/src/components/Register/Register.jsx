@@ -4,12 +4,15 @@ import { Formik } from 'formik';
 import { registerValidationSchema } from '../../lib/validate';
 import AuthContext from "../../contexts/AuthProvider";
 import MetaTags from '../Meta Tags/MetaTags';
+import ReCAPTCHA from "react-google-recaptcha";
+import * as Yup from "yup";
 
 export default function Register() {
     const location = useLocation();
     const { registerSubmitHandler, authError, clearAuthError } = useContext(AuthContext);
 
     const [isLoading, setIsLoading] = useState(false);
+    const [recaptchaValue, setRecaptchaValue] = useState(null);
 
     const formatPhoneNumber = (value) => {
         const digits = value.replace(/\D/g, '');
@@ -20,6 +23,16 @@ export default function Register() {
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
+        if (!recaptchaValue) {
+            alert('Моля, потвърдете, че не сте робот');
+            return;
+        }
+        
+        if (values.honeypot) {
+            alert('Spam detected');
+            return;
+        }
+
         setIsLoading(true);
         const formattedValues = {
             ...values,
@@ -129,7 +142,7 @@ export default function Register() {
                         <div id="content" className="col-sm-9">
                             <h1>Регистрация на акаунт</h1>
                             {authError && (
-                                <div className="alert alert-danger" role="alert" style={{ textAlign: 'center' }}>
+                                <div style={{ textAlign: 'center', marginBottom: '10px', color: "red", fontSize: "16px" }}>
                                     {authError}
                                 </div>
                             )}
@@ -145,7 +158,10 @@ export default function Register() {
                                         region: '',
                                         city: '',
                                         password: '',
-                                        confirmPassword: ''
+                                        confirmPassword: '',
+                                        agree: false,
+                                        recaptcha: '',
+                                        honeypot: ''
                                     }}
                                     validationSchema={registerValidationSchema}
                                     onSubmit={handleSubmit}
@@ -353,8 +369,50 @@ export default function Register() {
                                                     </div>
                                                 </div>
                                             </fieldset>
+                                            <div className="form-group required">
+                                                <ReCAPTCHA
+                                                    sitekey="6LfFgfUqAAAAAB4axQo3lgDzSFJAmp-rre7CPNqi"
+                                                    onChange={(value) => {
+                                                        setRecaptchaValue(value);
+                                                        setFieldValue('recaptcha', value);
+                                                    }}
+                                                />
+                                                {errors.recaptcha && touched.recaptcha && (
+                                                    <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                        {errors.recaptcha}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div style={{ display: 'none' }}>
+                                                <label htmlFor="honeypot">Leave this field blank</label>
+                                                <input
+                                                    type="text"
+                                                    id="honeypot"
+                                                    name="honeypot"
+                                                    onChange={handleChange}
+                                                    value={values.honeypot}
+                                                />
+                                            </div>
                                             <div className="buttons">
-                                                <div className="pull-right"><input type="submit" value="Регистрация" className="btn btn-primary" disabled={isLoading} /></div>
+                                                <div className="pull-right" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "30px" }}>
+                                                    <div className="form-group required" style={{ marginBottom: "0" }}>
+                                                        <label>
+                                                            <input
+                                                                type="checkbox"
+                                                                name="agree"
+                                                                checked={values.agree}
+                                                                onChange={handleChange}
+                                                            />
+                                                            &nbsp;Прочетох и се съгласявам с <Link style={{ textDecoration: "underline" }} to="/privacy-policy"><b>Политиката за поверителност</b></Link>
+                                                        </label>
+                                                        {errors.agree && touched.agree && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                Трябва да се съгласите с политиката за поверителност
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    <input type="submit" value="Регистрация" className="btn btn-primary" disabled={isLoading} />
+                                                </div>
                                                 <p>Вече имате акаунт? Влезте {" "}<Link className="bold" to="/login">тук</Link>.</p>
                                             </div>
                                         </form>
