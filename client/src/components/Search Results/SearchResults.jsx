@@ -276,7 +276,7 @@ export default function SearchResults() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h2 className="page-title">Търсене</h2>
-                            <div className="row category_thumb">
+                            {/* <div className="row category_thumb">
                                 <div className="col-sm-2 category_img">
                                     <img
                                         src="/images/category-baner-1098x200.jpg"
@@ -285,7 +285,7 @@ export default function SearchResults() {
                                         className="img-thumbnail"
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="category_filter">
                                 <div className="col-md-4 btn-list-grid">
                                     <div className="btn-group">
