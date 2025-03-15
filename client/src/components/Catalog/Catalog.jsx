@@ -17,9 +17,7 @@ export default function Catalog() {
     const sort = queryParams.get("sort") || "";
     const size = queryParams.get("size") || "";
     const page = parseInt(queryParams.get("page") || "1", 10);
-    const selectedCategories = queryParams.get("category") || "";
-    const categoryParam = queryParams.get("category") || "";
-    const categoryArray = categoryParam ? categoryParam.split(",") : [];
+    const category = queryParams.get("category") || "";
     const typeName = type ? filters[type.toUpperCase()] : "Каталог";
 
     const [catalog, setCatalog] = useState([]);
@@ -38,7 +36,7 @@ export default function Catalog() {
     useEffect(() => {
         setIsLoading(true);
         Promise.all([
-            clothesService.getCatalog(type, sort, size, page, categoryArray),
+            clothesService.getCatalog(type, sort, size, page, category),
             clothesService.getCategories(type),
         ])
             .then(([catalog, categories]) => {
@@ -51,7 +49,7 @@ export default function Catalog() {
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [location.search, type, sort, size, page, selectedCategories]);
+    }, [location.search, type, sort, size, page, category]);
 
     useEffect(() => {
         const hasActiveCategories = new URLSearchParams(location.search).get("category");
@@ -184,7 +182,7 @@ export default function Catalog() {
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
                             <meta httpEquiv="Content-Type" content="text/html; charset=iso-8859-1" />
-                            <div className="swiper-viewport">
+                            {/* <div className="swiper-viewport">
                                 <div id="banner0" className="swiper-container single-banner">
                                     <div className="swiper-wrapper">
                                         <div className="swiper-slide">
@@ -199,7 +197,7 @@ export default function Catalog() {
                                     </div>
                                     <div className="swiper-pagination" />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="box latest">
                                 <div className="box-heading" style={{ textAlign: "center" }}>Категории</div>
                                 <div className="box-content">
@@ -255,7 +253,7 @@ export default function Catalog() {
                         <div id="content" className="col-sm-9">
                             <h2 className="page-title">{type && filters[type.toUpperCase()]}</h2>
 
-                            <div className="row category_thumb">
+                            {/* <div className="row category_thumb">
                                 <div className="col-sm-2 category_img">
                                     <img
                                         src={`/images/category-baner-1098x200.jpg`}
@@ -264,7 +262,7 @@ export default function Catalog() {
                                         className="img-thumbnail"
                                     />
                                 </div>
-                            </div>
+                            </div> */}
 
                             {showFilters && (
                                 <>
