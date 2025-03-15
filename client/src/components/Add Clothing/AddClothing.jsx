@@ -1,18 +1,18 @@
-import { useContext, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import AuthContext from "../../contexts/AuthProvider";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Formik } from 'formik';
 import { addClothingValidationSchema } from '../../lib/validate';
 import * as clothesService from "../../services/clothesService";
 import MetaTags from '../Meta Tags/MetaTags';
 
 export default function AddClothing() {
-    const { addClothHandler } = useContext(AuthContext);
     const [frontImagePreview, setFrontImagePreview] = useState(null);
     const [backImagePreview, setBackImagePreview] = useState(null);
     const location = useLocation();
     const [isLoading, setIsLoading] = useState(false);
     const [price, setPrice] = useState([]);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         clothesService.getPrice().then(setPrice);
@@ -56,9 +56,40 @@ export default function AddClothing() {
 
     const handleSubmit = async (values, { setSubmitting }) => {
         setIsLoading(true);
-        await addClothHandler(values);
-        setSubmitting(false);
-        setIsLoading(false);
+        setError(null);
+        try {
+            const payload = { ...values };
+
+            if (payload.type === "KIT") {
+                delete payload.backImage;
+            }
+
+            await clothesService.create(
+                payload.name,
+                payload.description,
+                payload.price,
+                payload.type,
+                payload.category,
+                payload.model,
+                payload.frontImage,
+                payload.backImage
+            );
+
+            navigate("/");
+        } catch (error) {
+            console.error("Error adding product:", error);
+            setFrontImagePreview(null);
+            setBackImagePreview(null);
+
+            if (error.message?.includes("Clothing with this model and type already exists")) {
+                setError("Дреха с този модел и тип вече съществува.");
+            } else {
+                setError("Възникна грешка при добавянето на продукта.");
+            }
+        } finally {
+            setSubmitting(false);
+            setIsLoading(false);
+        }
     };
 
     const handleTypeChange = (e, setFieldValue) => {
@@ -136,6 +167,11 @@ export default function AddClothing() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Добавяне на продукт</h1>
+                            {error && (
+                                <div style={{ textAlign: 'center', marginBottom: '10px', color: "red", fontSize: "16px" }}>
+                                    {error}
+                                </div>
+                            )}
                             {isLoading && <div style={{ margin: '30% auto 0 auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
                             {!isLoading && (
                                 <Formik
@@ -267,7 +303,7 @@ export default function AddClothing() {
                                                             <option value="FISHING">Риболов</option>
                                                             <option value="UEFA_EURO_2024">УЕФА ЕВРО 2024</option>
                                                             <option value="MOVIES">Филми</option>
-                                                            <option value="GYM">Фитнес</option>
+                                                            <option value="GYM">Фитнес и свободно време</option>
                                                             <option value="FORMULA_1">Формула 1</option>
                                                             <option value="FOOTBALL">Футбол</option>
                                                             <option value="OTHERS">Други</option>
