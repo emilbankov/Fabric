@@ -62,18 +62,12 @@ export default function Header() {
                                             <a href="https://www.facebook.com/profile.php?id=61572836782465&mibextid=wwXIfr&rdid=E9FAPL9UceYYdXk1&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HnqLb5ty4%2F%3Fmibextid%3DwwXIfr" target="_blanc" title="Facebook" className="facebook icon">
                                                 <i className="fa-brands fa-facebook-f"></i>
                                             </a>
+                                            {/* <a href="#" title="RSS" className="rss icon">
+                                                <i className="fa-brands fa-instagram" />
+                                            </a>
                                             <a href="#" title="Twitter" className="twitter icon">
                                                 <i className="fa fa-twitter" />
-                                            </a>
-                                            <a href="#" title="RSS" className="rss icon">
-                                                <i className="fa fa-rss" />
-                                            </a>
-                                            <a href="#" title="Pinterest" className="pinterest icon">
-                                                <i className="fa-brands fa-pinterest" />
-                                            </a>
-                                            <a href="#" title="Google Plus " className="google-plus icon">
-                                                <i className="fa-brands fa-google-plus" />
-                                            </a>
+                                            </a> */}
                                         </li>
                                     </ul>
                                 </div>

@@ -14,27 +14,29 @@ export default function Footer() {
                                 <div className="footer-left">
                                     <div id="block_4" className="footer-area">
                                         <div className="content_footer_right">
-                                            <div id="block_1" className="footer-area col-sm-3 column">
-                                                <h5 className="toggle">Информация</h5>
+                                            <div id="block_1" className="footer-area col-sm-3 column" style={{ textAlign: "center" }}>
+                                                <h5 className="toggle" >Контакти</h5>
                                                 <ul className="list-unstyled">
-                                                    <li>
+                                                    {/* <li>
                                                         <div className="address">
                                                             <div className="address-text">Address</div>
                                                             <div className="contact_address">
                                                                 Fabric
                                                             </div>
                                                         </div>
-                                                    </li>
+                                                    </li> */}
                                                     <li>
-                                                        <div className="contact">
-                                                            <div className="contact-text">Phone</div>
-                                                            <div className="contact_phone">
-                                                                +359 892 046 660
-                                                            </div>
+                                                        <div className="contact" style={{ paddingTop: "0" }}>
+                                                            <a href="tel:+359892046660">
+                                                                <div className="contact-text">Phone</div>
+                                                                <div className="contact_phone">
+                                                                    +359 892 046 660
+                                                                </div>
+                                                            </a>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div className="email">
+                                                        <div className="email" style={{ paddingTop: "0" }}>
                                                             <div className="email-text">Mail</div>
                                                             <a href="#" className="email_link">
                                                                 fabricbgclothes@gmail.com
@@ -102,7 +104,7 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer >
         </>
     );
 };
