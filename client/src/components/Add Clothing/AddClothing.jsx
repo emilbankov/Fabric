@@ -75,7 +75,7 @@ export default function AddClothing() {
                 payload.backImage
             );
 
-            navigate("/");
+            navigate(`/catalog?type=${payload.type.toLowerCase()}&sort=new&size=20`);
         } catch (error) {
             console.error("Error adding product:", error);
             setFrontImagePreview(null);
@@ -172,7 +172,7 @@ export default function AddClothing() {
                                     {error}
                                 </div>
                             )}
-                            {isLoading && <div style={{ margin: '30% auto 0 auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
+                            {isLoading && <div style={{ margin: '20% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
                             {!isLoading && (
                                 <Formik
                                     initialValues={{
