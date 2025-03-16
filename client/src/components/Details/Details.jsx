@@ -25,7 +25,7 @@ export default function Details() {
     const [quantity, setQuantity] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [showNotification, setShowNotification] = useState(false);
     const { handleAddToWishlist } = useWishlist();
     const [notification, setNotification] = useState({ message: '', type: '' });
@@ -75,6 +75,8 @@ export default function Details() {
                 }
             } catch (error) {
                 console.error("Error fetching data:", error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -370,9 +372,12 @@ export default function Details() {
                                 style={{ display: "none", visibility: "hidden" }}
                             />
                         </aside>
-                        <div id="content" className="col-sm-9 productpage">
-
-                            {clothing.clothing && (
+                        {isLoading ? (
+                            <div style={{ margin: '15% auto' }} className="text-center">
+                                <img src="/images/loading.gif" alt="Loading..." />
+                            </div>
+                        ) : (
+                            <div id="content" className="col-sm-9 productpage">
                                 <div className="row">
                                     <div id="content" className="col-sm-9 productpage">
                                         <div className="row">
@@ -662,455 +667,453 @@ export default function Details() {
                                         </div>
                                     </div>
                                 </div>
-                            )}
-
-                            {clothing.clothing && (
-                                <div id="tabs_info" className="product-tab col-sm-12">
-                                    <ul className="nav nav-tabs">
-                                        <li className="active">
-                                            <a href="#tab-description" data-toggle="tab">
-                                                Описание
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#tab-specification" data-toggle="tab">
-                                                Размери
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div className="tab-content">
-                                        <div className="tab-pane active" id="tab-description">
-                                            <p className="product-desc">
-                                                {clothing.clothing.description}
-                                            </p>
-                                        </div>
-                                        <div className="tab-pane" id="tab-specification">
-                                            {(clothing.clothing.type === "T_SHIRT" || clothing.clothing.type === "LONG_T_SHIRT") && (
-                                                <div className="tab-pane" id="tab-specification">
-                                                    <h3 className="ta-c">Мъжки / Дамски</h3>
-                                                    <table className="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Размер</th>
-                                                                <th>Мъжка Тениска - Ширина (см)</th>
-                                                                <th>Мъжка Тениска - Дължина (см)</th>
-                                                                <th>Дамска Тениска - Ширина (см)</th>
-                                                                <th>Дамска Тениска - Дължина (см)</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>XS</td>
-                                                                <td>-</td>
-                                                                <td>-</td>
-                                                                <td>38</td>
-                                                                <td>59</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>S</td>
-                                                                <td>50</td>
-                                                                <td>69</td>
-                                                                <td>40</td>
-                                                                <td>60</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>M</td>
-                                                                <td>52</td>
-                                                                <td>71</td>
-                                                                <td>42</td>
-                                                                <td>60</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>L</td>
-                                                                <td>54</td>
-                                                                <td>72</td>
-                                                                <td>44</td>
-                                                                <td>61</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>XL</td>
-                                                                <td>56</td>
-                                                                <td>74</td>
-                                                                <td>47</td>
-                                                                <td>62</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2XL</td>
-                                                                <td>58</td>
-                                                                <td>76</td>
-                                                                <td>-</td>
-                                                                <td>-</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3XL</td>
-                                                                <td>60</td>
-                                                                <td>79</td>
-                                                                <td>-</td>
-                                                                <td>-</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>5XL</td>
-                                                                <td>69</td>
-                                                                <td>79</td>
-                                                                <td>-</td>
-                                                                <td>-</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <h3 className="ta-c">Детски</h3>
-                                                    <table className="table table-bordered" style={{ width: '100%' }}>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Размер</th>
-                                                                <th>Години</th>
-                                                                <th>Ширина (см)</th>
-                                                                <th>Дължина (см)</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>98</td>
-                                                                <td>2-3</td>
-                                                                <td>28</td>
-                                                                <td>39</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>110</td>
-                                                                <td>4-5</td>
-                                                                <td>30</td>
-                                                                <td>42</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>122</td>
-                                                                <td>6-7</td>
-                                                                <td>35</td>
-                                                                <td>46</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>134</td>
-                                                                <td>8-9</td>
-                                                                <td>39</td>
-                                                                <td>52</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>146</td>
-                                                                <td>10-11</td>
-                                                                <td>42</td>
-                                                                <td>55</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>158</td>
-                                                                <td>12-13</td>
-                                                                <td>44</td>
-                                                                <td>58</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            )}
-                                            {clothing.clothing.type === "SHORTS" && (
-                                                <div className="tab-pane" id="tab-specification">
-                                                    <h3 className="ta-c">Къси панталони</h3>
-                                                    <table className="table table-bordered" style={{ width: '100%' }}>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Размер</th>
-                                                                <th>Талия (см)</th>
-                                                                <th>Дължина (см)</th>
-                                                                <th>Ханш (см)</th>
-                                                                <th>Ориентировъчни килограми</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>XS</td>
-                                                                <td>36</td>
-                                                                <td>42</td>
-                                                                <td>50</td>
-                                                                <td>60 &lt;</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>S</td>
-                                                                <td>38</td>
-                                                                <td>44</td>
-                                                                <td>52</td>
-                                                                <td>60-70</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>M</td>
-                                                                <td>40</td>
-                                                                <td>46</td>
-                                                                <td>54</td>
-                                                                <td>70-80</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>L</td>
-                                                                <td>42</td>
-                                                                <td>48</td>
-                                                                <td>56</td>
-                                                                <td>80-90</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>XL</td>
-                                                                <td>44</td>
-                                                                <td>50</td>
-                                                                <td>58</td>
-                                                                <td>90-100</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2XL</td>
-                                                                <td>46</td>
-                                                                <td>52</td>
-                                                                <td>60</td>
-                                                                <td>100-110</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3XL</td>
-                                                                <td>48</td>
-                                                                <td>54</td>
-                                                                <td>62</td>
-                                                                <td>110-125</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            )}
-                                            {clothing.clothing.type === "SWEATSHIRT" && (
-                                                <div className="tab-pane" id="tab-specification">
-                                                    <h3 className="ta-c">Мъжки / Дамски</h3>
-                                                    <table className="table table-bordered" style={{ width: '100%' }}>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Размер</th>
-                                                                <th>Ширина (см)</th>
-                                                                <th>Дължина (см)</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>XS</td>
-                                                                <td>54</td>
-                                                                <td>66</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>S</td>
-                                                                <td>56</td>
-                                                                <td>68</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>M</td>
-                                                                <td>58</td>
-                                                                <td>70</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>L</td>
-                                                                <td>62</td>
-                                                                <td>72</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>XL</td>
-                                                                <td>64</td>
-                                                                <td>74</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2XL</td>
-                                                                <td>67</td>
-                                                                <td>76</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3XL</td>
-                                                                <td>69</td>
-                                                                <td>78</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>5XL</td>
-                                                                <td>72</td>
-                                                                <td>79</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <h3 className="ta-c">Детски</h3>
-                                                    <table className="table table-bordered" style={{ width: '100%' }}>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Размер</th>
-                                                                <th>Години</th>
-                                                                <th>Ширина (см)</th>
-                                                                <th>Дължина (см)</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>122</td>
-                                                                <td>6-7</td>
-                                                                <td>40</td>
-                                                                <td>54</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>134</td>
-                                                                <td>8-9</td>
-                                                                <td>42</td>
-                                                                <td>56</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>146</td>
-                                                                <td>10-11</td>
-                                                                <td>44</td>
-                                                                <td>58</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>158</td>
-                                                                <td>12-13</td>
-                                                                <td>46</td>
-                                                                <td>58</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            )}
-                                            {clothing.clothing.type === "KIT" && (
-                                                <div className="tab-pane" id="tab-specification">
-                                                    <h3 className="ta-c">Тениска</h3>
-                                                    <table className="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Размер</th>
-                                                                <th>Мъжка Тениска - Ширина (см)</th>
-                                                                <th>Мъжка Тениска - Дължина (см)</th>
-                                                                <th>Дамска Тениска - Ширина (см)</th>
-                                                                <th>Дамска Тениска - Дължина (см)</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>XS</td>
-                                                                <td>-</td>
-                                                                <td>-</td>
-                                                                <td>38</td>
-                                                                <td>59</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>S</td>
-                                                                <td>50</td>
-                                                                <td>69</td>
-                                                                <td>40</td>
-                                                                <td>60</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>M</td>
-                                                                <td>52</td>
-                                                                <td>71</td>
-                                                                <td>42</td>
-                                                                <td>60</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>L</td>
-                                                                <td>54</td>
-                                                                <td>72</td>
-                                                                <td>44</td>
-                                                                <td>61</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>XL</td>
-                                                                <td>56</td>
-                                                                <td>74</td>
-                                                                <td>47</td>
-                                                                <td>62</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2XL</td>
-                                                                <td>58</td>
-                                                                <td>76</td>
-                                                                <td>-</td>
-                                                                <td>-</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3XL</td>
-                                                                <td>60</td>
-                                                                <td>79</td>
-                                                                <td>-</td>
-                                                                <td>-</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>5XL</td>
-                                                                <td>69</td>
-                                                                <td>79</td>
-                                                                <td>-</td>
-                                                                <td>-</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <h3 className="ta-c">Къси панталони</h3>
-                                                    <table className="table table-bordered" style={{ width: '100%' }}>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Размер</th>
-                                                                <th>Талия (см)</th>
-                                                                <th>Дължина (см)</th>
-                                                                <th>Ханш (см)</th>
-                                                                <th>Ориентировъчни килограми</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>XS</td>
-                                                                <td>36</td>
-                                                                <td>42</td>
-                                                                <td>50</td>
-                                                                <td>60 &lt;</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>S</td>
-                                                                <td>38</td>
-                                                                <td>44</td>
-                                                                <td>52</td>
-                                                                <td>60-70</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>M</td>
-                                                                <td>40</td>
-                                                                <td>46</td>
-                                                                <td>54</td>
-                                                                <td>70-80</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>L</td>
-                                                                <td>42</td>
-                                                                <td>48</td>
-                                                                <td>56</td>
-                                                                <td>80-90</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>XL</td>
-                                                                <td>44</td>
-                                                                <td>50</td>
-                                                                <td>58</td>
-                                                                <td>90-100</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2XL</td>
-                                                                <td>46</td>
-                                                                <td>52</td>
-                                                                <td>60</td>
-                                                                <td>100-110</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3XL</td>
-                                                                <td>48</td>
-                                                                <td>54</td>
-                                                                <td>62</td>
-                                                                <td>110-125</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            )}
+                                {clothing.clothing && (
+                                    <div id="tabs_info" className="product-tab col-sm-12">
+                                        <ul className="nav nav-tabs">
+                                            <li className="active">
+                                                <a href="#tab-description" data-toggle="tab">
+                                                    Описание
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#tab-specification" data-toggle="tab">
+                                                    Размери
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div className="tab-content">
+                                            <div className="tab-pane active" id="tab-description">
+                                                <p className="product-desc">
+                                                    {clothing.clothing.description}
+                                                </p>
+                                            </div>
+                                            <div className="tab-pane" id="tab-specification">
+                                                {(clothing.clothing.type === "T_SHIRT" || clothing.clothing.type === "LONG_T_SHIRT") && (
+                                                    <div className="tab-pane" id="tab-specification">
+                                                        <h3 className="ta-c">Мъжки / Дамски</h3>
+                                                        <table className="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Размер</th>
+                                                                    <th>Мъжка Тениска - Ширина (см)</th>
+                                                                    <th>Мъжка Тениска - Дължина (см)</th>
+                                                                    <th>Дамска Тениска - Ширина (см)</th>
+                                                                    <th>Дамска Тениска - Дължина (см)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>XS</td>
+                                                                    <td>-</td>
+                                                                    <td>-</td>
+                                                                    <td>38</td>
+                                                                    <td>59</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>S</td>
+                                                                    <td>50</td>
+                                                                    <td>69</td>
+                                                                    <td>40</td>
+                                                                    <td>60</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>M</td>
+                                                                    <td>52</td>
+                                                                    <td>71</td>
+                                                                    <td>42</td>
+                                                                    <td>60</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>L</td>
+                                                                    <td>54</td>
+                                                                    <td>72</td>
+                                                                    <td>44</td>
+                                                                    <td>61</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>XL</td>
+                                                                    <td>56</td>
+                                                                    <td>74</td>
+                                                                    <td>47</td>
+                                                                    <td>62</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2XL</td>
+                                                                    <td>58</td>
+                                                                    <td>76</td>
+                                                                    <td>-</td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3XL</td>
+                                                                    <td>60</td>
+                                                                    <td>79</td>
+                                                                    <td>-</td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>5XL</td>
+                                                                    <td>69</td>
+                                                                    <td>79</td>
+                                                                    <td>-</td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <h3 className="ta-c">Детски</h3>
+                                                        <table className="table table-bordered" style={{ width: '100%' }}>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Размер</th>
+                                                                    <th>Години</th>
+                                                                    <th>Ширина (см)</th>
+                                                                    <th>Дължина (см)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>98</td>
+                                                                    <td>2-3</td>
+                                                                    <td>28</td>
+                                                                    <td>39</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>110</td>
+                                                                    <td>4-5</td>
+                                                                    <td>30</td>
+                                                                    <td>42</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>122</td>
+                                                                    <td>6-7</td>
+                                                                    <td>35</td>
+                                                                    <td>46</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>134</td>
+                                                                    <td>8-9</td>
+                                                                    <td>39</td>
+                                                                    <td>52</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>146</td>
+                                                                    <td>10-11</td>
+                                                                    <td>42</td>
+                                                                    <td>55</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>158</td>
+                                                                    <td>12-13</td>
+                                                                    <td>44</td>
+                                                                    <td>58</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                )}
+                                                {clothing.clothing.type === "SHORTS" && (
+                                                    <div className="tab-pane" id="tab-specification">
+                                                        <h3 className="ta-c">Къси панталони</h3>
+                                                        <table className="table table-bordered" style={{ width: '100%' }}>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Размер</th>
+                                                                    <th>Талия (см)</th>
+                                                                    <th>Дължина (см)</th>
+                                                                    <th>Ханш (см)</th>
+                                                                    <th>Ориентировъчни килограми</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>XS</td>
+                                                                    <td>36</td>
+                                                                    <td>42</td>
+                                                                    <td>50</td>
+                                                                    <td>60 &lt;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>S</td>
+                                                                    <td>38</td>
+                                                                    <td>44</td>
+                                                                    <td>52</td>
+                                                                    <td>60-70</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>M</td>
+                                                                    <td>40</td>
+                                                                    <td>46</td>
+                                                                    <td>54</td>
+                                                                    <td>70-80</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>L</td>
+                                                                    <td>42</td>
+                                                                    <td>48</td>
+                                                                    <td>56</td>
+                                                                    <td>80-90</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>XL</td>
+                                                                    <td>44</td>
+                                                                    <td>50</td>
+                                                                    <td>58</td>
+                                                                    <td>90-100</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2XL</td>
+                                                                    <td>46</td>
+                                                                    <td>52</td>
+                                                                    <td>60</td>
+                                                                    <td>100-110</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3XL</td>
+                                                                    <td>48</td>
+                                                                    <td>54</td>
+                                                                    <td>62</td>
+                                                                    <td>110-125</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                )}
+                                                {clothing.clothing.type === "SWEATSHIRT" && (
+                                                    <div className="tab-pane" id="tab-specification">
+                                                        <h3 className="ta-c">Мъжки / Дамски</h3>
+                                                        <table className="table table-bordered" style={{ width: '100%' }}>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Размер</th>
+                                                                    <th>Ширина (см)</th>
+                                                                    <th>Дължина (см)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>XS</td>
+                                                                    <td>54</td>
+                                                                    <td>66</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>S</td>
+                                                                    <td>56</td>
+                                                                    <td>68</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>M</td>
+                                                                    <td>58</td>
+                                                                    <td>70</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>L</td>
+                                                                    <td>62</td>
+                                                                    <td>72</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>XL</td>
+                                                                    <td>64</td>
+                                                                    <td>74</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2XL</td>
+                                                                    <td>67</td>
+                                                                    <td>76</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3XL</td>
+                                                                    <td>69</td>
+                                                                    <td>78</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>5XL</td>
+                                                                    <td>72</td>
+                                                                    <td>79</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <h3 className="ta-c">Детски</h3>
+                                                        <table className="table table-bordered" style={{ width: '100%' }}>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Размер</th>
+                                                                    <th>Години</th>
+                                                                    <th>Ширина (см)</th>
+                                                                    <th>Дължина (см)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>122</td>
+                                                                    <td>6-7</td>
+                                                                    <td>40</td>
+                                                                    <td>54</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>134</td>
+                                                                    <td>8-9</td>
+                                                                    <td>42</td>
+                                                                    <td>56</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>146</td>
+                                                                    <td>10-11</td>
+                                                                    <td>44</td>
+                                                                    <td>58</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>158</td>
+                                                                    <td>12-13</td>
+                                                                    <td>46</td>
+                                                                    <td>58</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                )}
+                                                {clothing.clothing.type === "KIT" && (
+                                                    <div className="tab-pane" id="tab-specification">
+                                                        <h3 className="ta-c">Тениска</h3>
+                                                        <table className="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Размер</th>
+                                                                    <th>Мъжка Тениска - Ширина (см)</th>
+                                                                    <th>Мъжка Тениска - Дължина (см)</th>
+                                                                    <th>Дамска Тениска - Ширина (см)</th>
+                                                                    <th>Дамска Тениска - Дължина (см)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>XS</td>
+                                                                    <td>-</td>
+                                                                    <td>-</td>
+                                                                    <td>38</td>
+                                                                    <td>59</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>S</td>
+                                                                    <td>50</td>
+                                                                    <td>69</td>
+                                                                    <td>40</td>
+                                                                    <td>60</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>M</td>
+                                                                    <td>52</td>
+                                                                    <td>71</td>
+                                                                    <td>42</td>
+                                                                    <td>60</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>L</td>
+                                                                    <td>54</td>
+                                                                    <td>72</td>
+                                                                    <td>44</td>
+                                                                    <td>61</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>XL</td>
+                                                                    <td>56</td>
+                                                                    <td>74</td>
+                                                                    <td>47</td>
+                                                                    <td>62</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2XL</td>
+                                                                    <td>58</td>
+                                                                    <td>76</td>
+                                                                    <td>-</td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3XL</td>
+                                                                    <td>60</td>
+                                                                    <td>79</td>
+                                                                    <td>-</td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>5XL</td>
+                                                                    <td>69</td>
+                                                                    <td>79</td>
+                                                                    <td>-</td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <h3 className="ta-c">Къси панталони</h3>
+                                                        <table className="table table-bordered" style={{ width: '100%' }}>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Размер</th>
+                                                                    <th>Талия (см)</th>
+                                                                    <th>Дължина (см)</th>
+                                                                    <th>Ханш (см)</th>
+                                                                    <th>Ориентировъчни килограми</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>XS</td>
+                                                                    <td>36</td>
+                                                                    <td>42</td>
+                                                                    <td>50</td>
+                                                                    <td>60 &lt;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>S</td>
+                                                                    <td>38</td>
+                                                                    <td>44</td>
+                                                                    <td>52</td>
+                                                                    <td>60-70</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>M</td>
+                                                                    <td>40</td>
+                                                                    <td>46</td>
+                                                                    <td>54</td>
+                                                                    <td>70-80</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>L</td>
+                                                                    <td>42</td>
+                                                                    <td>48</td>
+                                                                    <td>56</td>
+                                                                    <td>80-90</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>XL</td>
+                                                                    <td>44</td>
+                                                                    <td>50</td>
+                                                                    <td>58</td>
+                                                                    <td>90-100</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2XL</td>
+                                                                    <td>46</td>
+                                                                    <td>52</td>
+                                                                    <td>60</td>
+                                                                    <td>100-110</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3XL</td>
+                                                                    <td>48</td>
+                                                                    <td>54</td>
+                                                                    <td>62</td>
+                                                                    <td>110-125</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            )}
-
-                        </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
                 {(similar?.clothes?.length > 1 || collection?.clothes?.length > 1) && (
