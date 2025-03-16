@@ -36,6 +36,7 @@ export default function Checkout() {
     const [manualAddress, setManualAddress] = useState(false);
     const [step1Complete, setStep1Complete] = useState(false);
     const [step2Complete, setStep2Complete] = useState(false);
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
     console.log(cart);
 
     const [formValues, setFormValues] = useState({
@@ -281,7 +282,7 @@ export default function Checkout() {
     };
 
     const handleOrderSubmit = async () => {
-        setIsConfirmingOrder(true); // Disable the button
+        setIsConfirmingOrder(true); // Set loading state to true
         
         try {
             // Calculate total price
@@ -360,6 +361,24 @@ export default function Checkout() {
             }
         };
     }, [location.pathname]);
+
+    const handleLoginSubmit = (e) => {
+        e.preventDefault();
+        setIsLoggingIn(true);
+        loginSubmitHandler(values, () => {
+            setIsLoggingIn(false);
+            setStep1Complete(true);
+            setFormValues({
+                firstName: userProfile.firstName || '',
+                lastName: userProfile.lastName || '',
+                email: userProfile.email || '',
+                phoneNumber: userProfile.phoneNumber?.replace('+359 ', '') || '',
+                city: userProfile.city || '',
+                address: userProfile.address || '',
+                region: userProfile.region || '',
+            });
+        });
+    };
 
     return (
         <>
@@ -483,53 +502,42 @@ export default function Checkout() {
                                                             {authError}
                                                         </div>
                                                     )}
-                                                    <form onSubmit={(e) => {
-                                                        e.preventDefault();
-                                                        loginSubmitHandler(values, () => {
-                                                            // This will run after successful login
-                                                            setStep1Complete(true);
-                                                            
-                                                            // Force update the form values
-                                                            setFormValues({
-                                                                firstName: userProfile.firstName || '',
-                                                                lastName: userProfile.lastName || '',
-                                                                email: userProfile.email || '',
-                                                                phoneNumber: userProfile.phoneNumber?.replace('+359 ', '') || '',
-                                                                city: userProfile.city || '',
-                                                                address: userProfile.address || '',
-                                                                region: userProfile.region || '',
-                                                            });
-                                                        });
-                                                    }}>
-                                                        <div className="form-group">
-                                                            <label className="control-label" htmlFor="email">E-mail</label>
-                                                            <input
-                                                                className="form-control"
-                                                                type="email"
-                                                                id="email"
-                                                                name="email"
-                                                                placeholder="E-mail"
-                                                                onChange={onChange}
-                                                                value={values.email}
-                                                            />
+                                                    {isLoggingIn ? (
+                                                        <div style={{ margin: '10% auto' }} className="text-center">
+                                                            <img src="/images/loading.gif" alt="Loading..." />
                                                         </div>
-                                                        <div className="form-group">
-                                                            <label className="control-label" htmlFor="password">
-                                                                Парола
-                                                            </label>
-                                                            <input
-                                                                className="form-control mb-5"
-                                                                type="password"
-                                                                id="password"
-                                                                name="password"
-                                                                placeholder="Парола"
-                                                                onChange={onChange}
-                                                                value={values.password}
-                                                            />
-                                                            <Link className="forgotten-password" to="/forgotten-password">Забравена парола?</Link>
-                                                        </div>
-                                                        <input type="submit" value="Вход" className="btn btn-primary login-fr" />
-                                                    </form>
+                                                    ) : (
+                                                        <form onSubmit={handleLoginSubmit}>
+                                                            <div className="form-group">
+                                                                <label className="control-label" htmlFor="email">E-mail</label>
+                                                                <input
+                                                                    className="form-control"
+                                                                    type="email"
+                                                                    id="email"
+                                                                    name="email"
+                                                                    placeholder="E-mail"
+                                                                    onChange={onChange}
+                                                                    value={values.email}
+                                                                />
+                                                            </div>
+                                                            <div className="form-group">
+                                                                <label className="control-label" htmlFor="password">
+                                                                    Парола
+                                                                </label>
+                                                                <input
+                                                                    className="form-control mb-5"
+                                                                    type="password"
+                                                                    id="password"
+                                                                    name="password"
+                                                                    placeholder="Парола"
+                                                                    onChange={onChange}
+                                                                    value={values.password}
+                                                                />
+                                                                <Link className="forgotten-password" to="/forgotten-password">Забравена парола?</Link>
+                                                            </div>
+                                                            <input type="submit" value="Вход" className="btn btn-primary login-fr" />
+                                                        </form>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -928,189 +936,194 @@ export default function Checkout() {
                                         style={{ pointerEvents: !step2Complete ? 'none' : 'auto' }}
                                     >
                                         <div className="panel-body">
-                                            {cart.map((item) => (
-                                                <table key={`${item.id}-${item.size}-${item.type || "default"}`} className="table table-bordered shopping-cart responsive">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td className="text-center">Име</td>
-                                                            <td className="text-center">
-                                                                <Link to={`/clothing/details/${item.id}`}>
-                                                                    {item.name}
-                                                                </Link>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">Снимка</td>
-                                                            <td className="text-center">
-                                                                <Link to={`/clothing/details/${item.id}`}>
-                                                                    <img
-                                                                        src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto/w_55,h_68${item.image}`}
-                                                                        alt={item.name}
-                                                                        title={item.name}
-                                                                        className="img-thumbnail"
-                                                                        loading="lazy"
-                                                                    />
-                                                                </Link>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">Модел</td>
-                                                            <td className="text-center">
-                                                                #{item.model}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">Размер</td>
-                                                            <td className="text-center">
-                                                                {item.size.slice(0, 3)}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">Пол</td>
-                                                            <td className="text-center">
-                                                                {gender[item.gender]}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">Тип</td>
-                                                            <td className="text-center">
-                                                                {item?.type?.slice(0, 28) || "—"}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">Количество</td>
-                                                            <td className="text-center">
-                                                                {item.quantity}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">Общо</td>
-                                                            <td className="text-center">
-                                                                {(item.price * item.quantity).toFixed(2)} лв.
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            ))}
-
-                                            <table className="table table-bordered shopping-cart responsive">
-                                                <tfoot>
-                                                    <tr>
-                                                        <td className="text-center">Продукти</td>
-                                                        <td className="text-center">
-                                                            {cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)} лв.
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">Доставка</td>
-                                                            <td className="text-center">
-                                                                {cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
-                                                                    ? "Безплатна"
-                                                                    : (deliveryType === 'address' ? "9.00 лв." : "6.90 лв.")}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">Крайна сума</td>
-                                                            <td className="text-center">
-                                                                {(cart.reduce((total, item) => total + (item.price * item.quantity), 0) +
-                                                                    (cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
-                                                                        ? 0
-                                                                        : (deliveryType === 'address' ? 9.00 : 6.90)
-                                                                    )).toFixed(2)} лв.
-
-                                                            </td>
-                                                        </tr>
-                                                </tfoot>
-                                                </table>
-
-                                            <div className="table-responsive">
-                                                <table className="table table-bordered table-hover shopping-cart">
-                                                    <thead>
-                                                        <tr>
-                                                            <td className="text-center">Име</td>
-                                                            <td className="text-center">Снимка</td>
-                                                            <td className="text-center">Модел</td>
-                                                            <td className="text-center">Размер</td>
-                                                            <td className="text-center">Пол</td>
-                                                            <td className="text-center">Тип</td>
-                                                            <td className="text-center">Количество</td>
-                                                            <td className="text-center">Общо</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {cart.map(item => (
-                                                            <tr key={`${item.id}-${item.size}-${item.type || "default"}`}>
-                                                                <td className="text-center">
-                                                                    <Link to={`/clothing/details/${item.id}`}>
-                                                                        {item.name}
-                                                                    </Link>
-                                                                </td>
-                                                                <td className="text-center">
-                                                                    <Link to={`/clothing/details/${item.id}`}>
-                                                                        <img
-                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto/w_55,h_68${item.image}`}
-                                                                            alt={item.name}
-                                                                            title={item.name}
-                                                                            className="img-thumbnail"
-                                                                            loading="lazy"
-                                                                        />
-                                                                    </Link>
-                                                                </td>
-                                                                <td className="text-center">#{item.model}</td>
-                                                                <td className="text-center">{item.size.slice(0, 3)}</td>
-                                                                <td className="text-center">{gender[item.gender]}</td>
-                                                                <td className="text-center">{item?.type?.slice(0, 28) || "—"}</td>
-                                                                <td className="text-center">{item.quantity}</td>
-                                                                <td className="text-center">{(item.price * item.quantity).toFixed(2)} лв.</td>
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td colSpan={7} className="text-right">
-                                                                <strong>Продукти:</strong>
-                                                            </td>
-                                                            <td className="text-right total">
-                                                                {cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)} лв.
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colSpan={7} className="text-right">
-                                                                <strong>Доставка:</strong>
-                                                            </td>
-                                                            <td className="text-right total">
-                                                                {cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
-                                                                    ? "Безплатна"
-                                                                    : (deliveryType === 'address' ? "9.00 лв." : "6.90 лв.")}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colSpan={7} className="text-right">
-                                                                <strong>Крайна сума:</strong>
-                                                            </td>
-                                                            <td className="text-right total">
-                                                                {(cart.reduce((total, item) => total + (item.price * item.quantity), 0) +
-                                                                    (cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
-                                                                        ? 0
-                                                                        : (deliveryType === 'address' ? 9.00 : 6.90)
-                                                                    )).toFixed(2)} лв.
-                                                            </td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
-                                            <div className="buttons">
-                                                <div className="pull-right">
-                                                    <input
-                                                        type="button"
-                                                        value="Потвърди поръчка"
-                                                        id="button-confirm"
-                                                        className="btn btn-primary"
-                                                        onClick={handleOrderSubmit}
-                                                        disabled={isConfirmingOrder}
-                                                    />
+                                            {isConfirmingOrder ? (
+                                                <div style={{ margin: '10% auto' }} className="text-center">
+                                                    <img src="/images/loading.gif" alt="Loading..." />
                                                 </div>
-                                            </div>
+                                            ) : (
+                                                <>
+                                                    {cart.map((item) => (
+                                                        <table key={`${item.id}-${item.size}-${item.type || "default"}`} className="table table-bordered shopping-cart responsive">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td className="text-center">Име</td>
+                                                                    <td className="text-center">
+                                                                        <Link to={`/clothing/details/${item.id}`}>
+                                                                            {item.name}
+                                                                        </Link>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="text-center">Снимка</td>
+                                                                    <td className="text-center">
+                                                                        <Link to={`/clothing/details/${item.id}`}>
+                                                                            <img
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto/w_55,h_68${item.image}`}
+                                                                                alt={item.name}
+                                                                                title={item.name}
+                                                                                className="img-thumbnail"
+                                                                                loading="lazy"
+                                                                            />
+                                                                        </Link>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="text-center">Модел</td>
+                                                                    <td className="text-center">
+                                                                        #{item.model}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="text-center">Размер</td>
+                                                                    <td className="text-center">
+                                                                        {item.size.slice(0, 3)}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="text-center">Пол</td>
+                                                                    <td className="text-center">
+                                                                        {gender[item.gender]}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="text-center">Тип</td>
+                                                                    <td className="text-center">
+                                                                        {item?.type?.slice(0, 28) || "—"}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="text-center">Количество</td>
+                                                                    <td className="text-center">
+                                                                        {item.quantity}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td className="text-center">Общо</td>
+                                                                    <td className="text-center">
+                                                                        {(item.price * item.quantity).toFixed(2)} лв.
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    ))}
+                                                    <table className="table table-bordered shopping-cart responsive">
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td className="text-center">Продукти</td>
+                                                                <td className="text-center">
+                                                                    {cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)} лв.
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="text-center">Доставка</td>
+                                                                <td className="text-center">
+                                                                    {cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
+                                                                        ? "Безплатна"
+                                                                        : (deliveryType === 'address' ? "9.00 лв." : "6.90 лв.")}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="text-center">Крайна сума</td>
+                                                                <td className="text-center">
+                                                                    {(cart.reduce((total, item) => total + (item.price * item.quantity), 0) +
+                                                                        (cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
+                                                                            ? 0
+                                                                            : (deliveryType === 'address' ? 9.00 : 6.90)
+                                                                        )).toFixed(2)} лв.
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                    <div className="table-responsive">
+                                                        <table className="table table-bordered table-hover shopping-cart">
+                                                            <thead>
+                                                                <tr>
+                                                                    <td className="text-center">Име</td>
+                                                                    <td className="text-center">Снимка</td>
+                                                                    <td className="text-center">Модел</td>
+                                                                    <td className="text-center">Размер</td>
+                                                                    <td className="text-center">Пол</td>
+                                                                    <td className="text-center">Тип</td>
+                                                                    <td className="text-center">Количество</td>
+                                                                    <td className="text-center">Общо</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {cart.map(item => (
+                                                                    <tr key={`${item.id}-${item.size}-${item.type || "default"}`}>
+                                                                        <td className="text-center">
+                                                                            <Link to={`/clothing/details/${item.id}`}>
+                                                                                {item.name}
+                                                                            </Link>
+                                                                        </td>
+                                                                        <td className="text-center">
+                                                                            <Link to={`/clothing/details/${item.id}`}>
+                                                                                <img
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto/w_55,h_68${item.image}`}
+                                                                                    alt={item.name}
+                                                                                    title={item.name}
+                                                                                    className="img-thumbnail"
+                                                                                    loading="lazy"
+                                                                                />
+                                                                            </Link>
+                                                                        </td>
+                                                                        <td className="text-center">#{item.model}</td>
+                                                                        <td className="text-center">{item.size.slice(0, 3)}</td>
+                                                                        <td className="text-center">{gender[item.gender]}</td>
+                                                                        <td className="text-center">{item?.type?.slice(0, 28) || "—"}</td>
+                                                                        <td className="text-center">{item.quantity}</td>
+                                                                        <td className="text-center">{(item.price * item.quantity).toFixed(2)} лв.</td>
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colSpan={7} className="text-right">
+                                                                        <strong>Продукти:</strong>
+                                                                    </td>
+                                                                    <td className="text-right total">
+                                                                        {cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)} лв.
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colSpan={7} className="text-right">
+                                                                        <strong>Доставка:</strong>
+                                                                    </td>
+                                                                    <td className="text-right total">
+                                                                        {cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
+                                                                            ? "Безплатна"
+                                                                            : (deliveryType === 'address' ? "9.00 лв." : "6.90 лв.")}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colSpan={7} className="text-right">
+                                                                        <strong>Крайна сума:</strong>
+                                                                    </td>
+                                                                    <td className="text-right total">
+                                                                        {(cart.reduce((total, item) => total + (item.price * item.quantity), 0) +
+                                                                            (cart.reduce((total, item) => total + (item.price * item.quantity), 0) >= 100
+                                                                                ? 0
+                                                                                : (deliveryType === 'address' ? 9.00 : 6.90)
+                                                                            )).toFixed(2)} лв.
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                    <div className="buttons">
+                                                        <div className="pull-right">
+                                                            <input
+                                                                type="button"
+                                                                value="Потвърди поръчка"
+                                                                id="button-confirm"
+                                                                className="btn btn-primary"
+                                                                onClick={handleOrderSubmit}
+                                                                disabled={isConfirmingOrder}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
