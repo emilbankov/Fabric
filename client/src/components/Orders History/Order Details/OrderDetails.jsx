@@ -173,7 +173,6 @@ export default function OrderDetailsModal({ show, onClose, orderId, refreshOrder
                                                     <tr key={item.id}>
                                                         <td className="text-center">
                                                             {item.name}<br />
-                                                            &nbsp;<small>Тип: {item.type === null ? "-" : item.type}</small><br />
                                                             &nbsp;<small>Размер: {item.size === null ? "-" : item.size}</small><br />
                                                             &nbsp;<small>Пол: {gender[item.gender]}</small><br />
                                                         </td>

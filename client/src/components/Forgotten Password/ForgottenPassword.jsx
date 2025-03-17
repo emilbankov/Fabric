@@ -10,15 +10,44 @@ import { forgottenPassword } from '../../services/authService';
 export default function ForgottenPassword() {
     const location = useLocation();
     const [showSuccess, setShowSuccess] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = (values, { resetForm }) => {
-        forgottenPassword(values.email);
-        setShowSuccess(true);
-        resetForm();
-        setTimeout(() => {
+    const handleSubmit = async (values, { resetForm }) => {
+        try {
+            // Call the forgottenPassword service
+            const response = await forgottenPassword(values.email);
+
+            // Show success message if the request is successful
+            setShowSuccess(true);
+            setError('');
+            resetForm();
+
+            // Hide the success message after 5 seconds
+            setTimeout(() => {
+                setShowSuccess(false);
+            }, 5000);
+
+            // Log the response for debugging
+            console.log('Password reset email sent:', response);
+        } catch (error) {
+            // Handle errors
+            console.error('Failed to send password reset email:', error);
+
+            if (error.errors[0].includes("Email not found")) {
+                // Show error message to the user
+                setError('Акаунт с този имейл не съществува. Моля, опитайте отново.');
+            } else {
+                setError('Неуспешно изпращане на имейл. Моля, опитайте отново.');
+            }
+            
             setShowSuccess(false);
-        }, 5000);
-    }
+            
+            // Hide the error message after 5 seconds
+            setTimeout(() => {
+                setError('');
+            }, 5000);
+        }
+    };
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -62,7 +91,10 @@ export default function ForgottenPassword() {
                     </ul>
                     <div className="row">
                         <div className={`alert alert-success alert-dismissible style={} ${showSuccess ? 'show-alert' : 'hide-alert'}`}>
-                            <i className="fa fa-check-circle" /> Линк за подновяване на паролата е изпратен на вашият имейл.
+                            <i className="fa fa-check-circle" /> Линк за подновяване на паролата е изпратен на вашия имейл.
+                        </div>
+                        <div className={`alert alert-success alert-dismissible style={} ${error ? 'show-alert' : 'hide-alert'}`} style={{ color: '#721c24', backgroundColor: '#f8d7da' }}>
+                            <i className="fa fa-xmark-circle" /> {error}
                         </div>
                         <aside id="column-left" className="col-sm-3 hidden-xs">
                             <div className="box">
