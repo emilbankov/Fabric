@@ -329,6 +329,7 @@ export default function Catalog() {
                                                 className=" form-control catalog"
                                                 onChange={handleSortChange}
                                                 value={sort}
+                                                style={{ textAlign: "center" }}
                                             >
                                                 <option value="new">Сортирай</option>
                                                 <option value="name_asc">Име (А - Я)</option>
@@ -350,6 +351,7 @@ export default function Catalog() {
                                                 className="form-control size"
                                                 onChange={handleSizeChange}
                                                 value={size}
+                                                style={{ textAlign: "center" }}
                                             >
                                                 <option value="20">20</option>
                                                 <option value="40">40</option>
