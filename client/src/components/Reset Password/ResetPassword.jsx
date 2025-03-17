@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from 'formik';
 import { resetPasswordSchema } from '../../lib/validate';
@@ -10,7 +10,7 @@ export default function ResetPassword() {
     const navigate = useNavigate();
     const searchParams = new URLSearchParams(location.search);
     const token = searchParams.get('token');
-    console.log(token);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (!token) {
@@ -19,11 +19,14 @@ export default function ResetPassword() {
     }, [token, navigate]);
 
     const handleSubmit = async (values) => {
+        setIsLoading(true);
         try {
             await resetPassword(values.password, token);
             navigate('/login');
         } catch (error) {
             console.error(error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -65,7 +68,7 @@ export default function ResetPassword() {
                 <div id="account-forgotten" className="container">
                     <ul className="breadcrumb">
                         <li><Link to="/"><i className="fa fa-home" /></Link></li>
-                        <li><Link to="/forgotten-password">Забравена парола</Link></li>
+                        <li><Link to="/reset-password">Промяна на парола</Link></li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
@@ -112,61 +115,67 @@ export default function ResetPassword() {
                             <p>
                                 Моля въведете нова парола за вашия акаунт.
                             </p>
-                            <Formik
-                                initialValues={{ password: '', confirmPassword: '' }}
-                                validationSchema={resetPasswordSchema}
-                                onSubmit={handleSubmit}
-                            >
-                                {({ errors, touched }) => (
-                                    <Form className="form-horizontal">
-                                        <fieldset>
-                                            <legend>Вашите данни</legend>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="input-password">
-                                                    Нова парола
-                                                </label>
-                                                <div className="col-sm-10">
-                                                    <Field
-                                                        type="password"
-                                                        name="password"
-                                                        placeholder="Нова парола"
-                                                        id="input-password"
-                                                        className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
-                                                    />
-                                                    {errors.password && touched.password && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.password}
-                                                        </div>
-                                                    )}
+                            {isLoading ? (
+                                <div style={{ margin: '10% auto' }} className="text-center">
+                                    <img src="/images/loading.gif" alt="Loading..." />
+                                </div>
+                            ) : (
+                                <Formik
+                                    initialValues={{ password: '', confirmPassword: '' }}
+                                    validationSchema={resetPasswordSchema}
+                                    onSubmit={handleSubmit}
+                                >
+                                    {({ errors, touched }) => (
+                                        <Form className="form-horizontal">
+                                            <fieldset>
+                                                <legend>Вашите данни</legend>
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="input-password">
+                                                        Нова парола
+                                                    </label>
+                                                    <div className="col-sm-10">
+                                                        <Field
+                                                            type="password"
+                                                            name="password"
+                                                            placeholder="Нова парола"
+                                                            id="input-password"
+                                                            className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
+                                                        />
+                                                        {errors.password && touched.password && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.password}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="form-group required">
-                                                <label className="col-sm-2 control-label" htmlFor="input-confirm-password">
-                                                    Потвърди паролата
-                                                </label>
-                                                <div className="col-sm-10">
-                                                    <Field
-                                                        type="password"
-                                                        name="confirmPassword"
-                                                        placeholder="Потвърди паролата"
-                                                        id="input-confirm-password"
-                                                        className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
-                                                    />
-                                                    {errors.confirmPassword && touched.confirmPassword && (
-                                                        <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                            {errors.confirmPassword}
-                                                        </div>
-                                                    )}
+                                                <div className="form-group required">
+                                                    <label className="col-sm-2 control-label" htmlFor="input-confirm-password">
+                                                        Потвърди паролата
+                                                    </label>
+                                                    <div className="col-sm-10">
+                                                        <Field
+                                                            type="password"
+                                                            name="confirmPassword"
+                                                            placeholder="Потвърди паролата"
+                                                            id="input-confirm-password"
+                                                            className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
+                                                        />
+                                                        {errors.confirmPassword && touched.confirmPassword && (
+                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                {errors.confirmPassword}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
+                                            </fieldset>
+                                            <div className="buttons clearfix">
+                                                <div className="pull-left"><Link to={-1} className="btn btn-default">Назад</Link></div>
+                                                <div className="pull-right"><input type="submit" value="Промени паролата" className="btn btn-default" /></div>
                                             </div>
-                                        </fieldset>
-                                        <div className="buttons clearfix">
-                                            <div className="pull-left"><Link to={-1} className="btn btn-default">Назад</Link></div>
-                                            <div className="pull-right"><input type="submit" value="Промени паролата" className="btn btn-default" /></div>
-                                        </div>
-                                    </Form>
-                                )}
-                            </Formik>
+                                        </Form>
+                                    )}
+                                </Formik>
+                            )}
                         </div>
                     </div>
                 </div>
