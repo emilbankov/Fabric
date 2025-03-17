@@ -8,6 +8,16 @@ export const typeTranslations = {
     "BANDANAS": "Бандана",
 };
 
+export const typeTranslationsPlural = {
+    "T_SHIRT": "Тениски",
+    "LONG_T_SHIRT": "Блузи",
+    "SWEATSHIRT": "Суитчъри",
+    "SHORTS": "Къси панталони",
+    "KIT": "Комплекти",
+    "TOWELS": "Плажни кърпи",
+    "BANDANAS": "Бандани",
+};
+
 export const categoriesMap = {
     "MARTIAL_SPORTS": "Бойни спортове",
     "GAME_OF_THRONES": "Гейм Аф Тронс",

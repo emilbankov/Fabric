@@ -7,6 +7,7 @@ export const getMostSold = async () => await get(`${baseUrl}/catalog?sort=most-s
 export const getOne = async (clothingId) => await get(`${baseUrl}/${clothingId}`);
 export const getCatalog = async (type, sort, size, page, category) => await get(`${baseUrl}/catalog?type=${type}&sort=${sort}&size=${size}&page=${page}&category=${category}`);
 export const getCategories = async (type) => await get(`${baseUrl}/category?type=${type}`);
+export const getHomeCategories = async () => await get(`${baseUrl}/categories`);
 
 export const search = async (name) => {
     const response = await fetch(`${baseUrl}/search?name=${name}`);
