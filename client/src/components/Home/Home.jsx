@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { homeCategories, testimonials, typeTranslations } from "../../lib/dictionary";
+import { testimonials, typeTranslationsPlural, categoriesMap } from "../../lib/dictionary";
 import MetaTags from '../Meta Tags/MetaTags';
+import { getHomeCategories } from "../../services/clothesService";
 
 export default function Home() {
     const location = useLocation();
     const navigate = useNavigate();
+    const [typeCategories, setTypeCategories] = useState({});
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -26,9 +28,22 @@ export default function Home() {
         };
     }, [location.pathname]);
 
+    useEffect(() => {
+        const fetchHomeCategories = async () => {
+            try {
+                const categories = await getHomeCategories();
+                setTypeCategories(categories);
+            } catch (error) {
+                console.error("Failed to fetch home categories:", error);
+            }
+        };
+
+        fetchHomeCategories();
+    }, []);
+
     return (
         <>
-            <MetaTags 
+            <MetaTags
                 title="Fabric | Начало"
                 description="Fabric - Вашият онлайн магазин за модерни дрехи и аксесоари. Разгледайте нашите най-нови и най-продавани продукти."
                 keywords="дрехи, дреха, мода, онлайн магазин, тениски, тениска, суичъри, суичър, блузи, блуза, 
@@ -73,33 +88,31 @@ export default function Home() {
             <div id="content" className="col-sm-12">
                 <div className="category_list_cms bottom-to-top hb-animate-element">
                     <div className="container">
-                        <div className="">
-                            <div className="category_title_cms">
-                                <div className="category_title">Категории</div>
-                            </div>
-                            <div className="">
-                                <div className="">
-                                    <div className="categories-cards">
-                                        {homeCategories.map(category => (
-                                            <div
-                                                className="col-6 col-md-4 col-lg-3-1 category-icon categories-responsive"
-                                                key={category.id}
-                                                onClick={() => navigate(category.link)}
-                                            >
-                                                <div className="icon-wrapper">
-                                                    <img
-                                                        src={category.image}
-                                                        alt={category.name}
-                                                        className="img-responsive"
-                                                    />
-                                                    <span style={{ overflow: "visible" }}>{category.name}</span>
-                                                </div>
+                        {Object.keys(typeCategories).map((type) => (
+                            <div key={type} className="category-section">
+                                <h1 className="category_title" style={{ fontSize: "24px", margin: "0" }}>
+                                    {typeTranslationsPlural[type] || type}
+                                </h1>
+                                <div className="categories-cards">
+                                    {typeCategories[type].map((category) => (
+                                        <div
+                                            className="col-6 col-md-4 col-lg-2-1 category-icon categories-responsive"
+                                            key={category}
+                                            onClick={() => navigate(`/catalog?type=${type.toLowerCase()}&category=${category}`)}
+                                        >
+                                            <div className="icon-wrapper">
+                                                <img
+                                                    src={`/images/categories-${type.toLowerCase()}/${category}.webp`}
+                                                    alt={category}
+                                                    className="img-responsive"
+                                                />
+                                                <span style={{ overflow: "visible" }}>{categoriesMap[category]}</span>
                                             </div>
-                                        ))}
-                                    </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
 
