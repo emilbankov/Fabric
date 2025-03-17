@@ -112,69 +112,72 @@ export default function ResetPassword() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Промяна на парола</h1>
-                            <p>
-                                Моля въведете нова парола за вашия акаунт.
-                            </p>
+
                             {isLoading ? (
                                 <div style={{ margin: '10% auto' }} className="text-center">
                                     <img src="/images/loading.gif" alt="Loading..." />
                                 </div>
                             ) : (
-                                <Formik
-                                    initialValues={{ password: '', confirmPassword: '' }}
-                                    validationSchema={resetPasswordSchema}
-                                    onSubmit={handleSubmit}
-                                >
-                                    {({ errors, touched }) => (
-                                        <Form className="form-horizontal">
-                                            <fieldset>
-                                                <legend>Вашите данни</legend>
-                                                <div className="form-group required">
-                                                    <label className="col-sm-2 control-label" htmlFor="input-password">
-                                                        Нова парола
-                                                    </label>
-                                                    <div className="col-sm-10">
-                                                        <Field
-                                                            type="password"
-                                                            name="password"
-                                                            placeholder="Нова парола"
-                                                            id="input-password"
-                                                            className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
-                                                        />
-                                                        {errors.password && touched.password && (
-                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                {errors.password}
-                                                            </div>
-                                                        )}
+                                <>
+                                    <p>
+                                        Моля въведете нова парола за вашия акаунт.
+                                    </p>
+                                    <Formik
+                                        initialValues={{ password: '', confirmPassword: '' }}
+                                        validationSchema={resetPasswordSchema}
+                                        onSubmit={handleSubmit}
+                                    >
+                                        {({ errors, touched }) => (
+                                            <Form className="form-horizontal">
+                                                <fieldset>
+                                                    <legend>Вашите данни</legend>
+                                                    <div className="form-group required">
+                                                        <label className="col-sm-2 control-label" htmlFor="input-password">
+                                                            Нова парола
+                                                        </label>
+                                                        <div className="col-sm-10">
+                                                            <Field
+                                                                type="password"
+                                                                name="password"
+                                                                placeholder="Нова парола"
+                                                                id="input-password"
+                                                                className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
+                                                            />
+                                                            {errors.password && touched.password && (
+                                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                    {errors.password}
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="form-group required">
-                                                    <label className="col-sm-2 control-label" htmlFor="input-confirm-password">
-                                                        Потвърди паролата
-                                                    </label>
-                                                    <div className="col-sm-10">
-                                                        <Field
-                                                            type="password"
-                                                            name="confirmPassword"
-                                                            placeholder="Потвърди паролата"
-                                                            id="input-confirm-password"
-                                                            className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
-                                                        />
-                                                        {errors.confirmPassword && touched.confirmPassword && (
-                                                            <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
-                                                                {errors.confirmPassword}
-                                                            </div>
-                                                        )}
+                                                    <div className="form-group required">
+                                                        <label className="col-sm-2 control-label" htmlFor="input-confirm-password">
+                                                            Потвърди паролата
+                                                        </label>
+                                                        <div className="col-sm-10">
+                                                            <Field
+                                                                type="password"
+                                                                name="confirmPassword"
+                                                                placeholder="Потвърди паролата"
+                                                                id="input-confirm-password"
+                                                                className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
+                                                            />
+                                                            {errors.confirmPassword && touched.confirmPassword && (
+                                                                <div className="invalid-feedback" style={{ color: 'red', display: 'block' }}>
+                                                                    {errors.confirmPassword}
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
+                                                </fieldset>
+                                                <div className="buttons clearfix">
+                                                    <div className="pull-left"><Link to={-1} className="btn btn-default">Назад</Link></div>
+                                                    <div className="pull-right"><input type="submit" value="Промени паролата" className="btn btn-default" /></div>
                                                 </div>
-                                            </fieldset>
-                                            <div className="buttons clearfix">
-                                                <div className="pull-left"><Link to={-1} className="btn btn-default">Назад</Link></div>
-                                                <div className="pull-right"><input type="submit" value="Промени паролата" className="btn btn-default" /></div>
-                                            </div>
-                                        </Form>
-                                    )}
-                                </Formik>
+                                            </Form>
+                                        )}
+                                    </Formik>
+                                </>
                             )}
                         </div>
                     </div>
