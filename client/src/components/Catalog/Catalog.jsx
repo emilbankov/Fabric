@@ -285,7 +285,6 @@ export default function Catalog() {
                                                             alt={categoriesMap[category]}
                                                             className="img-responsive"
                                                             loading="lazy"
-                                                        // style={{ minHeight: "159px" }}
                                                         />
                                                         <span>
                                                             {window.innerWidth <= 767 && categoriesMap[category].length > 7

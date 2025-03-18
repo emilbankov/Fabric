@@ -87,9 +87,9 @@ export default function Home() {
             </div>
             <div id="content" className="col-sm-12">
                 <div className="category_list_cms bottom-to-top hb-animate-element">
-                    <div className="container">
-                        {Object.keys(typeCategories).map((type) => (
-                            <div key={type} className="category-section">
+                    {Object.keys(typeCategories).map((type) => (
+                        <div key={type} className="container">
+                            <div className="category-section">
                                 <h1 className="category_title" style={{ fontSize: "24px", margin: "0" }}>
                                     {typeTranslationsPlural[type] || type}
                                 </h1>
@@ -112,8 +112,8 @@ export default function Home() {
                                     ))}
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
 
                 <div id="parallaxcmsblock" className="block parallax">

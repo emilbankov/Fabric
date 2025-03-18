@@ -36,7 +36,7 @@ export const categoriesMap = {
     "FORMULA_1": "Формула 1",
     "GYM": "Фитнес и свободно време",
     "NBA": "NBA",
-    "ABSTRACT": "АБСТРАКТНИ",
+    "ABSTRACT": "Абстрактни",
     "FOOTBALL": "Футбол",
     "OTHERS": "Други"
 };
