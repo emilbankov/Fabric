@@ -32,6 +32,7 @@ export default function Home() {
         const fetchHomeCategories = async () => {
             try {
                 const categories = await getHomeCategories();
+                console.log("Home categories fetched:", categories);
                 setTypeCategories(categories);
             } catch (error) {
                 console.error("Failed to fetch home categories:", error);
@@ -93,12 +94,13 @@ export default function Home() {
                                 <h1 className="category_title" style={{ fontSize: "24px", margin: "0" }}>
                                     {typeTranslationsPlural[type] || type}
                                 </h1>
-                                <div className="categories-cards">
+                                <div className="categories-cards-home">
                                     {typeCategories[type].map((category) => (
                                         <div
-                                            className="col-6 col-md-4 col-lg-2-1 category-icon categories-responsive"
+                                            className="col-6 col-md-4 col-lg-2-1 category-icon categories-responsive home-categories-card"
                                             key={category}
                                             onClick={() => navigate(`/catalog?type=${type.toLowerCase()}&category=${category}`)}
+                                            style={{ padding: "0 7.5px" }}
                                         >
                                             <div className="icon-wrapper">
                                                 <img
@@ -106,7 +108,7 @@ export default function Home() {
                                                     alt={category}
                                                     className="img-responsive"
                                                 />
-                                                <span style={{ overflow: "visible" }}>{categoriesMap[category]}</span>
+                                                <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{categoriesMap[category]}</span>
                                             </div>
                                         </div>
                                     ))}
@@ -149,7 +151,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 };

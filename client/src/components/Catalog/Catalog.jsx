@@ -278,6 +278,7 @@ export default function Catalog() {
                                                     className="col-sm-2 col-xs-4 category-icon"
                                                     key={category}
                                                     onClick={() => handleCategoryClick(category)}
+                                                    style={{ padding: "0 7.5px" }}
                                                 >
                                                     <div className={`icon-wrapper ${isActive ? 'active' : ''}`}>
                                                         <img
@@ -286,11 +287,7 @@ export default function Catalog() {
                                                             className="img-responsive"
                                                             loading="lazy"
                                                         />
-                                                        <span>
-                                                            {window.innerWidth <= 767 && categoriesMap[category].length > 7
-                                                                ? `${categoriesMap[category].substring(0, 7)}..`
-                                                                : categoriesMap[category]}
-                                                        </span>
+                                                        <span>{categoriesMap[category]}</span>
                                                     </div>
                                                 </div>
                                             );

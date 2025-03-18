@@ -25022,17 +25022,24 @@ div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-de
 	}
 }
 
+@media (max-width: 1200px) {
+	.categories-responsive {
+		display: inline-block;
+		width: 16.66% !important;
+	}
+}
+
 @media (max-width: 1024px) {
 	.categories-responsive {
 		display: inline-block;
-		width: 33%;
+		width: 16.66% !important;
 	}
 }
 
 @media (max-width: 768px) {
 	.categories-responsive {
 		display: inline-block;
-		width: 50%;
+		width: 25% !important;
 	}
 }
 
