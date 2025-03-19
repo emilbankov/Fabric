@@ -83,7 +83,6 @@ export default function Details() {
         fetchData();
     }, [clothingId]);
 
-
     const handleImageClick = (imagePath) => {
         setCurrentImage(imagePath);
     };
@@ -184,7 +183,7 @@ export default function Details() {
                     setNotification({ message: '' });
                     setTimeout(() => {
                         setNotification({
-                            message: `Успешно добавихте ${typeTranslations[clothing.clothing.type]} ${clothing.clothing.name} към любими!`,
+                            message: `Успешно добавихте ${clothing.clothing.name} към любими!`,
                         });
                     }, 0);
                 },
@@ -305,7 +304,7 @@ export default function Details() {
                                                                     <div className="image">
                                                                         <Link to={`/clothing/details/${item.id}`}>
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${item.images.find(image => image.side === 'front')?.path}`}
                                                                                 title="tote bags for women"
                                                                                 alt="tote bags for women"
                                                                                 className="img-responsive reg-image"
@@ -314,7 +313,7 @@ export default function Details() {
 
                                                                             {(item.type !== "KIT" && item.type !== "TOWELS" && item.type !== "BANDANAS") && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${item.images.find(image => image.side === 'back')?.path}`}
                                                                                     title="tote bags for women"
                                                                                     alt="tote bags for women"
                                                                                     className="img-responsive hover-image"
@@ -324,7 +323,7 @@ export default function Details() {
 
                                                                             {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${item.images.find(image => image.side === 'front')?.path}`}
                                                                                     title="tote bags for women"
                                                                                     alt="tote bags for women"
                                                                                     className="img-responsive hover-image"
@@ -339,7 +338,14 @@ export default function Details() {
                                                                                 <Link to={`/clothing/details/${item.id}`}>{item.name}</Link>
                                                                             </h4>
                                                                             <p className="price">
-                                                                                {item.price.toFixed(2)} лв.
+                                                                                {item?.discountPrice ? (
+                                                                                    <>
+                                                                                        <span className="price-new">{item?.discountPrice?.toFixed(2)} лв.</span>
+                                                                                        <span className="price-old">{item?.price?.toFixed(2)} лв.</span>
+                                                                                    </>
+                                                                                ) : (
+                                                                                    <span className="price-new">{item?.price?.toFixed(2)} лв.</span>
+                                                                                )}
                                                                             </p>
                                                                         </div>
                                                                         <div className="product_hover_block">
@@ -405,8 +411,8 @@ export default function Details() {
                                                             >
                                                                 <img
                                                                     id="tmzoom"
-                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${currentImage}`}
-                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${currentImage}`}
+                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${currentImage}`}
+                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${currentImage}`}
                                                                     title={clothing.clothing.name}
                                                                     alt={clothing.clothing.name}
                                                                     style={{
@@ -441,7 +447,7 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${image.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${image.path}`}
                                                                                     width={74}
                                                                                     height={74}
                                                                                     title={image.side}
@@ -481,7 +487,7 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${image.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${image.path}`}
                                                                                     loading="lazy"
                                                                                     width={74}
                                                                                     height={74}
@@ -502,7 +508,7 @@ export default function Details() {
                                                 </div>
                                             </div>
                                             <div className="col-sm-6 product-right">
-                                                <h3 className="product-title" style={{ textTransform: "none" }}>{typeTranslations[clothing.clothing.type]} {clothing.clothing.name}</h3>
+                                                <h3 className="product-title" style={{ textTransform: "none" }}>{clothing.clothing.name}</h3>
                                                 <div className="description">
                                                     <table className="product-description">
                                                         <tbody>
@@ -1150,7 +1156,7 @@ export default function Details() {
                                                                                 <div className="image">
                                                                                     <Link to={`/clothing/details/${clothing.id}`}>
                                                                                         <img
-                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                             title={clothing.name}
                                                                                             alt={clothing.name}
                                                                                             className="img-responsive reg-image"
@@ -1158,7 +1164,7 @@ export default function Details() {
                                                                                         />
                                                                                         {(clothing.type !== "KIT" && clothing.type !== "TOWELS" && clothing.type !== "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'back')?.path}`}
+                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${clothing.images.find(image => image.side === 'back')?.path}`}
                                                                                                 title={clothing.name}
                                                                                                 alt={clothing.name}
                                                                                                 className="img-responsive hover-image"
@@ -1167,7 +1173,7 @@ export default function Details() {
                                                                                         )}
                                                                                         {(clothing.type === "KIT" || clothing.type === "TOWELS" || clothing.type === "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                                 title={clothing.name}
                                                                                                 alt={clothing.name}
                                                                                                 className="img-responsive hover-image"
@@ -1175,6 +1181,9 @@ export default function Details() {
                                                                                             />
                                                                                         )}
                                                                                     </Link>
+                                                                                    {clothing?.discountPrice && (
+                                                                                        <div className="saleback"><div className="saleicon sale">{(Math.ceil((clothing.price - clothing.discountPrice) / clothing.price * 100))}%</div></div>
+                                                                                    )}
                                                                                     <div className="product_hover_block">
                                                                                         <div className="action">
                                                                                             <button
@@ -1202,7 +1211,14 @@ export default function Details() {
                                                                                             <Link to={`/clothing/details/${clothing.id}`}>{clothing.name}</Link>
                                                                                         </h4>
                                                                                         <p className="price">
-                                                                                            {clothing.price.toFixed(2)} лв.
+                                                                                            {clothing?.discountPrice ? (
+                                                                                                <>
+                                                                                                    <span className="price-new">{clothing?.discountPrice?.toFixed(2)} лв.</span>
+                                                                                                    <span className="price-old">{clothing?.price?.toFixed(2)} лв.</span>
+                                                                                                </>
+                                                                                            ) : (
+                                                                                                <span className="price-new">{clothing?.price?.toFixed(2)} лв.</span>
+                                                                                            )}
                                                                                         </p>
                                                                                     </div>
                                                                                 </div>
@@ -1243,7 +1259,7 @@ export default function Details() {
                                                                                 <div className="image">
                                                                                     <Link to={`/clothing/details/${product.id}`}>
                                                                                         <img
-                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${product.images.find(image => image.side === 'front')?.path}`}
                                                                                             title={product.name}
                                                                                             alt={product.name}
                                                                                             className="img-responsive reg-image"
@@ -1252,7 +1268,7 @@ export default function Details() {
 
                                                                                         {(product.type !== "KIT" && product.type !== "TOWELS" && product.type !== "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'back')?.path}`}
+                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${product.images.find(image => image.side === 'back')?.path}`}
                                                                                                 title={product.name}
                                                                                                 alt={product.name}
                                                                                                 className="img-responsive hover-image"
@@ -1262,7 +1278,7 @@ export default function Details() {
 
                                                                                         {(product.type === "KIT" || product.type === "TOWELS" || product.type === "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${product.images.find(image => image.side === 'front')?.path}`}
+                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${product.images.find(image => image.side === 'front')?.path}`}
                                                                                                 title={product.name}
                                                                                                 alt={product.name}
                                                                                                 className="img-responsive hover-image"
@@ -1270,6 +1286,9 @@ export default function Details() {
                                                                                             />
                                                                                         )}
                                                                                     </Link>
+                                                                                    {product?.discountPrice && (
+                                                                                        <div className="saleback"><div className="saleicon sale">{(Math.ceil((product.price - product.discountPrice) / product.price * 100))}%</div></div>
+                                                                                    )}
                                                                                     <div className="product_hover_block">
                                                                                         <div className="action">
                                                                                             <button
@@ -1299,8 +1318,14 @@ export default function Details() {
                                                                                             </a>
                                                                                         </h4>
                                                                                         <p className="price">
-                                                                                            <span className="price-new">{product.price.toFixed(2)} лв.</span>
-                                                                                            {/* <span className="price-old">$122.00</span> */}
+                                                                                            {product?.discountPrice ? (
+                                                                                                <>
+                                                                                                    <span className="price-new">{product?.discountPrice?.toFixed(2)} лв.</span>
+                                                                                                    <span className="price-old">{product?.price?.toFixed(2)} лв.</span>
+                                                                                                </>
+                                                                                            ) : (
+                                                                                                <span className="price-new">{product?.price?.toFixed(2)} лв.</span>
+                                                                                            )}
                                                                                         </p>
                                                                                     </div>
                                                                                 </div>
@@ -1365,7 +1390,7 @@ export default function Details() {
                             &times;
                         </span>
                         <img
-                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${currentImage}`}
+                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${currentImage}`}
                             alt={clothing.clothing?.name}
                             style={{
                                 maxWidth: '100%',
