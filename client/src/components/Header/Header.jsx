@@ -59,7 +59,7 @@ export default function Header() {
                                 <div id="follow_us" className="follow-us">
                                     <ul className="toggle-block">
                                         <li>
-                                            <a href="https://www.facebook.com/profile.php?id=61572836782465&mibextid=wwXIfr&rdid=E9FAPL9UceYYdXk1&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HnqLb5ty4%2F%3Fmibextid%3DwwXIfr" target="_blanc" title="Facebook" className="facebook icon">
+                                            <a href="https://www.facebook.com/profile.php?id=61573919165882" target="_blanc" title="Facebook" className="facebook icon">
                                                 <i className="fa-brands fa-facebook-f"></i>
                                             </a>
                                             {/* <a href="#" title="RSS" className="rss icon">

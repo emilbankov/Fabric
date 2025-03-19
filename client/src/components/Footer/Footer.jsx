@@ -44,7 +44,7 @@ export default function Footer() {
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <a target="_blanc" href="https://www.facebook.com/profile.php?id=61572836782465&mibextid=wwXIfr&rdid=E9FAPL9UceYYdXk1&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HnqLb5ty4%2F%3Fmibextid%3DwwXIfr">
+                                                        <a target="_blanc" href="https://www.facebook.com/profile.php?id=61573919165882">
                                                             <div className="contact" style={{ padding: "0" }}>
                                                                 <div className="facebook_text">Facebook</div>
                                                                 <div className="contact_phone">
