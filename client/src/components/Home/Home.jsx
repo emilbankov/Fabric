@@ -10,6 +10,9 @@ export default function Home() {
     const [typeCategories, setTypeCategories] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
+    // Define the desired order of types
+    const typeOrder = ["T_SHIRT", "LONG_T_SHIRT", "SWEATSHIRT", "SHORTS", "KITS", "BANDANAS"];
+
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
@@ -44,6 +47,11 @@ export default function Home() {
 
         fetchHomeCategories();
     }, []);
+
+    // Sort the types based on the defined order
+    const sortedTypes = Object.keys(typeCategories).sort((a, b) => {
+        return typeOrder.indexOf(a) - typeOrder.indexOf(b);
+    });
 
     return (
         <>
@@ -96,7 +104,7 @@ export default function Home() {
                     </div>
                 ) : (
                     <div className="category_list_cms bottom-to-top hb-animate-element">
-                        {Object.keys(typeCategories).map((type) => (
+                        {sortedTypes.map((type) => (
                             <div key={type} className="container">
                                 <div className="category-section">
                                     <h1 className="category_title" style={{ fontSize: "24px", margin: "0" }}>
