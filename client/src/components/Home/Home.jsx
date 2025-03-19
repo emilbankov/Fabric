@@ -8,6 +8,7 @@ export default function Home() {
     const location = useLocation();
     const navigate = useNavigate();
     const [typeCategories, setTypeCategories] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
@@ -30,12 +31,15 @@ export default function Home() {
 
     useEffect(() => {
         const fetchHomeCategories = async () => {
+            setIsLoading(true);
             try {
                 const categories = await getHomeCategories();
                 console.log("Home categories fetched:", categories);
                 setTypeCategories(categories);
             } catch (error) {
                 console.error("Failed to fetch home categories:", error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -87,36 +91,42 @@ export default function Home() {
                 </div>
             </div>
             <div id="content" className="col-sm-12">
-                <div className="category_list_cms bottom-to-top hb-animate-element">
-                    {Object.keys(typeCategories).map((type) => (
-                        <div key={type} className="container">
-                            <div className="category-section">
-                                <h1 className="category_title" style={{ fontSize: "24px", margin: "0" }}>
-                                    {typeTranslationsPlural[type] || type}
-                                </h1>
-                                <div className="categories-cards-home">
-                                    {typeCategories[type].map((category) => (
-                                        <div
-                                            className="col-6 col-md-4 col-lg-2-1 category-icon categories-responsive home-categories-card"
-                                            key={category}
-                                            onClick={() => navigate(`/catalog?type=${type.toLowerCase()}&category=${category}`)}
-                                            style={{ padding: "0 7.5px" }}
-                                        >
-                                            <div className="icon-wrapper">
-                                                <img
-                                                    src={`/images/categories-${type.toLowerCase()}/${category}.webp`}
-                                                    alt={category}
-                                                    className="img-responsive"
-                                                />
-                                                <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{categoriesMap[category]}</span>
+                {isLoading ? (
+                    <div style={{ margin: '12% auto 8.4%' }} className="text-center">
+                        <img src="/images/loader.gif" alt="Loading..." />
+                    </div>
+                ) : (
+                    <div className="category_list_cms bottom-to-top hb-animate-element">
+                        {Object.keys(typeCategories).map((type) => (
+                            <div key={type} className="container">
+                                <div className="category-section">
+                                    <h1 className="category_title" style={{ fontSize: "24px", margin: "0" }}>
+                                        {typeTranslationsPlural[type] || type}
+                                    </h1>
+                                    <div className="categories-cards-home">
+                                        {typeCategories[type].map((category) => (
+                                            <div
+                                                className="col-6 col-md-4 col-lg-2-1 category-icon categories-responsive home-categories-card"
+                                                key={category}
+                                                onClick={() => navigate(`/catalog?type=${type.toLowerCase()}&category=${category}`)}
+                                                style={{ padding: "0 7.5px" }}
+                                            >
+                                                <div className="icon-wrapper">
+                                                    <img
+                                                        src={`/images/categories-${type.toLowerCase()}/${category}.webp`}
+                                                        alt={category}
+                                                        className="img-responsive"
+                                                    />
+                                                    <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{categoriesMap[category]}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
 
                 <div id="parallaxcmsblock" className="block parallax">
                     <div id="wdcmstestimonial">
