@@ -358,7 +358,7 @@ export default function SearchResults() {
                                                 <div className="image">
                                                     <Link to={`/clothing/details/${item.id}`}>
                                                         <img
-                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto/w_250,h_300${item.images.find(image => image.side === 'front')?.path}`}
+                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_260,h_320${item.images.find(image => image.side === 'front')?.path}`}
                                                             title={item.name}
                                                             alt={item.name}
                                                             className="img-responsive reg-image"
@@ -366,7 +366,7 @@ export default function SearchResults() {
                                                         />
                                                         {(item.type !== "KIT" && item.type !== "TOWELS" && item.type !== "BANDANAS") && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'back')?.path}`}
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_260,h_320${item.images.find(image => image.side === 'back')?.path}`}
                                                                 title={item.name}
                                                                 alt={item.name}
                                                                 className="img-responsive hover-image"
@@ -375,7 +375,7 @@ export default function SearchResults() {
                                                         )}
                                                         {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${item.images.find(image => image.side === 'front')?.path}`}
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_260,h_320${item.images.find(image => image.side === 'front')?.path}`}
                                                                 title={item.name}
                                                                 alt={item.name}
                                                                 className="img-responsive hover-image"
