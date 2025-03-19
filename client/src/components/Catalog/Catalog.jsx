@@ -369,7 +369,7 @@ export default function Catalog() {
                                                 <div className="image">
                                                     <Link to={`/clothing/details/${item.id}`}>
                                                         <img
-                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto/w_250,h_275${item.images.find(image => image.side === 'front')?.path}`}
+                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto/w_250,h_300${item.images.find(image => image.side === 'front')?.path}`}
                                                             title={item.name}
                                                             alt={item.name}
                                                             className="img-responsive reg-image"
