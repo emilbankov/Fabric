@@ -26,9 +26,6 @@ export default function ForgottenPassword() {
             setTimeout(() => {
                 setShowSuccess(false);
             }, 5000);
-
-            // Log the response for debugging
-            console.log('Password reset email sent:', response);
         } catch (error) {
             // Handle errors
             console.error('Failed to send password reset email:', error);

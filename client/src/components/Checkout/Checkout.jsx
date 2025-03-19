@@ -37,7 +37,6 @@ export default function Checkout() {
     const [step1Complete, setStep1Complete] = useState(false);
     const [step2Complete, setStep2Complete] = useState(false);
     const [isLoggingIn, setIsLoggingIn] = useState(false);
-    console.log(cart);
 
     const [formValues, setFormValues] = useState({
         firstName: '',
@@ -242,31 +241,31 @@ export default function Checkout() {
         const finalPrice = totalPrice + deliveryCost;
 
         // Log step 3 data
-        console.log('Step 3 Data:', {
-            personalInfo: {
-                firstName: formValues.firstName,
-                lastName: formValues.lastName,
-                email: formValues.email,
-                phoneNumber: formValues.phoneNumber,
-            },
-            deliveryInfo: {
-                type: deliveryType,
-                ...(deliveryType === 'office'
-                    ? { officeAddress: selectedOffice ? selectedOffice.address.fullAddress : searchTerm }
-                    : {
-                        region: formValues.region,
-                        city: formValues.city,
-                        address: formValues.address,
-                    }
-                )
-            },
-            orderDetails: {
-                items: cart,
-                totalPrice: Number(totalPrice.toFixed(2)),
-                deliveryCost: Number(deliveryCost.toFixed(2)),
-                finalPrice: Number(finalPrice.toFixed(2))
-            }
-        });
+        // console.log('Step 3 Data:', {
+        //     personalInfo: {
+        //         firstName: formValues.firstName,
+        //         lastName: formValues.lastName,
+        //         email: formValues.email,
+        //         phoneNumber: formValues.phoneNumber,
+        //     },
+        //     deliveryInfo: {
+        //         type: deliveryType,
+        //         ...(deliveryType === 'office'
+        //             ? { officeAddress: selectedOffice ? selectedOffice.address.fullAddress : searchTerm }
+        //             : {
+        //                 region: formValues.region,
+        //                 city: formValues.city,
+        //                 address: formValues.address,
+        //             }
+        //         )
+        //     },
+        //     orderDetails: {
+        //         items: cart,
+        //         totalPrice: Number(totalPrice.toFixed(2)),
+        //         deliveryCost: Number(deliveryCost.toFixed(2)),
+        //         finalPrice: Number(finalPrice.toFixed(2))
+        //     }
+        // });
 
         setStep2Complete(true);
 

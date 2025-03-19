@@ -35,7 +35,6 @@ export default function OrderDetailsModal({ show, onClose, orderId, refreshOrder
     const handleConfirmOrder = async () => {
         try {
             await ordersService.confirmOrder(orderId);
-            console.log('Order confirmed successfully');
             onClose();
             refreshOrders();
         } catch (error) {
@@ -46,7 +45,6 @@ export default function OrderDetailsModal({ show, onClose, orderId, refreshOrder
     const handleRejectOrder = async () => {
         try {
             await ordersService.rejectOrder(orderId);
-            console.log('Order rejected successfully');
             onClose();
             refreshOrders();
         } catch (error) {

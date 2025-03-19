@@ -34,7 +34,6 @@ export default function Home() {
             setIsLoading(true);
             try {
                 const categories = await getHomeCategories();
-                console.log("Home categories fetched:", categories);
                 setTypeCategories(categories);
             } catch (error) {
                 console.error("Failed to fetch home categories:", error);
