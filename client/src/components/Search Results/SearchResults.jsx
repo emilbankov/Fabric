@@ -19,6 +19,7 @@ export default function SearchResults() {
 
     const [checkedTypes, setCheckedTypes] = useState(selectedTypes ? selectedTypes.split(",") : []);
     const [results, setResults] = useState({ clothes: [] });
+    const [isListView, setIsListView] = useState(false);
 
     useEffect(() => {
         Promise.all([
@@ -86,6 +87,7 @@ export default function SearchResults() {
         const products = document.querySelectorAll(".product-layout");
 
         const setGridView = () => {
+            setIsListView(false);
             gridButton.classList.add("active");
             listButton.classList.remove("active");
 
@@ -95,6 +97,7 @@ export default function SearchResults() {
         };
 
         const setListView = () => {
+            setIsListView(true);
             listButton.classList.add("active");
             gridButton.classList.remove("active");
 
@@ -358,28 +361,31 @@ export default function SearchResults() {
                                                 <div className="image">
                                                     <Link to={`/clothing/details/${item.id}`}>
                                                         <img
-                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_260,h_320${item.images.find(image => image.side === 'front')?.path}`}
+                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1560,h_1920${item.images.find(image => image.side === 'front')?.path}`}
                                                             title={item.name}
                                                             alt={item.name}
                                                             className="img-responsive reg-image"
                                                             loading="lazy"
+                                                            style={isListView ? { maxWidth: "262px" } : {}}
                                                         />
                                                         {(item.type !== "KIT" && item.type !== "TOWELS" && item.type !== "BANDANAS") && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_260,h_320${item.images.find(image => image.side === 'back')?.path}`}
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1560,h_1920${item.images.find(image => image.side === 'back')?.path}`}
                                                                 title={item.name}
                                                                 alt={item.name}
                                                                 className="img-responsive hover-image"
                                                                 loading="lazy"
+                                                                style={isListView ? { maxWidth: "262px" } : {}}
                                                             />
                                                         )}
                                                         {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_260,h_320${item.images.find(image => image.side === 'front')?.path}`}
+                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1560,h_1920${item.images.find(image => image.side === 'front')?.path}`}
                                                                 title={item.name}
                                                                 alt={item.name}
                                                                 className="img-responsive hover-image"
                                                                 loading="lazy"
+                                                                style={isListView ? { maxWidth: "262px" } : {}}
                                                             />
                                                         )}
                                                     </Link>
