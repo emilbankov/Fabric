@@ -115,7 +115,7 @@ export default function Home() {
                                             <div
                                                 className="col-6 col-md-4 col-lg-2-1 category-icon categories-responsive home-categories-card"
                                                 key={category}
-                                                onClick={() => navigate(`/catalog?type=${type.toLowerCase()}&sort=new&size=20`)}
+                                                onClick={() => navigate(`/catalog?type=${type.toLowerCase()}&category=${category}&sort=new&size=20`)}
                                                 style={{ padding: "0 7.5px" }}
                                             >
                                                 <div className="icon-wrapper">
