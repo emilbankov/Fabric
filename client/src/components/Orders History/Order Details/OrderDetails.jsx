@@ -85,7 +85,7 @@ export default function OrderDetailsModal({ show, onClose, orderId, refreshOrder
                     onClick={e => e.stopPropagation()}
                 >
                     <div className="modal-content">
-                        {isLoading && <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
+                        {isLoading && <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loader.gif" alt="Loading..." /></div>}
                         {!isLoading && order && (
                             <div>
                                 <div className="modal-header text-center" style={{ position: 'relative' }}>

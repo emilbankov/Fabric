@@ -361,7 +361,7 @@ export default function Catalog() {
                             </div>
                             <br />
                             <div className="row">
-                                {isLoading && <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
+                                {isLoading && <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loader.gif" alt="Loading..." /></div>}
                                 {!isLoading && catalog.clothes && catalog.clothes.map(item => (
                                     <div className="product-layout product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6" key={item.id}>
                                         <div className="product-block product-thumb">

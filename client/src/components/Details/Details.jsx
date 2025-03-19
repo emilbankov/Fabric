@@ -374,7 +374,7 @@ export default function Details() {
                         </aside>
                         {isLoading ? (
                             <div style={{ margin: '15% auto' }} className="text-center">
-                                <img src="/images/loading.gif" alt="Loading..." />
+                                <img src="/images/loader.gif" alt="Loading..." />
                             </div>
                         ) : (
                             <div id="content" className="col-sm-9 productpage">
@@ -1382,7 +1382,7 @@ export default function Details() {
 
             {showConfirmModal && (
                 <div className="confirmation-modal-overlay">
-                    {isLoading && <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
+                    {isLoading && <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loader.gif" alt="Loading..." /></div>}
                     {!isLoading && (
                         <div className="confirmation-modal">
                             <h3>Потвърждаване на изтриване</h3>

@@ -111,7 +111,7 @@ export default function Login() {
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h1>Влизане в акаунт</h1>
-                            {isLoading && (<div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>)}
+                            {isLoading && (<div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loader.gif" alt="Loading..." /></div>)}
                             {!isLoading && (
                                 <div className="row">
                                     <div className="col-sm-6">

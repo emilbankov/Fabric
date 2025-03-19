@@ -170,7 +170,7 @@ export default function OrdersHistory() {
                             </div>
                             <div className="table-responsive">
                                 {isLoading ? (
-                                    <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>
+                                    <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loader.gif" alt="Loading..." /></div>
                                 ) : (
                                     <table className="table table-bordered table-hover">
                                         <thead>

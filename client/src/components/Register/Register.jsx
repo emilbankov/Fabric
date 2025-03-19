@@ -146,7 +146,7 @@ export default function Register() {
                                     {authError}
                                 </div>
                             )}
-                            {isLoading && (<div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>)}
+                            {isLoading && (<div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loader.gif" alt="Loading..." /></div>)}
                             {!isLoading && (
                                 <Formik
                                     initialValues={{

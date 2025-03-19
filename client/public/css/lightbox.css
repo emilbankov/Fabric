@@ -1,6 +1,6 @@
 /* line 7, ../sass.sass */
 body:after {
-  content: url(../images/close.png) url(../images/loading.gif) url(../images/prev.png) url(../images/next.png);
+  content: url(../images/close.png) url(../images/loader.gif) url(../images/prev.png) url(../images/next.png);
   display: none;
 }
 
@@ -87,7 +87,7 @@ body:after {
   width: 32px;
   height: 32px;
   margin: 0 auto;
-  background: url(../images/loading.gif) no-repeat;
+  background: url(../images/loader.gif) no-repeat;
 }
 
 /* line 63, ../sass.sass */

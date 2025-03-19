@@ -72,7 +72,7 @@ export default function Search() {
                     </div>
                     {query && query.length > 0 && (
                         <div className="live-search" style={{ display: query?.length > 0 ? "block" : "none" }}>
-                            {loading && <img className="loading" src="/images/loading.gif" />}
+                            {loading && <img className="loading" src="/images/loader.gif" />}
                             <ul>
                                 {results.clothes && results.clothes.slice(0, 6).map((product) => (
                                     <li key={product.id}>

@@ -172,7 +172,7 @@ export default function AddClothing() {
                                     {error}
                                 </div>
                             )}
-                            {isLoading && <div style={{ margin: '20% auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
+                            {isLoading && <div style={{ margin: '20% auto' }} className="text-center"><img src="/images/loader.gif" alt="Loading..." /></div>}
                             {!isLoading && (
                                 <Formik
                                     initialValues={{

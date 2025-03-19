@@ -457,7 +457,7 @@ export default function Checkout() {
                                         <div className="panel-body">
                                             {isLoggingIn ? (
                                                 <div style={{ margin: '10% auto' }} className="text-center">
-                                                    <img src="/images/loading.gif" alt="Loading..." />
+                                                    <img src="/images/loader.gif" alt="Loading..." />
                                                 </div>
                                             ) : (
                                                 <div className="row">
@@ -938,7 +938,7 @@ export default function Checkout() {
                                         <div className="panel-body">
                                             {isConfirmingOrder ? (
                                                 <div style={{ margin: '10% auto' }} className="text-center">
-                                                    <img src="/images/loading.gif" alt="Loading..." />
+                                                    <img src="/images/loader.gif" alt="Loading..." />
                                                 </div>
                                             ) : (
                                                 <>

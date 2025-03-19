@@ -282,7 +282,7 @@ export default function EditClothing() {
                                     {errors.submit}
                                 </div>
                             )}
-                            {isLoading && <div style={{ margin: '30% auto 0 auto' }} className="text-center"><img src="/images/loading.gif" alt="Loading..." /></div>}
+                            {isLoading && <div style={{ margin: '30% auto 0 auto' }} className="text-center"><img src="/images/loader.gif" alt="Loading..." /></div>}
                             {!isLoading && (
                                 <form className="form-horizontal" onSubmit={editHandler}>
                                     <fieldset id="account">
