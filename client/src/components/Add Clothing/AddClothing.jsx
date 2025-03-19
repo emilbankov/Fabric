@@ -291,11 +291,11 @@ export default function AddClothing() {
                                                             <option value="MARTIAL_SPORTS">Бойни спортове</option>
                                                             <option value="GAME_OF_THRONES">Гейм Аф Тронс</option>
                                                             <option value="DOGS">Кучета</option>
-                                                            <option value="CARS">Коли</option>
+                                                            <option value="CARS">Автомобили</option>
                                                             <option value="CHRISTMAS">Коледни</option>
                                                             <option value="TRUCKS">Камиони</option>
                                                             <option value="HUNTING">Лов</option>
-                                                            <option value="MOTORCYCLES">Мотори</option>
+                                                            <option value="MOTORCYCLES">Мотоциклети</option>
                                                             <option value="MUSIC">Музика</option>
                                                             <option value="NBA">NBA</option>
                                                             <option value="PATRIOTIC">Патриотични</option>
