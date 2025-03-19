@@ -68,31 +68,31 @@ export const homeCategories = [
         id: 'T_SHIRT',
         name: 'Тениски',
         image: '/images/categories/t-shirts.jpg',
-        link: '/catalog?type=T_SHIRT'
+        link: '/catalog?type=t_shirt&sort=new&size=20'
     },
     {
         id: 'LONG_T_SHIRT',
         name: 'Блузи',
         image: '/images/categories/long-t-shirts.jpg',
-        link: '/catalog?type=LONG_T_SHIRT'
+        link: '/catalog?type=long_t_shirt&sort=new&size=20'
     },
     {
         id: 'SWEATSHIRT',
         name: 'Суитчъри',
         image: '/images/categories/sweatshirts.jpg',
-        link: '/catalog?type=SWEATSHIRT'
+        link: '/catalog?type=sweatshirt&sort=new&size=20'
     },
     {
         id: 'SHORTS',
         name: 'Къси панталони',
         image: '/images/categories/shorts.jpg',
-        link: '/catalog?type=SHORTS'
+        link: '/catalog?type=shorts&sort=new&size=20'
     },
     {
         id: 'KIT',
         name: 'Комплекти',
         image: '/images/categories/kits.jpg',
-        link: '/catalog?type=KIT'
+        link: '/catalog?type=kit&sort=new&size=20'
     }
 ];
 
