@@ -361,11 +361,12 @@ export default function Checkout() {
         };
     }, [location.pathname]);
 
-    const handleLoginSubmit = (e) => {
+    const handleLoginSubmit = async (e) => {
         e.preventDefault();
-        setIsLoggingIn(true);
-        loginSubmitHandler(values, () => {
-            setIsLoggingIn(false);
+        try {
+            setIsLoggingIn(true); // Show loader
+            await loginSubmitHandler(values); // Await the login request
+            setIsLoggingIn(false); // Hide loader on success
             setStep1Complete(true);
             setFormValues({
                 firstName: userProfile.firstName || '',
@@ -376,7 +377,10 @@ export default function Checkout() {
                 address: userProfile.address || '',
                 region: userProfile.region || '',
             });
-        });
+        } catch (error) {
+            setIsLoggingIn(false); // Hide loader on error
+            console.error('Login failed:', error);
+        }
     };
 
     return (
@@ -502,7 +506,7 @@ export default function Checkout() {
                                                     <div className="col-sm-6 login-form" style={{ display: showLoginForm ? 'block' : 'none' }}>
                                                         <h2>Завръщащ се клиент</h2>
                                                         {authError && (
-                                                            <div className="alert alert-danger" role="alert">
+                                                            <div style={{ marginBottom: '10px', color: "red", fontSize: "16px" }}>
                                                                 {authError}
                                                             </div>
                                                         )}
