@@ -25032,14 +25032,14 @@ div.modal div.modal-dialog div.modal-content div.modal-body table.table-order-de
 @media (max-width: 1024px) {
 	.categories-responsive {
 		display: inline-block;
-		width: 16.66% !important;
+		width: 20% !important;
 	}
 }
 
 @media (max-width: 768px) {
 	.categories-responsive {
 		display: inline-block;
-		width: 25% !important;
+		width: 33% !important;
 	}
 }
 
