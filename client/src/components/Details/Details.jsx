@@ -411,8 +411,8 @@ export default function Details() {
                                                             >
                                                                 <img
                                                                     id="tmzoom"
-                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${currentImage}`}
-                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${currentImage}`}
+                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1290,h_1560${currentImage}`}
+                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1290,h_1560${currentImage}`}
                                                                     title={clothing.clothing.name}
                                                                     alt={clothing.clothing.name}
                                                                     style={{
@@ -447,7 +447,7 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${image.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1290,h_1560${image.path}`}
                                                                                     width={74}
                                                                                     height={74}
                                                                                     title={image.side}
@@ -487,7 +487,7 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${image.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1290,h_1560${image.path}`}
                                                                                     loading="lazy"
                                                                                     width={74}
                                                                                     height={74}
