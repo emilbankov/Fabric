@@ -36,7 +36,7 @@ export default function Cart() {
                             <div className="cart_image" />
                             <span id="cart-total">
                                 <span className="item-count">{cart.reduce((total, item) => total + item.quantity, 0)}</span>
-                                <span className="price"> ${total.toFixed(2)} </span>
+                                <span className="price">{total.toFixed(2)} лв.</span>
                                 <span className="mycart">My cart</span>
                             </span>
                         </div>
@@ -71,7 +71,7 @@ export default function Cart() {
 
                                                     </td>
                                                     <td className="text-center">x{item.quantity}</td>
-                                                    <td className="text-center">{(item.price * item.quantity).toFixed(2)} лв.</td>
+                                                    <td className="text-center">{Number(item.price).toFixed(2)} лв.</td>
                                                     <td className="text-center">
                                                         <button
                                                             type="button"
