@@ -304,7 +304,7 @@ export default function Details() {
                                                                     <div className="image">
                                                                         <Link to={`/clothing/details/${item.id}`}>
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${item.images.find(image => image.side === 'front')?.path}`}
+                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_74,h_100${item.images.find(image => image.side === 'front')?.path}`}
                                                                                 title="tote bags for women"
                                                                                 alt="tote bags for women"
                                                                                 className="img-responsive reg-image"
@@ -313,7 +313,7 @@ export default function Details() {
 
                                                                             {(item.type !== "KIT" && item.type !== "TOWELS" && item.type !== "BANDANAS") && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${item.images.find(image => image.side === 'back')?.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_74,h_100${item.images.find(image => image.side === 'back')?.path}`}
                                                                                     title="tote bags for women"
                                                                                     alt="tote bags for women"
                                                                                     className="img-responsive hover-image"
@@ -323,7 +323,7 @@ export default function Details() {
 
                                                                             {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${item.images.find(image => image.side === 'front')?.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_74,h_100${item.images.find(image => image.side === 'front')?.path}`}
                                                                                     title="tote bags for women"
                                                                                     alt="tote bags for women"
                                                                                     className="img-responsive hover-image"
@@ -1156,7 +1156,7 @@ export default function Details() {
                                                                                 <div className="image">
                                                                                     <Link to={`/clothing/details/${clothing.id}`}>
                                                                                         <img
-                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_264,h_357${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                             title={clothing.name}
                                                                                             alt={clothing.name}
                                                                                             className="img-responsive reg-image"
@@ -1164,7 +1164,7 @@ export default function Details() {
                                                                                         />
                                                                                         {(clothing.type !== "KIT" && clothing.type !== "TOWELS" && clothing.type !== "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${clothing.images.find(image => image.side === 'back')?.path}`}
+                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_264,h_357${clothing.images.find(image => image.side === 'back')?.path}`}
                                                                                                 title={clothing.name}
                                                                                                 alt={clothing.name}
                                                                                                 className="img-responsive hover-image"
@@ -1173,7 +1173,7 @@ export default function Details() {
                                                                                         )}
                                                                                         {(clothing.type === "KIT" || clothing.type === "TOWELS" || clothing.type === "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_264,h_357${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                                 title={clothing.name}
                                                                                                 alt={clothing.name}
                                                                                                 className="img-responsive hover-image"
