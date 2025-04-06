@@ -25,6 +25,7 @@ export default function Catalog() {
     const [isLoading, setIsLoading] = useState(false);
     const [showFilters, setShowFilters] = useState(true);
     const [notification, setNotification] = useState({ message: '', type: '' });
+    // Use state to track grid vs. list view
     const [isListView, setIsListView] = useState(false);
 
     useEffect(() => {
@@ -40,9 +41,9 @@ export default function Catalog() {
             clothesService.getCatalog(type, sort, size, page, category),
             clothesService.getCategories(type),
         ])
-            .then(([catalog, categories]) => {
-                setCatalog(catalog);
-                setCategories(categories);
+            .then(([catalogData, categoriesData]) => {
+                setCatalog(catalogData);
+                setCategories(categoriesData);
             })
             .catch((err) => {
                 console.error("Error fetching data:", err);
@@ -94,53 +95,20 @@ export default function Catalog() {
         navigate(`${location.pathname}?${params.toString()}`);
     };
 
-    useEffect(() => {
-        const gridButton = document.getElementById("grid-view");
-        const listButton = document.getElementById("list-view");
-        const products = document.querySelectorAll(".product-layout");
+    // Instead of using direct DOM manipulation for grid/list view,
+    // we use inline event handlers and conditional rendering.
+    const handleGridView = () => setIsListView(false);
+    const handleListView = () => setIsListView(true);
 
-        const setGridView = () => {
-            setIsListView(false);
-            gridButton.classList.add("active");
-            listButton.classList.remove("active");
-
-            products.forEach((product) => {
-                product.className =
-                    "product-layout product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6";
-            });
-        };
-
-        const setListView = () => {
-            setIsListView(true);
-            listButton.classList.add("active");
-            gridButton.classList.remove("active");
-
-            products.forEach((product) => {
-                product.className = "product-layout product-list col-xs-12";
-            });
-        };
-
-        setGridView();
-
-        gridButton.addEventListener("click", setGridView);
-        listButton.addEventListener("click", setListView);
-
-        return () => {
-            gridButton.removeEventListener("click", setGridView);
-            listButton.removeEventListener("click", setListView);
-        };
-    }, [catalog.clothes]);
-
+    // If you still need to load external custom JS, you can keep this effect
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
         if (existingScript && existingScript.parentNode) {
             existingScript.parentNode.removeChild(existingScript);
         }
-
         const script = document.createElement("script");
         script.src = "/js/custom.js";
         script.async = true;
-
         document.body.appendChild(script);
 
         return () => {
@@ -158,9 +126,7 @@ export default function Catalog() {
                 keywords={`Fabric, ${typeName}, дрехи, мода, онлайн магазин, тениски, блузи, суичъри, къси панталони, комплекти, плажни кърпи, плаж, кърпи, бандани, ${typeName.toLowerCase()}, clothes, fashion, online store, t-shirts, blouses, sweatshirts, shorts, sets, beach towels, beach, towels, bandanas`}
             />
             {notification.message && (
-                <CustomNotification
-                    message={notification.message}
-                />
+                <CustomNotification message={notification.message} />
             )}
             <div className="product-category-20 layout-2 left-col">
                 <div className="content_headercms_bottom" />
@@ -179,32 +145,18 @@ export default function Catalog() {
                             </Link>
                         </li>
                         <li>
-                            <Link to={`/catalog?sort=${sort}&type=${type}`}>{type && filters[type.toUpperCase()]}</Link>
+                            <Link to={`/catalog?sort=${sort}&type=${type}`}>
+                                {type && filters[type.toUpperCase()]}
+                            </Link>
                         </li>
                     </ul>
                     <div className="row">
                         <aside id="column-left" className="col-sm-3 hidden-xs">
                             <meta httpEquiv="Content-Type" content="text/html; charset=iso-8859-1" />
-                            {/* <div className="swiper-viewport">
-                                <div id="banner0" className="swiper-container single-banner">
-                                    <div className="swiper-wrapper">
-                                        <div className="swiper-slide">
-                                            <a href="#">
-                                                <img
-                                                    src="/images/left-banner-272x340.jpg"
-                                                    alt="Left Banner1"
-                                                    className="img-responsive"
-                                                />
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div className="swiper-pagination" />
-                                </div>
-                            </div> */}
                             <div className="box latest">
                                 <div className="box-heading" style={{ textAlign: "center" }}>Категории</div>
                                 <div className="box-content">
-                                    <div className="box-product productbox-grid" id=" latest-grid">
+                                    <div className="box-product productbox-grid" id="latest-grid">
                                         {homeCategories.map((category) => (
                                             <div className="product-items" key={category.id}>
                                                 <div className="product-items">
@@ -235,7 +187,7 @@ export default function Catalog() {
                                                                             onClick={() => navigate(`/clothing/details/${category.id}`)}
                                                                             title="Add to Cart"
                                                                         >
-                                                                            <i className="极fa fa-shopping-cart" area-hidden="true" />
+                                                                            <i className="fa fa-shopping-cart" aria-hidden="true" />
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -248,73 +200,56 @@ export default function Catalog() {
                                     </div>
                                 </div>
                             </div>
-                            <span
-                                className="latest_default_width"
-                                style={{ display: "none", visibility: "hidden" }}
-                            />
+                            <span className="latest_default_width" style={{ display: "none", visibility: "hidden" }} />
                         </aside>
                         <div id="content" className="col-sm-9">
                             <h2 className="page-title">{type && filters[type.toUpperCase()]}</h2>
-
-                            {/* <div className="row category_thumb">
-                                <div className="col-sm-2 category_img">
-                                    <img
-                                        src={`/images/category-baner-1098x200.jpg`}
-                                        alt="Men"
-                                        title="Men"
-                                        className="img-thumbnail"
-                                    />
-                                </div>
-                            </div> */}
-
                             {showFilters && (
-                                <>
-                                    <div className="row category-icons-filter">
-                                        {catalog.clothes && categories.map((category) => {
-                                            const isActive = new URLSearchParams(location.search)
-                                                .get("category")
-                                                ?.split(",")
-                                                .includes(category);
-
-                                            return (
-                                                <div
-                                                    className="col-sm-2 col-xs-4 category-icon"
-                                                    key={category}
-                                                    onClick={() => handleCategoryClick(category)}
-                                                    style={{ padding: "0 7.5px" }}
-                                                >
-                                                    <div className={`icon-wrapper ${isActive ? 'active' : ''}`}>
-                                                        <img
-                                                            src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category}.webp`}
-                                                            alt={categoriesMap[category]}
-                                                            className="img-responsive"
-                                                            loading="lazy"
-                                                        />
-                                                        <span>{categoriesMap[category]}</span>
-                                                    </div>
+                                <div className="row category-icons-filter">
+                                    {catalog.clothes && categories.map((category) => {
+                                        const isActive = new URLSearchParams(location.search)
+                                            .get("category")
+                                            ?.split(",")
+                                            .includes(category);
+                                        return (
+                                            <div
+                                                className="col-sm-2 col-xs-4 category-icon"
+                                                key={category}
+                                                onClick={() => handleCategoryClick(category)}
+                                                style={{ padding: "0 7.5px" }}
+                                            >
+                                                <div className={`icon-wrapper ${isActive ? 'active' : ''}`}>
+                                                    <img
+                                                        src={`/images/categories-${catalog?.clothes?.[0]?.type.toLowerCase()}/${category}.webp`}
+                                                        alt={categoriesMap[category]}
+                                                        className="img-responsive"
+                                                        loading="lazy"
+                                                    />
+                                                    <span>{categoriesMap[category]}</span>
                                                 </div>
-                                            );
-                                        })}
-                                    </div>
-                                </>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             )}
-
                             <div className="category_filter">
                                 <div className="col-md-4 btn-list-grid">
                                     <div className="btn-group">
                                         <button
                                             type="button"
                                             id="grid-view"
-                                            className="btn btn-default grid"
+                                            className={`btn btn-default grid ${!isListView ? "active" : ""}`}
                                             title="Grid"
+                                            onClick={handleGridView}
                                         >
                                             <i className="fa fa-th" />
                                         </button>
                                         <button
                                             type="button"
                                             id="list-view"
-                                            className="btn btn-default list"
+                                            className={`btn btn-default list ${isListView ? "active" : ""}`}
                                             title="List"
+                                            onClick={handleListView}
                                         >
                                             <i className="fa fa-th-list" />
                                         </button>
@@ -325,7 +260,7 @@ export default function Catalog() {
                                         <div className="col-md-3 text-right sort">
                                             <select
                                                 id="input-sort"
-                                                className=" form-control catalog"
+                                                className="form-control catalog"
                                                 onChange={handleSortChange}
                                                 value={sort}
                                                 style={{ textAlign: "center" }}
@@ -356,7 +291,7 @@ export default function Catalog() {
                                                 <option value="40">40</option>
                                                 <option value="60">60</option>
                                                 <option value="80">80</option>
-                                                <option value="100">100 </option>
+                                                <option value="100">100</option>
                                             </select>
                                         </div>
                                     </div>
@@ -364,9 +299,18 @@ export default function Catalog() {
                             </div>
                             <br />
                             <div className="row">
-                                {isLoading && <div style={{ margin: '10% auto' }} className="text-center"><img src="/images/loader.gif" alt="Loading..." /></div>}
+                                {isLoading && (
+                                    <div style={{ margin: '10% auto' }} className="text-center">
+                                        <img src="/images/loader.gif" alt="Loading..." />
+                                    </div>
+                                )}
                                 {!isLoading && catalog.clothes && catalog.clothes.map(item => (
-                                    <div className="product-layout product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6" key={item.id}>
+                                    <div
+                                        key={item.id}
+                                        className={`product-layout ${isListView
+                                            ? "product-list col-xs-12"
+                                            : "product-grid col-lg-3 col-md-4 col-sm-4 col-xs-6"}`}
+                                    >
                                         <div className="product-block product-thumb">
                                             <div className="product-block-inner">
                                                 <div className="image">
@@ -401,7 +345,11 @@ export default function Catalog() {
                                                         )}
                                                     </Link>
                                                     {item?.discountPrice && (
-                                                        <div className="saleback"><div className="saleicon sale">{(Math.ceil((item.price - item.discountPrice) / item.price * 100))}%</div></div>
+                                                        <div className="saleback">
+                                                            <div className="saleicon sale">
+                                                                {Math.ceil((item.price - item.discountPrice) / item.price * 100)}%
+                                                            </div>
+                                                        </div>
                                                     )}
                                                     <div className="product_hover_block">
                                                         <div className="action">
@@ -411,7 +359,7 @@ export default function Catalog() {
                                                                 onClick={() => navigate(`/clothing/details/${item.id}`)}
                                                                 title="Add to Cart"
                                                             >
-                                                                <i className="fa fa-shopping-cart" area-hidden="true" />{" "}
+                                                                <i className="fa fa-shopping-cart" aria-hidden="true" />{" "}
                                                             </button>
                                                             <button
                                                                 className="wishlist"
@@ -424,7 +372,7 @@ export default function Catalog() {
                                                                             setNotification({ message: '' });
                                                                             setTimeout(() => {
                                                                                 setNotification({
-                                                                                    message: `Успешно добавихте ${typeTranslations[item.type]} ${item.name} към любими!`,
+                                                                                    message: `Успешно добавихте ${typeTranslations[item.type]} ${item.name} към любими!`
                                                                                 });
                                                                             }, 0);
                                                                         },
@@ -432,7 +380,7 @@ export default function Catalog() {
                                                                             setNotification({ message: '' });
                                                                             setTimeout(() => {
                                                                                 setNotification({
-                                                                                    message: "Неуспешно добавяне на продукт към любими. Моля, опитайте отново.",
+                                                                                    message: "Неуспешно добавяне на продукт към любими. Моля, опитайте отново."
                                                                                 });
                                                                             }, 0);
                                                                         },
@@ -440,7 +388,7 @@ export default function Catalog() {
                                                                             setNotification({ message: '' });
                                                                             setTimeout(() => {
                                                                                 setNotification({
-                                                                                    message: `Този продукт вече е във вашия списък с любими!`,
+                                                                                    message: `Този продукт вече е във вашия списък с любими!`
                                                                                 });
                                                                             }, 0);
                                                                         },
@@ -448,7 +396,7 @@ export default function Catalog() {
                                                                             setNotification({ message: '' });
                                                                             setTimeout(() => {
                                                                                 setNotification({
-                                                                                    message: "Трябва да влезете в профила си, за да добавяте продукти към любими!",
+                                                                                    message: "Трябва да влезете в профила си, за да добавяте продукти към любими!"
                                                                                 });
                                                                             }, 0);
                                                                         }
@@ -486,9 +434,7 @@ export default function Catalog() {
                                                                 {item.name}
                                                             </Link>
                                                         </h4>
-                                                        <p className="desc">
-                                                            {item.description}
-                                                        </p>
+                                                        <p className="desc">{item.description}</p>
                                                         <p className="price">
                                                             {item?.discountPrice ? (
                                                                 <>
@@ -535,11 +481,9 @@ export default function Catalog() {
                                             const totalPages = Math.max(1, catalog.total_pages || 1);
                                             let startPage = Math.max(1, page - 1);
                                             let endPage = Math.min(totalPages, startPage + 2);
-
                                             if (endPage - startPage < 2) {
                                                 startPage = Math.max(1, endPage - 2);
                                             }
-
                                             return [...Array(Math.max(0, endPage - startPage + 1))].map(
                                                 (_, index) => {
                                                     const pageNumber = startPage + index;
@@ -573,9 +517,7 @@ export default function Catalog() {
                                                 </li>
                                                 <li>
                                                     <a
-                                                        onClick={() =>
-                                                            handlePageChange(catalog.total_pages)
-                                                        }
+                                                        onClick={() => handlePageChange(catalog.total_pages)}
                                                         role="button"
                                                         style={{ cursor: "pointer" }}
                                                     >
@@ -587,8 +529,7 @@ export default function Catalog() {
                                     </ul>
                                 </div>
                                 <div className="col-sm-6 text-right page-result">
-                                    Показвани {catalog.items_on_page} от {size} (
-                                    {catalog.total_pages} Страници)
+                                    Показвани {catalog.items_on_page} от {size} ({catalog.total_pages} Страници)
                                 </div>
                             </div>
                         </div>
