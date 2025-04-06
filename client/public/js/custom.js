@@ -330,7 +330,19 @@ function mobileToggleColumn() {
 		$('#column-right').appendTo('.home_row');
 		$('#column-left').insertBefore('#content');
 		$('#column-right').insertAfter('#content');
-		$('.common-home #column-left,.common-home #column-right').insertBefore('#content-top');
+
+		// Check if #content-top exists and is a sibling of the columns
+		if ($('#content-top').length) {
+			var parentNode = $('#content-top').parent();
+			if ($('.common-home #column-left,.common-home #column-right').parent().is(parentNode)) {
+				$('.common-home #column-left,.common-home #column-right').insertBefore('#content-top');
+			} else {
+				console.error('The nodes do not share the same parent.');
+			}
+		} else {
+			console.error('#content-top does not exist in the DOM.');
+		}
+
 		$("#column-left .box-heading,#column-right .box-heading").parent().find('.box-content,.filterbox,.list-group').removeAttr('style');
 		$("#column-left .box-heading,#column-right .box-heading").removeClass('active');
 		$("#column-left .box-heading,#column-right .box-heading").removeClass('toggle');

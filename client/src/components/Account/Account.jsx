@@ -13,6 +13,7 @@ export default function Account() {
             try {
                 const profileData = await profile();
                 updateUserProfile(profileData);
+                
             } catch (error) {
                 console.error("Failed to fetch profile:", error);
             }
@@ -21,7 +22,7 @@ export default function Account() {
         if (isAuthenticated) {
             fetchProfile();
         }
-    }, [location.pathname, isAuthenticated, updateUserProfile]);
+    }, [location.pathname]);
 
     useEffect(() => {
         const existingScript = document.querySelector('script[src="/js/custom.js"]');
