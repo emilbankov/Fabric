@@ -95,8 +95,6 @@ export default function Catalog() {
         navigate(`${location.pathname}?${params.toString()}`);
     };
 
-    // Instead of using direct DOM manipulation for grid/list view,
-    // we use inline event handlers and conditional rendering.
     const handleGridView = () => setIsListView(false);
     const handleListView = () => setIsListView(true);
 
@@ -116,7 +114,7 @@ export default function Catalog() {
                 script.parentNode.removeChild(script);
             }
         };
-    }, [location.pathname, catalog.clothes]);
+    }, []);
 
     return (
         <>
