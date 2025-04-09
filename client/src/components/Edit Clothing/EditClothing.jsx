@@ -42,12 +42,12 @@ export default function EditClothing() {
                     const backImage = result.clothing.images.find(img => img.side === 'back');
 
                     if (frontImage) {
-                        const frontPath = `https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${frontImage.path}`;
+                        const frontPath = `https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto${frontImage.path}`;
                         setFrontImagePreview(frontPath);
                         setOriginalImages(prev => ({ ...prev, front: frontPath }));
                     }
                     if (backImage) {
-                        const backPath = `https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto${backImage.path}`;
+                        const backPath = `https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto${backImage.path}`;
                         setBackImagePreview(backPath);
                         setOriginalImages(prev => ({ ...prev, back: backPath }));
                     }
