@@ -411,8 +411,8 @@ export default function Details() {
                                                             >
                                                                 <img
                                                                     id="tmzoom"
-                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1290,h_1560${currentImage}`}
-                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1290,h_1560${currentImage}`}
+                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_645,h_780${currentImage}`}
+                                                                    data-zoom-image={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_645,h_780${currentImage}`}
                                                                     title={clothing.clothing.name}
                                                                     alt={clothing.clothing.name}
                                                                     style={{
@@ -447,7 +447,7 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1290,h_1560${image.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_645,h_780${image.path}`}
                                                                                     width={74}
                                                                                     height={74}
                                                                                     title={image.side}
@@ -487,7 +487,7 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_1290,h_1560${image.path}`}
+                                                                                    src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_645,h_780${image.path}`}
                                                                                     loading="lazy"
                                                                                     width={74}
                                                                                     height={74}
@@ -1156,7 +1156,7 @@ export default function Details() {
                                                                                 <div className="image">
                                                                                     <Link to={`/clothing/details/${clothing.id}`}>
                                                                                         <img
-                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_264,h_357${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_264,h_329${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                             title={clothing.name}
                                                                                             alt={clothing.name}
                                                                                             className="img-responsive reg-image"
@@ -1164,7 +1164,7 @@ export default function Details() {
                                                                                         />
                                                                                         {(clothing.type !== "KIT" && clothing.type !== "TOWELS" && clothing.type !== "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_264,h_357${clothing.images.find(image => image.side === 'back')?.path}`}
+                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_264,h_329${clothing.images.find(image => image.side === 'back')?.path}`}
                                                                                                 title={clothing.name}
                                                                                                 alt={clothing.name}
                                                                                                 className="img-responsive hover-image"
@@ -1173,7 +1173,7 @@ export default function Details() {
                                                                                         )}
                                                                                         {(clothing.type === "KIT" || clothing.type === "TOWELS" || clothing.type === "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_264,h_357${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_264,h_329${clothing.images.find(image => image.side === 'front')?.path}`}
                                                                                                 title={clothing.name}
                                                                                                 alt={clothing.name}
                                                                                                 className="img-responsive hover-image"
@@ -1259,7 +1259,7 @@ export default function Details() {
                                                                                 <div className="image">
                                                                                     <Link to={`/clothing/details/${product.id}`}>
                                                                                         <img
-                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${product.images.find(image => image.side === 'front')?.path}`}
+                                                                                            src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_260,h_310${product.images.find(image => image.side === 'front')?.path}`}
                                                                                             title={product.name}
                                                                                             alt={product.name}
                                                                                             className="img-responsive reg-image"
@@ -1268,7 +1268,7 @@ export default function Details() {
 
                                                                                         {(product.type !== "KIT" && product.type !== "TOWELS" && product.type !== "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${product.images.find(image => image.side === 'back')?.path}`}
+                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_260,h_310${product.images.find(image => image.side === 'back')?.path}`}
                                                                                                 title={product.name}
                                                                                                 alt={product.name}
                                                                                                 className="img-responsive hover-image"
@@ -1278,7 +1278,7 @@ export default function Details() {
 
                                                                                         {(product.type === "KIT" || product.type === "TOWELS" || product.type === "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best${product.images.find(image => image.side === 'front')?.path}`}
+                                                                                                src={`https://res.cloudinary.com/dfttdd1vq/image/upload/f_webp,q_auto:best/w_260,h_310${product.images.find(image => image.side === 'front')?.path}`}
                                                                                                 title={product.name}
                                                                                                 alt={product.name}
                                                                                                 className="img-responsive hover-image"
