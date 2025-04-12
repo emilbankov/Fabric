@@ -337,12 +337,8 @@ function mobileToggleColumn() {
 			var parentNode = $contentTop.parent();
 			if ($('.common-home #column-left, .common-home #column-right').parent().is(parentNode)) {
 				$('.common-home #column-left, .common-home #column-right').insertBefore($contentTop);
-			} else {
-				console.error('The columns do not share the same parent as #content-top.');
-			}
-		} else {
-			console.warn('#content-top does not exist in the DOM. Skipping its repositioning.');
-		}
+			} 
+		} 
 
 		$("#column-left .box-heading, #column-right .box-heading")
 			.parent().find('.box-content, .filterbox, .list-group').removeAttr('style');

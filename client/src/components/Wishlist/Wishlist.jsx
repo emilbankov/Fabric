@@ -112,6 +112,7 @@ export default function Wishlist() {
                                                             src={`https://fabric-bg.com/images-ftp${item.image}.webp`}
                                                             alt={item.name}
                                                             title={item.name}
+                                                            style={{ width: "55px" }}
                                                         />
                                                     </Link>
                                                 </td>
