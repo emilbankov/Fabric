@@ -966,7 +966,8 @@ export default function Checkout() {
                                                                                 title={item.name}
                                                                                 className="img-thumbnail"
                                                                                 loading="lazy"
-                                                                            />
+                                                                                style={{ width: "55px" }}
+                                                                                />
                                                                         </Link>
                                                                     </td>
                                                                 </tr>
@@ -1067,6 +1068,7 @@ export default function Checkout() {
                                                                                     title={item.name}
                                                                                     className="img-thumbnail"
                                                                                     loading="lazy"
+                                                                                    style={{ width: "55px" }}
                                                                                 />
                                                                             </Link>
                                                                         </td>
