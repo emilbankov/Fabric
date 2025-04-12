@@ -42,12 +42,12 @@ export default function EditClothing() {
                     const backImage = result.clothing.images.find(img => img.side === 'back');
 
                     if (frontImage) {
-                        const frontPath = `https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto${frontImage.path}`;
+                        const frontPath = `https://fabric-bg.com/images-ftp${frontImage.path}.webp`;
                         setFrontImagePreview(frontPath);
                         setOriginalImages(prev => ({ ...prev, front: frontPath }));
                     }
                     if (backImage) {
-                        const backPath = `https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto${backImage.path}`;
+                        const backPath = `https://fabric-bg.com/images-ftp${backImage.path}.webp`;
                         setBackImagePreview(backPath);
                         setOriginalImages(prev => ({ ...prev, back: backPath }));
                     }
@@ -450,8 +450,8 @@ export default function EditClothing() {
                                                             src={frontImagePreview}
                                                             alt="Front Preview"
                                                             style={{
-                                                                width: "200px",
-                                                                height: "200px",
+                                                                width: "325px",
+                                                                height: "400px",
                                                                 objectFit: "cover",
                                                                 border: "2px solid black",
                                                                 borderRadius: "20px",
@@ -491,8 +491,8 @@ export default function EditClothing() {
                                                                 src={backImagePreview}
                                                                 alt="Back Preview"
                                                                 style={{
-                                                                    width: "200px",
-                                                                    height: "200px",
+                                                                    width: "325px",
+                                                                    height: "400px",
                                                                     objectFit: "cover",
                                                                     border: "2px solid black",
                                                                     borderRadius: "20px",

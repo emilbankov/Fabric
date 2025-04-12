@@ -364,8 +364,8 @@ export default function AddClothing() {
                                                                     src={frontImagePreview}
                                                                     alt="Front Preview"
                                                                     style={{
-                                                                        width: "200px",
-                                                                        height: "200px",
+                                                                        width: "325px",
+                                                                        height: "400px",
                                                                         objectFit: "cover",
                                                                         border: "2px solid black",
                                                                         borderRadius: "20px",
@@ -400,8 +400,8 @@ export default function AddClothing() {
                                                                         src={backImagePreview}
                                                                         alt="Back Preview"
                                                                         style={{
-                                                                            width: "200px",
-                                                                            height: "200px",
+                                                                            width: "325px",
+                                                                            height: "400px",
                                                                             objectFit: "cover",
                                                                             border: "2px solid black",
                                                                             borderRadius: "20px",
