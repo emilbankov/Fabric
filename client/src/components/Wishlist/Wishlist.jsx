@@ -109,7 +109,7 @@ export default function Wishlist() {
                                                 <td className="text-center">
                                                     <Link to={`/clothing/details/${item.id}`}>
                                                         <img
-                                                            src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto/w_55,h_68${item.image}`}
+                                                            src={`https://fabric-bg.com/images-ftp${item.image}.webp`}
                                                             alt={item.name}
                                                             title={item.name}
                                                         />

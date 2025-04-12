@@ -272,11 +272,11 @@ export default function Catalog() {
                                         </div>
                                     </div>
                                     <div className="show-wrapper">
-                                        <div className="col-md-1 text-right show">
+                                        {/* <div className="col-md-1 text-right show">
                                             <label className="control-label" htmlFor="input-limit">
                                                 Подреди по:
                                             </label>
-                                        </div>
+                                        </div> */}
                                         <div className="col-md-2 text-right limit">
                                             <select
                                                 id="input-limit"
@@ -314,7 +314,7 @@ export default function Catalog() {
                                                 <div className="image">
                                                     <Link to={`/clothing/details/${item.id}`}>
                                                         <img
-                                                            src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_600,h_740${item.images.find(image => image.side === 'front')?.path}`}
+                                                            src={`https://fabric-bg.com/images-ftp${item.images.find(image => image.side === 'front')?.path}.webp`}
                                                             title={item.name}
                                                             alt={item.name}
                                                             className="img-responsive reg-image"
@@ -323,7 +323,7 @@ export default function Catalog() {
                                                         />
                                                         {(item.type !== "KIT" && item.type !== "TOWELS" && item.type !== "BANDANAS") && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_600,h_740${item.images.find(image => image.side === 'back')?.path}`}
+                                                                src={`https://fabric-bg.com/images-ftp${item.images.find(image => image.side === 'back')?.path}.webp`}
                                                                 title={item.name}
                                                                 alt={item.name}
                                                                 className="img-responsive hover-image"
@@ -333,7 +333,7 @@ export default function Catalog() {
                                                         )}
                                                         {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
                                                             <img
-                                                                src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_600,h_740${item.images.find(image => image.side === 'front')?.path}`}
+                                                                src={`https://fabric-bg.com/images-ftp${item.images.find(image => image.side === 'front')?.path}.webp`}
                                                                 title={item.name}
                                                                 alt={item.name}
                                                                 className="img-responsive hover-image"

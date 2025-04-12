@@ -304,7 +304,7 @@ export default function Details() {
                                                                     <div className="image">
                                                                         <Link to={`/clothing/details/${item.id}`}>
                                                                             <img
-                                                                                src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_74,h_100${item.images.find(image => image.side === 'front')?.path}`}
+                                                                                src={`https://fabric-bg.com/images-ftp${item.images.find(image => image.side === 'front')?.path}.webp`}
                                                                                 title="tote bags for women"
                                                                                 alt="tote bags for women"
                                                                                 className="img-responsive reg-image"
@@ -313,7 +313,7 @@ export default function Details() {
 
                                                                             {(item.type !== "KIT" && item.type !== "TOWELS" && item.type !== "BANDANAS") && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_74,h_100${item.images.find(image => image.side === 'back')?.path}`}
+                                                                                    src={`https://fabric-bg.com/images-ftp${item.images.find(image => image.side === 'back')?.path}.webp`}
                                                                                     title="tote bags for women"
                                                                                     alt="tote bags for women"
                                                                                     className="img-responsive hover-image"
@@ -323,7 +323,7 @@ export default function Details() {
 
                                                                             {(item.type === "KIT" || item.type === "TOWELS" || item.type === "BANDANAS") && (
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_74,h_100${item.images.find(image => image.side === 'front')?.path}`}
+                                                                                    src={`https://fabric-bg.com/images-ftp${item.images.find(image => image.side === 'front')?.path}.webp`}
                                                                                     title="tote bags for women"
                                                                                     alt="tote bags for women"
                                                                                     className="img-responsive hover-image"
@@ -411,8 +411,8 @@ export default function Details() {
                                                             >
                                                                 <img
                                                                     id="tmzoom"
-                                                                    src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_645,h_780${currentImage}`}
-                                                                    data-zoom-image={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_645,h_780${currentImage}`}
+                                                                    src={`https://fabric-bg.com/images-ftp${currentImage}.webp`}
+                                                                    data-zoom-image={`https://fabric-bg.com/images-ftp${currentImage}.webp`}
                                                                     title={clothing.clothing.name}
                                                                     alt={clothing.clothing.name}
                                                                     style={{
@@ -447,7 +447,7 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_645,h_780${image.path}`}
+                                                                                    src={`https://fabric-bg.com/images-ftp${image.path}.webp`}
                                                                                     width={74}
                                                                                     height={74}
                                                                                     title={image.side}
@@ -487,7 +487,7 @@ export default function Details() {
                                                                                 }}
                                                                             >
                                                                                 <img
-                                                                                    src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_645,h_780${image.path}`}
+                                                                                    src={`https://fabric-bg.com/images-ftp${image.path}.webp`}
                                                                                     loading="lazy"
                                                                                     width={74}
                                                                                     height={74}
@@ -1156,7 +1156,7 @@ export default function Details() {
                                                                                 <div className="image">
                                                                                     <Link to={`/clothing/details/${clothing.id}`}>
                                                                                         <img
-                                                                                            src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_264,h_329${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                            src={`https://fabric-bg.com/images-ftp${clothing.images.find(image => image.side === 'front')?.path}.webp`}
                                                                                             title={clothing.name}
                                                                                             alt={clothing.name}
                                                                                             className="img-responsive reg-image"
@@ -1164,7 +1164,7 @@ export default function Details() {
                                                                                         />
                                                                                         {(clothing.type !== "KIT" && clothing.type !== "TOWELS" && clothing.type !== "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_264,h_329${clothing.images.find(image => image.side === 'back')?.path}`}
+                                                                                                src={`https://fabric-bg.com/images-ftp${clothing.images.find(image => image.side === 'back')?.path}.webp`}
                                                                                                 title={clothing.name}
                                                                                                 alt={clothing.name}
                                                                                                 className="img-responsive hover-image"
@@ -1173,7 +1173,7 @@ export default function Details() {
                                                                                         )}
                                                                                         {(clothing.type === "KIT" || clothing.type === "TOWELS" || clothing.type === "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_264,h_329${clothing.images.find(image => image.side === 'front')?.path}`}
+                                                                                                src={`https://fabric-bg.com/images-ftp${clothing.images.find(image => image.side === 'front')?.path}.webp`}
                                                                                                 title={clothing.name}
                                                                                                 alt={clothing.name}
                                                                                                 className="img-responsive hover-image"
@@ -1259,7 +1259,7 @@ export default function Details() {
                                                                                 <div className="image">
                                                                                     <Link to={`/clothing/details/${product.id}`}>
                                                                                         <img
-                                                                                            src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_260,h_310${product.images.find(image => image.side === 'front')?.path}`}
+                                                                                            src={`https://fabric-bg.com/images-ftp${product.images.find(image => image.side === 'front')?.path}.webp`}
                                                                                             title={product.name}
                                                                                             alt={product.name}
                                                                                             className="img-responsive reg-image"
@@ -1268,7 +1268,7 @@ export default function Details() {
 
                                                                                         {(product.type !== "KIT" && product.type !== "TOWELS" && product.type !== "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_260,h_310${product.images.find(image => image.side === 'back')?.path}`}
+                                                                                                src={`https://fabric-bg.com/images-ftp${product.images.find(image => image.side === 'back')?.path}.webp`}
                                                                                                 title={product.name}
                                                                                                 alt={product.name}
                                                                                                 className="img-responsive hover-image"
@@ -1278,7 +1278,7 @@ export default function Details() {
 
                                                                                         {(product.type === "KIT" || product.type === "TOWELS" || product.type === "BANDANAS") && (
                                                                                             <img
-                                                                                                src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best/w_260,h_310${product.images.find(image => image.side === 'front')?.path}`}
+                                                                                                src={`https://fabric-bg.com/images-ftp${product.images.find(image => image.side === 'front')?.path}.webp`}
                                                                                                 title={product.name}
                                                                                                 alt={product.name}
                                                                                                 className="img-responsive hover-image"
@@ -1390,7 +1390,7 @@ export default function Details() {
                             &times;
                         </span>
                         <img
-                            src={`https://res.cloudinary.com/doekkwbwh/image/upload/f_webp,q_auto:best${currentImage}`}
+                            src={`https://fabric-bg.com/images-ftp${currentImage}.webp`}
                             alt={clothing.clothing?.name}
                             style={{
                                 maxWidth: '100%',
