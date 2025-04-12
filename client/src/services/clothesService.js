@@ -68,7 +68,7 @@ export const edit = async (clothingId, clothData) => {
 };
 
 export const deleteProduct = (clothingId) => {
-    const result = del(`${baseUrl}/${clothingId}`);
+    const result = put(`${baseUrl}/delete/${clothingId}`);
 
     return result;
 };
