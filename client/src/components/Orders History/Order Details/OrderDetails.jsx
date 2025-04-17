@@ -110,7 +110,7 @@ export default function OrderDetailsModal({ show, onClose, orderId, refreshOrder
                                             <tbody>
                                                 <tr>
                                                     <td className="text-center" style={{ width: '25%' }}>
-                                                        <b>Order ID:</b> #{order.id}
+                                                        <b>Order ID:</b> #{order.id + 600}
                                                     </td>
                                                     <td className="text-center" style={{ width: '25%' }}>
                                                         <b>Статус:</b> {order.status}

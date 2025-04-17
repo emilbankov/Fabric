@@ -187,7 +187,7 @@ export default function OrdersHistory() {
                                         <tbody>
                                             {orders.map((order) => (
                                                 <tr key={order.id}>
-                                                    <td className="text-center">#{order.id}</td>
+                                                    <td className="text-center">#{order.id + 600}</td>
                                                     <td className="text-center">{order.customer}</td>
                                                     <td className="text-center">{order.quantity}</td>
                                                     <td className="text-center">{order.status}</td>

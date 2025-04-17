@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Formik } from 'formik';
 import * as clothesService from "../../services/clothesService";
 import MetaTags from '../Meta Tags/MetaTags';
+import { CartContext } from "../../contexts/CartProvider";
 
 export default function Prices() {
     const location = useLocation();
+    const { clearCart } = useContext(CartContext);
 
     const [isLoading, setIsLoading] = useState(true);
     const [price, setPrice] = useState({});
@@ -56,6 +58,8 @@ export default function Prices() {
             const response = await clothesService.changePrices(payload.type, payload.price, payload.discountPrice);
             if (response.message === "Clothes price updated successfully!") {
                 setSuccess("Цената беше обновена успешно!");
+
+                clearCart();
             } else {
                 setSuccess(response.message);
             }
